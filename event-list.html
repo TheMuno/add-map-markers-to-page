@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="event-list.css">
+</head>
+<body>
+    <div class="section">
+        <div id="map"></div>
+        <div class="day-events">
+            <div class="qr-toggle-wrap">
+                <label for="qr-toggle">Toggle QR Codes</label> 
+                <input type="checkbox" name="qr-toggle" id="qr-toggle" class="qr-toggle">
+            </div>   
+            <div class="day-event day-1-event"> 
+                <div class="day-head">Day 1</div>
+                <div class="single-event hide">
+                    <canvas id="qrcode-1" class="qrcode"></canvas> 
+                    <a href="" class="event-link" target="_blank"></a>
+                </div>  
+            </div>
+        </div>
+    </div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4&libraries=places&v=weekly&language=en" ></script>     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script type="module" src="event-list.js"></script>
+</body>
+</html> 
+
+<!-- <script type="module" src="https://cdn.jsdelivr.net/gh/HelloKhonsu/DayPlanner/event-list_1.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/HelloKhonsu/DayPlanner/event-list_1.css">  -->
