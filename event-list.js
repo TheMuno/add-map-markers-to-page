@@ -184,10 +184,10 @@ function constructEvent(dayEventTxt, day, marker, eventNum, markerObj) {
     $eventLink.textContent = dayEventTxt;  
     $eventLink.href = directionsUrl; 
 
-    if (eventNum === 0) {
-        $dayEvent.textContent = $eventLink.textContent;
-        $eventLink.remove(); 
-    }
+    // if (eventNum === 0) {
+    //     $dayEvent.textContent = $eventLink.textContent;
+    //     $eventLink.remove(); 
+    // }
 
     // const directionsUrl = generateDirectionsUrl($dayEvent); 
     generateQRCode($qrCanvas, directionsUrl); 
@@ -214,14 +214,14 @@ function addDayEventList(dayNum) {
 }  
 
 function generateDirectionsUrl(dayEvent) {
-    const prevLat = dayEvent.previousElementSibling?.marker?.position.lat();
-    const prevLng = dayEvent.previousElementSibling?.marker?.position.lng();
+    // const prevLat = dayEvent.previousElementSibling?.marker?.position.lat();
+    // const prevLng = dayEvent.previousElementSibling?.marker?.position.lng();
 
     const destinationLat = dayEvent.marker?.lat || dayEvent?.marker?.position?.lat();
     const destinationLng = dayEvent.marker?.lng || dayEvent?.marker?.position?.lng();
 
-    if (!prevLat || !prevLng) return; 
-    const url = `${directionsUrlBase}&origin=${prevLat},${prevLng}&destination=${destinationLat},${destinationLng}`; 
+    // if (!prevLat || !prevLng) return; 
+    const url = `${directionsUrlBase}&destination=${destinationLat},${destinationLng}`;   
     return url; 
 }
 
