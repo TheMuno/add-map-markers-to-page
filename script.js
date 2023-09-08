@@ -39,12 +39,14 @@ const $map = document.querySelector('#map'),
     $daysSelect = document.querySelector('#days-select'), 
     $addDay = document.querySelector('.add-day'),
     $dayEvents = document.querySelector('.day-events'),
+    $downloadUserCSV = document.querySelector('.download-user-csv'), 
+    $downloadDBCSV = document.querySelector('.download-all-csv'),
     $printedPlanBtn = document.querySelector('.printed-plan');
 
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
     
 
-
+'AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4'
 
 // const $map = document.querySelector('.plan_map'),
 //     $address = document.querySelector('#Activity-Name'),  
@@ -57,7 +59,8 @@ const    $logoutBtn = document.querySelector('[data-wf-user-logout="Log out"]'),
     initialCoords  = { lat: 40.7580, lng: -73.9855 },
     mapIcon = 'https://uploads-ssl.webflow.com/61268cc8812ac5956bad13e4/64ba87cd2730a9c6cf7c0d5a_pin%20(3).png', 
     directionsUrlBase = 'https://www.google.com/maps/dir/?api=1', 
-    startingIndex = 1; 
+    startingIndex = 1,
+    googleSpreadsheetID = '1Zj1ae5faA8h7UwHvtYVtKoiA_G3LtQcuTOFV1Evq4BQ';   
 
 let currentDay = $daysSelect.options[startingIndex]; 
 currentDay.markers = [];
@@ -174,7 +177,7 @@ const markerPopup = new google.maps.InfoWindow();
 
         $address.value = '';  
     });
-}();
+}//();
 
 function createMarker(title, position) {
     const marker = new google.maps.Marker({
@@ -629,7 +632,7 @@ $dayEvents.addEventListener('click', e => {
     }
 });   
 
-document.querySelector('.download-user-csv').addEventListener('click', async (e) => {
+$downloadUserCSV.addEventListener('click', async (e) => {
     const userMail = localStorage.getItem('user-email'); 
     if (!userMail) {
         alert('No User Email Found!'); 
@@ -652,7 +655,7 @@ document.querySelector('.download-user-csv').addEventListener('click', async (e)
 
 });
 
-document.querySelector('.download-all-csv').addEventListener('click', async (e) => {
+$downloadDBCSV.addEventListener('click', async (e) => {
     const userMail = localStorage.getItem('user-email'); 
     if (!userMail) {
         alert('No User Email Found!'); 
@@ -665,8 +668,10 @@ document.querySelector('.download-all-csv').addEventListener('click', async (e) 
 
     const allUsersEvents = await getAllUsersDayEvents();
     
+    // console.log('All User Events Retrieved...') 
+
     // console.log(allUsersEvents)
-    console.log('All User Events Retrieved...')
+    
 
     const csv = convertAllUsersEventsToCSV(allUsersEvents);
 
@@ -676,28 +681,33 @@ document.querySelector('.download-all-csv').addEventListener('click', async (e) 
 });
 
 async function getAllUsersDayEvents() {
-    const docRef = doc(db, 'listOfCollections', 'users');
-    const docSnap = await getDoc(docRef);
-
-    console.log('DocSnap retrieved...')
-
-    if (!docSnap.exists()) return; 
-    console.log('Document data:', docSnap.data());
+    const querySnapshot = await getDocs(collection(db, 'Locations')); 
 
     const allUsersEvents = {}; 
 
-    const listOfCollections = docSnap.data();
-    const { userEmails } = listOfCollections;
-    for (const userMail of userEmails) {
-        const userEvents = await getUserDayEvents(userMail);
+    querySnapshot.forEach(user => {
+        // doc.data() is never undefined for query doc snapshots
+        const email = user.id.split('User-')[1]; 
 
-        console.log('User Mail Retrieved...')
-        console.log('userMail', userMail)
+        const userData = user.data();
+        const { CreatedAt, ModifiedAt } = userData; 
 
-        allUsersEvents[userMail] = userEvents;         
-    }
+        const daysArr = [];
+        for (const [key, val] of Object.entries(userData)) {
+            if (key.startsWith('_')) {
+                daysArr.push(val);  
+            }
+        }
 
-    return allUsersEvents; 
+        allUsersEvents[email] = daysArr; 
+        if (CreatedAt) allUsersEvents[email].CreatedAt = CreatedAt;
+        if (ModifiedAt) allUsersEvents[email].ModifiedAt = ModifiedAt;
+
+    });  
+
+    console.log('allUsersEvents', allUsersEvents)
+
+    return allUsersEvents;  
 }
 
 function convertAllUsersEventsToCSV(allUsersEvents) {
@@ -727,22 +737,42 @@ function convertUserEventsToCSV(userMail, dayEvents) {
     return str; 
 }
 
-function convertArrayToCSV(userMail, arr) {
-    let userMailSet = false;
+function convertArrayToCSV(userMail, arr) {    
+    const arrHasDays = arr.find(d => Array.isArray(d) && d.length);
+
+    let createdAt = arr.CreatedAt ? new Date(arr.CreatedAt.toDate()).toUTCString() : ''; 
+    let modifiedAt = arr.ModifiedAt ? new Date(arr.ModifiedAt.toDate()).toUTCString() : ''; 
     let str = ''; 
-    str += arr.map((day, dayNum) => {
-        return day.map(eventObj => {
-            const row = `${!userMailSet ? userMail : ''},${dayNum+1},"${eventObj.dayEventName}","${eventObj.title}",${eventObj.lat},${eventObj.lng}\n`; 
+
+    if (!arrHasDays) {
+        str += `${userMail},"${createdAt}","${modifiedAt}"\n`;   
+        return str;
+    }
+
+    let userMailSet = false;
+    let createdAtSet = false;
+    let modifiedAtSet = false; 
+
+    for (let i = 0, max = arr.length; i < max; i++) {
+        const day = arr[i];
+        const dayNum = i; 
+
+        str += day.map(eventObj => {
+            const { dayEventName='', title='', lat='', lng='' } = eventObj; 
+            const row = `${!userMailSet ? userMail : ''},"${!createdAtSet ? createdAt : ''}","${!modifiedAtSet ? modifiedAt : ''}",${dayNum+1},"${dayEventName}","${title}",${lat},${lng}\n`; 
             if (!userMailSet) userMailSet = true; 
+            if (!createdAtSet) createdAtSet = true; 
+            if (!modifiedAtSet) modifiedAtSet = true; 
             return row;
         }).join(''); 
-    }).join(''); 
 
-    return str; 
+    }
+
+    return str;
 }
 
 function getCSVHeaderStr() {
-    return 'User Email,Day,Day Event Name,Title,Latitude,Longitude\n'; 
+    return 'User Email,Created At,Modified At,Day,Day Event Name,Title,Latitude,Longitude\n'; 
 }
 
 function downloadBlob(content, filename, contentType) {
@@ -756,3 +786,5 @@ function downloadBlob(content, filename, contentType) {
     pom.setAttribute('download', filename);
     pom.click();
 } 
+
+
