@@ -177,7 +177,7 @@ const markerPopup = new google.maps.InfoWindow();
 
         $address.value = '';  
     });
-}//();
+}();
 
 function createMarker(title, position) {
     const marker = new google.maps.Marker({
