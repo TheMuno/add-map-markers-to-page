@@ -16,6 +16,8 @@
         <input type="button" value="Download Current User CSV" class="get-resource-btn download-user-csv"> 
         <input type="button" value="Download All Users CSV" class="get-resource-btn download-all-csv">   
         <input type="button" value="Get Printed Plan" class="get-resource-btn printed-plan">  
+        <input type="button" value="Download PDF" class="get-resource-btn download-pdf">  
+        <button class="get-resource-btn" onclick="authenticate().then(loadClient)" disabled>Authorize & Load</button>  
     </div>
     <div class="section header">
         <div class="header--left">
@@ -61,6 +63,61 @@
         });
       </script> -->
        
+      <script src="//www.sejda.com/js/sejda-js-api.min.js"></script>
+      <script src="https://apis.google.com/js/api.js"></script>  
     <script type="module" src="script.js"></script>  
+    <script>
+        const CLIENT_ID = '424207365074-g5444q1mhm5n5d04pu563ofqjup3j5e2.apps.googleusercontent.com'; 
+        const API_KEY = 'AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4'; 
+
+        function authenticate() {
+            return gapi.auth2.getAuthInstance()
+            .signIn({scope: "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/spreadsheets"})
+            .then(function() { console.log("Sign-in successful"); },
+              function(err) { console.error("Error signing in", err); });
+        }
+
+        function loadClient() {
+            gapi.client.setApiKey(API_KEY);
+            return gapi.client.load("https://sheets.googleapis.com/$discovery/rest?version=v4")
+            .then(function() { console.log("GAPI client loaded for API"); },
+              function(err) { console.error("Error loading GAPI client for API", err); });
+        }
+
+        // Make sure the client is loaded and sign-in is complete before calling this method.
+        function execute() {
+            return gapi.client.sheets.spreadsheets.values.append({
+                "spreadsheetId": "1Zj1ae5faA8h7UwHvtYVtKoiA_G3LtQcuTOFV1Evq4BQ",
+                "range": "A1:E1",
+                "includeValuesInResponse": true,
+                "insertDataOption": "INSERT_ROWS",
+                "responseDateTimeRenderOption": "FORMATTED_STRING",
+                "responseValueRenderOption": "UNFORMATTED_VALUE",
+                "valueInputOption": "RAW",
+                "resource": {
+                    "values": [
+                        [
+                            "Yes",
+                            "No",
+                            "Maybe",
+                            "I",
+                            "Don't",
+                            "Know"
+                        ]
+                    ]
+                }
+            })
+            .then(function(response) {
+                // Handle the results here (response.result has the parsed body).
+                console.log("Response", response);
+              },
+              function(err) { console.error("Execute error", err); 
+            });
+        }
+
+        gapi.load("client:auth2", function() {
+            gapi.auth2.init({client_id: CLIENT_ID});
+        });
+    </script>
 </body> 
 </html>   

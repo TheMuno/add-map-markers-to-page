@@ -131,7 +131,9 @@ const markerPopup = new google.maps.InfoWindow();
                 return;
             }
 
-            const marker = createMarker(place.name, place.geometry.location);  
+            console.log('place', place)  
+
+            const marker = createMarker(place);   
 
             map.panTo(marker.position); 
 
@@ -179,22 +181,90 @@ const markerPopup = new google.maps.InfoWindow();
     });
 }();
 
-function createMarker(title, position) {
+function createMarker(place) {
+    const { name, formatted_address, geometry, latLng, website, current_opening_hours, opening_hours, formatted_phone_number, reviews } = place; 
+
+    // console.log('the place', place)  
+
+    // console.log('current_opening_hours', place.current_opening_hours)
+    // console.log('opening_hours', place.opening_hours)
+
+    // const locationName = `${name} ${formatted_address}`; 
+    let hrs;
+    if (opening_hours) hrs = opening_hours.weekday_text;
+    if (current_opening_hours) hrs = current_opening_hours.weekday_text;
+
+    // const hrs = current_opening_hours ? current_opening_hours.weekday_text : opening_hours.weekday_text; 
+
+    // if(!hrs) return; 
+
+    // console.log('geometry', geometry, 'geometry.location', geometry.location) 
+
+    const position = geometry ? geometry.location : latLng; 
+
     const marker = new google.maps.Marker({
         map,
         icon,
-        title, 
-        position,  
+        title : name, 
+        position : position,  
     });
+
+    let operatingHrs, reviewsContent; 
+    if(hrs) {
+        operatingHrs = hrs.map(hr => {
+            return `<div>${hr}</div>`;
+        }).join('');
+    }
+
+    if (reviews) {
+        reviewsContent = reviews.map(review => {
+            const { author_name, author_url, profile_photo_url, rating, relative_time_description, text } = review;
+            return `<div class="review-data">
+              <div class="review-data-row location-review-pic">${profile_photo_url ? `<img src="${profile_photo_url}">` : ''}</div>  
+              <div class="review-data-row location-review-time">${relative_time_description ? relative_time_description : '<i>missing_time_posted</i>'}</div>
+              <div class="review-data-row location-review-title"><a href="${author_url ? author_url : '#'}">${author_name}</a></div>
+              <div class="review-data-row location-review-rating">Rating: ${rating}</div>
+              <div class="review-data-row location-review-text">${text}</div>
+            </div>`;
+        }).join('');  
+    }
+
+    const contentString = `
+    <div class="location-popup-content">
+    <div class="location-row location-title">${name}</div>
+      <div class="location-row">Website: ${website ? `<a href="${website}">Visit Site</a>` : '<i>missing_link</i>'}</div>
+      <div class="location-row">Phone Number: ${formatted_phone_number ? `<a href="${formatted_phone_number}">${formatted_phone_number}</a>` : '<i>missing_contact</i>'}</div>
+      <div class="location-row location-operating-hrs">${operatingHrs ? operatingHrs : '<i>missing_operating_hours</i>'}</div>
+      <div class="location-row location-reviews">${reviewsContent 
+        ? `<div class="view-reviews"><span class="view-reviews-text">View Reviews</span> <i class="arrow right"></i></div><div class="reviews-list hide">${reviewsContent}</div>`
+        : '<i>missing_reviews</i>'}</div> 
+    </div>`;   
 
     marker.addListener('click', () => { 
         markerPopup.close();
-        markerPopup.setContent(marker.getTitle());
+        // markerPopup.setContent(marker.getTitle());
+        markerPopup.setContent(contentString);
         markerPopup.open(marker.getMap(), marker);
     });
 
     return marker; 
 } 
+
+$map.addEventListener('click', e => { 
+    if (!e.target.closest('.view-reviews')) return;
+    const $locationReviews = e.target.closest('.location-reviews'); 
+    const $arrow = e.target.closest('.view-reviews').querySelector('.arrow'); 
+    if ($arrow.classList.contains('right')) {
+        $arrow.classList.remove('right');
+        $arrow.classList.add('down');
+        $locationReviews.querySelector('.reviews-list').classList.remove('hide');
+    }
+    else {
+        $arrow.classList.remove('down');
+        $arrow.classList.add('right');
+        $locationReviews.querySelector('.reviews-list').classList.add('hide');
+    }
+}); 
 
 
 function postDayEvent(dayEvent, day, marker, eventId, markerObj) {
@@ -445,7 +515,11 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
             const { lat, lng, title, dayEventName } = location;
             if (lat && lng) {
-                const createdMarker = createMarker(title, {lat, lng});   
+                const locationInfo = {
+                    name: title,
+                    latLng: {lat, lng}
+                };
+                const createdMarker = createMarker(locationInfo);   
                 currentDay.markers.push(createdMarker);  
                 postDayEvent(dayEventName, dayClass, createdMarker, `event${(eventNum+2)}-day${dayNum}`, {lat, lng, title, dayEventName}); 
             }
@@ -788,3 +862,94 @@ function downloadBlob(content, filename, contentType) {
 } 
 
 
+document.querySelector('.download-pdf').addEventListener('click', function(e){
+    SejdaJsApi.htmlToPdf({
+        filename: 'out.pdf',
+        /* leave blank for one long page */
+        pageSize: 'a4',
+        publishableKey: 'api_public_y0urap1k3yh3r3',
+        htmlCode: document.querySelector('html').innerHTML,
+        /* url: window.location.href */
+        always: function() {
+            // PDF download should have started
+        },
+        error: function(err) {
+            console.error(err);
+            alert('An error occurred');
+        }
+    });
+}); 
+
+
+
+/*
+const SPREADSHEET_ID = '1Zj1ae5faA8h7UwHvtYVtKoiA_G3LtQcuTOFV1Evq4BQ'; 
+const CLIENT_ID = '424207365074-g5444q1mhm5n5d04pu563ofqjup3j5e2.apps.googleusercontent.com'; 
+const API_KEY = 'AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4'; 
+const SCOPE = 'https://www.googleapis.com/auth/spreadsheets,https://www.googleapis.com/auth/drive,https://www.googleapis.com/auth/drive.file'; 
+
+!function handleClientLoad() { //initialize the Google API
+    gapi.load('client:auth2', initClient);
+}();
+
+function initClient() { //provide the authentication credentials you set up in the Google developer console
+    console.log('gapi',gapi)  
+   
+    gapi.client.init({
+      'apiKey': API_KEY,
+      'clientId': CLIENT_ID,
+      'scope': SCOPE,
+      'discoveryDocs': ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+    }).then(()=> {
+      gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateSignInStatus); //add a function called `updateSignInStatus` if you want to do something once a user is logged in with Google
+      this.updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+    });
+}
+
+function onFormSubmit(submissionValues) {
+
+    const params = {
+      // The ID of the spreadsheet to update.
+      spreadsheetId: SPREADSHEET_ID, 
+      // The A1 notation of a range to search for a logical table of data.Values will be appended after the last row of the table.
+      range: 'Sheet1', //this is the default spreadsheet name, so unless you've changed it, or are submitting to multiple sheets, you can leave this
+      // How the input data should be interpreted.
+      valueInputOption: 'RAW', //RAW = if no conversion or formatting of submitted data is needed. Otherwise USER_ENTERED
+      // How the input data should be inserted.
+      insertDataOption: 'INSERT_ROWS', //Choose OVERWRITE OR INSERT_ROWS
+    };
+
+    const valueRangeBody = {
+      'majorDimension': 'ROWS', //log each entry as a new row (vs column)
+      'values': [submissionValues] //convert the object's values to an array
+    };
+
+    let request = gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
+    request.then(function (response) {
+      // TODO: Insert desired response behaviour on submission
+      console.log(response.result);
+    }, function (reason) {
+      console.error('error: ' + reason.result.error.message);
+    });
+}
+
+setTimeout(() => {
+    console.log('ran!!')
+    onFormSubmit('My, Name, Is, This'); 
+}, 20 * 1000); 
+// onFormSubmit('My, Name, Is, This') 
+
+
+*/
+
+
+  /**
+   * Sample JavaScript code for sheets.spreadsheets.values.append
+   * See instructions for running APIs Explorer code samples locally:
+   * https://developers.google.com/explorer-help/code-samples#javascript
+   */
+
+  
+
+{/* <button onclick="authenticate().then(loadClient)">authorize and load</button>
+<button onclick="execute()">execute</button> */} 
