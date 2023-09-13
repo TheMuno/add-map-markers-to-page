@@ -867,7 +867,7 @@ document.querySelector('.download-pdf').addEventListener('click', function(e){
         filename: 'out.pdf',
         /* leave blank for one long page */
         pageSize: 'a4',
-        publishableKey: 'api_public_y0urap1k3yh3r3',
+        publishableKey: 'api_public_fcdfae5db947466d8fb4c84e8148ab77',
         htmlCode: document.querySelector('html').innerHTML,
         /* url: window.location.href */
         always: function() {
