@@ -239,3 +239,21 @@ function generateQRCode(el, url) {
     });
 } 
 
+document.querySelector('.download-pdf').addEventListener('click', function(e){
+    SejdaJsApi.htmlToPdf({
+        filename: 'file.pdf',
+        /* leave blank for one long page */
+        pageSize: 'a4',
+        publishableKey: 'api_public_fcdfae5db947466d8fb4c84e8148ab77',
+        htmlCode: document.querySelector('html').innerHTML,
+        /* url: window.location.href */
+        always: function() {
+            // PDF download should have started
+        },
+        error: function(err) {
+            console.error(err);
+            alert('An error occurred');
+        }
+    });
+}); 
+
