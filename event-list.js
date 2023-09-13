@@ -240,6 +240,10 @@ function generateQRCode(el, url) {
 } 
 
 document.querySelector('.download-pdf').addEventListener('click', function(e){
+    const $btn = e.currentTarget;
+    const btnTxt = $btn.textContent;
+    $btn.setContent = 'Loading...';
+
     SejdaJsApi.htmlToPdf({
         filename: 'file.pdf',
         /* leave blank for one long page */
@@ -249,6 +253,7 @@ document.querySelector('.download-pdf').addEventListener('click', function(e){
         /* url: window.location.href */
         always: function() {
             // PDF download should have started
+            $btn.setContent = btnTxt;
         },
         error: function(err) {
             console.error(err);
