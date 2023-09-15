@@ -5,17 +5,103 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="event-list.css">
+    <!-- <link rel="stylesheet" href="event-list.css"> -->
+    <style>
+        .section {
+    margin: 30px auto; 
+    width: 90%;
+    max-width: 1500px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* outline: 1px dotted red;    */
+    flex-direction: column;
+}
+
+#map {
+    width: 100%; 
+    height: 500px;   
+    /* align-self: start;  */
+} 
+
+
+.day-events {
+    /* outline: 1px dotted yellowgreen;  */
+    width: 90%; 
+    margin-top: 50px;  
+}
+
+.day-event {
+    margin-bottom: 50px; 
+}
+
+.day-event.hide {
+    display: none; 
+}
+
+.day-head {
+    font-size: 18px; 
+    font-weight: bold;  
+    /* text-align: center; */
+}
+
+.single-event {
+    /* border: 1px solid black;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;  */
+    /* height: 20px; 
+    padding-top: 10px;   */
+    position: relative;
+    width: 90%; 
+    margin: 10px 0; 
+}
+
+/* .single-event .day-text { 
+    overflow: hidden; 
+    width: 100%;
+    height: 100%; 
+    /* cursor: pointer;  * /
+}  */
+
+.single-event.hide {
+    display: none;
+}  
+
+/* .single-event:nth-child(3) canvas {
+    visibility: hidden; 
+    pointer-events: none;
+} */
+
+.qrcode.hide {
+    display: none; 
+}
+
+.qr-toggle-wrap {
+    margin-bottom: 20px;
+}
+
+.download-pdf-wrap {
+    margin-bottom: 20px; 
+}
+
+.get-resource-btn {
+    width: 200px;
+    height: 30px; 
+    margin: 5px 5px 0 0;  
+}
+
+    </style>
 </head>
 <body>
     <div class="section">
         <div id="map"></div>
         <div class="day-events">
-            <div class="qr-toggle-wrap">
+            <div class="qr-toggle-wrap --hide-from-pdf">
                 <label for="qr-toggle">Toggle QR Codes</label> 
                 <input type="checkbox" name="qr-toggle" id="qr-toggle" class="qr-toggle">
             </div>   
-            <div class="download-pdf-wrap">
+            <div class="download-pdf-wrap --hide-from-pdf">
                 <input type="button" value="Download PDF" class="get-resource-btn download-pdf">  
             </div>
             <div class="day-event day-1-event"> 
