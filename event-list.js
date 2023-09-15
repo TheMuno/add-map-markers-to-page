@@ -20,6 +20,7 @@ const db = getFirestore(app);
 
 const $map = document.querySelector('#map'),
     $dayEvents = document.querySelector('.day-events'),
+    $downloadPDF = document.querySelector('.download-pdf'), 
     mapZoom = 13,
     initialCoords = { lat: 40.7580, lng: -73.9855 },
     directionsUrlBase = 'https://www.google.com/maps/dir/?api=1', 
@@ -46,6 +47,8 @@ const icon = {
 google.maps.event.addDomListener(window, 'load', () => {
     const userMail = localStorage.getItem('user-email');  
     if (userMail) retrieveSavedMarkersFromFirebase(userMail);
+
+    $downloadPDF.removeAttribute('disabled');
 }); 
 
 // $dayEvents.addEventListener('click', e => {
@@ -239,10 +242,10 @@ function generateQRCode(el, url) {
     });
 } 
 
-document.querySelector('.download-pdf').addEventListener('click', function(e){
+$downloadPDF.addEventListener('click', function(e){
     const $btn = e.currentTarget;
-    const btnTxt = $btn.textContent;
-    $btn.setContent = 'Loading...';
+    const btnTxt = $btn.value;
+    $btn.value = 'Downloading...';
 
     SejdaJsApi.htmlToPdf({
         filename: 'file.pdf',
@@ -253,7 +256,7 @@ document.querySelector('.download-pdf').addEventListener('click', function(e){
         /* url: window.location.href */
         always: function() {
             // PDF download should have started
-            $btn.setContent = btnTxt;
+            $btn.value = btnTxt;
         },
         error: function(err) {
             console.error(err);
