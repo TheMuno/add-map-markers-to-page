@@ -6,6 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <!-- <link rel="stylesheet" href="event-list.css"> -->
+
+    <script>
+        // HTMLCanvasElement.prototype.getContext = function(origFn) {
+        //     return function(type, attribs) {
+        //     attribs = attribs || {};
+        //     attribs.preserveDrawingBuffer = true;
+        //     return origFn.call(this, type, attribs);
+        //     };
+        // }(HTMLCanvasElement.prototype.getContext);
+
+        HTMLCanvasElement.prototype.getContext = function(origFn) {
+            return function(type, attribs) {
+                attribs = attribs || {};
+                if (type === 'webgl' || type === 'webgl2') {
+                    attribs.preserveDrawingBuffer = true;
+                }
+                return origFn.call(this, type, attribs);
+            };
+        }(HTMLCanvasElement.prototype.getContext);
+    </script>
+
     <style>
         .section {
     margin: 30px auto; 
@@ -91,11 +112,22 @@
     margin: 5px 5px 0 0;  
 }
 
+.static-img-wrap {
+    margin: 20px 0; 
+}
+
     </style>
 </head>
 <body>
     <div class="section">
-        <div id="map"></div>
+        <div id="map">
+            
+        </div>
+        <div class="static-img-wrap">
+            <div>Static Image:</div>
+            <img src="" class="map-img" alt="">
+        </div>
+        
         <div class="day-events">
             <div class="qr-toggle-wrap --hide-from-pdf">
                 <label for="qr-toggle">Toggle QR Codes</label> 
@@ -115,13 +147,40 @@
         </div>
     </div>
 
+    
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4&libraries=places&v=weekly&language=en" ></script>     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <script src="//www.sejda.com/js/sejda-js-api.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- <script>
+        HTMLCanvasElement.prototype.getContext = function(origFn) {
+            return function(type, attribs) {
+            attribs = attribs || {};
+            attribs.preserveDrawingBuffer = true;
+            return origFn.call(this, type, attribs);
+            };
+        }(HTMLCanvasElement.prototype.getContext);
+    </script> -->
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" 
+    integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <!-- <script>
+        HTMLCanvasElement.prototype.getContext = function(origFn) {
+            return function(type, attribs) {
+            attribs = attribs || {};
+            attribs.preserveDrawingBuffer = true;
+            return origFn.call(this, type, attribs);
+            };
+        }(HTMLCanvasElement.prototype.getContext);
+    </script> -->
+    
     <script type="module" src="event-list.js"></script>
 </body>
 </html> 
 
 <!-- <script type="module" src="https://cdn.jsdelivr.net/gh/HelloKhonsu/DayPlanner/event-list_1.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/HelloKhonsu/DayPlanner/event-list_1.css">  -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/HelloKhonsu/DayPlanner/event-list_1.css">  --> 

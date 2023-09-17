@@ -18,14 +18,18 @@ const app = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);   
 
+
+
 const $map = document.querySelector('#map'),
+    $mapImg = document.querySelector('.map-img'),
     $dayEvents = document.querySelector('.day-events'),
     $downloadPDFSedja = document.querySelector('.download-pdf-sedja'), 
     $downloadPDFHtml2PDF = document.querySelector('.download-pdf-html2pdf'), 
     mapZoom = 13,
     initialCoords = { lat: 40.7580, lng: -73.9855 },
     directionsUrlBase = 'https://www.google.com/maps/dir/?api=1', 
-    mapIcon = 'https://uploads-ssl.webflow.com/61268cc8812ac5956bad13e4/64ba87cd2730a9c6cf7c0d5a_pin%20(3).png'; 
+    mapIcon = 'https://uploads-ssl.webflow.com/61268cc8812ac5956bad13e4/64ba87cd2730a9c6cf7c0d5a_pin%20(3).png',
+    mapIconEncoded = 'https%3A%2F%2Fuploads-ssl.webflow.com%2F61268cc8812ac5956bad13e4%2F64ba87cd2730a9c6cf7c0d5a_pin%2520%283%29.png'; 
 
 let map; 
 const markerPopup = new google.maps.InfoWindow();  
@@ -42,6 +46,7 @@ const icon = {
     map = new google.maps.Map($map, { 
         zoom: mapZoom,
         center: initialCoords,
+        preserveDrawingBuffer: true,
     });
 }(); 
 
@@ -86,6 +91,8 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
     const userData = sortObject(docSnap.data());
 
+    let markersStr = '';
+
     for (let [day, locations] of Object.entries(userData)) {
         if (!day.startsWith('_')) continue;
 
@@ -107,6 +114,10 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
             const $currentDay = $dayEvents.querySelector(dayClass); 
 
             const { lat, lng, title, dayEventName } = location;
+
+            // markersStr += `${markersStr.length ? '%7C' : ''}${lat},${lng}`;  
+            markersStr += `%7C${lat},${lng}`;  
+
             if (lat && lng) {
                 const createdMarker = createMarker(title, {lat, lng});   
                 // currentDay.markers.push(createdMarker);  
@@ -114,9 +125,12 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
             }
 
             if ($currentDay && $currentDay.querySelectorAll('.single-event').length > 1) $dayEvents.querySelector(`${dayClass} .single-event`).classList.add('hide');  
-        });
+        }); 
 
     }
+
+    const staticMapUrl = constructStaticMapUrl(markersStr); 
+    $mapImg.src = staticMapUrl; 
 
     function sortObject(obj) {
         return Object.keys(obj).sort().reduce((result, key) => {   
@@ -268,6 +282,36 @@ $downloadPDFSedja.addEventListener('click', function(e){
 }); 
 
 $downloadPDFHtml2PDF.addEventListener('click', function(e){
+    // var element = document.querySelector('#map'); 
     var element = document.querySelector('body');
     html2pdf(element);
+    // html2canvas(element, {
+    //     useCORS: true,
+    //     onrendered: function(canvas) {
+    //         var dataUrl= canvas.toDataURL("image/png");
+
+    //         // DO SOMETHING WITH THE DATAURL
+    //         // Eg. write it to the page
+    //         document.write('<img src="' + dataUrl + '"/>');
+    //     }
+    // });
 }); 
+
+function constructStaticMapUrl(markers) {
+    const url = `https://maps.googleapis.com/maps/api/staticmap?size=640x250&scale=2&markers=icon:${mapIconEncoded}${markers}&key=AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4`;  // &zoom=12
+    return url; 
+} 
+
+
+
+// preserveDrawingBuffer: true 
+// var map = new mapboxgl.Map({ 
+//     container: 'ZipMapusa', 
+//     style: 'mapbox://styles/mapbox/light-v10', 
+//     zoom: 3.5, 
+//     maxZoom: 10, 
+//     scrollZoom: true, 
+//     maxBounds: bounds, 
+//     center: [-96.3558753, 36.78], 
+//     preserveDrawingBuffer: true, 
+// });
