@@ -20,7 +20,8 @@ const db = getFirestore(app);
 
 const $map = document.querySelector('#map'),
     $dayEvents = document.querySelector('.day-events'),
-    $downloadPDF = document.querySelector('.download-pdf'), 
+    $downloadPDFSedja = document.querySelector('.download-pdf-sedja'), 
+    $downloadPDFHtml2PDF = document.querySelector('.download-pdf-html2pdf'), 
     mapZoom = 13,
     initialCoords = { lat: 40.7580, lng: -73.9855 },
     directionsUrlBase = 'https://www.google.com/maps/dir/?api=1', 
@@ -48,7 +49,8 @@ google.maps.event.addDomListener(window, 'load', () => {
     const userMail = localStorage.getItem('user-email');  
     if (userMail) retrieveSavedMarkersFromFirebase(userMail);
 
-    $downloadPDF.removeAttribute('disabled');
+    $downloadPDFSedja.removeAttribute('disabled');
+    $downloadPDFHtml2PDF.removeAttribute('disabled');
 }); 
 
 // $dayEvents.addEventListener('click', e => {
@@ -242,18 +244,18 @@ function generateQRCode(el, url) {
     });
 } 
 
-$downloadPDF.addEventListener('click', function(e){
+$downloadPDFSedja.addEventListener('click', function(e){
     const $btn = e.currentTarget;
     const btnTxt = $btn.value;
-    $btn.value = 'Downloading...';
+    $btn.value = 'Processing...';
 
     SejdaJsApi.htmlToPdf({
-        filename: 'file.pdf',
+        filename: 'daily-plan.pdf',
         /* leave blank for one long page */
         pageSize: 'a4',
         publishableKey: 'api_public_fcdfae5db947466d8fb4c84e8148ab77',
-        htmlCode: document.querySelector('html').innerHTML,
-        /* url: window.location.href */
+        // htmlCode: document.querySelector('html').innerHTML,
+        url: window.location.href, 
         always: function() {
             // PDF download should have started
             $btn.value = btnTxt;
@@ -265,3 +267,7 @@ $downloadPDF.addEventListener('click', function(e){
     });
 }); 
 
+$downloadPDFHtml2PDF.addEventListener('click', function(e){
+    var element = document.querySelector('body');
+    html2pdf(element);
+}); 
