@@ -25,6 +25,7 @@ const $map = document.querySelector('#map'),
     $dayEvents = document.querySelector('.day-events'),
     $downloadPDFSedja = document.querySelector('.download-pdf-sedja'), 
     $downloadPDFHtml2PDF = document.querySelector('.download-pdf-html2pdf'), 
+    $downloadPDFWindowPrint = document.querySelector('.download-pdf-windowPrint'),
     mapZoom = 13,
     initialCoords = { lat: 40.7580, lng: -73.9855 },
     directionsUrlBase = 'https://www.google.com/maps/dir/?api=1', 
@@ -56,6 +57,7 @@ google.maps.event.addDomListener(window, 'load', () => {
 
     $downloadPDFSedja.removeAttribute('disabled');
     $downloadPDFHtml2PDF.removeAttribute('disabled');
+    $downloadPDFWindowPrint.removeAttribute('disabled');
 }); 
 
 // $dayEvents.addEventListener('click', e => {
@@ -130,7 +132,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
     }
 
     const staticMapUrl = constructStaticMapUrl(markersStr); 
-    $mapImg.src = staticMapUrl; 
+    // $mapImg.src = staticMapUrl; 
 
     function sortObject(obj) {
         return Object.keys(obj).sort().reduce((result, key) => {   
@@ -282,6 +284,17 @@ $downloadPDFSedja.addEventListener('click', function(e){
 }); 
 
 $downloadPDFHtml2PDF.addEventListener('click', function(e){
+
+    HTMLCanvasElement.prototype.getContext = function(origFn) {
+        return function(type, attribs) {
+            attribs = attribs || {};
+            if (type === 'webgl' || type === 'webgl2') {
+                attribs.preserveDrawingBuffer = true;
+            }
+            return origFn.call(this, type, attribs);
+        };
+    }(HTMLCanvasElement.prototype.getContext);
+
     // var element = document.querySelector('#map'); 
     var element = document.querySelector('body');
     html2pdf(element);
@@ -302,8 +315,6 @@ function constructStaticMapUrl(markers) {
     return url; 
 } 
 
-
-
 // preserveDrawingBuffer: true 
 // var map = new mapboxgl.Map({ 
 //     container: 'ZipMapusa', 
@@ -315,3 +326,8 @@ function constructStaticMapUrl(markers) {
 //     center: [-96.3558753, 36.78], 
 //     preserveDrawingBuffer: true, 
 // });
+
+
+$downloadPDFWindowPrint.addEventListener('click', e => {
+    window.print(); 
+});

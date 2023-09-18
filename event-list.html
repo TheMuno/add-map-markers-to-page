@@ -116,6 +116,11 @@
     margin: 20px 0; 
 }
 
+@media print {
+  @page { margin: 0; }
+  body { margin: 1.6cm; }
+}
+
     </style>
 </head>
 <body>
@@ -123,10 +128,10 @@
         <div id="map">
             
         </div>
-        <div class="static-img-wrap">
+        <!-- <div class="static-img-wrap">
             <div>Static Image:</div>
             <img src="" class="map-img" alt="">
-        </div>
+        </div> -->
         
         <div class="day-events">
             <div class="qr-toggle-wrap --hide-from-pdf">
@@ -136,6 +141,7 @@
             <div class="download-pdf-wrap --hide-from-pdf">
                 <input type="button" disabled value="Download PDF SEDJA" class="get-resource-btn download-pdf-sedja">  
                 <input type="button" disabled value="Download PDF HTML2PDF" class="get-resource-btn download-pdf-html2pdf">  
+                <input type="button" disabled value="Download PDF Window.print()" class="get-resource-btn download-pdf-windowPrint">  
             </div>
             <div class="day-event day-1-event"> 
                 <div class="day-head">Day 1</div>
