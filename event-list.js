@@ -47,17 +47,14 @@ const icon = {
     map = new google.maps.Map($map, { 
         zoom: mapZoom,
         center: initialCoords,
-        preserveDrawingBuffer: true,
+        // preserveDrawingBuffer: true,
+        disableDefaultUI: true,
     });
 }(); 
 
 google.maps.event.addDomListener(window, 'load', () => {
     const userMail = localStorage.getItem('user-email');  
     if (userMail) retrieveSavedMarkersFromFirebase(userMail);
-
-    $downloadPDFSedja.removeAttribute('disabled');
-    $downloadPDFHtml2PDF.removeAttribute('disabled');
-    $downloadPDFWindowPrint.removeAttribute('disabled');
 }); 
 
 // $dayEvents.addEventListener('click', e => {
@@ -130,6 +127,8 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
         }); 
 
     }
+
+    enableDownloadPDFBtns(); 
 
     const staticMapUrl = constructStaticMapUrl(markersStr); 
     // $mapImg.src = staticMapUrl; 
@@ -260,6 +259,8 @@ function generateQRCode(el, url) {
     });
 } 
 
+
+
 $downloadPDFSedja.addEventListener('click', function(e){
     const $btn = e.currentTarget;
     const btnTxt = $btn.value;
@@ -270,11 +271,11 @@ $downloadPDFSedja.addEventListener('click', function(e){
         /* leave blank for one long page */
         pageSize: 'a4',
         publishableKey: 'api_public_fcdfae5db947466d8fb4c84e8148ab77',
-        htmlCode: document.querySelector('html').innerHTML,
-        // url: window.location.href, 
+        // htmlCode: document.querySelector('html').innerHTML,
+        url: window.location.href, 
         always: function() {
             // PDF download should have started
-            $btn.value = btnTxt;
+            // $btn.value = btnTxt;
         },
         error: function(err) {
             console.error(err);
@@ -284,20 +285,29 @@ $downloadPDFSedja.addEventListener('click', function(e){
 }); 
 
 $downloadPDFHtml2PDF.addEventListener('click', function(e){
-
-    HTMLCanvasElement.prototype.getContext = function(origFn) {
-        return function(type, attribs) {
-            attribs = attribs || {};
-            if (type === 'webgl' || type === 'webgl2') {
-                attribs.preserveDrawingBuffer = true;
-            }
-            return origFn.call(this, type, attribs);
-        };
-    }(HTMLCanvasElement.prototype.getContext);
-
-    // var element = document.querySelector('#map'); 
+    // var element = document.querySelector('#map');
+    // var element = document.querySelector('#map > div:first-of-type'); 
+    // var element = document.querySelector('.gm-style > div:first-of-type'); 
     var element = document.querySelector('body');
-    html2pdf(element);
+    var opt = {
+        // margin:       1,
+        filename:     'myfile.pdf',
+        // image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { 
+            useCORS: true,
+            // allowTaint: true,
+            // ignoreElements: (node) => {
+            //     return node.nodeName === 'IFRAME';
+            // },
+        },
+        // jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
+        
+      }
+    // html2pdf().set(opt).from(element).save(); 
+
+    html2pdf(element, opt);
+
+    // html2pdf(element);
     // html2canvas(element, {
     //     useCORS: true,
     //     onrendered: function(canvas) {
@@ -331,3 +341,9 @@ function constructStaticMapUrl(markers) {
 $downloadPDFWindowPrint.addEventListener('click', e => {
     window.print(); 
 });
+
+function enableDownloadPDFBtns() {
+    $downloadPDFSedja.classList.remove('disabled');
+    $downloadPDFHtml2PDF.classList.remove('disabled');
+    $downloadPDFWindowPrint.classList.remove('disabled');
+}
