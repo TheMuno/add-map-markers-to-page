@@ -51,6 +51,28 @@
         </div> 
         <div id="map"></div>
     </div>
+    <div class="section">
+        <div class="khonsu-notes" style="display:flex;flex-direction:column;width:500px;">
+            <label for="knotes">Khonsu Notes</label>
+            <textarea name="knotes" id="knotes" class="knotes" cols="30" rows="10"></textarea>
+        </div>
+        <div class="reservations">
+            <label for="day-text">Reservations</label>
+            <div class="single-event hide">
+                <div class="day-text"></div>
+            </div>
+        </div>
+        <div class="map-url">
+            <label for="map-url-link">Map Url</label>
+            <div class="map-url-link">
+                <a href=""></a>
+            </div>
+        </div>
+        <div class="map-url-qrcode">
+            <label for="map-url-qr">QR Code</label>
+            <div class="map-url-qr"></div>
+        </div>
+    </div>
     <a href="https://www.flaticon.com/free-icons/new-tab" title="new-tab icons">Get direction icons created by Prosymbols Premium - Flaticon</a>
 
     <!-- <script>
@@ -64,9 +86,9 @@
       </script> -->
        
       
-      <script src="https://apis.google.com/js/api.js"></script>  
+    <script src="https://apis.google.com/js/api.js"></script>  
     <script type="module" src="script.js"></script>  
-    <script>
+    <!-- <script>
         const CLIENT_ID = '424207365074-g5444q1mhm5n5d04pu563ofqjup3j5e2.apps.googleusercontent.com'; 
         const API_KEY = 'AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4'; 
 
@@ -118,6 +140,6 @@
         gapi.load("client:auth2", function() {
             gapi.auth2.init({client_id: CLIENT_ID});
         });
-    </script>
+    </script> -->
 </body> 
 </html>   

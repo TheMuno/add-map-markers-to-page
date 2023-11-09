@@ -493,39 +493,69 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
     const userData = sortObject(docSnap.data());
 
-    for (let [day, locations] of Object.entries(userData)) {
-        if (!day.startsWith('_')) continue;
+    for (let [entry, locations] of Object.entries(userData)) { 
+        // if (!day.startsWith('_')) continue;
 
-        const dayNum = Number(day.split('Day')[1]);  
+        if (entry.startsWith('_')) {
+            const day = entry; 
 
-        if (dayNum === 1) {
-            currentDay = $daysSelect.options[1]; 
-            currentDay.markers = currentDay.markers || []; 
-            $addDay.dayNum = 1; 
-        }
-        else {  
-            currentDay = addOptionToDaysSelect(dayNum);  
-            currentDay.markers = currentDay.markers || []; 
-            $addDay.dayNum = dayNum;
-        }
+            const dayNum = Number(day.split('Day')[1]);  
 
-        locations.forEach((location, eventNum) => {
-            const dayClass = `.day-${dayNum}-event`; 
-            const $currentDay = $dayEvents.querySelector(dayClass); 
-
-            const { lat, lng, title, dayEventName } = location;
-            if (lat && lng) {
-                const locationInfo = {
-                    name: title,
-                    latLng: {lat, lng}
-                };
-                const createdMarker = createMarker(locationInfo);   
-                currentDay.markers.push(createdMarker);  
-                postDayEvent(dayEventName, dayClass, createdMarker, `event${(eventNum+2)}-day${dayNum}`, {lat, lng, title, dayEventName}); 
+            if (dayNum === 1) {
+                currentDay = $daysSelect.options[1]; 
+                currentDay.markers = currentDay.markers || []; 
+                $addDay.dayNum = 1; 
+            }
+            else {  
+                currentDay = addOptionToDaysSelect(dayNum);  
+                currentDay.markers = currentDay.markers || []; 
+                $addDay.dayNum = dayNum;
             }
 
-            if ($currentDay && $currentDay.querySelectorAll('.single-event').length > 1) $dayEvents.querySelector(`${dayClass} .single-event`).classList.add('hide');  
-        });
+            locations.forEach((location, eventNum) => {
+                const dayClass = `.day-${dayNum}-event`; 
+                const $currentDay = $dayEvents.querySelector(dayClass); 
+
+                const { lat, lng, title, dayEventName } = location;
+                if (lat && lng) {
+                    const locationInfo = {
+                        name: title,
+                        latLng: {lat, lng}
+                    };
+                    const createdMarker = createMarker(locationInfo);   
+                    currentDay.markers.push(createdMarker);  
+                    postDayEvent(dayEventName, dayClass, createdMarker, `event${(eventNum+2)}-day${dayNum}`, {lat, lng, title, dayEventName}); 
+                }
+
+                if ($currentDay && $currentDay.querySelectorAll('.single-event').length > 1) $dayEvents.querySelector(`${dayClass} .single-event`).classList.add('hide');  
+            });
+
+        }
+        else {
+            if (entry.toLowerCase() === 'khonsunotes') {
+                const $khonsuNotes = document.querySelector('.khonsu-notes .knotes'); 
+                $khonsuNotes.value = locations.replaceAll('-','\n-').replace(/^\n/,''); 
+            }
+            else if (entry.toLowerCase() === 'reservations') {
+                const $reservations = document.querySelector('.reservations'); 
+                const $reservation = $reservations.querySelector('.single-event');
+                locations.forEach(location => {
+                    const $reservationClone = $reservation.cloneNode(true);
+                    $reservationClone.classList.remove('hide');
+                    $reservationClone.querySelector('.day-text').textContent = location;
+                    $reservations.append($reservationClone);
+                });
+                $reservations.querySelector('.single-event')
+            }
+            else if (entry.toLowerCase() === 'mapurl') {
+                const $mapUrl = document.querySelector('.map-url-link a'); 
+                $mapUrl.href = locations; 
+                $mapUrl.textContent = locations;
+            }
+            else if (entry.toLowerCase() === 'qrcode') {
+                
+            }
+        }
 
     }
 
@@ -537,6 +567,21 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
             return result;
         }, {});
     }
+}
+
+async function retrieveUserNotesFromFirebase(userMail) {
+    const docRef = doc(db, 'Locations', `User-${userMail}`);
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+        // docSnap.data() will be undefined in this case
+        console.log('No user with such email!');
+        return; 
+    } 
+
+    const userData = sortObject(docSnap.data());
+
+
 }
 
 async function removeFirebaseSavedMarker(userMail, dayNum, $event) {

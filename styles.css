@@ -115,7 +115,8 @@
 .side-bar {
     /* outline: 1px solid red;  */
     width: 30%;   
-    height: 850px; 
+    /* height: 850px;  */
+    height: 400px; 
     overflow-y: auto; 
     /* overflow-x: hidden;  */
     align-self: flex-start;
@@ -203,7 +204,8 @@
 
 #map {
     width: 68%; 
-    height: 850px; 
+    /* height: 850px;  */
+    height: 400px; 
     align-self: start; 
 } 
 
