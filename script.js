@@ -41,7 +41,8 @@ const $map = document.querySelector('#map'),
     $dayEvents = document.querySelector('.day-events'),
     $downloadUserCSV = document.querySelector('.download-user-csv'), 
     $downloadDBCSV = document.querySelector('.download-all-csv'),
-    $printedPlanBtn = document.querySelector('.printed-plan');
+    $printedPlanBtn = document.querySelector('.printed-plan'),
+    $khonsuNotes = document.querySelector('.khonsu-notes .knotes'); 
 
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
     
@@ -334,6 +335,59 @@ async function addDayToFirebase(userMail, dayNum) {
 }
 
 
+
+
+
+async function updateKhonsuDataEdits(userMail, notes) {
+    const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
+    const dayObj = {};
+    dayObj['KhonsuNotes'] = notes; 
+    dayObj.ModifiedAt = serverTimestamp(); 
+
+    await updateDoc(existingMarkers, dayObj);
+}
+
+$khonsuNotes.addEventListener('change', e => {
+    const userMail = localStorage.getItem('user-email'); 
+    if (!userMail) return; 
+    const notes = e.currentTarget.value; 
+    updateKhonsuDataEdits(userMail, notes); 
+});
+
+async function updateReservationsEdits(userMail, notes) {
+    const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
+    const dayObj = {};
+    dayObj['Reservations'] = notes; 
+    dayObj.ModifiedAt = serverTimestamp(); 
+
+    await updateDoc(existingMarkers, dayObj);
+}
+
+const $reservations = document.querySelector('.reservations .reserve'); 
+$reservations.forEach(reservation => {
+    reservation.addEventListener('change', e => {
+        const userMail = localStorage.getItem('user-email'); 
+        if (!userMail) return; 
+        // const notes = e.currentTarget.value; 
+
+        let reserveData = []; 
+        $reservations.forEach(r => {
+            const time = r.querySelector('.reserve-time').value;
+            const info = r.querySelector('.reserve-info').value;
+            reserveData.push(`${time} - ${info}`); 
+        });
+
+        updateReservationsEdits(userMail, reserveData); 
+    });
+});
+
+
+
+
+
+
+
+
 function updateDayNum($addDayBtn) {
     const dayNum = ($addDayBtn.dayNum || 1) + 1;
     $addDayBtn.dayNum = dayNum;  
@@ -533,7 +587,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
         }
         else {
             if (entry.toLowerCase() === 'khonsunotes') {
-                const $khonsuNotes = document.querySelector('.khonsu-notes .knotes'); 
+                
                 $khonsuNotes.value = locations.replaceAll('-','\n-').replace(/^\n/,''); 
             }
             else if (entry.toLowerCase() === 'reservations') {
