@@ -179,7 +179,7 @@ const markerPopup = new google.maps.InfoWindow();
 
         $address.value = '';  
     });
-}();
+}//();
 
 function createMarker(place) {
     const { name, formatted_address, geometry, latLng, website, current_opening_hours, opening_hours, formatted_phone_number, reviews } = place; 
@@ -538,19 +538,24 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
             }
             else if (entry.toLowerCase() === 'reservations') {
                 const $reservations = document.querySelector('.reservations'); 
-                const $reservation = $reservations.querySelector('.single-event');
+                const $reservation = $reservations.querySelector('.reserve');
                 locations.forEach(location => {
                     const $reservationClone = $reservation.cloneNode(true);
                     $reservationClone.classList.remove('hide');
-                    $reservationClone.querySelector('.day-text').textContent = location;
+
+                    const time = location.split('-')[0];
+                    const info = location.split('-')[1];
+
+                    $reservationClone.querySelector('.reserve-time').value = time;
+                    $reservationClone.querySelector('.reserve-info').value = info; 
+
                     $reservations.append($reservationClone);
                 });
-                $reservations.querySelector('.single-event')
+                // $reservations.querySelector('.single-event')
             }
             else if (entry.toLowerCase() === 'mapurl') {
-                const $mapUrl = document.querySelector('.map-url-link a'); 
-                $mapUrl.href = locations; 
-                $mapUrl.textContent = locations;
+                const $mapUrl = document.querySelector('.map-url-link input'); 
+                $mapUrl.value = locations; 
             }
             else if (entry.toLowerCase() === 'qrcode') {
                 

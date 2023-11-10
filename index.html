@@ -6,7 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title> 
     <link rel="stylesheet" href="styles.css">  
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4&libraries=places&v=weekly&language=en" ></script>       
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4&libraries=places&v=weekly&language=en" ></script>   
+    <style>
+        .khonsu-data {
+            width: 24%; 
+            /* outline: 1px solid green; */
+        }
+
+        .khonsu-notes {
+            display:flex;
+            flex-direction:column;
+            /* width:500px; */
+        }
+
+        .reservations .reserve.hide {
+            display: none;
+        }
+
+        .reservations .reserve input {
+            height: 30px; 
+            margin-left: 2px;
+        }
+
+        .reservations .reserve-time {
+            width: 25%; 
+        }
+
+        .reservations .reserve-info {
+            width: 65%; 
+        }
+
+        .map-url .map-url-link input {
+            width: 98%; 
+            height: 30px; 
+            margin: 10px auto;
+            display: block;
+        }
+
+        .map-url-qrcode .map-url-qr {
+            height: 200px;
+            width: 200px; 
+            margin: auto;
+            border: 1px solid black; 
+        }
+    </style>    
 </head>
 <body>
     <div class="section reset-justify">
@@ -52,23 +95,28 @@
         <div id="map"></div>
     </div>
     <div class="section">
-        <div class="khonsu-notes" style="display:flex;flex-direction:column;width:500px;">
+        <div class="khonsu-data khonsu-notes">
             <label for="knotes">Khonsu Notes</label>
             <textarea name="knotes" id="knotes" class="knotes" cols="30" rows="10"></textarea>
         </div>
-        <div class="reservations">
+        <div class="khonsu-data reservations">
             <label for="day-text">Reservations</label>
+            <div>
+                <div class="reserve hide">
+                    <input type="text" class="reserve-time"><input type="text" class="reserve-info">
+                </div>
+            </div>
             <div class="single-event hide">
                 <div class="day-text"></div>
             </div>
         </div>
-        <div class="map-url">
+        <div class="khonsu-data map-url">
             <label for="map-url-link">Map Url</label>
             <div class="map-url-link">
-                <a href=""></a>
+                <input type="text">
             </div>
         </div>
-        <div class="map-url-qrcode">
+        <div class="khonsu-data map-url-qrcode">
             <label for="map-url-qr">QR Code</label>
             <div class="map-url-qr"></div>
         </div>
