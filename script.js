@@ -363,7 +363,7 @@ async function updateReservationsEdits(userMail, notes) {
     await updateDoc(existingMarkers, dayObj);
 }
 
-const $reservations = document.querySelector('.reservations .reserve'); 
+const $reservations = document.querySelectorAll('.reservations .reserve'); 
 $reservations.forEach(reservation => {
     reservation.addEventListener('change', e => {
         const userMail = localStorage.getItem('user-email'); 
