@@ -391,6 +391,15 @@ document.querySelector('.add-reservation').addEventListener('click', e => {
 });
 
 
+document.querySelectorAll('.khonsu-data .save-khonsu-data').forEach(btn => {
+    btn.addEventListener('click', e => {
+        const $btn = e.currentTarget; 
+        const btnTxt = $btn.value; 
+        $btn.value = 'Submitted!';
+        setTimeout(()=>$btn.value=btnTxt,1000);
+    });
+});
+
 
 
 

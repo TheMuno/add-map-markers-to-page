@@ -53,6 +53,19 @@
             margin: auto;
             border: 1px solid black; 
         }
+
+        .save-khonsu-data {
+            width: fit-content; 
+        }
+
+        .save-khonsu-data.save-khonsu-notes {
+            margin: 2px auto;
+        }
+
+        .save-khonsu-data.save-qrcode {
+            margin: 2px auto;
+            display: block;
+        }
     </style>    
 </head>
 <body>
@@ -102,6 +115,7 @@
         <div class="khonsu-data khonsu-notes">
             <label for="knotes">Khonsu Notes</label>
             <textarea name="knotes" id="knotes" class="knotes" cols="30" rows="10"></textarea>
+            <input type="button" value="Submit" class="save-khonsu-data save-khonsu-notes">
         </div>
         <div class="khonsu-data reservations">
             <label for="day-text">Reservations</label>
@@ -111,16 +125,19 @@
                 </div>
             </div>
             <input type="button" value="Add Reservation" class="add-reservation">
+            <input type="button" value="Submit" class="save-khonsu-data save-reservations">
         </div>
         <div class="khonsu-data map-url">
             <label for="map-url-link">Map Url</label>
             <div class="map-url-link">
                 <input type="text">
             </div>
+            <input type="button" value="Submit" class="save-khonsu-data save-map-url">
         </div>
         <div class="khonsu-data map-url-qrcode">
             <label for="map-url-qr">QR Code</label>
             <div class="map-url-qr"></div>
+            <input type="button" value="Submit" class="save-khonsu-data save-qrcode">
         </div>
     </div>
     <a href="https://www.flaticon.com/free-icons/new-tab" title="new-tab icons">Get direction icons created by Prosymbols Premium - Flaticon</a>
