@@ -36,6 +36,10 @@
             width: 65%; 
         }
 
+        .reservations .add-reservation {
+            margin-top: 2px; 
+        }
+
         .map-url .map-url-link input {
             width: 98%; 
             height: 30px; 
@@ -101,14 +105,12 @@
         </div>
         <div class="khonsu-data reservations">
             <label for="day-text">Reservations</label>
-            <div>
+            <div class="reserves">
                 <div class="reserve hide">
                     <input type="text" class="reserve-time"><input type="text" class="reserve-info">
                 </div>
             </div>
-            <div class="single-event hide">
-                <div class="day-text"></div>
-            </div>
+            <input type="button" value="Add Reservation" class="add-reservation">
         </div>
         <div class="khonsu-data map-url">
             <label for="map-url-link">Map Url</label>

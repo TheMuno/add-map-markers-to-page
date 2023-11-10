@@ -381,6 +381,14 @@ $reservations.forEach(reservation => {
     });
 });
 
+document.querySelector('.add-reservation').addEventListener('click', e => {
+    const $reservations = e.currentTarget.closest('.reservations'); 
+    const $reserves = $reservations.querySelector('.reserves'); 
+    const $reserve = $reserves.querySelector('.reserve');
+    const $reserveClone = $reserve.cloneNode(true);
+    $reserveClone.classList.remove('hide');
+    $reservations.insertBefore($reserveClone, $reservations.querySelector('.add-reservation'));
+});
 
 
 
@@ -603,7 +611,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                     $reservationClone.querySelector('.reserve-time').value = time;
                     $reservationClone.querySelector('.reserve-info').value = info; 
 
-                    $reservations.append($reservationClone);
+                    $reservations.insertBefore($reservationClone, $reservations.querySelector('.add-reservation'));
                 });
                 // $reservations.querySelector('.single-event')
             }
