@@ -347,38 +347,34 @@ async function updateKhonsuDataEdits(userMail, notes) {
     await updateDoc(existingMarkers, dayObj);
 }
 
-$khonsuNotes.addEventListener('change', e => {
+$khonsuNotes.addEventListener('change', async e => {
     const userMail = localStorage.getItem('user-email'); 
     if (!userMail) return; 
     const notes = e.currentTarget.value; 
     updateKhonsuDataEdits(userMail, notes); 
 });
 
-async function updateReservationsEdits(userMail, notes) {
+async function updateReservationsEdits(userMail, reservationData) {
     const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
     const dayObj = {};
-    dayObj['Reservations'] = notes; 
+    dayObj['Reservations'] = reservationData; 
     dayObj.ModifiedAt = serverTimestamp(); 
 
     await updateDoc(existingMarkers, dayObj);
 }
 
-const $reservations = document.querySelectorAll('.reservations .reserve'); 
-$reservations.forEach(reservation => {
-    reservation.addEventListener('change', e => {
-        const userMail = localStorage.getItem('user-email'); 
-        if (!userMail) return; 
-        // const notes = e.currentTarget.value; 
+const $reservations = document.querySelector('.reservations'); 
+$reservations.addEventListener('change', async e => {
+    const userMail = localStorage.getItem('user-email'); 
+    if (!e.target.closest('.reserve') || !userMail) return; 
 
-        let reserveData = []; 
-        $reservations.forEach(r => {
-            const time = r.querySelector('.reserve-time').value;
-            const info = r.querySelector('.reserve-info').value;
-            reserveData.push(`${time} - ${info}`); 
-        });
-
-        updateReservationsEdits(userMail, reserveData); 
+    const reservationData = [...$reservations.querySelectorAll('.reserve:not(.hide)')].map(r => {
+        const time = r.querySelector('.reserve-time').value;
+        const info = r.querySelector('.reserve-info').value;
+        return `${time} - ${info}`; 
     });
+
+    updateReservationsEdits(userMail, reservationData); 
 });
 
 document.querySelector('.add-reservation').addEventListener('click', e => {
@@ -620,9 +616,8 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                     $reservationClone.querySelector('.reserve-time').value = time;
                     $reservationClone.querySelector('.reserve-info').value = info; 
 
-                    $reservations.insertBefore($reservationClone, $reservations.querySelector('.add-reservation'));
+                    $reservations.querySelector('.reserves').append($reservationClone); 
                 });
-                // $reservations.querySelector('.single-event')
             }
             else if (entry.toLowerCase() === 'mapurl') {
                 const $mapUrl = document.querySelector('.map-url-link input'); 
