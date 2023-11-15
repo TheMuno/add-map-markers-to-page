@@ -424,6 +424,8 @@ function generateQRCode(link) {
     const $qrCodeContainer = document.querySelector('.khonsu-data.map-url-qrcode .map-url-qr');
     $qrCodeContainer.innerHTML = $qrCode;
 
+    console.log('qrcode', $qrCode) 
+
     // <qr-code id="qr1" contents="https://www.google.com/" module-color="#1c7d43" position-ring-color="#13532d" position-center-color="#70c559">
     //     <img src="https://assets-global.website-files.com/61268cc8812ac5956bad13e4/6138485d84bf820d8e9ef952_khonsu%20logo%20white.svg" slot="icon" />
     // </qr-code>
