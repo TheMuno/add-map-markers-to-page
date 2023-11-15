@@ -662,11 +662,13 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
             }
             else if (entry.toLowerCase() === 'mapurl') {
                 const $mapUrl = document.querySelector('.map-url-link input'); 
+                locations = locations.trim(); 
                 $mapUrl.value = locations; 
+                generateQRCode(locations);
             }
-            else if (entry.toLowerCase() === 'qrcode') {
+            // else if (entry.toLowerCase() === 'qrcode') {
                 
-            }
+            // }
         }
 
     }
