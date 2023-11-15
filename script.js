@@ -181,7 +181,7 @@ const markerPopup = new google.maps.InfoWindow();
 
         $address.value = '';  
     });
-}//();
+}();
 
 function createMarker(place) {
     const { name, formatted_address, geometry, latLng, website, current_opening_hours, opening_hours, formatted_phone_number, reviews } = place; 
