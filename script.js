@@ -30,6 +30,7 @@ localStorage.setItem('user-email', 'one@mail.com');
 
 document.querySelector('.user-email').addEventListener('change', e => {
     localStorage.setItem('user-email', e.currentTarget.value);
+    window.location.reload(); 
 });
 
 
@@ -180,7 +181,7 @@ const markerPopup = new google.maps.InfoWindow();
 
         $address.value = '';  
     });
-}();
+}//();
 
 function createMarker(place) {
     const { name, formatted_address, geometry, latLng, website, current_opening_hours, opening_hours, formatted_phone_number, reviews } = place; 
@@ -395,6 +396,46 @@ document.querySelectorAll('.khonsu-data .save-khonsu-data').forEach(btn => {
         setTimeout(()=>$btn.value=btnTxt,1000);
     });
 });
+
+async function updateKhonsuDataMapUrl(userMail, mapurl) {
+    const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
+    const dayObj = {};
+    dayObj['MapUrl'] = mapurl; 
+    dayObj.ModifiedAt = serverTimestamp(); 
+
+    await updateDoc(existingMarkers, dayObj);
+    generateQRCode(mapurl); 
+}
+
+function generateQRCode(link) {
+    const $qrCode = document.createElement('qr-code');
+    $qrCode.id = 'qr1';
+    $qrCode.setAttribute('contents', link);
+    $qrCode.setAttribute('module-color', '#1c7d43');
+    $qrCode.setAttribute('position-ring-color', '#13532d');
+    $qrCode.setAttribute('position-center-color', '#70c559');
+
+    const $khonsuImg = document.createElement('img');
+    $khonsuImg.src = 'Imgs/khonsu-logo-white.png';
+    $khonsuImg.setAttribute('slot', 'icon'); 
+
+    $qrCode.append($khonsuImg);
+
+    document.querySelector('.khonsu-data.map-url-qrcode .map-url-qr').append($qrCode);
+
+    // <qr-code id="qr1" contents="https://www.google.com/" module-color="#1c7d43" position-ring-color="#13532d" position-center-color="#70c559">
+    //     <img src="https://assets-global.website-files.com/61268cc8812ac5956bad13e4/6138485d84bf820d8e9ef952_khonsu%20logo%20white.svg" slot="icon" />
+    // </qr-code>
+}
+
+document.querySelector('.khonsu-data.map-url .map-url-link input').addEventListener('change', e => {
+    const userMail = localStorage.getItem('user-email'); 
+    if (!userMail) return; 
+    const mapUrl = e.currentTarget.value; 
+    updateKhonsuDataMapUrl(userMail, mapUrl); 
+});
+
+
 
 
 
@@ -640,20 +681,6 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
     }
 }
 
-async function retrieveUserNotesFromFirebase(userMail) {
-    const docRef = doc(db, 'Locations', `User-${userMail}`);
-    const docSnap = await getDoc(docRef);
-
-    if (!docSnap.exists()) {
-        // docSnap.data() will be undefined in this case
-        console.log('No user with such email!');
-        return; 
-    } 
-
-    const userData = sortObject(docSnap.data());
-
-
-}
 
 async function removeFirebaseSavedMarker(userMail, dayNum, $event) {
     const dayEventRef = doc(db, 'Locations', `User-${userMail}`);
