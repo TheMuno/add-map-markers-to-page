@@ -411,7 +411,7 @@ function generateQRCode(link) {
     const $qrCode = document.createElement('qr-code');
     $qrCode.id = 'qr1';
     $qrCode.setAttribute('contents', link);
-    $qrCode.setAttribute('module-color', '#1c7d43');
+    $qrCode.setAttribute('module-color', '#000');
     $qrCode.setAttribute('position-ring-color', '#f8942c');
     $qrCode.setAttribute('position-center-color', '#000');
 
