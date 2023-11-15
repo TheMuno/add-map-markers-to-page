@@ -412,7 +412,7 @@ function generateQRCode(link) {
     $qrCode.id = 'qr1';
     $qrCode.setAttribute('contents', link);
     $qrCode.setAttribute('module-color', '#1c7d43');
-    $qrCode.setAttribute('position-ring-color', '#13532d');
+    $qrCode.setAttribute('position-ring-color', '#f8942c');
     $qrCode.setAttribute('position-center-color', '#000');
 
     const $khonsuImg = document.createElement('img');
@@ -422,7 +422,7 @@ function generateQRCode(link) {
     $qrCode.append($khonsuImg);
 
     const $qrCodeContainer = document.querySelector('.khonsu-data.map-url-qrcode .map-url-qr');
-    // $qrCodeContainer.innerHTML = $qrCode;
+    $qrCodeContainer.innerHTML = '';
     $qrCodeContainer.append($qrCode); 
 
     console.log('qrcode', $qrCode) 
