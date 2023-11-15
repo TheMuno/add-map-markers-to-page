@@ -43,12 +43,12 @@ const $map = document.querySelector('#map'),
     $downloadUserCSV = document.querySelector('.download-user-csv'), 
     $downloadDBCSV = document.querySelector('.download-all-csv'),
     $printedPlanBtn = document.querySelector('.printed-plan'),
-    $khonsuNotes = document.querySelector('.khonsu-notes .knotes'); 
+    $khonsuNotes = document.querySelector('.khonsu-notes .knotes'),
+    $qrCodeContainer = document.querySelector('.khonsu-data.map-url-qrcode .map-url-qr');
 
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
     
 
-'AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4'
 
 // const $map = document.querySelector('.plan_map'),
 //     $address = document.querySelector('#Activity-Name'),  
@@ -404,16 +404,22 @@ async function updateKhonsuDataMapUrl(userMail, mapurl) {
     dayObj.ModifiedAt = serverTimestamp(); 
 
     await updateDoc(existingMarkers, dayObj);
-    generateQRCode(mapurl); 
+    generateQRCode(mapurl, $qrCodeContainer); 
 }
 
-function generateQRCode(link) {
+function generateQRCode(link, container) {
+    const width = getComputedStyle(container).width;
+    const height = getComputedStyle(container).height;
+    const margin = 'auto'; 
+    const bgColor = '#fff'; 
+
     const $qrCode = document.createElement('qr-code');
     $qrCode.id = 'qr1';
     $qrCode.setAttribute('contents', link);
     $qrCode.setAttribute('module-color', '#000');
     $qrCode.setAttribute('position-ring-color', '#f8942c');
     $qrCode.setAttribute('position-center-color', '#000');
+    $qrCode.setAttribute('style', `width:${width};height:${height};margin:${margin};background-color:${bgColor};`);
 
     const $khonsuImg = document.createElement('img');
     $khonsuImg.src = 'Imgs/khonsu-logo-white.png';
@@ -421,11 +427,8 @@ function generateQRCode(link) {
 
     $qrCode.append($khonsuImg);
 
-    const $qrCodeContainer = document.querySelector('.khonsu-data.map-url-qrcode .map-url-qr');
-    $qrCodeContainer.innerHTML = '';
-    $qrCodeContainer.append($qrCode); 
-
-    console.log('qrcode', $qrCode) 
+    container.innerHTML = '';
+    container.append($qrCode);
 
     // <qr-code id="qr1" contents="https://www.google.com/" module-color="#1c7d43" position-ring-color="#13532d" position-center-color="#70c559">
     //     <img src="https://assets-global.website-files.com/61268cc8812ac5956bad13e4/6138485d84bf820d8e9ef952_khonsu%20logo%20white.svg" slot="icon" />
@@ -668,7 +671,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                 const $mapUrl = document.querySelector('.map-url-link input'); 
                 locations = locations.trim(); 
                 $mapUrl.value = locations; 
-                generateQRCode(locations);
+                generateQRCode(locations, $qrCodeContainer); 
             }
             // else if (entry.toLowerCase() === 'qrcode') {
                 
