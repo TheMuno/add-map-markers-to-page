@@ -422,7 +422,8 @@ function generateQRCode(link) {
     $qrCode.append($khonsuImg);
 
     const $qrCodeContainer = document.querySelector('.khonsu-data.map-url-qrcode .map-url-qr');
-    $qrCodeContainer.innerHTML = $qrCode;
+    // $qrCodeContainer.innerHTML = $qrCode;
+    $qrCodeContainer.append($qrCode); 
 
     console.log('qrcode', $qrCode) 
 
