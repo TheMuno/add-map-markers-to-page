@@ -413,7 +413,7 @@ function generateQRCode(link) {
     $qrCode.setAttribute('contents', link);
     $qrCode.setAttribute('module-color', '#1c7d43');
     $qrCode.setAttribute('position-ring-color', '#13532d');
-    $qrCode.setAttribute('position-center-color', '#70c559');
+    $qrCode.setAttribute('position-center-color', '#000');
 
     const $khonsuImg = document.createElement('img');
     $khonsuImg.src = 'Imgs/khonsu-logo-white.png';
