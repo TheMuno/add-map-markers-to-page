@@ -422,8 +422,11 @@ function generateQRCode(link, container) {
     $qrCode.setAttribute('style', `width:${width};height:${height};margin:${margin};background-color:${bgColor};`);
 
     const $khonsuImg = document.createElement('img');
-    $khonsuImg.src = 'Imgs/khonsu-logo-white.png';
+    // $khonsuImg.src = 'Imgs/khonsu-logo-white.png';
+    $khonsuImg.src = 'https://uploads-ssl.webflow.com/61268cc8812ac5956bad13e4/6554ce372d94b4af034be736_FB%20App%20Logo%201024.png';
     $khonsuImg.setAttribute('slot', 'icon'); 
+    $khonsuImg.setAttribute('width', '100%'); 
+    $khonsuImg.setAttribute('height', '100%'); 
 
     $qrCode.append($khonsuImg);
 
