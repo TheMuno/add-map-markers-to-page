@@ -606,6 +606,15 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
     if (!docSnap.exists()) {
         // docSnap.data() will be undefined in this case
         console.log('No user with such email!');
+
+        const $warnDiv = document.createElement('div');
+        $warnDiv.className = 'warn-info';
+        $warnDiv.textContent = 'No user with such email!';
+
+        $userMail.parentElement.insertBefore($warnDiv, $userMail.nextElementSibling);
+
+        setTimeout(()=>$warnDiv.remove(),2000);
+
         return; 
     } 
 
