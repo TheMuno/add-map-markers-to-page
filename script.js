@@ -613,7 +613,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
         $userMail.parentElement.insertBefore($warnDiv, $userMail.nextElementSibling);
 
-        setTimeout(()=>$warnDiv.remove(),2000);
+        setTimeout(()=>$warnDiv.remove(),5000);
 
         return; 
     } 
