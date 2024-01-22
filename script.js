@@ -301,12 +301,14 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
     $dayEvent.id = eventId;
     $dayEvent.querySelector('.remove-marker').classList.remove('hide'); 
     $dayEvent.querySelector('.get-directions').classList.remove('hide'); 
-    $dayEvent.querySelector('.day-text').textContent = dayEvent;
+    // $dayEvent.querySelector('.day-text').textContent = dayEvent;
+    $dayEvent.querySelector('.day-text').value = dayEvent;
     $dayEvent.marker = marker; 
     $dayEvent.markerObj = markerObj;
     $dayEvent.addEventListener('mouseover', e => {
         const $event = e.currentTarget; 
-        $event.setAttribute('title', $event.querySelector('.day-text').textContent);  
+        // $event.setAttribute('title', $event.querySelector('.day-text').textContent);  
+        $event.setAttribute('title', $event.querySelector('.day-text').value);  
     });
 
     $allEvents.append($dayEvent); 
