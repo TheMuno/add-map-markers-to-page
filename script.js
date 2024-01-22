@@ -44,7 +44,9 @@ const $map = document.querySelector('#map'),
     $downloadDBCSV = document.querySelector('.download-all-csv'),
     $printedPlanBtn = document.querySelector('.printed-plan'),
     $khonsuNotes = document.querySelector('.khonsu-notes .knotes'),
-    $qrCodeContainer = document.querySelector('.khonsu-data.map-url-qrcode .map-url-qr');
+    $qrCodeContainer = document.querySelector('.khonsu-data.map-url-qrcode .map-url-qr'),
+    $hourlyBtn = document.querySelector('.view-hourly'),
+    $hourEvents = document.querySelector('.hour-events');
 
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
     
@@ -1027,7 +1029,10 @@ function downloadBlob(content, filename, contentType) {
 
 
 
-
+$hourlyBtn.addEventListener('click', e => {
+    $dayEvents.classList.toggle('hide');
+    $hourEvents.classList.toggle('hide');
+}); 
 
 
 /*

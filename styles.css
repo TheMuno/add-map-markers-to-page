@@ -124,9 +124,15 @@
     display: flex; 
 }
 
-.day-events {
+.day-events,
+.hour-events {
     /* outline: 1px dotted yellowgreen;  */
     width: 90%; 
+}
+
+.day-events.hide,
+.hour-events.hide {
+    display: none;
 }
 
 .day-event {
