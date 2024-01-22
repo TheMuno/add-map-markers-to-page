@@ -175,7 +175,7 @@
     width: 10px; 
 }
 
-img.remove-marker.remove-day {
+img.remove-day {
     margin-bottom: -3px;
     cursor: pointer; 
 }

@@ -556,6 +556,12 @@ $dayEvents.addEventListener('click', e => {
             }
         }
     }
+    else if (e.target.closest('.remove-day')) {
+        const $removeDay = e.target; 
+        const $day = $removeDay.closest('.day-event');
+
+        $day.remove(); 
+    }
     else if (e.target.closest('.get-directions')) {    
         const $getDir = e.target;   
         const $event = $getDir.closest('.single-event'); 
