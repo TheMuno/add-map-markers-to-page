@@ -958,6 +958,45 @@ $dayEvents.addEventListener('click', e => {
     }
 });   
 
+$dayEvents.addEventListener('change', e => {
+    if (!e.target.closest('.day-text')) return;
+    const userMail = localStorage.getItem('user-email');
+    if (!userMail) return; 
+    
+    const $dayText = e.target;
+    const dayNum = $dayText.closest('.day-head').querySelector('.header-text').textContent.trim().slice(-1);
+    updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText); 
+});
+
+async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
+    const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
+    const dayObj = {};
+    const underscores = dayNum.toString().split('').map(_ => '_').join('');  
+
+    const $singleEvent = $dayText.closest('.single-event');
+    const lat = $singleEvent.markerObj?.lat; 
+    const lng = $singleEvent.markerObj?.lng; 
+    const title = $singleEvent.markerObj?.title; 
+
+    const markerObj = {lat, lng, title}; 
+    markerObj.dayEventName = $dayText.value;  
+
+    dayObj[`${underscores}Day${dayNum}`] = arrayUnion(markerObj); 
+    dayObj.ModifiedAt = serverTimestamp(); 
+
+    await updateDoc(existingMarkers, dayObj);
+}
+
+// async function saveMarkerToFirebase(userMail, dayNum, markerObj) {  
+//     const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
+//     const dayObj = {};
+//     const underscores = dayNum.toString().split('').map(_ => '_').join('');  
+//     dayObj[`${underscores}Day${dayNum}`] = arrayUnion(markerObj); 
+//     dayObj.ModifiedAt = serverTimestamp(); 
+
+//     await updateDoc(existingMarkers, dayObj);
+// }
+
 $downloadUserCSV.addEventListener('click', async (e) => {
     const userMail = localStorage.getItem('user-email'); 
     if (!userMail) {
