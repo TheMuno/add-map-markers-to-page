@@ -47,7 +47,7 @@ const $map = document.querySelector('#map'),
     $qrCodeContainer = document.querySelector('.khonsu-data.map-url-qrcode .map-url-qr'),
     $hourlyBtn = document.querySelector('.view-hourly'),
     $addReservation = document.querySelector('.add-reservation'),
-    $reservations = document.querySelectorAll('.reservations'),
+    $reservations = document.querySelector('.reservations'),
     $hourEvents = document.querySelector('.hour-events');
     
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
