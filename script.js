@@ -560,17 +560,17 @@ $dayEvents.addEventListener('click', e => {
         const $removeDay = e.target; 
         const $day = $removeDay.closest('.day-event');
 
-        const dayHead = $day.querySelector('.day-head');
-        const dayNum = dayHead.textContent.trim().slice(-1);
+        // const dayHead = $day.querySelector('.day-head');
+        // const dayNum = dayHead.textContent.trim().slice(-1);
 
-        console.log('$removeDay', $removeDay, '\n$day', $day)
+        // console.log('$removeDay', $removeDay, '\n$day', $day)
 
-        console.log('day-head', dayHead, 
-        '\ndayHead text', dayHead.textContent, 
-        '\ndayHead text trimmed', dayHead.textContent.trim(),
-        '\ndayNum', dayNum)
+        // console.log('day-head', dayHead, 
+        // '\ndayHead text', dayHead.textContent, 
+        // '\ndayHead text trimmed', dayHead.textContent.trim(),
+        // '\ndayNum', dayNum)
 
-        removeDay($removeDay); 
+        removeDay($day); 
         $day.remove(); 
     }
     else if (e.target.closest('.get-directions')) {    
@@ -602,7 +602,7 @@ function removeMarker($event, $removeMarker) {
 }  
 
 function removeDay($day) {
-    const dayNum = $day.querySelector('.day-head').textContent.slice(-1); 
+    const dayNum = $day.querySelector('.day-head').textContent.trim().slice(-1); 
 
     const currentDayMarkers = $daysSelect.options[dayNum].markers;
         console.log('currentDayMarkers', currentDayMarkers)
