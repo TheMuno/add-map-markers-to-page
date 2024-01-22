@@ -388,7 +388,8 @@ $addReservation.addEventListener('click', e => {
     const $reserve = $reserves.querySelector('.reserve');
     const $reserveClone = $reserve.cloneNode(true);
     $reserveClone.classList.remove('hide');
-    $reservations.insertBefore($reserveClone, $reservations.querySelector('.add-reservation'));
+    $reservations.querySelector('.reserves').append($reserveClone);
+    // $reservations.insertBefore($reserveClone, $reservations.querySelector('.add-reservation')); 
 });
 
 $reservations.addEventListener('click', e => {
