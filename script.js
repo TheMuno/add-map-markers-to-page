@@ -46,6 +46,7 @@ const $map = document.querySelector('#map'),
     $khonsuNotes = document.querySelector('.khonsu-notes .knotes'),
     $qrCodeContainer = document.querySelector('.khonsu-data.map-url-qrcode .map-url-qr'),
     $hourlyBtn = document.querySelector('.view-hourly'),
+    $addReservation = document.querySelector('.add-reservation');,
     $hourEvents = document.querySelector('.hour-events');
 
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
@@ -380,13 +381,18 @@ $reservations.addEventListener('change', async e => {
     updateReservationsEdits(userMail, reservationData); 
 });
 
-document.querySelector('.add-reservation').addEventListener('click', e => {
+
+$addReservation.addEventListener('click', e => {
     const $reservations = e.currentTarget.closest('.reservations'); 
     const $reserves = $reservations.querySelector('.reserves'); 
     const $reserve = $reserves.querySelector('.reserve');
     const $reserveClone = $reserve.cloneNode(true);
     $reserveClone.classList.remove('hide');
     $reservations.insertBefore($reserveClone, $reservations.querySelector('.add-reservation'));
+});
+
+$removeReservation.addEventListener('click', e => {
+
 });
 
 
@@ -1079,6 +1085,12 @@ function downloadBlob(content, filename, contentType) {
 $hourlyBtn.addEventListener('click', e => {
     $dayEvents.classList.toggle('hide');
     $hourEvents.classList.toggle('hide');
+    if ($dayEvents.classList.contains('hide')) {
+        $hourlyBtn.value = 'View Day';
+    }
+    else {
+        $hourlyBtn.value = 'View Hourly';
+    }
 }); 
 
 
