@@ -47,9 +47,9 @@ const $map = document.querySelector('#map'),
     $qrCodeContainer = document.querySelector('.khonsu-data.map-url-qrcode .map-url-qr'),
     $hourlyBtn = document.querySelector('.view-hourly'),
     $addReservation = document.querySelector('.add-reservation'),
-    $reservationBtns = document.querySelectorAll('.reservations .remove-reservation'),
+    $reservations = document.querySelectorAll('.reservations'),
     $hourEvents = document.querySelector('.hour-events');
-
+    
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
     
 
@@ -368,7 +368,6 @@ async function updateReservationsEdits(userMail, reservationData) {
     await updateDoc(existingMarkers, dayObj);
 }
 
-const $reservations = document.querySelector('.reservations'); 
 $reservations.addEventListener('change', async e => {
     const userMail = localStorage.getItem('user-email'); 
     if (!e.target.closest('.reserve') || !userMail) return; 
@@ -392,11 +391,11 @@ $addReservation.addEventListener('click', e => {
     $reservations.insertBefore($reserveClone, $reservations.querySelector('.add-reservation'));
 });
 
-$reservationBtns.forEach(removeBtn => {
-    removeBtn.addEventListener('click', e => {
+$reservations.addEventListener('click', e => {
+    if (e.currentTarget.closest('.remove-reservation')) {
         console.log('e.currentTarget.closest', e.currentTarget.closest('.reserve'))
         e.currentTarget.closest('.reserve').remove(); 
-    });
+    }
 });
 
 
@@ -716,7 +715,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                 $khonsuNotes.value = locations.replaceAll('-','\n-').replace(/^\n/,''); 
             }
             else if (entry.toLowerCase() === 'reservations') {
-                const $reservations = document.querySelector('.reservations'); 
+                // const $reservations = document.querySelector('.reservations'); 
                 const $reservation = $reservations.querySelector('.reserve');
                 locations.forEach(location => {
                     const $reservationClone = $reservation.cloneNode(true);
