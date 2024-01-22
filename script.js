@@ -561,7 +561,7 @@ $dayEvents.addEventListener('click', e => {
         const $day = $removeDay.closest('.day-event');
 
         const dayHead = $day.querySelector('.day-head');
-        const dayNum = dayHead.textContent.slice(-1);
+        const dayNum = dayHead.textContent.trim().slice(-1);
 
         console.log('$removeDay', $removeDay, '\n$day', $day)
 
