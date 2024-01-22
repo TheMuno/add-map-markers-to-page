@@ -964,7 +964,7 @@ $dayEvents.addEventListener('change', e => {
     if (!userMail) return; 
     
     const $dayText = e.target;
-    const dayNum = $dayText.closest('.day-head').querySelector('.header-text').textContent.trim().slice(-1);
+    const dayNum = $dayText.closest('.day-event').querySelector('.day-head .header-text').textContent.trim().slice(-1);
     updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText); 
 });
 
