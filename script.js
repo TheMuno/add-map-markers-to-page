@@ -582,9 +582,11 @@ $dayEvents.addEventListener('click', e => {
 
         const $firstDayEvent = $dayEvents.querySelector('.day-event.day-1-event'); 
         if ($dayEvents.querySelectorAll('.day-event').length === 1) {
+            console.log('1 day-event remaining')
             $firstDayEvent.classList.remove('hide');
         }
         else {
+            console.log($dayEvents.querySelectorAll('.day-event').length, 'events remaining')
             $firstDayEvent.classList.add('hide');
         }
     }
