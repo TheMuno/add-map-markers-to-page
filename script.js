@@ -560,6 +560,7 @@ $dayEvents.addEventListener('click', e => {
         const $removeDay = e.target; 
         const $day = $removeDay.closest('.day-event');
 
+        removeDay($removeDay); 
         $day.remove(); 
     }
     else if (e.target.closest('.get-directions')) {    
@@ -589,6 +590,23 @@ function removeMarker($event, $removeMarker) {
     const userMail = localStorage.getItem('user-email');   
     if (userMail) removeFirebaseSavedMarker(userMail, dayNum, $event);  
 }  
+
+function removeDay($removeDay) {
+    const dayNum = $removeDay.closest('.day-event').querySelector('.day-head').textContent.slice(-1); 
+
+    const currentDayMarkers = $daysSelect.options[dayNum].markers;
+        console.log('currentDayMarkers', currentDayMarkers)
+    // if (currentDayMarkers) {
+    //     console.log('currentDayMarkers', currentDayMarkers)
+    //     currentDayMarkers.forEach(marker => {
+    //         marker.setMap(null);
+    //     });
+    //     currentDayMarkers = [];  
+    // }
+
+    // const userMail = localStorage.getItem('user-email');   
+    // if (userMail) removeFirebaseSavedDay(userMail, dayNum);
+}
 
 !async function createUserInFirebase(userMail) {
     const userRef = doc(db, 'Locations', `User-${userMail}`);
@@ -715,6 +733,13 @@ async function removeFirebaseSavedMarker(userMail, dayNum, $event) {
     const dayEventRef = doc(db, 'Locations', `User-${userMail}`);
     const dayObj = {};
     dayObj[`_Day${dayNum}`] = arrayRemove($event.markerObj); 
+    await updateDoc(dayEventRef, dayObj);  
+}  
+
+async function removeFirebaseSavedDay(userMail, dayNum) {
+    const dayEventRef = doc(db, 'Locations', `User-${userMail}`);
+    const dayObj = {};
+    dayObj[`_Day${dayNum}`] = []; 
     await updateDoc(dayEventRef, dayObj);  
 }  
 
