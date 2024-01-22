@@ -749,8 +749,8 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                     const $reservationClone = $reservation.cloneNode(true);
                     $reservationClone.classList.remove('hide');
 
-                    const time = location.split('-')[0];
-                    const info = location.split('-')[1];
+                    const time = location.split('-')[0]?.trim();
+                    const info = location.split('-')[1]?.trim();
 
                     $reservationClone.querySelector('.reserve-time').value = time;
                     $reservationClone.querySelector('.reserve-info').value = info; 
