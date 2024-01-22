@@ -580,8 +580,12 @@ $dayEvents.addEventListener('click', e => {
             // }
         }
 
+        const $firstDayEvent = $dayEvents.querySelector('.day-event.day-1-event'); 
         if ($dayEvents.querySelectorAll('.day-event').length === 1) {
-            $dayEvents.querySelector('.day-event.day-1-event').classList.remove('hide');
+            $firstDayEvent.classList.remove('hide');
+        }
+        else {
+            $firstDayEvent.classList.add('hide');
         }
     }
     else if (e.target.closest('.get-directions')) {    
