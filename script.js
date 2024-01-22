@@ -373,8 +373,8 @@ $reservations.addEventListener('change', async e => {
     if (!e.target.closest('.reserve') || !userMail) return; 
 
     const reservationData = [...$reservations.querySelectorAll('.reserve:not(.hide)')].map(r => {
-        const time = r.querySelector('.reserve-time').value;
-        const info = r.querySelector('.reserve-info').value;
+        const time = r.querySelector('.reserve-time').value.trim();
+        const info = r.querySelector('.reserve-info').value.trim();
         return `${time} - ${info}`; 
     });
 
