@@ -551,7 +551,7 @@ $dayEvents.addEventListener('click', e => {
 
         if (eventNum == 1) {
             $dayEvent.querySelector('.single-event.hide')?.classList.remove('hide'); 
-            if ( Number( $dayEvent.querySelector('.day-head').textContent.slice(-1) ) !== 1 ) {
+            if ( Number( $dayEvent.querySelector('.day-head').textContent.trim().slice(-1) ) !== 1 ) {
                 $dayEvent.classList.add('hide'); 
             }
         }
@@ -562,9 +562,15 @@ $dayEvents.addEventListener('click', e => {
 
         removeDay($dayEvent); 
 
-        if ($dayEvents.querySelectorAll('.day-event').length > 1) $dayEvent.remove(); 
+        const dayNum = $dayEvent.querySelector('.day-head').textContent.trim().slice(-1); 
+        if (dayNum !== '1') {
+            $dayEvent.remove(); 
+        }
+        else {
+            $dayEvent.querySelectorAll('.single-event:not(.hide)').forEach($event => $event.remove()); 
+            $dayEvent.querySelector('.single-event.hide')?.classList.remove('hide'); 
 
-
+        }
     }
     else if (e.target.closest('.get-directions')) {    
         const $getDir = e.target;   
