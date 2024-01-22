@@ -473,7 +473,7 @@ function addDayEventList(dayNum) {
     const $dayEvent = $dayEvents.children[0].cloneNode(true);
     $dayEvent.classList.remove('day-1-event');
     $dayEvent.classList.add(`day-${dayNum}-event`);
-    $dayEvent.querySelector('.day-head').textContent = `Day ${dayNum}`; 
+    $dayEvent.querySelector('.day-head .header-text').textContent = `Day ${dayNum}`; 
 
     if ($dayEvent.querySelector('.single-event.hide'))   {
         $dayEvent.querySelectorAll('.single-event:not(.hide)').forEach(el => el.remove()); 
@@ -559,16 +559,6 @@ $dayEvents.addEventListener('click', e => {
     else if (e.target.closest('.remove-day')) {
         const $removeDay = e.target; 
         const $day = $removeDay.closest('.day-event');
-
-        // const dayHead = $day.querySelector('.day-head');
-        // const dayNum = dayHead.textContent.trim().slice(-1);
-
-        // console.log('$removeDay', $removeDay, '\n$day', $day)
-
-        // console.log('day-head', dayHead, 
-        // '\ndayHead text', dayHead.textContent, 
-        // '\ndayHead text trimmed', dayHead.textContent.trim(),
-        // '\ndayNum', dayNum)
 
         removeDay($day); 
         $day.remove(); 
