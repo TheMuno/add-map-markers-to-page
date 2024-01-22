@@ -558,10 +558,13 @@ $dayEvents.addEventListener('click', e => {
     }
     else if (e.target.closest('.remove-day')) {
         const $removeDay = e.target; 
-        const $day = $removeDay.closest('.day-event');
+        const $dayEvent = $removeDay.closest('.day-event');
 
-        removeDay($day); 
-        $day.remove(); 
+        removeDay($dayEvent); 
+
+        if ($dayEvents.querySelectorAll('.day-event').length > 1) $dayEvent.remove(); 
+
+
     }
     else if (e.target.closest('.get-directions')) {    
         const $getDir = e.target;   
@@ -583,7 +586,7 @@ $dayEvents.addEventListener('click', e => {
 
 function removeMarker($event, $removeMarker) {
     $event.marker?.setMap(null); 
-    const dayNum = $removeMarker.closest('.day-event').querySelector('.day-head').textContent.slice(-1); 
+    const dayNum = $removeMarker.closest('.day-event').querySelector('.day-head').textContent.trim().slice(-1); 
     const currentDayMarkers = $daysSelect.options[dayNum].markers;
     if (currentDayMarkers) currentDayMarkers.splice(currentDayMarkers.indexOf($event.marker), 1);   
 
@@ -596,13 +599,14 @@ function removeDay($day) {
 
     const currentDayMarkers = $daysSelect.options[dayNum].markers;
         console.log('currentDayMarkers', currentDayMarkers)
-    // if (currentDayMarkers) {
+    if (currentDayMarkers) {
+        
     //     console.log('currentDayMarkers', currentDayMarkers)
     //     currentDayMarkers.forEach(marker => {
     //         marker.setMap(null);
     //     });
     //     currentDayMarkers = [];  
-    // }
+    }
 
     // const userMail = localStorage.getItem('user-email');   
     // if (userMail) removeFirebaseSavedDay(userMail, dayNum);
