@@ -560,6 +560,8 @@ $dayEvents.addEventListener('click', e => {
         const $removeDay = e.target; 
         const $day = $removeDay.closest('.day-event');
 
+        console.log('$removeDay', $removeDay, '$day', $day)
+
         removeDay($removeDay); 
         $day.remove(); 
     }
@@ -591,8 +593,8 @@ function removeMarker($event, $removeMarker) {
     if (userMail) removeFirebaseSavedMarker(userMail, dayNum, $event);  
 }  
 
-function removeDay($removeDay) {
-    const dayNum = $removeDay.closest('.day-event').querySelector('.day-head').textContent.slice(-1); 
+function removeDay($day) {
+    const dayNum = $day.querySelector('.day-head').textContent.slice(-1); 
 
     const currentDayMarkers = $daysSelect.options[dayNum].markers;
         console.log('currentDayMarkers', currentDayMarkers)
