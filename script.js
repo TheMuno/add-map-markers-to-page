@@ -579,16 +579,6 @@ $dayEvents.addEventListener('click', e => {
                 $dayEvents.querySelector('.day-event.day-1-event').classList.remove('hide');
             }
         }
-
-        // const $firstDayEvent = $dayEvents.querySelector('.day-event.day-1-event'); 
-        // if ($dayEvents.querySelectorAll('.day-event').length === 1) {
-        //     console.log('1 day-event remaining')
-        //     $firstDayEvent.classList.remove('hide');
-        // }
-        // else {
-        //     console.log($dayEvents.querySelectorAll('.day-event').length, 'events remaining')
-        //     // $firstDayEvent.classList.add('hide');
-        // }
     }
     else if (e.target.closest('.get-directions')) {    
         const $getDir = e.target;   
@@ -622,21 +612,16 @@ function removeDay($day) {
     const dayNum = $day.querySelector('.day-head').textContent.trim().slice(-1); 
 
     const currentDayMarkers = $daysSelect.options[dayNum].markers;
-        console.log('currentDayMarkers', currentDayMarkers)
     if (currentDayMarkers) {
-        
-    //     console.log('currentDayMarkers', currentDayMarkers)
-    //     currentDayMarkers.forEach(marker => {
-    //         marker.setMap(null);
-    //     });
-    //     currentDayMarkers = [];  
+        currentDayMarkers.forEach(marker => {
+            marker.setMap(null);
+        });
+        currentDayMarkers = [];  
     }
 
-    // const userMail = localStorage.getItem('user-email');   
-    // if (userMail) removeFirebaseSavedDay(userMail, dayNum);
+    const userMail = localStorage.getItem('user-email');   
+    if (userMail) removeFirebaseSavedDay(userMail, dayNum);
 }
-
-
 
 
 !async function createUserInFirebase(userMail) {
