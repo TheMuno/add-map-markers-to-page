@@ -175,6 +175,11 @@
     width: 10px; 
 }
 
+img.remove-marker.remove-day {
+    margin-bottom: -3px;
+    cursor: pointer; 
+}
+
 .single-event img.get-directions {
     position: absolute;
     top: 5px;
