@@ -560,7 +560,11 @@ $dayEvents.addEventListener('click', e => {
         const $removeDay = e.target; 
         const $day = $removeDay.closest('.day-event');
 
-        console.log('$removeDay', $removeDay, '$day', $day)
+        const dayNum = $day.querySelector('.day-head').textContent.slice(-1);
+
+        console.log('$removeDay', $removeDay, '\n$day', $day)
+
+        console.log('day-head', $day.querySelector('.day-head'), '\ndayNum', dayNum)
 
         removeDay($removeDay); 
         $day.remove(); 
