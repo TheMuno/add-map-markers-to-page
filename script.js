@@ -587,7 +587,7 @@ $dayEvents.addEventListener('click', e => {
         }
         else {
             console.log($dayEvents.querySelectorAll('.day-event').length, 'events remaining')
-            $firstDayEvent.classList.add('hide');
+            // $firstDayEvent.classList.add('hide');
         }
     }
     else if (e.target.closest('.get-directions')) {    
