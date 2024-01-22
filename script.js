@@ -185,7 +185,7 @@ const markerPopup = new google.maps.InfoWindow();
 
         $address.value = '';  
     });
-}//();
+}();
 
 function createMarker(place) {
     const { name, formatted_address, geometry, latLng, website, current_opening_hours, opening_hours, formatted_phone_number, reviews } = place; 
@@ -977,6 +977,9 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
     const lat = $singleEvent.markerObj?.lat; 
     const lng = $singleEvent.markerObj?.lng; 
     const title = $singleEvent.markerObj?.title; 
+
+    // const prevDayEventName = $singleEvent.markerObj?.dayEventName; 
+    // currentDayMarkers.splice(currentDayMarkers.indexOf($event.marker), 1);   
 
     const markerObj = {lat, lng, title}; 
     markerObj.dayEventName = $dayText.value;  
