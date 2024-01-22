@@ -392,10 +392,38 @@ $addReservation.addEventListener('click', e => {
 });
 
 $reservations.addEventListener('click', e => {
-    if (e.target.closest('.remove-reservation')) {
-        e.target.closest('.reserve').remove(); 
-    }
+    const userMail = localStorage.getItem('user-email'); 
+    if (!e.target.closest('.remove-reservation') || !userMail) return; 
+
+    const $removeBtn = e.target; 
+    $removeBtn.closest('.reserve').remove(); 
+    // removeFirebaseReservations($removeBtn); 
+
+    const reservationData = [...$reservations.querySelectorAll('.reserve:not(.hide)')].map(r => {
+        const time = r.querySelector('.reserve-time').value;
+        const info = r.querySelector('.reserve-info').value;
+        return `${time} - ${info}`; 
+    });
+    
+    updateReservationsEdits(userMail, reservationData);
 });
+
+// function removeFirebaseReservations($removeBtn) {
+//     const eventsArr = [...$dayEvent.closest('.all-events').querySelectorAll('.single-event')].map(dayEvent => {
+//         return dayEvent.markerObj;
+//     });
+
+//     const reservationData = [...$reservations.querySelectorAll('.reserve:not(.hide)')].map(r => {
+//         const time = r.querySelector('.reserve-time').value;
+//         const info = r.querySelector('.reserve-info').value;
+//         return `${time} - ${info}`; 
+//     });
+
+//     const dayEventRef = doc(db, 'Locations', `User-${userMail}`);
+//     const dayObj = {};
+//     dayObj[`_Day${dayNum}`] = eventsArr; 
+//     await updateDoc(dayEventRef, dayObj); 
+// }
 
 
 document.querySelectorAll('.khonsu-data .save-khonsu-data').forEach(btn => {
