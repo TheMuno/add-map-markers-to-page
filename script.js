@@ -568,27 +568,27 @@ $dayEvents.addEventListener('click', e => {
             $dayEvent.querySelector('.single-event.hide')?.classList.remove('hide'); 
             // $dayEvent.classList.add('hide'); 
 
-            // if ($dayEvents.querySelectorAll('.day-event').length !== 1) {
-            //     $dayEvent.classList.add('hide'); 
-            // }
+            if ($dayEvents.querySelectorAll('.day-event').length !== 1) {
+                $dayEvent.classList.add('hide'); 
+            }
         }
         else {
             $dayEvent.remove();  
 
-            // if ($dayEvents.querySelectorAll('.day-event').length === 1) {
-            //     $dayEvents.querySelector('.day-event.day-1-event').classList.remove('hide');
-            // }
+            if ($dayEvents.querySelectorAll('.day-event').length === 1) {
+                $dayEvents.querySelector('.day-event.day-1-event').classList.remove('hide');
+            }
         }
 
-        const $firstDayEvent = $dayEvents.querySelector('.day-event.day-1-event'); 
-        if ($dayEvents.querySelectorAll('.day-event').length === 1) {
-            console.log('1 day-event remaining')
-            $firstDayEvent.classList.remove('hide');
-        }
-        else {
-            console.log($dayEvents.querySelectorAll('.day-event').length, 'events remaining')
-            // $firstDayEvent.classList.add('hide');
-        }
+        // const $firstDayEvent = $dayEvents.querySelector('.day-event.day-1-event'); 
+        // if ($dayEvents.querySelectorAll('.day-event').length === 1) {
+        //     console.log('1 day-event remaining')
+        //     $firstDayEvent.classList.remove('hide');
+        // }
+        // else {
+        //     console.log($dayEvents.querySelectorAll('.day-event').length, 'events remaining')
+        //     // $firstDayEvent.classList.add('hide');
+        // }
     }
     else if (e.target.closest('.get-directions')) {    
         const $getDir = e.target;   
