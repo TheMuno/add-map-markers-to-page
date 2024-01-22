@@ -394,7 +394,7 @@ $addReservation.addEventListener('click', e => {
 
 $reservationBtns.forEach(removeBtn => {
     removeBtn.addEventListener('click', e => {
-        removeBtn.closest('.reserve').remove(); 
+        e.currentTarget.closest('.reserve').remove(); 
     });
 });
 
