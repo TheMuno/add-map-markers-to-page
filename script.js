@@ -563,13 +563,13 @@ $dayEvents.addEventListener('click', e => {
         removeDay($dayEvent); 
 
         const dayNum = $dayEvent.querySelector('.day-head').textContent.trim().slice(-1); 
-        if (dayNum !== '1') {
-            $dayEvent.remove(); 
-        }
-        else {
+        if (dayNum === '1') {
             $dayEvent.querySelectorAll('.single-event:not(.hide)').forEach($event => $event.remove()); 
             $dayEvent.querySelector('.single-event.hide')?.classList.remove('hide'); 
-
+            $dayEvent.classList.add('hide'); 
+        }
+        else {
+            $dayEvent.remove();  
         }
     }
     else if (e.target.closest('.get-directions')) {    
@@ -617,6 +617,14 @@ function removeDay($day) {
     // const userMail = localStorage.getItem('user-email');   
     // if (userMail) removeFirebaseSavedDay(userMail, dayNum);
 }
+
+
+// if ($dayEvents.querySelectorAll('.day-event').length === 1) {
+                
+// }
+// else {
+//     $dayEvent.classList.add('hide'); 
+// }
 
 !async function createUserInFirebase(userMail) {
     const userRef = doc(db, 'Locations', `User-${userMail}`);
