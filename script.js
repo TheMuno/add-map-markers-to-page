@@ -565,7 +565,10 @@ $dayEvents.addEventListener('click', e => {
 
         console.log('$removeDay', $removeDay, '\n$day', $day)
 
-        console.log('day-head', dayHead, '\ndayHead text', dayHead.textContent, '\ndayNum', dayNum)
+        console.log('day-head', dayHead, 
+        '\ndayHead text', dayHead.textContent, 
+        '\ndayHead text trimmed', dayHead.textContent.trim(),
+        '\ndayNum', dayNum)
 
         removeDay($removeDay); 
         $day.remove(); 
