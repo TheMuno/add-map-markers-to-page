@@ -984,7 +984,7 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
     const markerObj = {lat, lng, title}; 
     markerObj.dayEventName = $dayText.value;  
 
-    dayObj[`${underscores}Day${dayNum}`] = arrayUnion(markerObj); 
+    dayObj[`${underscores}Day${dayNum}`] = markerObj //arrayUnion(markerObj); 
     dayObj.ModifiedAt = serverTimestamp(); 
 
     await updateDoc(existingMarkers, dayObj);
