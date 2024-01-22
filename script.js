@@ -564,7 +564,7 @@ $dayEvents.addEventListener('click', e => {
 
         const dayNum = $dayEvent.querySelector('.day-head').textContent.trim().slice(-1); 
         if (dayNum === '1') {
-            $dayEvent.querySelectorAll('.single-event:not(.hide)').forEach($event => $event.remove()); 
+            $dayEvent.querySelectorAll('.all-events .single-event:not(.hide)').forEach($event => $event.remove()); 
             $dayEvent.querySelector('.single-event.hide')?.classList.remove('hide'); 
             // $dayEvent.classList.add('hide'); 
 
