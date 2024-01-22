@@ -392,7 +392,7 @@ $addReservation.addEventListener('click', e => {
 });
 
 $reservations.addEventListener('click', e => {
-    console.log('e.currentTarget', e.currentTarget)
+    console.log('e.currentTarget', e.currentTarget, '\ne.target', e.target)
     if (e.currentTarget.closest('.remove-reservation')) {
         console.log('e.currentTarget.closest', e.currentTarget.closest('.reserve'))
         e.currentTarget.closest('.reserve').remove(); 
