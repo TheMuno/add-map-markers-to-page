@@ -47,6 +47,7 @@ const $map = document.querySelector('#map'),
     $qrCodeContainer = document.querySelector('.khonsu-data.map-url-qrcode .map-url-qr'),
     $hourlyBtn = document.querySelector('.view-hourly'),
     $addReservation = document.querySelector('.add-reservation'),
+    $reservationBtns = document.querySelectorAll('.reservations .remove-reservation'),
     $hourEvents = document.querySelector('.hour-events');
 
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
@@ -391,8 +392,10 @@ $addReservation.addEventListener('click', e => {
     $reservations.insertBefore($reserveClone, $reservations.querySelector('.add-reservation'));
 });
 
-$removeReservation.addEventListener('click', e => {
-
+$reservationBtns.forEach(removeBtn => {
+    removeBtn.addEventListener('click', e => {
+        removeBtn.closest('.reserve').remove(); 
+    });
 });
 
 
