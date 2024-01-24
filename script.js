@@ -602,7 +602,7 @@ $dayEvents.addEventListener('click', e => {
 
         removeDay($dayEvent); 
 
-        const dayNum = $dayEvent.querySelector('.day-head').textContent.trim().slice(-1); 
+        const dayNum = $dayEvent.querySelector('.day-head').textContent.trim().split(/\s+/).pop();  //.slice(-1); 
         if (dayNum === '1') {
             $dayEvent.querySelectorAll('.all-events .single-event:not(.hide)').forEach($event => $event.remove()); 
             $dayEvent.querySelector('.single-event.hide')?.classList.remove('hide'); 
@@ -640,7 +640,7 @@ $dayEvents.addEventListener('click', e => {
 
 function removeMarker($event, $removeMarker) {
     $event.marker?.setMap(null); 
-    const dayNum = $removeMarker.closest('.day-event').querySelector('.day-head').textContent.trim().slice(-1); 
+    const dayNum = $removeMarker.closest('.day-event').querySelector('.day-head').textContent.trim().split(/\s+/).pop(); //.slice(-1); 
     const currentDayMarkers = $daysSelect.options[dayNum].markers;
     if (currentDayMarkers) currentDayMarkers.splice(currentDayMarkers.indexOf($event.marker), 1);   
 
@@ -971,7 +971,7 @@ $dayEvents.addEventListener('change', async e => {
     if (!userMail) return; 
     
     const $header = $dayText.closest('.day-event').querySelector('.day-head .header-text');
-    const dayNum = $header.textContent.trim().slice(-1);
+    const dayNum = $header.textContent.trim().split(/\s+/).pop();  //.slice(-1);
 
     updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText); 
 
