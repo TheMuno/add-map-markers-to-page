@@ -797,6 +797,9 @@ async function removeFirebaseSavedDay(userMail, dayNum) {
     const dayObj = {};
     const underscores = dayNum.toString().split('').map(_ => '_').join('');  
     dayObj[`${underscores}Day${dayNum}`] = []; 
+
+    console.log('dayObj', dayObj)
+
     await updateDoc(dayEventRef, dayObj);  
 }  
 
