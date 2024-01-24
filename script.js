@@ -649,7 +649,7 @@ function removeMarker($event, $removeMarker) {
 }  
 
 function removeDay($day) {
-    const dayNum = $day.querySelector('.day-head').textContent.trim().slice(-1); 
+    const dayNum = $day.querySelector('.day-head').textContent.trim().split(/\s+/).pop(); 
 
     let currentDayMarkers = $daysSelect.options[dayNum].markers;
     if (currentDayMarkers) {
