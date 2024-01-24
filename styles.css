@@ -219,6 +219,102 @@ img.remove-day {
     box-shadow: rgb(0 0 0 / 25%) 0px 54px 55px, rgb(0 0 0 / 12%) 0px -12px 30px, rgb(0 0 0 / 12%) 0px 4px 6px, rgb(0 0 0 / 17%) 0px 12px 13px, rgb(0 0 0 / 9%) 0px -3px 5px; 
 }
 
+.khonsu-data {
+    width: 24%; 
+    /* outline: 1px solid green; */
+}
+
+.khonsu-notes {
+    display:flex;
+    flex-direction:column;
+    /* width:500px; */
+}
+
+.reservations .reserve.hide {
+    display: none;
+}
+
+.reservations .reserve input {
+    height: 30px; 
+    margin-left: 2px;
+}
+
+.reservations .reserve-time {
+    width: 25%; 
+}
+
+.reservations .reserve-info {
+    width: 60%; 
+}
+
+.reservations .remove-reservation {
+    width: 10px; 
+    cursor: pointer; 
+}
+
+.reservations .add-reservation {
+    margin-top: 2px; 
+}
+
+.map-url .map-url-link input {
+    width: 98%; 
+    height: 30px; 
+    margin: 10px auto;
+    display: block;
+}
+
+.map-url-qrcode {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.map-url-qrcode .map-url-qr {
+    height: 200px;
+    width: 200px; 
+    /* margin: auto; */
+    /* border: 1px solid black;  */
+}
+
+.save-khonsu-data {
+    width: fit-content; 
+}
+
+.save-khonsu-data.save-khonsu-notes {
+    margin: 2px auto;
+}
+
+.save-khonsu-data.save-qrcode {
+    margin: 2px auto;
+    display: block;
+}
+
+qr-code {
+    width: 200px;
+    height: 200px;
+    margin: 2em auto;
+    background-color: #fff;
+}
+
+.warn-info {
+    position: absolute;
+    top: 67px;
+    left: 125px;
+    font-size: 15px;
+    color: red; 
+}
+
+.day-times {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 10px; 
+}
+
+.day-time.hide {
+    display: none;
+}
+
 #map {
     width: 68%; 
     /* height: 850px;  */

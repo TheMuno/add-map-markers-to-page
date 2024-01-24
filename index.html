@@ -6,94 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title> 
     <link rel="stylesheet" href="styles.css">  
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4&libraries=places&v=weekly&language=en" ></script>   
-    <style>
-        .khonsu-data {
-            width: 24%; 
-            /* outline: 1px solid green; */
-        }
-
-        .khonsu-notes {
-            display:flex;
-            flex-direction:column;
-            /* width:500px; */
-        }
-
-        .reservations .reserve.hide {
-            display: none;
-        }
-
-        .reservations .reserve input {
-            height: 30px; 
-            margin-left: 2px;
-        }
-
-        .reservations .reserve-time {
-            width: 25%; 
-        }
-
-        .reservations .reserve-info {
-            width: 60%; 
-        }
-
-        .reservations .remove-reservation {
-            width: 10px; 
-            cursor: pointer; 
-        }
-
-        .reservations .add-reservation {
-            margin-top: 2px; 
-        }
-
-        .map-url .map-url-link input {
-            width: 98%; 
-            height: 30px; 
-            margin: 10px auto;
-            display: block;
-        }
-
-        .map-url-qrcode {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .map-url-qrcode .map-url-qr {
-            height: 200px;
-            width: 200px; 
-            /* margin: auto; */
-            /* border: 1px solid black;  */
-        }
-
-        .save-khonsu-data {
-            width: fit-content; 
-        }
-
-        .save-khonsu-data.save-khonsu-notes {
-            margin: 2px auto;
-        }
-
-        .save-khonsu-data.save-qrcode {
-            margin: 2px auto;
-            display: block;
-        }
-
-        qr-code {
-            width: 200px;
-            height: 200px;
-            margin: 2em auto;
-            background-color: #fff;
-        }
-
-        .warn-info {
-            position: absolute;
-            top: 67px;
-            left: 125px;
-            font-size: 15px;
-            color: red; 
-        }
-    </style>    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4&libraries=places&v=weekly&language=en" ></script>      
 </head>
 <body>
     <div class="section reset-justify">
@@ -143,53 +56,75 @@
                 </div>
             </div> 
             <div class="hour-events hide">
-                <select name="day-times" id="day-times">
+                <select name="day-times" id="day-times" class="day-times">
                     <option value="morning">Morning</option>
                     <option value="afternoon">Afternoon</option>
                     <option value="evening">Evening</option>
                 </select>
-                <div class="day-event"> 
-                    <div class="day-head">8 a.m</div>
+                <div class="day-time morning">
+                    <div class="day-event"> 
+                        <div class="day-head">8 a.m</div>
+                    </div>
+                    <div class="day-event"> 
+                        <div class="day-head">9 a.m</div>
+                    </div>
+    
+                    <div class="day-event"> 
+                        <div class="day-head">10 a.m</div>
+                    </div>
+    
+                    <div class="day-event"> 
+                        <div class="day-head">11 a.m</div>
+                    </div>
                 </div>
-                <div class="day-event"> 
-                    <div class="day-head">9 a.m</div>
+                
+                <div class="day-time afternoon hide">
+                    <div class="day-event"> 
+                        <div class="day-head">12 p.m</div>
+                    </div>
+    
+                    <div class="day-event"> 
+                        <div class="day-head">1 p.m</div>
+                    </div>
+    
+                    <div class="day-event"> 
+                        <div class="day-head">2 p.m</div>
+                    </div>
+    
+                    <div class="day-event"> 
+                        <div class="day-head">3 p.m</div>
+                    </div>
+    
+                    <div class="day-event"> 
+                        <div class="day-head">4 p.m</div>
+                    </div>
+    
+                    <div class="day-event"> 
+                        <div class="day-head">5 p.m</div>
+                    </div>
                 </div>
 
-                <div class="day-event"> 
-                    <div class="day-head">10 a.m</div>
+                <div class="day-time evening hide">
+                    <div class="day-event"> 
+                        <div class="day-head">6 p.m</div>
+                    </div>
+                    <div class="day-event"> 
+                        <div class="day-head">7 p.m</div>
+                    </div>
+                    <div class="day-event"> 
+                        <div class="day-head">8 p.m</div>
+                    </div>
+                    <div class="day-event"> 
+                        <div class="day-head">9 p.m</div>
+                    </div>
+                    <div class="day-event"> 
+                        <div class="day-head">10 p.m</div>
+                    </div>
+                    <div class="day-event"> 
+                        <div class="day-head">11 p.m</div>
+                    </div>
                 </div>
-
-                <div class="day-event"> 
-                    <div class="day-head">11 a.m</div>
-                </div>
-
-                <div class="day-event"> 
-                    <div class="day-head">12 p.m</div>
-                </div>
-
-                <div class="day-event"> 
-                    <div class="day-head">1 p.m</div>
-                </div>
-
-                <div class="day-event"> 
-                    <div class="day-head">2 p.m</div>
-                </div>
-
-                <div class="day-event"> 
-                    <div class="day-head">3 p.m</div>
-                </div>
-
-                <div class="day-event"> 
-                    <div class="day-head">4 p.m</div>
-                </div>
-
-                <div class="day-event"> 
-                    <div class="day-head">5 p.m</div>
-                </div>
-
-                <div class="day-event"> 
-                    <div class="day-head">6 p.m</div>
-                </div>
+                
             </div>
         </div> 
         <div id="map"></div>
