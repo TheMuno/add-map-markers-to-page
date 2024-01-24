@@ -311,6 +311,10 @@ qr-code {
     margin-bottom: 10px; 
 }
 
+.day-times:focus {
+    outline: none;
+}
+
 .day-time.hide {
     display: none;
 }
