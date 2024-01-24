@@ -960,12 +960,15 @@ $dayEvents.addEventListener('click', e => {
 });   
 
 $dayEvents.addEventListener('change', e => {
-    if (!e.target.closest('.day-text')) return;
+    const $dayText = e.target.closest('.day-text');
+    if (!$dayText) return;
+
     const userMail = localStorage.getItem('user-email');
     if (!userMail) return; 
     
-    const $dayText = e.target;
-    const dayNum = $dayText.closest('.day-event').querySelector('.day-head .header-text').textContent.trim().slice(-1);
+    const $header = $dayText.closest('.day-event').querySelector('.day-head .header-text');
+    const dayNum = $header.textContent.trim().slice(-1);
+
     updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText); 
 });
 
@@ -984,6 +987,8 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
 
     const markerObj = {lat, lng, title}; 
     markerObj.dayEventName = $dayText.value;  
+
+    console.log('markerObj', markerObj)
 
     dayObj[`${underscores}Day${dayNum}`] = arrayUnion(markerObj); 
     dayObj.ModifiedAt = serverTimestamp(); 
@@ -1162,7 +1167,7 @@ $hourlyBtn.addEventListener('click', e => {
     $dayEvents.classList.toggle('hide');
     $hourEvents.classList.toggle('hide');
     if ($dayEvents.classList.contains('hide')) {
-        $hourlyBtn.value = 'View Day';
+        $hourlyBtn.value = 'View Days';
     }
     else {
         $hourlyBtn.value = 'View Hourly';
