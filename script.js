@@ -994,7 +994,7 @@ $dayEvents.addEventListener('change', async e => {
     // console.log('prevMakerObj', prevMakerObj, '\nmarkerObj', markerObj)
 // }
 
-async function removePrevMarkerObjOnFirebase() {
+async function removePrevMarkerObjOnFirebase(userMail, dayNum, $dayText) {
     const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
     const dayObj = {};
     const underscores = dayNum.toString().split('').map(_ => '_').join('');  
@@ -1017,7 +1017,7 @@ async function removePrevMarkerObjOnFirebase() {
     await updateDoc(existingMarkers, dayObj); 
 }
 
-async function updateFirebaseWithNewMarkerObj() {
+async function updateFirebaseWithNewMarkerObj(userMail, dayNum, $dayText) {
     const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
     const dayObj = {};
     const underscores = dayNum.toString().split('').map(_ => '_').join('');  
