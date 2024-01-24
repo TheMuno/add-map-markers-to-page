@@ -981,7 +981,7 @@ $dayEvents.addEventListener('change', async e => {
 
 async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
     const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
-    const dayObj = {};
+    let dayObj = {};
     const underscores = dayNum.toString().split('').map(_ => '_').join('');  
 
     const $singleEvent = $dayText.closest('.single-event');
@@ -999,10 +999,16 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
     console.log('prevMakerObj', prevMakerObj, '\nmarkerObj', markerObj)
 
     dayObj[`${underscores}Day${dayNum}`] = arrayRemove(prevMakerObj);
-    dayObj.ModifiedAt = serverTimestamp(); 
+    // dayObj.ModifiedAt = serverTimestamp(); 
 
     await updateDoc(existingMarkers, dayObj);
 
+    dayObj = {};
+
+    dayObj[`${underscores}Day${dayNum}`] = arrayUnion(markerObj); 
+    dayObj.ModifiedAt = serverTimestamp(); 
+
+    await updateDoc(existingMarkers, dayObj); 
 }
 
 // async function removePrevMarkerObjOnFirebase(userMail, dayNum, $dayText) {
@@ -1064,162 +1070,6 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
 
 //     await updateDoc(existingMarkers, dayObj);
 // }
-
-// $downloadUserCSV.addEventListener('click', async (e) => {
-//     const userMail = localStorage.getItem('user-email'); 
-//     if (!userMail) {
-//         alert('No User Email Found!'); 
-//         return;
-//     } 
-
-//     const $downloadBtn = e.currentTarget; 
-//     const downloadBtnTxt = $downloadBtn.value; 
-//     $downloadBtn.value = 'Loading...';
-
-//     const dayEvents = await getUserDayEvents(userMail);
-
-//     console.log(dayEvents)
-
-//     const csv = convertUserEventsToCSV(userMail, dayEvents);
-
-//     downloadBlob(csv, `${userMail}_Days-Events.csv`, 'text/csv;charset=utf-8;');
-
-//     $downloadBtn.value = downloadBtnTxt;
-
-// });
-
-// $downloadDBCSV.addEventListener('click', async (e) => {
-//     const userMail = localStorage.getItem('user-email'); 
-//     if (!userMail) {
-//         alert('No User Email Found!'); 
-//         return;
-//     } 
-
-//     const $downloadBtn = e.currentTarget; 
-//     const downloadBtnTxt = $downloadBtn.value; 
-//     $downloadBtn.value = 'Loading...';
-
-//     const allUsersEvents = await getAllUsersDayEvents();
-    
-//     // console.log('All User Events Retrieved...') 
-
-//     // console.log(allUsersEvents)
-    
-
-//     const csv = convertAllUsersEventsToCSV(allUsersEvents);
-
-//     downloadBlob(csv, `All-Users-Days-Events.csv`, 'text/csv;charset=utf-8;');
-
-//     $downloadBtn.value = downloadBtnTxt;
-// });
-
-async function getAllUsersDayEvents() {
-    const querySnapshot = await getDocs(collection(db, 'Locations')); 
-
-    const allUsersEvents = {}; 
-
-    querySnapshot.forEach(user => {
-        // doc.data() is never undefined for query doc snapshots
-        const email = user.id.split('User-')[1]; 
-
-        const userData = user.data();
-        const { CreatedAt, ModifiedAt } = userData; 
-
-        const daysArr = [];
-        for (const [key, val] of Object.entries(userData)) {
-            if (key.startsWith('_')) {
-                daysArr.push(val);  
-            }
-        }
-
-        allUsersEvents[email] = daysArr; 
-        if (CreatedAt) allUsersEvents[email].CreatedAt = CreatedAt;
-        if (ModifiedAt) allUsersEvents[email].ModifiedAt = ModifiedAt;
-
-    });  
-
-    console.log('allUsersEvents', allUsersEvents)
-
-    return allUsersEvents;  
-}
-
-function convertAllUsersEventsToCSV(allUsersEvents) {
-    let str = getCSVHeaderStr();  
-
-    for (const [userMail, dayEvents] of Object.entries(allUsersEvents)) {
-        str += convertArrayToCSV(userMail, dayEvents); 
-    }
-
-    return str; 
-}
-
-async function getUserDayEvents(userMail) {
-    const querySnapshot = await getDocs(collection(db, `Markers-${userMail}`));  
-    const data = [];
-
-    querySnapshot.forEach((doc) => { 
-        data.push( doc.data().eventsArr );
-    });
-
-    return data; 
-}
-
-function convertUserEventsToCSV(userMail, dayEvents) {
-    let str = getCSVHeaderStr();  
-    str += convertArrayToCSV(userMail, dayEvents); 
-    return str; 
-}
-
-function convertArrayToCSV(userMail, arr) {    
-    const arrHasDays = arr.find(d => Array.isArray(d) && d.length);
-
-    let createdAt = arr.CreatedAt ? new Date(arr.CreatedAt.toDate()).toUTCString() : ''; 
-    let modifiedAt = arr.ModifiedAt ? new Date(arr.ModifiedAt.toDate()).toUTCString() : ''; 
-    let str = ''; 
-
-    if (!arrHasDays) {
-        str += `${userMail},"${createdAt}","${modifiedAt}"\n`;   
-        return str;
-    }
-
-    let userMailSet = false;
-    let createdAtSet = false;
-    let modifiedAtSet = false; 
-
-    for (let i = 0, max = arr.length; i < max; i++) {
-        const day = arr[i];
-        const dayNum = i; 
-
-        str += day.map(eventObj => {
-            const { dayEventName='', title='', lat='', lng='' } = eventObj; 
-            const row = `${!userMailSet ? userMail : ''},"${!createdAtSet ? createdAt : ''}","${!modifiedAtSet ? modifiedAt : ''}",${dayNum+1},"${dayEventName}","${title}",${lat},${lng}\n`; 
-            if (!userMailSet) userMailSet = true; 
-            if (!createdAtSet) createdAtSet = true; 
-            if (!modifiedAtSet) modifiedAtSet = true; 
-            return row;
-        }).join(''); 
-
-    }
-
-    return str;
-}
-
-function getCSVHeaderStr() {
-    return 'User Email,Created At,Modified At,Day,Day Event Name,Title,Latitude,Longitude\n'; 
-}
-
-function downloadBlob(content, filename, contentType) {
-    // Create a blob
-    var blob = new Blob([content], { type: contentType });
-    var url = URL.createObjectURL(blob);
-  
-    // Create a link to download it
-    var pom = document.createElement('a');
-    pom.href = url;
-    pom.setAttribute('download', filename);
-    pom.click();
-} 
-
 
 
 $hourlyBtn.addEventListener('click', e => {
