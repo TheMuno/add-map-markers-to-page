@@ -40,9 +40,9 @@ const $map = document.querySelector('#map'),
     $daysSelect = document.querySelector('#days-select'), 
     $addDay = document.querySelector('.add-day'),
     $dayEvents = document.querySelector('.day-events'),
-    $downloadUserCSV = document.querySelector('.download-user-csv'), 
-    $downloadDBCSV = document.querySelector('.download-all-csv'),
-    $printedPlanBtn = document.querySelector('.printed-plan'),
+    // $downloadUserCSV = document.querySelector('.download-user-csv'), 
+    // $downloadDBCSV = document.querySelector('.download-all-csv'),
+    // $printedPlanBtn = document.querySelector('.printed-plan'),
     $khonsuNotes = document.querySelector('.khonsu-notes .knotes'),
     $qrCodeContainer = document.querySelector('.khonsu-data.map-url-qrcode .map-url-qr'),
     $hourlyBtn = document.querySelector('.view-hourly'),
@@ -83,9 +83,9 @@ $logoutBtn?.addEventListener('click', () => {
     localStorage.removeItem('user-email');
 }); 
 
-$printedPlanBtn.addEventListener('click', e => {
-    window.open('./event-list.html')
-});
+// $printedPlanBtn.addEventListener('click', e => {
+//     window.open('./event-list.html')
+// });
 
 
 
@@ -1001,53 +1001,53 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
 //     await updateDoc(existingMarkers, dayObj);
 // }
 
-$downloadUserCSV.addEventListener('click', async (e) => {
-    const userMail = localStorage.getItem('user-email'); 
-    if (!userMail) {
-        alert('No User Email Found!'); 
-        return;
-    } 
+// $downloadUserCSV.addEventListener('click', async (e) => {
+//     const userMail = localStorage.getItem('user-email'); 
+//     if (!userMail) {
+//         alert('No User Email Found!'); 
+//         return;
+//     } 
 
-    const $downloadBtn = e.currentTarget; 
-    const downloadBtnTxt = $downloadBtn.value; 
-    $downloadBtn.value = 'Loading...';
+//     const $downloadBtn = e.currentTarget; 
+//     const downloadBtnTxt = $downloadBtn.value; 
+//     $downloadBtn.value = 'Loading...';
 
-    const dayEvents = await getUserDayEvents(userMail);
+//     const dayEvents = await getUserDayEvents(userMail);
 
-    console.log(dayEvents)
+//     console.log(dayEvents)
 
-    const csv = convertUserEventsToCSV(userMail, dayEvents);
+//     const csv = convertUserEventsToCSV(userMail, dayEvents);
 
-    downloadBlob(csv, `${userMail}_Days-Events.csv`, 'text/csv;charset=utf-8;');
+//     downloadBlob(csv, `${userMail}_Days-Events.csv`, 'text/csv;charset=utf-8;');
 
-    $downloadBtn.value = downloadBtnTxt;
+//     $downloadBtn.value = downloadBtnTxt;
 
-});
+// });
 
-$downloadDBCSV.addEventListener('click', async (e) => {
-    const userMail = localStorage.getItem('user-email'); 
-    if (!userMail) {
-        alert('No User Email Found!'); 
-        return;
-    } 
+// $downloadDBCSV.addEventListener('click', async (e) => {
+//     const userMail = localStorage.getItem('user-email'); 
+//     if (!userMail) {
+//         alert('No User Email Found!'); 
+//         return;
+//     } 
 
-    const $downloadBtn = e.currentTarget; 
-    const downloadBtnTxt = $downloadBtn.value; 
-    $downloadBtn.value = 'Loading...';
+//     const $downloadBtn = e.currentTarget; 
+//     const downloadBtnTxt = $downloadBtn.value; 
+//     $downloadBtn.value = 'Loading...';
 
-    const allUsersEvents = await getAllUsersDayEvents();
+//     const allUsersEvents = await getAllUsersDayEvents();
     
-    // console.log('All User Events Retrieved...') 
+//     // console.log('All User Events Retrieved...') 
 
-    // console.log(allUsersEvents)
+//     // console.log(allUsersEvents)
     
 
-    const csv = convertAllUsersEventsToCSV(allUsersEvents);
+//     const csv = convertAllUsersEventsToCSV(allUsersEvents);
 
-    downloadBlob(csv, `All-Users-Days-Events.csv`, 'text/csv;charset=utf-8;');
+//     downloadBlob(csv, `All-Users-Days-Events.csv`, 'text/csv;charset=utf-8;');
 
-    $downloadBtn.value = downloadBtnTxt;
-});
+//     $downloadBtn.value = downloadBtnTxt;
+// });
 
 async function getAllUsersDayEvents() {
     const querySnapshot = await getDocs(collection(db, 'Locations')); 
