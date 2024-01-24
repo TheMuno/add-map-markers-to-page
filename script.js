@@ -991,11 +991,14 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
 
     console.log('prevMakerObj', prevMakerObj, '\nmarkerObj', markerObj)
 
-    dayObj[`${underscores}Day${dayNum}`] = arrayRemove(prevMakerObj); 
+    dayObj[`${underscores}Day${dayNum}`] = arrayRemove(prevMakerObj);
+
+    await updateDoc(existingMarkers, dayObj); 
+
     dayObj[`${underscores}Day${dayNum}`] = arrayUnion(markerObj); 
     dayObj.ModifiedAt = serverTimestamp(); 
 
-    await updateDoc(existingMarkers, dayObj);
+    await updateDoc(existingMarkers, dayObj); 
 }
 
 // async function saveMarkerToFirebase(userMail, dayNum, markerObj) {  
