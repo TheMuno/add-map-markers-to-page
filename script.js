@@ -795,7 +795,8 @@ async function removeFirebaseSavedMarker(userMail, dayNum, $event) {
 async function removeFirebaseSavedDay(userMail, dayNum) {
     const dayEventRef = doc(db, 'Locations', `User-${userMail}`);
     const dayObj = {};
-    dayObj[`_Day${dayNum}`] = []; 
+    const underscores = dayNum.toString().split('').map(_ => '_').join('');  
+    dayObj[`${underscores}Day${dayNum}`] = []; 
     await updateDoc(dayEventRef, dayObj);  
 }  
 
