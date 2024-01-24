@@ -973,13 +973,50 @@ $dayEvents.addEventListener('change', async e => {
     const $header = $dayText.closest('.day-event').querySelector('.day-head .header-text');
     const dayNum = $header.textContent.trim().split(/\s+/).pop();  //.slice(-1);
 
-    updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText); 
+    // updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText); 
 
     // await removePrevMarkerObjOnFirebase(userMail, dayNum, $dayText);
     // await updateFirebaseWithNewMarkerObj(userMail, dayNum, $dayText);
+
+    await func1(userMail, dayNum, $dayText);
+    await func2(userMail, dayNum, $dayText); 
 });
 
-async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
+// async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
+//     const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
+//     let dayObj = {};
+//     const underscores = dayNum.toString().split('').map(_ => '_').join('');  
+
+//     const $singleEvent = $dayText.closest('.single-event');
+//     const lat = $singleEvent.markerObj?.lat; 
+//     const lng = $singleEvent.markerObj?.lng; 
+//     const title = $singleEvent.markerObj?.title; 
+//     const prevDayEventName = $singleEvent.markerObj?.dayEventName; 
+//     // currentDayMarkers.splice(currentDayMarkers.indexOf($event.marker), 1);   
+
+//     const prevMakerObj = {lat, lng, title, dayEventName: prevDayEventName}; 
+
+//     const markerObj = {lat, lng, title}; 
+//     markerObj.dayEventName = $dayText.value.trim();  
+
+//     console.log('Part 1', 'prevMakerObj', prevMakerObj, '\nmarkerObj', markerObj)
+
+//     dayObj[`${underscores}Day${dayNum}`] = arrayUnion(markerObj); 
+//     // dayObj.ModifiedAt = serverTimestamp(); 
+
+//     await updateDoc(existingMarkers, dayObj);
+
+//     dayObj = {};
+
+//     dayObj[`${underscores}Day${dayNum}`] = arrayRemove(prevMakerObj);
+//     dayObj.ModifiedAt = serverTimestamp(); 
+
+//     await updateDoc(existingMarkers, dayObj); 
+
+//     console.log('Part 2', 'prevMakerObj', prevMakerObj, '\nmarkerObj', markerObj)
+// }
+
+async function func1(userMail, dayNum, $dayText){
     const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
     let dayObj = {};
     const underscores = dayNum.toString().split('').map(_ => '_').join('');  
@@ -988,29 +1025,33 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
     const lat = $singleEvent.markerObj?.lat; 
     const lng = $singleEvent.markerObj?.lng; 
     const title = $singleEvent.markerObj?.title; 
-    const prevDayEventName = $singleEvent.markerObj?.dayEventName; 
-    // currentDayMarkers.splice(currentDayMarkers.indexOf($event.marker), 1);   
-
-    const prevMakerObj = {lat, lng, title, dayEventName: prevDayEventName}; 
 
     const markerObj = {lat, lng, title}; 
     markerObj.dayEventName = $dayText.value.trim();  
-
-    console.log('Part 1', 'prevMakerObj', prevMakerObj, '\nmarkerObj', markerObj)
 
     dayObj[`${underscores}Day${dayNum}`] = arrayUnion(markerObj); 
     // dayObj.ModifiedAt = serverTimestamp(); 
 
     await updateDoc(existingMarkers, dayObj);
+}
 
-    dayObj = {};
+async function func2(userMail, dayNum, $dayText){
+    const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
+    let dayObj = {};
+    const underscores = dayNum.toString().split('').map(_ => '_').join('');  
+
+    const $singleEvent = $dayText.closest('.single-event');
+    const lat = $singleEvent.markerObj?.lat; 
+    const lng = $singleEvent.markerObj?.lng; 
+    const title = $singleEvent.markerObj?.title; 
+    const prevDayEventName = $singleEvent.markerObj?.dayEventName;  
+
+    const prevMakerObj = {lat, lng, title, dayEventName: prevDayEventName}; 
 
     dayObj[`${underscores}Day${dayNum}`] = arrayRemove(prevMakerObj);
     dayObj.ModifiedAt = serverTimestamp(); 
 
     await updateDoc(existingMarkers, dayObj); 
-
-    console.log('Part 2', 'prevMakerObj', prevMakerObj, '\nmarkerObj', markerObj)
 }
 
 // async function removePrevMarkerObjOnFirebase(userMail, dayNum, $dayText) {
