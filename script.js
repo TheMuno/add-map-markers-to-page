@@ -959,7 +959,7 @@ $dayEvents.addEventListener('click', e => {
     }
 });   
 
-$dayEvents.addEventListener('change', e => {
+$dayEvents.addEventListener('change', async e => {
     const $dayText = e.target.closest('.day-text');
     if (!$dayText) return;
 
