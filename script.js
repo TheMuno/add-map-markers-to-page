@@ -984,7 +984,7 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
     const prevDayEventName = $singleEvent.markerObj?.dayEventName; 
     // currentDayMarkers.splice(currentDayMarkers.indexOf($event.marker), 1);   
 
-    const prevMakerObj = {lat, lng, title, prevDayEventName}; 
+    const prevMakerObj = {lat, lng, title, dayEventName: prevDayEventName}; 
 
     const markerObj = {lat, lng, title}; 
     markerObj.dayEventName = $dayText.value;  
