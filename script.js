@@ -1004,6 +1004,8 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
         return {lat, lng, title, dayEventName};
     });
 
+    console.log('dayEvents', dayEvents)
+
     dayObj[`${underscores}Day${dayNum}`] = dayEvents;
     dayObj.ModifiedAt = serverTimestamp(); 
 
