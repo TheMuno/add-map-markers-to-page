@@ -1013,7 +1013,7 @@ $hourlyBtn.addEventListener('click', e => {
 }); 
 
 $dayTimeSectionsSelect.addEventListener('change', e => {
-    const $selectedTime = $dayTimesSelect.value.toLowerCase().trim();
+    const $selectedTime = e.currentTarget.value.toLowerCase().trim();
     // const $hrEvents = $dayTimesSelect.closest('.hour-events '); 
     // const $otherTimes = $hrEvents.querySelectorAll(`.day-time:not(.${$selectedTime})`); 
 
