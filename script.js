@@ -1021,17 +1021,20 @@ $dayTimeSectionsSelect.addEventListener('change', e => {
     // $otherTimes.forEach(time => time.classList.add('hide'));
 
     if ($selectedTime.includes('morning')) {
+        $dayTimesSelect.innerHTML = '';
         for (let i = 8; i < 12; i++) {
             createSelectOptions(`${i} a.m`);
         } 
     }
     else if ($selectedTime.includes('afternoon')) { 
+        $dayTimesSelect.innerHTML = '';
         createSelectOptions('12 p.m');
         for (let i = 1; i < 6; i++) {
             createSelectOptions(`${i} p.m`);
         } 
     }
-    else if ($selectedTime.includes('evening')) { 
+    else if ($selectedTime.includes('evening')) {
+        $dayTimesSelect.innerHTML = ''; 
         for (let i = 6; i < 12; i++) {
             createSelectOptions(`${i} p.m`);
         } 
