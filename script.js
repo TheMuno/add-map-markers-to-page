@@ -999,7 +999,7 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
         const lat = singleEvent.markerObj?.lat; 
         const lng = singleEvent.markerObj?.lng; 
         const title = singleEvent.markerObj?.title; 
-        const dayEventName = singleEvent.value.trim();  //.markerObj?.dayEventName; 
+        const dayEventName = singleEvent.querySelector('.day-text').value.trim();  //.markerObj?.dayEventName; 
 
         return {lat, lng, title, dayEventName};
     });
