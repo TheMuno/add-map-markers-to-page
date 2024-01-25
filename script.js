@@ -1022,18 +1022,18 @@ $dayTimeSectionsSelect.addEventListener('change', e => {
 
     if ($selectedTime.includes('morning')) {
         for (let i = 8; i < 12; i++) {
-            createSelectOptions(i);
+            createSelectOptions(`${i} a.m`);
         } 
     }
     else if ($selectedTime.includes('afternoon')) { 
-        createSelectOptions(12);
+        createSelectOptions('12 p.m');
         for (let i = 1; i < 6; i++) {
-            createSelectOptions(i);
+            createSelectOptions(`${i} p.m`);
         } 
     }
-    else if ($selectedTime.includes('afternoon')) { 
+    else if ($selectedTime.includes('evening')) { 
         for (let i = 6; i < 12; i++) {
-            createSelectOptions(i);
+            createSelectOptions(`${i} p.m`);
         } 
     }
 });
@@ -1041,9 +1041,8 @@ $dayTimeSectionsSelect.addEventListener('change', e => {
 
 function createSelectOptions(hr) {
     const $option = document.createElement('option');
-    const time = `${hr} a.m`; 
-    $option.value = time;
-    $option.textContent = time; 
+    $option.value = hr;
+    $option.textContent = hr; 
     $dayTimesSelect.append($option);
 }
 
