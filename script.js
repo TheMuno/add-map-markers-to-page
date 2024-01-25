@@ -973,7 +973,7 @@ $dayEvents.addEventListener('change', async e => {
     const $header = $dayText.closest('.day-event').querySelector('.day-head .header-text');
     const dayNum = $header.textContent.trim().split(/\s+/).pop();  //.slice(-1);
 
-    updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText); 
+    await updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText); 
 
     // await removePrevMarkerObjOnFirebase(userMail, dayNum, $dayText);
     // await updateFirebaseWithNewMarkerObj(userMail, dayNum, $dayText);
