@@ -305,12 +305,15 @@ qr-code {
     color: red; 
 }
 
+.day-time-sections,
 .day-times {
     width: 100%;
     height: 40px;
+    margin-top: 2px;
     margin-bottom: 10px; 
 }
 
+.day-time-sections:focus,
 .day-times:focus {
     outline: none;
 }
