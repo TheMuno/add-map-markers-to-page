@@ -312,6 +312,10 @@ qr-code {
     margin-bottom: 10px; 
 }
 
+.day-time-sections {
+    margin-bottom: 0; 
+}
+
 .day-times {
     margin-top: 2px;
 }
