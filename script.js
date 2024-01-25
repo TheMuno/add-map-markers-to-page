@@ -49,6 +49,7 @@ const $map = document.querySelector('#map'),
     $addReservation = document.querySelector('.add-reservation'),
     $reservations = document.querySelector('.reservations'),
     $hourEvents = document.querySelector('.hour-events'),
+    $dayTimeSectionsSelect = document.querySelector('.day-time-sections'),
     $dayTimesSelect = document.querySelector('.day-times');
     
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
@@ -1011,11 +1012,38 @@ $hourlyBtn.addEventListener('click', e => {
     }
 }); 
 
-$dayTimesSelect.addEventListener('change', e => {
-    const $selectedTime = $dayTimesSelect.value;
-    const $hrEvents = $dayTimesSelect.closest('.hour-events '); 
-    const $otherTimes = $hrEvents.querySelectorAll(`.day-time:not(.${$selectedTime})`); 
+$dayTimeSectionsSelect.addEventListener('change', e => {
+    const $selectedTime = $dayTimesSelect.value.toLowerCase().trim();
+    // const $hrEvents = $dayTimesSelect.closest('.hour-events '); 
+    // const $otherTimes = $hrEvents.querySelectorAll(`.day-time:not(.${$selectedTime})`); 
 
-    $hrEvents.querySelector(`.${$selectedTime}`)?.classList.remove('hide');
-    $otherTimes.forEach(time => time.classList.add('hide'));
+    // $hrEvents.querySelector(`.${$selectedTime}`)?.classList.remove('hide');
+    // $otherTimes.forEach(time => time.classList.add('hide'));
+
+    if ($selectedTime.includes('morning')) {
+        for (let i = 8; i < 12; i++) {
+            createSelectOptions(i);
+        } 
+    }
+    else if ($selectedTime.includes('afternoon')) { 
+        createSelectOptions(12);
+        for (let i = 1; i < 6; i++) {
+            createSelectOptions(i);
+        } 
+    }
+    else if ($selectedTime.includes('afternoon')) { 
+        for (let i = 6; i < 12; i++) {
+            createSelectOptions(i);
+        } 
+    }
 });
+
+
+function createSelectOptions(hr) {
+    const $option = document.createElement('option');
+    const time = `${hr} a.m`; 
+    $option.value = time;
+    $option.textContent = time; 
+    $dayTimesSelect.append($option);
+}
+
