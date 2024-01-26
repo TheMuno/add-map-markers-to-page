@@ -531,7 +531,7 @@ function addDayEventList(dayNum) {
 
 
 
-    const $dayHrEvent = $hourEvents.children[0].cloneNode(true);
+    const $dayHrEvent = $hourEvents.querySelector('.day-event.day-1-event').cloneNode(true);
     console.log('$dayHrEvent', $dayHrEvent)
     $dayHrEvent.classList.remove('day-1-event');
     $dayHrEvent.classList.add(`day-${dayNum}-event`);
