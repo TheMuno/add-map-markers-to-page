@@ -1025,6 +1025,7 @@ $hourlyBtn.addEventListener('click', e => {
     $hourEvents.classList.toggle('hide');
     if ($dayEvents.classList.contains('hide')) {
         $hourlyBtn.value = 'View Days';
+        $daysSelect.selectedIndex = 0; 
     }
     else {
         $hourlyBtn.value = 'View Hourly';
