@@ -617,6 +617,9 @@ $dayEvents.addEventListener('click', e => {
         }
     }
     else if (e.target.closest('.remove-day')) {
+        const userMail = localStorage.getItem('user-email');   
+        if (userMail) return; 
+
         const $removeDay = e.target; 
         const $dayEvent = $removeDay.closest('.day-event');
 
@@ -679,8 +682,8 @@ function removeDay($day) {
         currentDayMarkers = [];  
     }
 
-    const userMail = localStorage.getItem('user-email');   
-    if (userMail) removeFirebaseSavedDay(userMail, dayNum);
+    const userMail = localStorage.getItem('user-email');
+    removeFirebaseSavedDay(userMail, dayNum);
 }
 
 
@@ -814,22 +817,21 @@ async function removeFirebaseSavedMarker(userMail, dayNum, $event) {
 
 async function removeFirebaseSavedDay(userMail, dayNum) {
     const dayEventRef = doc(db, 'Locations', `User-${userMail}`);
-    // const dayObj = {};
+    const dayObj = {};
     const underscores = dayNum.toString().split('').map(_ => '_').join('');  
-    // dayObj[`${underscores}Day${dayNum}`] = []; 
+    dayObj[`${underscores}Day${dayNum}`] = []; 
 
     console.log('dayObj', dayObj)
 
-    // await updateDoc(dayEventRef, dayObj);  
+    await updateDoc(dayEventRef, dayObj);  
 
-    // const cityRef = doc(db, 'cities', 'BJ');
 
-    const dayToDelete = `${underscores}Day${dayNum}`;
+    // const dayToDelete = `${underscores}Day${dayNum}`;
 
-    // Remove the 'capital' field from the document
-    await updateDoc(dayEventRef, {
-        [dayToDelete]: deleteField()
-    });
+    // // Remove the 'capital' field from the document
+    // await updateDoc(dayEventRef, {
+    //     [dayToDelete]: deleteField()
+    // });
 }  
 
 
