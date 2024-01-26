@@ -528,6 +528,16 @@ function addDayEventList(dayNum) {
     
     $dayEvent.classList.remove('hide');   
     $dayEvents.insertBefore($dayEvent, $dayEvents.querySelector(`.day-${dayNum+1}-event`)); 
+
+
+
+    const $dayHrEvent = $hourEvents.children[0].cloneNode(true);
+    $dayHrEvent.classList.remove('day-1-event');
+    $dayHrEvent.classList.add(`day-${dayNum}-event`);
+    $dayHrEvent.querySelector('.day-head .header-text').textContent = `Day ${dayNum}`; 
+
+    $dayHrEvent.classList.remove('hide'); 
+    $hourEvents.append($dayHrEvent);
 }
 
 function getCurrentDayNum() {
