@@ -1014,11 +1014,11 @@ $hourlyBtn.addEventListener('click', e => {
 
 $dayTimeSectionsSelect.addEventListener('change', e => {
     const $selectedTime = e.currentTarget.value.toLowerCase().trim();
-    // const $hrEvents = $dayTimesSelect.closest('.hour-events '); 
-    // const $otherTimes = $hrEvents.querySelectorAll(`.day-time:not(.${$selectedTime})`); 
+    const $hrEvents = e.currentTarget.closest('.hour-events '); 
+    const $otherTimes = $hrEvents.querySelectorAll(`.day-time:not(.${$selectedTime})`); 
 
-    // $hrEvents.querySelector(`.${$selectedTime}`)?.classList.remove('hide');
-    // $otherTimes.forEach(time => time.classList.add('hide'));
+    $hrEvents.querySelector(`.${$selectedTime}`)?.classList.remove('hide');
+    $otherTimes.forEach(time => time.classList.add('hide'));
 
     if ($selectedTime.includes('morning')) {
         $dayTimesSelect.innerHTML = '';
