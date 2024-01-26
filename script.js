@@ -530,15 +530,22 @@ function addDayEventList(dayNum) {
     $dayEvents.insertBefore($dayEvent, $dayEvents.querySelector(`.day-${dayNum+1}-event`)); 
 
 
-
+    // Hour Events 
     const $dayHrEvent = $hourEvents.querySelector('.day-event.day-1-event').cloneNode(true);
-    console.log('$dayHrEvent', $dayHrEvent)
     $dayHrEvent.classList.remove('day-1-event');
     $dayHrEvent.classList.add(`day-${dayNum}-event`);
     $dayHrEvent.querySelector('.day-head .header-text').textContent = `Day ${dayNum}`; 
 
+    if ($dayHrEvent.querySelector('.single-event.hide'))   {
+        $dayHrEvent.querySelectorAll('.single-event:not(.hide)').forEach(el => el.remove()); 
+        $dayHrEvent.querySelector('.single-event.hide').classList.remove('hide'); 
+    }
+
+    $dayHrEvent.querySelector('.remove-marker').classList.add('hide');
+    $dayHrEvent.querySelector('.get-directions').classList.add('hide');
+
     $dayHrEvent.classList.remove('hide'); 
-    $hourEvents.append($dayHrEvent);
+    $hourEvents.querySelector(`.day-${dayNum}-event`).append($dayHrEvent);
 }
 
 function getCurrentDayNum() {
