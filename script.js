@@ -545,7 +545,8 @@ function addDayEventList(dayNum) {
     $dayHrEvent.querySelector('.get-directions').classList.add('hide');
 
     $dayHrEvent.classList.remove('hide'); 
-    $hourEvents.querySelector(`.day-${dayNum}-event`).append($dayHrEvent);
+    // $hourEvents.querySelector(`.day-${dayNum}-event`).append($dayHrEvent);
+    $hourEvents.insertBefore($dayHrEvent, $hourEvents.querySelector(`.day-${dayNum+1}-event`)); 
 }
 
 function getCurrentDayNum() {
