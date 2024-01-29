@@ -1080,6 +1080,7 @@ $dayEvents.addEventListener('click', e => {
     const $dayEvent = $hourlyBtn.closest('.day-event'); 
 
     const $dayTimeSections = $dayEvent.querySelector('.day-time-sections'); 
+    const $fullDayEvents = $dayEvent.querySelector('.all-events.full-day'); 
 
     const $hourEvents = $dayEvent.querySelector('.hour-events');
     $hourEvents.classList.toggle('hide');
@@ -1089,9 +1090,6 @@ $dayEvents.addEventListener('click', e => {
 
         const $timeEvents = $dayEvent.querySelectorAll('.time-events');
         $timeEvents.forEach(time => time.classList.add('hide')); 
-
-        const $fullDayEvents = $dayEvent.querySelector('.all-events.full-day'); 
-        $fullDayEvents.classList.add('hide');  
 
         const timeOfDay = $dayTimeSections.value; 
         if (timeOfDay.includes('morning')) {
@@ -1111,6 +1109,7 @@ $dayEvents.addEventListener('click', e => {
         $hourlyBtn.value = 'View Hourly';
         $dayTimeSections.selectedIndex = 0; 
         $dayTimeSections.classList.add('hide');
+        $fullDayEvents.classList.remove('hide');  
     }
 });
 
