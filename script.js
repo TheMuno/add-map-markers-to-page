@@ -47,10 +47,10 @@ const $map = document.querySelector('#map'),
     $qrCodeContainer = document.querySelector('.khonsu-data.map-url-qrcode .map-url-qr'),
     // $hourlyBtn = document.querySelector('.view-hourly'),
     $addReservation = document.querySelector('.add-reservation'),
-    $reservations = document.querySelector('.reservations'),
-    $hourEvents = document.querySelector('.hour-events'),
-    $dayTimeSectionsSelect = document.querySelector('.day-time-sections'),
-    $dayTimesSelect = document.querySelector('.day-times');
+    $reservations = document.querySelector('.reservations');
+    // $hourEvents = document.querySelector('.hour-events'),
+    // $dayTimeSectionsSelect = document.querySelector('.day-time-sections'),
+    // $dayTimesSelect = document.querySelector('.day-times');
     
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
     
@@ -1062,15 +1062,15 @@ $dayEvents.addEventListener('click', e => {
         $timeEvents.forEach(time => time.classList.add('hide')); 
 
         if (time.includes('morning')) {
-            const $mrnEvents = $timeEvents.querySelector('.morning');
+            const $mrnEvents = $hourEvents.querySelector('.morning');
             $mrnEvents.classList.remove('hide');
         }
         else if (time.includes('afternoon')) { 
-            const $afternoonEvents = $timeEvents.querySelector('.afternoon');
+            const $afternoonEvents = $hourEvents.querySelector('.afternoon');
             $afternoonEvents.classList.remove('hide');
         }
         else {
-            const $eveningEvents = $timeEvents.querySelector('.evening');
+            const $eveningEvents = $hourEvents.querySelector('.evening');
             $eveningEvents.classList.remove('hide');
         }
     }
@@ -1079,40 +1079,40 @@ $dayEvents.addEventListener('click', e => {
     }
 });
 
-$dayTimeSectionsSelect.addEventListener('change', e => {
-    const $selectedTime = e.currentTarget.value.toLowerCase().trim();
-    const $hrEvents = e.currentTarget.closest('.hour-events '); 
-    const $otherTimes = $hrEvents.querySelectorAll(`.day-time:not(.${$selectedTime})`); 
+// $dayTimeSectionsSelect.addEventListener('change', e => {
+//     const $selectedTime = e.currentTarget.value.toLowerCase().trim();
+//     const $hrEvents = e.currentTarget.closest('.hour-events '); 
+//     const $otherTimes = $hrEvents.querySelectorAll(`.day-time:not(.${$selectedTime})`); 
 
-    $hrEvents.querySelector(`.${$selectedTime}`)?.classList.remove('hide');
-    $otherTimes.forEach(time => time.classList.add('hide'));
+//     $hrEvents.querySelector(`.${$selectedTime}`)?.classList.remove('hide');
+//     $otherTimes.forEach(time => time.classList.add('hide'));
 
-    if ($selectedTime.includes('morning')) {
-        $dayTimesSelect.innerHTML = '';
-        for (let i = 8; i < 12; i++) {
-            createSelectOptions(`${i} a.m`);
-        } 
-    }
-    else if ($selectedTime.includes('afternoon')) { 
-        $dayTimesSelect.innerHTML = '';
-        createSelectOptions('12 p.m');
-        for (let i = 1; i < 6; i++) {
-            createSelectOptions(`${i} p.m`);
-        } 
-    }
-    else if ($selectedTime.includes('evening')) {
-        $dayTimesSelect.innerHTML = ''; 
-        for (let i = 6; i < 12; i++) {
-            createSelectOptions(`${i} p.m`);
-        } 
-    }
-});
+//     if ($selectedTime.includes('morning')) {
+//         $dayTimesSelect.innerHTML = '';
+//         for (let i = 8; i < 12; i++) {
+//             createSelectOptions(`${i} a.m`);
+//         } 
+//     }
+//     else if ($selectedTime.includes('afternoon')) { 
+//         $dayTimesSelect.innerHTML = '';
+//         createSelectOptions('12 p.m');
+//         for (let i = 1; i < 6; i++) {
+//             createSelectOptions(`${i} p.m`);
+//         } 
+//     }
+//     else if ($selectedTime.includes('evening')) {
+//         $dayTimesSelect.innerHTML = ''; 
+//         for (let i = 6; i < 12; i++) {
+//             createSelectOptions(`${i} p.m`);
+//         } 
+//     }
+// });
 
 
-function createSelectOptions(hr) {
-    const $option = document.createElement('option');
-    $option.value = hr;
-    $option.textContent = hr; 
-    $dayTimesSelect.append($option);
-}
+// function createSelectOptions(hr) {
+//     const $option = document.createElement('option');
+//     $option.value = hr;
+//     $option.textContent = hr; 
+//     $dayTimesSelect.append($option);
+// }
 
