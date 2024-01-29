@@ -45,7 +45,7 @@ const $map = document.querySelector('#map'),
     // $printedPlanBtn = document.querySelector('.printed-plan'),
     $khonsuNotes = document.querySelector('.khonsu-notes .knotes'),
     $qrCodeContainer = document.querySelector('.khonsu-data.map-url-qrcode .map-url-qr'),
-    $hourlyBtn = document.querySelector('.view-hourly'),
+    // $hourlyBtn = document.querySelector('.view-hourly'),
     $addReservation = document.querySelector('.add-reservation'),
     $reservations = document.querySelector('.reservations'),
     $hourEvents = document.querySelector('.hour-events'),
@@ -1043,6 +1043,35 @@ $hourlyBtn.addEventListener('click', e => {
         $hourlyBtn.value = 'View Hourly';
     }
 }); 
+
+
+$dayEvents.addEventListener('click', e => {
+    if (!e.target.closest('.view-hourly')) return; 
+    
+    const $hourlyBtn = e.target;
+    const time = $hourlyBtn.value;
+    const $dayEvent = $hourlyBtn.closest('.day-event'); 
+
+    const $hourEvents = $dayEvent.querySelector('.hour-events');
+    $hourEvents.classList.toggle('hide');
+    if ($hourEvents.classList.contains('hide')) return; 
+
+    const $timeEvents = $dayEvent.querySelector('.time-events');
+    $timeEvents.forEach(time => time.classList.add('hide')); 
+
+    if (time.includes('morning')) {
+        const $mrnEvents = $timeEvents.querySelector('.morning');
+        $mrnEvents.classList.remove('hide');
+    }
+    else if (time.includes('afternoon')) { 
+        const $afternoonEvents = $timeEvents.querySelector('.afternoon');
+        $afternoonEvents.classList.remove('hide');
+    }
+    else {
+        const $eveningEvents = $timeEvents.querySelector('.evening');
+        $eveningEvents.classList.remove('hide');
+    }
+});
 
 $dayTimeSectionsSelect.addEventListener('change', e => {
     const $selectedTime = e.currentTarget.value.toLowerCase().trim();

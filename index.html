@@ -21,6 +21,10 @@
         .day-top-buttons .day-time-sections {
             width: 100px; 
         }
+
+        .hour-events.hide {
+            display: none;
+        }
     </style>   
 </head>
 <body>
@@ -73,6 +77,17 @@
                         <img class="remove-marker" src="Imgs/x.png" alt="">
                         <img class="get-directions" src="Imgs/directions.png" alt=""> 
                     </div>  
+                    <div class="hour-events hide"> 
+                        <div class="time-events morning">
+                            <div class="all-events"></div>
+                        </div>
+                        <div class="time-events afternoon">
+                            <div class="all-events"></div>
+                        </div>
+                        <div class="time-events evening">
+                            <div class="all-events"></div>
+                        </div>
+                    </div>
                     <div class="all-events"></div> 
                     <div class="modal hide"> 
                         <div class="modal-content">
@@ -81,118 +96,6 @@
                     </div>
                 </div>
             </div> 
-            <div class="hour-events hide"> 
-                <select name="day-time-sections" id="day-time-sections" class="day-time-sections">
-                    <option value="morning">Morning</option>
-                    <option value="afternoon">Afternoon</option>
-                    <option value="evening">Evening</option>
-                </select>
-                <select name="day-times" id="day-times" class="day-times">
-                    <option value="8 a.m">8 a.m</option>
-                    <option value="9 a.m">9 a.m</option>
-                    <option value="10 a.m">10 a.m</option>
-                    <option value="11 a.m">11 a.m</option>
-                </select>
-                <div class="day-time morning">
-
-                    <div class="day-event day-1-event"> 
-
-                        <div class="day-head">
-                            <span class="header-text">Day 1</span>  
-                            <img class="remove-day" src="Imgs/x-24.png" alt="">
-                        </div>
-
-                        <!-- <input class="sort-events" type="button" value="Sort"> -->
-
-                        <div class="time-block">
-                            <div class="day-head time-text" style="margin-top:20px;">8 a.m</div>
-
-                            <div class="single-event hide" id="event-1" draggable="true">
-                                <!-- <div class="day-text"></div> -->
-                                <input type="text" class="day-text"> 
-                                <img class="remove-marker" src="Imgs/x.png" alt="">
-                                <img class="get-directions" src="Imgs/directions.png" alt=""> 
-                            </div>  
-                            <div class="all-events"></div> 
-                        </div>
-
-                        <!-- <div class="modal hide"> 
-                            <div class="modal-content">
-                                <img src="Imgs/x.png" alt="close modal" class="close-modal">
-                            </div>
-                        </div> -->
-                        
-                    </div>
-
-                </div>
-
-                <div class="day-time afternoon hide">
-
-                    <div class="day-event day-1-event"> 
-
-                        <div class="day-head">
-                            <span class="header-text">Day 1</span>  
-                            <img class="remove-day" src="Imgs/x-24.png" alt="">
-                        </div>
-
-                        <!-- <input class="sort-events" type="button" value="Sort"> -->
-
-                        <div class="time-block">
-                            <div class="day-head time-text" style="margin-top:20px;">12 p.m</div>
-
-                            <div class="single-event" id="event-1" draggable="true">
-                                <!-- <div class="day-text"></div> -->
-                                <input type="text" class="day-text"> 
-                                <img class="remove-marker" src="Imgs/x.png" alt="">
-                                <img class="get-directions" src="Imgs/directions.png" alt=""> 
-                            </div>  
-                            <div class="all-events"></div> 
-                        </div>
-
-                        <!-- <div class="modal hide"> 
-                            <div class="modal-content">
-                                <img src="Imgs/x.png" alt="close modal" class="close-modal">
-                            </div>
-                        </div> -->
-                        
-                    </div>
-
-                </div>
-
-                <div class="day-time evening hide">
-
-                    <div class="day-event day-1-event"> 
-
-                        <div class="day-head">
-                            <span class="header-text">Day 1</span>  
-                            <img class="remove-day" src="Imgs/x-24.png" alt="">
-                        </div>
-
-                        <!-- <input class="sort-events" type="button" value="Sort"> -->
-
-                        <div class="time-block">
-                            <div class="day-head time-text" style="margin-top:20px;">6 p.m</div>
-
-                            <div class="single-event" id="event-1" draggable="true">
-                                <!-- <div class="day-text"></div> -->
-                                <input type="text" class="day-text"> 
-                                <img class="remove-marker" src="Imgs/x.png" alt="">
-                                <img class="get-directions" src="Imgs/directions.png" alt=""> 
-                            </div>  
-                            <div class="all-events"></div> 
-                        </div>
-
-                        <!-- <div class="modal hide"> 
-                            <div class="modal-content">
-                                <img src="Imgs/x.png" alt="close modal" class="close-modal">
-                            </div>
-                        </div> -->
-                        
-                    </div>
-
-                </div>
-                
-            </div>
         </div> 
         <div id="map"></div>
     </div>
