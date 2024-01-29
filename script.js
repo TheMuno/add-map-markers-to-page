@@ -1124,6 +1124,8 @@ $dayEvents.addEventListener('change', e => {
     const selectedTime = $timeSelect.value.trim();
 
     const $hourEvents = $dayEvent.querySelector('.hour-events');
+    const $timeEvents = $dayEvent.querySelectorAll('.time-events');
+    $timeEvents.forEach(time => time.classList.add('hide')); 
 
     if (selectedTime.includes('morning')) {
         const $mrnEvents = $hourEvents.querySelector('.morning');
