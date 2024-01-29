@@ -1049,7 +1049,6 @@ $dayEvents.addEventListener('click', e => {
     if (!e.target.closest('.view-hourly')) return; 
 
     const $hourlyBtn = e.target;
-    const origText = $hourlyBtn.value.trim(); 
     const time = $hourlyBtn.value;
     const $dayEvent = $hourlyBtn.closest('.day-event'); 
 
@@ -1078,8 +1077,7 @@ $dayEvents.addEventListener('click', e => {
         }
     }
     else {
-        $hourlyBtn.value = origText;
-        console.log('origText', origText) 
+        $hourlyBtn.value = 'View Hourly';
         $dayTimeSections.selectedIndex = 0; 
         $dayTimeSections.classList.add('hide');
     }
