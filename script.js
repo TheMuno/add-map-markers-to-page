@@ -1110,7 +1110,7 @@ $dayEvents.addEventListener('click', e => {
     }
     else {
         $hourlyBtn.value = 'View Hourly';
-        $dayTimeSections.selectedIndex = 0; 
+        // $dayTimeSections.selectedIndex = 0; 
         $dayTimeSections.classList.add('hide');
         $fullDayEvents.classList.remove('hide');  
     }
