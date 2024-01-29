@@ -1031,23 +1031,23 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
 
 }
 
-$hourlyBtn.addEventListener('click', e => {
-    $dayEvents.classList.toggle('hide');
-    $hourEvents.classList.toggle('hide');
-    if ($dayEvents.classList.contains('hide')) {
-        $hourlyBtn.value = 'View Days';
-        $daysSelect.selectedIndex = 0; 
-        $daysSelect.dispatchEvent(new Event('change')); 
-    }
-    else {
-        $hourlyBtn.value = 'View Hourly';
-    }
-}); 
+// $hourlyBtn.addEventListener('click', e => {
+//     $dayEvents.classList.toggle('hide');
+//     $hourEvents.classList.toggle('hide');
+//     if ($dayEvents.classList.contains('hide')) {
+//         $hourlyBtn.value = 'View Days';
+//         $daysSelect.selectedIndex = 0; 
+//         $daysSelect.dispatchEvent(new Event('change')); 
+//     }
+//     else {
+//         $hourlyBtn.value = 'View Hourly';
+//     }
+// }); 
 
 
 $dayEvents.addEventListener('click', e => {
     if (!e.target.closest('.view-hourly')) return; 
-    
+
     const $hourlyBtn = e.target;
     const time = $hourlyBtn.value;
     const $dayEvent = $hourlyBtn.closest('.day-event'); 
