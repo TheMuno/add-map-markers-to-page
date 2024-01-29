@@ -1063,7 +1063,7 @@ $dayEvents.addEventListener('click', e => {
         const $timeEvents = $dayEvent.querySelectorAll('.time-events');
         $timeEvents.forEach(time => time.classList.add('hide')); 
 
-        const timeOfDay = dayTimeSections.value; 
+        const timeOfDay = $dayTimeSections.value; 
         if (timeOfDay.includes('morning')) {
             const $mrnEvents = $hourEvents.querySelector('.morning');
             $mrnEvents.classList.remove('hide');
