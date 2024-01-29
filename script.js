@@ -1116,6 +1116,29 @@ $dayEvents.addEventListener('click', e => {
     }
 });
 
+$dayEvents.addEventListener('change', e => {
+    if (!e.target.closest('.day-time-sections')) return;
+
+    const $timeSelect = e.target;
+    const $dayEvent = $timeSelect.closest('.day-event'); 
+    const selectedTime = $timeSelect.value.trim();
+
+    const $hourEvents = $dayEvent.querySelector('.hour-events');
+
+    if (selectedTime.includes('morning')) {
+        const $mrnEvents = $hourEvents.querySelector('.morning');
+        $mrnEvents.classList.remove('hide');
+    }
+    else if (selectedTime.includes('afternoon')) { 
+        const $afternoonEvents = $hourEvents.querySelector('.afternoon');
+        $afternoonEvents.classList.remove('hide');
+    }
+    else {
+        const $eveningEvents = $hourEvents.querySelector('.evening');
+        $eveningEvents.classList.remove('hide');
+    }
+});
+
 // $dayTimeSectionsSelect.addEventListener('change', e => {
 //     const $selectedTime = e.currentTarget.value.toLowerCase().trim();
 //     const $hrEvents = e.currentTarget.closest('.hour-events '); 
