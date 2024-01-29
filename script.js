@@ -314,6 +314,8 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
         $event.setAttribute('title', $event.querySelector('.day-text').value);  
     });
 
+    $dayEvent.timeOfDay = markerObj.timeOfDay; 
+
     $allEvents.append($dayEvent); 
 
     // $day.append($allEvents);   
@@ -714,13 +716,15 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
         console.log('No user with such email!');
         $noUser.textContent = 'No user with such email, sorry!';
 
-        const $warnDiv = document.createElement('div');
-        $warnDiv.className = 'warn-info';
-        $warnDiv.textContent = 'No user with such email!';
+        // const $warnDiv = document.createElement('div');
+        // $warnDiv.className = 'warn-info';
+        // $warnDiv.textContent = 'No user with such email!';
 
-        $userMail.parentElement.insertBefore($warnDiv, $userMail.nextElementSibling);
+        // $userMail.parentElement.insertBefore($warnDiv, $userMail.nextElementSibling);
 
-        setTimeout(()=>$warnDiv.remove(),5000);
+        // setTimeout(()=>$warnDiv.remove(),5000);
+
+        setTimeout(()=> $noUser.textContent = '', 5000);
 
         return; 
     } 
@@ -758,7 +762,12 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                     };
                     const createdMarker = createMarker(locationInfo);   
                     currentDay.markers.push(createdMarker);  
-                    postDayEvent(dayEventName, dayClass, createdMarker, `event${(eventNum+2)}-day${dayNum}`, {lat, lng, title, dayEventName}); 
+
+                    const timeOfDay = location.timeOfDay;
+
+                    const markerObj = timeOfDay ? {lat, lng, title, dayEventName, timeOfDay} : {lat, lng, title, dayEventName}; 
+
+                    postDayEvent(dayEventName, dayClass, createdMarker, `event${(eventNum+2)}-day${dayNum}`, markerObj); 
                 }
 
                 if ($currentDay && $currentDay.querySelectorAll('.single-event').length > 1) $dayEvents.querySelector(`${dayClass} .single-event`).classList.add('hide');  
