@@ -531,22 +531,22 @@ function addDayEventList(dayNum) {
 
 
     // Hour Events 
-    const $dayHrEvent = $hourEvents.querySelector('.day-event.day-1-event').cloneNode(true);
-    $dayHrEvent.classList.remove('day-1-event');
-    $dayHrEvent.classList.add(`day-${dayNum}-event`);
-    $dayHrEvent.querySelector('.day-head .header-text').textContent = `Day ${dayNum}`; 
+    // const $dayHrEvent = $hourEvents.querySelector('.day-event.day-1-event').cloneNode(true);
+    // $dayHrEvent.classList.remove('day-1-event');
+    // $dayHrEvent.classList.add(`day-${dayNum}-event`);
+    // $dayHrEvent.querySelector('.day-head .header-text').textContent = `Day ${dayNum}`; 
 
-    if ($dayHrEvent.querySelector('.single-event.hide'))   {
-        $dayHrEvent.querySelectorAll('.single-event:not(.hide)').forEach(el => el.remove()); 
-        $dayHrEvent.querySelector('.single-event.hide').classList.remove('hide'); 
-    }
+    // if ($dayHrEvent.querySelector('.single-event.hide'))   {
+    //     $dayHrEvent.querySelectorAll('.single-event:not(.hide)').forEach(el => el.remove()); 
+    //     $dayHrEvent.querySelector('.single-event.hide').classList.remove('hide'); 
+    // }
 
-    $dayHrEvent.querySelector('.remove-marker').classList.add('hide');
-    $dayHrEvent.querySelector('.get-directions').classList.add('hide');
+    // $dayHrEvent.querySelector('.remove-marker').classList.add('hide');
+    // $dayHrEvent.querySelector('.get-directions').classList.add('hide');
 
-    $dayHrEvent.classList.remove('hide'); 
-    // const selectedTime = $dayTimeSectionsSelect.value.trim(); 
-    $hourEvents.querySelector('.day-time.morning').append($dayHrEvent);
+    // $dayHrEvent.classList.remove('hide'); 
+    // // const selectedTime = $dayTimeSectionsSelect.value.trim(); 
+    // $hourEvents.querySelector('.day-time.morning').append($dayHrEvent);
 }
 
 function getCurrentDayNum() {
