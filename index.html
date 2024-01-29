@@ -29,9 +29,9 @@
         </div>
         <input type="text" class="user-input" placeholder="Enter Address">
     </div>
-    <div class="section">
+    <!-- <div class="section">
         <input type="button" value="View Hourly" class="get-resource-btn view-hourly">
-    </div>
+    </div> -->
     <div class="section"> 
         <div class="side-bar">
             <div class="day-events">
@@ -41,6 +41,14 @@
                         <img class="remove-day" src="Imgs/x-24.png" alt="">
                     </div>
                     <input class="sort-events" type="button" value="Sort">
+                    
+                    <input class="view-hourly" type="button" value="View Hourly">
+                    <select name="day-time-sections" id="day-time-sections" class="day-time-sections">
+                        <option value="morning">Morning</option>
+                        <option value="afternoon">Afternoon</option>
+                        <option value="evening">Evening</option>
+                    </select>
+
                     <div class="single-event" id="event-1" draggable="true">
                         <!-- <div class="day-text"></div> -->
                         <input type="text" class="day-text"> 
@@ -60,28 +68,6 @@
                     <option value="morning">Morning</option>
                     <option value="afternoon">Afternoon</option>
                     <option value="evening">Evening</option>
-
-                    <!-- <optgroup label="Morning">                        
-                    </optgroup>
-                    <hr />
-                    <optgroup label="Afternoon">
-                        <option value="12 p.m">12 p.m</option>
-                        <option value="1 p.m">1 p.m</option>
-                        <option value="2 p.m">2 p.m</option>
-                        <option value="3 p.m">3 p.m</option>
-                        <option value="4 p.m">4 p.m</option>
-                        <option value="5 p.m">5 p.m</option> 
-                    </optgroup>
-                    <hr />
-                    <optgroup label="Evening">
-                        <option value="6 p.m">6 p.m</option>
-                        <option value="7 p.m">7 p.m</option>
-                        <option value="8 p.m">8 p.m</option>
-                        <option value="9 p.m">9 p.m</option>
-                        <option value="10 p.m">10 p.m</option>
-                        <option value="11 p.m">11 p.m</option>
-                    </optgroup> -->
-
                 </select>
                 <select name="day-times" id="day-times" class="day-times">
                     <option value="8 a.m">8 a.m</option>
@@ -103,7 +89,7 @@
                         <div class="time-block">
                             <div class="day-head time-text" style="margin-top:20px;">8 a.m</div>
 
-                            <div class="single-event" id="event-1" draggable="true">
+                            <div class="single-event hide" id="event-1" draggable="true">
                                 <!-- <div class="day-text"></div> -->
                                 <input type="text" class="day-text"> 
                                 <img class="remove-marker" src="Imgs/x.png" alt="">
