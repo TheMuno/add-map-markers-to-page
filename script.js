@@ -1079,6 +1079,7 @@ $dayEvents.addEventListener('click', e => {
     }
     else {
         $hourlyBtn.value = origText;
+        console.log('origText', origText) 
         $dayTimeSections.selectedIndex = 0; 
         $dayTimeSections.classList.add('hide');
     }
