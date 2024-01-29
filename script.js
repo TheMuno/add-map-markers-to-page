@@ -47,10 +47,11 @@ const $map = document.querySelector('#map'),
     $qrCodeContainer = document.querySelector('.khonsu-data.map-url-qrcode .map-url-qr'),
     // $hourlyBtn = document.querySelector('.view-hourly'),
     $addReservation = document.querySelector('.add-reservation'),
-    $reservations = document.querySelector('.reservations');
+    $reservations = document.querySelector('.reservations'),
     // $hourEvents = document.querySelector('.hour-events'),
     // $dayTimeSectionsSelect = document.querySelector('.day-time-sections'),
     // $dayTimesSelect = document.querySelector('.day-times');
+    $noUser = document.querySelector('.no-user');
     
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
     
@@ -711,6 +712,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
     if (!docSnap.exists()) {
         // docSnap.data() will be undefined in this case
         console.log('No user with such email!');
+        $noUser.textContent = 'No user with such email, sorry!';
 
         const $warnDiv = document.createElement('div');
         $warnDiv.className = 'warn-info';
