@@ -1049,14 +1049,17 @@ $dayEvents.addEventListener('click', e => {
     if (!e.target.closest('.view-hourly')) return; 
 
     const $hourlyBtn = e.target;
+    const origText = $hourlyBtn.textContent.trim(); 
     const time = $hourlyBtn.value;
     const $dayEvent = $hourlyBtn.closest('.day-event'); 
+
+    const $dayTimeSections = $dayEvent.querySelector('.day-time-sections'); 
 
     const $hourEvents = $dayEvent.querySelector('.hour-events');
     $hourEvents.classList.toggle('hide');
     if (!$hourEvents.classList.contains('hide')) { 
-
-        $dayEvent.querySelector('.day-time-sections').classList.remove('hide');
+        $hourlyBtn.textContent = 'View Full Day';
+        $dayTimeSections.classList.remove('hide');
 
         const $timeEvents = $dayEvent.querySelectorAll('.time-events');
         $timeEvents.forEach(time => time.classList.add('hide')); 
@@ -1075,7 +1078,9 @@ $dayEvents.addEventListener('click', e => {
         }
     }
     else {
-        $dayEvent.querySelector('.day-time-sections').classList.add('hide');
+        $hourlyBtn.textContent = origText;
+        $dayTimeSections.selectedIndex = 0; 
+        $dayTimeSections.classList.add('hide');
     }
 });
 
