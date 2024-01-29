@@ -316,6 +316,8 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
 
     $dayEvent.timeOfDay = markerObj.timeOfDay; 
 
+    console.log('markerObj.timeOfDay', markerObj.timeOfDay, '\nmarkerObj', markerObj)
+
     $fullDayEvents.append($dayEvent); 
 
     const $mrngEvents = $day.querySelector('.time-events.morning .all-events');
