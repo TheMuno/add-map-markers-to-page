@@ -297,7 +297,7 @@ function postDayEvent(dayEvent, day, marker, eventId, markerObj) {
 function constructEvent(dayEvent, day, marker, eventId, markerObj) {
     const $day = $dayEvents.querySelector(day); 
 
-    const $allEvents = $day.querySelector('.all-events'); 
+    const $allEvents = $day.querySelector('.all-events.full-day'); 
 
     const $dayEvent = $day.querySelector('.single-event').cloneNode(true);   
     $dayEvent.classList.remove('hide'); 
@@ -630,7 +630,7 @@ $dayEvents.addEventListener('click', e => {
 
         const dayNum = $dayEvent.querySelector('.day-head').textContent.trim().split(/\s+/).pop();  //.slice(-1); 
         if (dayNum === '1') {
-            $dayEvent.querySelectorAll('.all-events .single-event:not(.hide)').forEach($event => $event.remove()); 
+            $dayEvent.querySelectorAll('.all-events.full-day .single-event:not(.hide)').forEach($event => $event.remove()); 
             $dayEvent.querySelector('.single-event.hide')?.classList.remove('hide'); 
             // $dayEvent.classList.add('hide'); 
 
@@ -956,7 +956,7 @@ async function updateFirebaseAfterSort($dayEvent) {
     const dayNum = $dayEvent.id.slice(-1); 
     const userMail = localStorage.getItem('user-email');
 
-    const eventsArr = [...$dayEvent.closest('.all-events').querySelectorAll('.single-event')].map(dayEvent => {
+    const eventsArr = [...$dayEvent.closest('.all-events.full-day').querySelectorAll('.single-event')].map(dayEvent => {
         return dayEvent.markerObj;
     });
 
@@ -969,7 +969,7 @@ async function updateFirebaseAfterSort($dayEvent) {
 $dayEvents.addEventListener('click', e => {
     if (e.target.closest('.sort-events')) {
         const $dayEvent = e.target.closest('.day-event');
-        const $allEvents = $dayEvent.querySelector('.all-events'); 
+        const $allEvents = $dayEvent.querySelector('.all-events.full-day'); 
         const $allEventsClone = $allEvents.cloneNode(true);
 
         const markerObjs = [...$allEvents.querySelectorAll('.single-event')].map(dayEvent => {
@@ -989,14 +989,14 @@ $dayEvents.addEventListener('click', e => {
         $img.addEventListener('click', e => {
             e.stopPropagation(); 
             const $closeBtn = e.currentTarget; 
-            const $sortedEvents = $closeBtn.closest('.modal-content').querySelector('.all-events');
+            const $sortedEvents = $closeBtn.closest('.modal-content').querySelector('.all-events.full-day');
             $allEvents.replaceWith($sortedEvents);
             $closeBtn.closest('.modal').classList.add('hide');  
         }); 
 
         $modal.addEventListener('click', e => { 
             if (e.target !== $modal) return;    
-            const $sortedEvents = e.target.querySelector('.all-events');
+            const $sortedEvents = e.target.querySelector('.all-events.full-day');
             $allEvents.replaceWith($sortedEvents);
             e.target.classList.add('hide'); 
         });
@@ -1023,7 +1023,7 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
     let dayObj = {};
     const underscores = dayNum.toString().split('').map(_ => '_').join('');  
 
-    const $allEvents = $dayText.closest('.all-events');
+    const $allEvents = $dayText.closest('.all-events.full-day');
     const dayEvents = [...$allEvents.querySelectorAll('.single-event')].map(singleEvent => {
         const lat = singleEvent.markerObj?.lat; 
         const lng = singleEvent.markerObj?.lng; 
