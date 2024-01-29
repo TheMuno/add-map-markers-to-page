@@ -297,7 +297,7 @@ function postDayEvent(dayEvent, day, marker, eventId, markerObj) {
 function constructEvent(dayEvent, day, marker, eventId, markerObj) {
     const $day = $dayEvents.querySelector(day); 
 
-    const $allEvents = $day.querySelector('.all-events.full-day'); 
+    const $fullDayEvents = $day.querySelector('.all-events.full-day'); 
 
     const $dayEvent = $day.querySelector('.single-event').cloneNode(true);   
     $dayEvent.classList.remove('hide'); 
@@ -316,9 +316,20 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
 
     $dayEvent.timeOfDay = markerObj.timeOfDay; 
 
-    $allEvents.append($dayEvent); 
+    $fullDayEvents.append($dayEvent); 
 
-    // $day.append($allEvents);   
+    const $mrngEvents = $day.querySelector('.time-events.morning .all-events');
+    const $afternoonEvents = $day.querySelector('.time-events.morning .all-events');
+    const $eveningEvents = $day.querySelector('.time-events.morning .all-events');
+    if (markerObj.timeOfDay.includes('morning')) {
+        $mrngEvents.append($dayEvent); 
+    }
+    else if (markerObj.timeOfDay.includes('afternoon')) {
+        $afternoonEvents.append($dayEvent); 
+    }
+    else if (markerObj.timeOfDay.includes('evening')) {
+        $eveningEvents.append($dayEvent); 
+    }
 }
 
 $addDay.addEventListener('click', e => {
@@ -1073,6 +1084,9 @@ $dayEvents.addEventListener('click', e => {
 
         const $timeEvents = $dayEvent.querySelectorAll('.time-events');
         $timeEvents.forEach(time => time.classList.add('hide')); 
+
+        const $fullDayEvents = $dayEvent.querySelector('.all-events.full-day'); 
+        $fullDayEvents.classList.add('hide');  
 
         const timeOfDay = $dayTimeSections.value; 
         if (timeOfDay.includes('morning')) {
