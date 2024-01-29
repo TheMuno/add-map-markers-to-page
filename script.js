@@ -319,15 +319,18 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
     $fullDayEvents.append($dayEvent); 
 
     const $mrngEvents = $day.querySelector('.time-events.morning .all-events');
-    const $afternoonEvents = $day.querySelector('.time-events.morning .all-events');
-    const $eveningEvents = $day.querySelector('.time-events.morning .all-events');
-    if (markerObj.timeOfDay.includes('morning')) {
+    const $afternoonEvents = $day.querySelector('.time-events.afternoon .all-events');
+    const $eveningEvents = $day.querySelector('.time-events.evening .all-events');
+    if (markerObj.timeOfDay.includes('morning')) { 
+        console.log('Includes morning')
         $mrngEvents.append($dayEvent); 
     }
     else if (markerObj.timeOfDay.includes('afternoon')) {
+        console.log('Includes afternoon')
         $afternoonEvents.append($dayEvent); 
     }
     else if (markerObj.timeOfDay.includes('evening')) {
+        console.log('Includes evening')
         $eveningEvents.append($dayEvent); 
     }
 }
