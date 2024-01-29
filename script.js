@@ -168,15 +168,21 @@ const markerPopup = new google.maps.InfoWindow();
                 idNum = num; 
             }
 
+            const times = ['Morning', 'Afternoon', 'Evening'];
+            const timeOfDay = times[rand(0, 2)];
+
             let dayEventName = ''; 
             if (numOfPlacesFound > 1) {
                 const addressName = `${place.name} ${place.formatted_address}`; 
                 dayEventName = addressName; 
-                postDayEvent(addressName, day, marker, `event${idNum}-day${dayNum}`, {lat, lng, title, dayEventName});
+
+                const markerObj = {lat, lng, title, dayEventName, timeOfDay}; 
+                postDayEvent(addressName, day, marker, `event${idNum}-day${dayNum}`, markerObj);
             }
             else {
                 dayEventName = $address.value; 
-                postDayEvent($address.value, day, marker, `event${idNum}-day${dayNum}`, {lat, lng, title, dayEventName});
+                const markerObj = {lat, lng, title, dayEventName, timeOfDay}; 
+                postDayEvent($address.value, day, marker, `event${idNum}-day${dayNum}`, markerObj);
             }
 
             markerObj.dayEventName = dayEventName;             
@@ -188,6 +194,10 @@ const markerPopup = new google.maps.InfoWindow();
 
         $address.value = '';  
     });
+
+    function rand(min, max) { 
+        return Math.floor(Math.random() * (max - min + 1) + min)
+    }
 }();
 
 function createMarker(place) {
@@ -314,11 +324,12 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
         $event.setAttribute('title', $event.querySelector('.day-text').value);  
     });
 
-    $dayEvent.timeOfDay = markerObj.timeOfDay; 
-
     // console.log('markerObj.timeOfDay', markerObj.timeOfDay, '\nmarkerObj', markerObj)
 
     $fullDayEvents.append($dayEvent); 
+
+    $dayEvent.timeOfDay = markerObj.timeOfDay; 
+    if (!markerObj.timeOfDay) return;    
 
     const $mrngEvents = $day.querySelector('.time-events.morning .all-events');
     const $afternoonEvents = $day.querySelector('.time-events.afternoon .all-events');
