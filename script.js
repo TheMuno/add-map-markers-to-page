@@ -1054,22 +1054,28 @@ $dayEvents.addEventListener('click', e => {
 
     const $hourEvents = $dayEvent.querySelector('.hour-events');
     $hourEvents.classList.toggle('hide');
-    if ($hourEvents.classList.contains('hide')) return; 
+    if (!$hourEvents.classList.contains('hide')) { 
 
-    const $timeEvents = $dayEvent.querySelector('.time-events');
-    $timeEvents.forEach(time => time.classList.add('hide')); 
+        $dayEvent.querySelector('.day-time-sections').classList.remove('hide');
 
-    if (time.includes('morning')) {
-        const $mrnEvents = $timeEvents.querySelector('.morning');
-        $mrnEvents.classList.remove('hide');
-    }
-    else if (time.includes('afternoon')) { 
-        const $afternoonEvents = $timeEvents.querySelector('.afternoon');
-        $afternoonEvents.classList.remove('hide');
+        const $timeEvents = $dayEvent.querySelector('.time-events');
+        $timeEvents.forEach(time => time.classList.add('hide')); 
+
+        if (time.includes('morning')) {
+            const $mrnEvents = $timeEvents.querySelector('.morning');
+            $mrnEvents.classList.remove('hide');
+        }
+        else if (time.includes('afternoon')) { 
+            const $afternoonEvents = $timeEvents.querySelector('.afternoon');
+            $afternoonEvents.classList.remove('hide');
+        }
+        else {
+            const $eveningEvents = $timeEvents.querySelector('.evening');
+            $eveningEvents.classList.remove('hide');
+        }
     }
     else {
-        const $eveningEvents = $timeEvents.querySelector('.evening');
-        $eveningEvents.classList.remove('hide');
+        $dayEvent.querySelector('.day-time-sections').classList.add('hide');
     }
 });
 
