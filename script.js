@@ -1111,7 +1111,7 @@ $dayEvents.addEventListener('click', e => {
     const $hourlyBtn = e.target;
     const $dayEvent = $hourlyBtn.closest('.day-event'); 
     $dayEvent.querySelectorAll('.all-events .single-event').forEach(dayEvent => {
-        const timeSpan = dayEvent.querySelector('.event-time-of-day xx');
+        const timeSpan = dayEvent.querySelector('.event-time-of-day');
         const timeOfDay = timeSpan.timeOfDay;
         const timeExact = timeSpan.timeExact;
 
