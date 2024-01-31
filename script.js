@@ -1077,10 +1077,17 @@ $dayEvents.addEventListener('change', async e => {
     if (!userMail) return; 
 
     const $wrapper = e.target.closest('.single-event');
-    // const $time = $wrapper.querySelector('.event-time-of-day');
+    const $time = $wrapper.querySelector('.event-time-of-day');
     const $dayText = $wrapper.querySelector('.day-text');
     const $header = $wrapper.closest('.day-event').querySelector('.day-head .header-text');
     const dayNum = $header.textContent.trim().split(/\s+/).pop();  
+
+    if ($time && $time.classList.contains('time-exact')) {
+        $wrapper.timeExact = $time.value;
+    }
+    else if ($time && !$time.classList.contains('time-exact')) {
+        $wrapper.timeOfDay = $time.value;
+    }
 
     //if ($dayText) {  
         await updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText); 
