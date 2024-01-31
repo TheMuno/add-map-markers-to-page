@@ -45,13 +45,16 @@
         }
 
         .event-time-of-day {
-            width: 2%;
+            /* width: 2%; */
+            width: 60px;
             margin-right: 5px;
             background: #f8942c;
             color: white;
             border-radius: 2px;
             font-size: 14px;
             padding: 4px;
+            border: 0;
+            outline: 0;
         }
 
         .section.notes {
@@ -111,7 +114,7 @@
                     </div>
 
                     <div class="single-event" id="event-1" draggable="true">
-                        <span class="event-time-of-day"></span>
+                        <input type="text" class="event-time-of-day">
                         <input type="text" class="day-text"> 
                         <img class="remove-marker" src="Imgs/x.png" alt="">
                         <img class="get-directions" src="Imgs/directions.png" alt=""> 

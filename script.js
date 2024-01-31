@@ -331,7 +331,7 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
     $timeOfDaySpan.timeOfDay = markerObj.timeOfDay || 'Undefined';
     $timeOfDaySpan.timeExact = markerObj.timeExact || 'Undefined';
 
-    $timeOfDaySpan.textContent = markerObj.timeOfDay || 'Undefined';
+    $timeOfDaySpan.value = markerObj.timeOfDay || 'Undefined';
 
     $dayEvent.marker = marker; 
     $dayEvent.markerObj = markerObj;
@@ -1119,12 +1119,12 @@ $dayEvents.addEventListener('click', e => {
         const timeExact = timeSpan.timeExact;
 
         if (timeSpan.classList.contains('time-exact')) {
-            timeSpan.textContent = timeOfDay;
+            timeSpan.value = timeOfDay;
             timeSpan.classList.remove('time-exact');
             $hourlyBtn.value = 'View Hourly';
         }
         else {
-            timeSpan.textContent = timeExact;
+            timeSpan.value = timeExact;
             timeSpan.classList.add('time-exact');
             $hourlyBtn.value = 'View Day';
         }
