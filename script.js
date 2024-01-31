@@ -1077,13 +1077,13 @@ $dayEvents.addEventListener('change', async e => {
     if (!userMail) return; 
 
     const $wrapper = e.target.closest('.single-event');
-    const $time = $wrapper.querySelector('.event-time-of-day');
+    // const $time = $wrapper.querySelector('.event-time-of-day');
     const $dayText = $wrapper.querySelector('.day-text');
     const $header = $wrapper.closest('.day-event').querySelector('.day-head .header-text');
     const dayNum = $header.textContent.trim().split(/\s+/).pop();  
 
     //if ($dayText) {  
-        await updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, $time); 
+        await updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText); 
     //}
     //else {
     //    const $time = e.target.closest('.event-time-of-day');
@@ -1091,18 +1091,19 @@ $dayEvents.addEventListener('change', async e => {
     //}
 });
 
-async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, $time) {
+async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
     const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
     let dayObj = {};
     const underscores = dayNum.toString().split('').map(_ => '_').join('');  
 
     const $allEvents = $dayText.closest('.all-events.full-day');
     const dayEvents = [...$allEvents.querySelectorAll('.single-event')].map(singleEvent => {
+        const $timeSpan = singleEvent.querySelector('.event-time-of-day');
         const lat = singleEvent.markerObj?.lat; 
         const lng = singleEvent.markerObj?.lng; 
         const title = singleEvent.markerObj?.title; 
-        const timeOfDay = $time.timeOfDay; //singleEvent.markerObj?.timeOfDay;
-        const timeExact = $time.timeExact; //singleEvent.markerObj?.timeExact;
+        const timeOfDay = $timeSpan.timeOfDay; //singleEvent.markerObj?.timeOfDay;
+        const timeExact = $timeSpan.timeExact; //singleEvent.markerObj?.timeExact;
         const knotes = singleEvent.markerObj?.knotes;
 
         const editedDayEventName = singleEvent.querySelector('.day-text').value.trim();
