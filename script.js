@@ -1102,8 +1102,8 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
         const lat = singleEvent.markerObj?.lat; 
         const lng = singleEvent.markerObj?.lng; 
         const title = singleEvent.markerObj?.title; 
-        const timeOfDay = $timeSpan.value; //singleEvent.markerObj?.timeOfDay;
-        const timeExact = $timeSpan.value; //singleEvent.markerObj?.timeExact;
+        const timeOfDay = singleEvent.markerObj?.timeOfDay; // $timeSpan.value; //
+        const timeExact = singleEvent.markerObj?.timeExact; // $timeSpan.value; //
         const knotes = singleEvent.markerObj?.knotes;
 
         const editedDayEventName = singleEvent.querySelector('.day-text').value.trim();
