@@ -319,6 +319,8 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
 
     $dayEvent.querySelector('.event-time-of-day').value = markerObj.timeOfDay;
 
+    console.log('inside constructEvent', markerObj.timeOfDay)
+
     $dayEvent.marker = marker; 
     $dayEvent.markerObj = markerObj;
     $dayEvent.addEventListener('mouseover', e => {
@@ -794,10 +796,13 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                     const createdMarker = createMarker(locationInfo);   
                     currentDay.markers.push(createdMarker);  
 
-                    console.log('location', location)
                     const timeOfDay = location.timeOfDay;
 
+                    console.log('time-of-day', timeOfDay)
+
                     const markerObj = timeOfDay ? {lat, lng, title, dayEventName, timeOfDay} : {lat, lng, title, dayEventName}; 
+
+                    console.log('init markerObj', markerObj)
 
                     postDayEvent(dayEventName, dayClass, createdMarker, `event${(eventNum+2)}-day${dayNum}`, markerObj); 
                 }
