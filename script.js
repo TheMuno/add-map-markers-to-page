@@ -1071,19 +1071,26 @@ $dayEvents.addEventListener('click', e => {
 });   
 
 $dayEvents.addEventListener('change', async e => {
-    const $dayText = e.target.closest('.day-text');
-    if (!$dayText) return;
+    if (!e.target.closest('.day-text') && !e.target.closest('.event-time-of-day')) return; 
 
     const userMail = localStorage.getItem('user-email');
     if (!userMail) return; 
-    
+
+    const $time = e.target.closest('.event-time-of-day');
+    const $dayText = e.target.closest('.day-text');
     const $header = $dayText.closest('.day-event').querySelector('.day-head .header-text');
     const dayNum = $header.textContent.trim().split(/\s+/).pop();  
 
-    await updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText); 
+    //if ($dayText) {  
+        await updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, $time); 
+    //}
+    //else {
+    //    const $time = e.target.closest('.event-time-of-day');
+
+    //}
 });
 
-async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
+async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, $time) {
     const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
     let dayObj = {};
     const underscores = dayNum.toString().split('').map(_ => '_').join('');  
@@ -1093,11 +1100,16 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
         const lat = singleEvent.markerObj?.lat; 
         const lng = singleEvent.markerObj?.lng; 
         const title = singleEvent.markerObj?.title; 
+        const timeOfDay = $time.timeOfDay; //singleEvent.markerObj?.timeOfDay;
+        const timeExact = $time.timeExact; //singleEvent.markerObj?.timeExact;
+        const knotes = singleEvent.markerObj?.knotes;
 
         const editedDayEventName = singleEvent.querySelector('.day-text').value.trim();
         singleEvent.markerObj.dayEventName = editedDayEventName; 
 
-        return {lat, lng, title, dayEventName: editedDayEventName};
+        const markerObj = knotes ? {lat, lng, title, dayEventName: editedDayEventName, timeOfDay, timeExact, knotes} 
+        : {lat, lng, title, dayEventName: editedDayEventName, timeOfDay, timeExact}; 
+        return markerObj;
     });
 
     dayObj[`${underscores}Day${dayNum}`] = dayEvents;
