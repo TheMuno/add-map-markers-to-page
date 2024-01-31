@@ -1076,9 +1076,10 @@ $dayEvents.addEventListener('change', async e => {
     const userMail = localStorage.getItem('user-email');
     if (!userMail) return; 
 
-    const $time = e.target.closest('.event-time-of-day');
-    const $dayText = e.target.closest('.day-text');
-    const $header = $dayText.closest('.day-event').querySelector('.day-head .header-text');
+    const $wrapper = e.target.closest('.single-event');
+    const $time = $wrapper.querySelector('.event-time-of-day');
+    const $dayText = $wrapper.querySelector('.day-text');
+    const $header = $wrapper.closest('.day-event').querySelector('.day-head .header-text');
     const dayNum = $header.textContent.trim().split(/\s+/).pop();  
 
     //if ($dayText) {  
