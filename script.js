@@ -316,6 +316,9 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
     $dayEvent.querySelector('.get-directions').classList.remove('hide'); 
     // $dayEvent.querySelector('.day-text').textContent = dayEvent;
     $dayEvent.querySelector('.day-text').value = dayEvent;
+
+    $dayEvent.querySelector('.event-time-of-day').value = markerObj.timeOfDay;
+
     $dayEvent.marker = marker; 
     $dayEvent.markerObj = markerObj;
     $dayEvent.addEventListener('mouseover', e => {
@@ -328,25 +331,25 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
 
     $fullDayEvents.append($dayEvent); 
 
-    $dayEvent.timeOfDay = markerObj.timeOfDay; 
-    if (!markerObj.timeOfDay) return;    
+    // $dayEvent.timeOfDay = markerObj.timeOfDay; 
+    // if (!markerObj.timeOfDay) return;    
 
-    const $mrngEvents = $day.querySelector('.time-events.morning .all-events');
-    const $afternoonEvents = $day.querySelector('.time-events.afternoon .all-events');
-    const $eveningEvents = $day.querySelector('.time-events.evening .all-events');
-    const $timedDayEvent = $dayEvent.cloneNode(true);
-    if (markerObj.timeOfDay.toLowerCase().trim().includes('morning')) { 
-        console.log('Includes morning')
-        $mrngEvents.append($timedDayEvent); 
-    }
-    else if (markerObj.timeOfDay.toLowerCase().trim().includes('afternoon')) {
-        console.log('Includes afternoon')
-        $afternoonEvents.append($timedDayEvent); 
-    }
-    else if (markerObj.timeOfDay.toLowerCase().trim().includes('evening')) {
-        console.log('Includes evening')
-        $eveningEvents.append($timedDayEvent); 
-    }
+    // const $mrngEvents = $day.querySelector('.time-events.morning .all-events');
+    // const $afternoonEvents = $day.querySelector('.time-events.afternoon .all-events');
+    // const $eveningEvents = $day.querySelector('.time-events.evening .all-events');
+    // const $timedDayEvent = $dayEvent.cloneNode(true);
+    // if (markerObj.timeOfDay.toLowerCase().trim().includes('morning')) { 
+    //     console.log('Includes morning')
+    //     $mrngEvents.append($timedDayEvent); 
+    // }
+    // else if (markerObj.timeOfDay.toLowerCase().trim().includes('afternoon')) {
+    //     console.log('Includes afternoon')
+    //     $afternoonEvents.append($timedDayEvent); 
+    // }
+    // else if (markerObj.timeOfDay.toLowerCase().trim().includes('evening')) {
+    //     console.log('Includes evening')
+    //     $eveningEvents.append($timedDayEvent); 
+    // }
 }
 
 $addDay.addEventListener('click', e => {
@@ -1083,7 +1086,7 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
 //     }
 // }); 
 
-
+/*
 $dayEvents.addEventListener('click', e => {
     if (!e.target.closest('.view-hourly')) return; 
 
@@ -1151,6 +1154,7 @@ $dayEvents.addEventListener('change', e => {
         $eveningEvents.classList.remove('hide');
     }
 });
+*/
 
 // $dayTimeSectionsSelect.addEventListener('change', e => {
 //     const $selectedTime = e.currentTarget.value.toLowerCase().trim();

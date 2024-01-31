@@ -43,6 +43,16 @@
         .all-events.full-day.hide {
             display: none;
         }
+
+        .event-time-of-day {
+            width: 2%;
+            margin-right: 5px;
+            background: #f8942c;
+            color: white;
+            border-radius: 2px;
+            font-size: 14px;
+            padding: 4px;
+        }
     </style>   
 </head>
 <body>
@@ -91,12 +101,12 @@
                     </div>
 
                     <div class="single-event" id="event-1" draggable="true">
-                        <!-- <div class="day-text"></div> -->
+                        <span class="event-time-of-day"></span>
                         <input type="text" class="day-text"> 
                         <img class="remove-marker" src="Imgs/x.png" alt="">
                         <img class="get-directions" src="Imgs/directions.png" alt=""> 
                     </div>  
-                    <div class="hour-events hide"> 
+                    <!-- <div class="hour-events hide"> 
                         <div class="time-events morning">
                             <div class="all-events"></div>
                         </div>
@@ -106,7 +116,7 @@
                         <div class="time-events evening">
                             <div class="all-events"></div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="all-events full-day"></div> 
                     <div class="modal hide"> 
                         <div class="modal-content">

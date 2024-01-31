@@ -149,10 +149,10 @@
 }
 
 .single-event {
-    border: 1px solid black;
+    /* border: 1px solid black;
     border-top: 0;
     border-left: 0;
-    border-right: 0; 
+    border-right: 0;  */
     height: 20px; 
     padding-top: 10px;  
     position: relative;
@@ -162,7 +162,8 @@
 
 .single-event .day-text { 
     overflow: hidden; 
-    width: 100%;
+    /* width: 100%; */
+    width: 75%;
     height: 100%; 
     /* cursor: pointer;  */
     border: 0;
