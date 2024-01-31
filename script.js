@@ -168,24 +168,34 @@ const markerPopup = new google.maps.InfoWindow();
                 idNum = num; 
             }
 
-            const times = ['Morning', 'Afternoon', 'Evening'];
-            const timeOfDay = times[rand(0, 2)];
+            const dayTimes = ['Morning', 'Afternoon', 'Evening'];
+            const clockTimes = ['08:00 AM', '09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', 
+                                '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM', 
+                                '06:00 PM', '07:00 PM', '08:00 PM', '09:00 PM', '10:00 PM',];
+            const timeOfDay = dayTimes[rand(0, 2)];
+            const timeExact = clockTimes[rand(0, 14)];
 
             let dayEventName = ''; 
             if (numOfPlacesFound > 1) {
                 const addressName = `${place.name} ${place.formatted_address}`; 
                 dayEventName = addressName; 
 
-                const markerObj = {lat, lng, title, dayEventName, timeOfDay}; 
+                // const markerObj = {lat, lng, title, dayEventName, timeOfDay}; 
+                markerObj.dayEventName = dayEventName;
+                markerObj.timeOfDay = timeOfDay;
+                markerObj.timeExact = timeExact;
                 postDayEvent(addressName, day, marker, `event${idNum}-day${dayNum}`, markerObj);
             }
             else {
                 dayEventName = $address.value; 
-                const markerObj = {lat, lng, title, dayEventName, timeOfDay}; 
+                // const markerObj = {lat, lng, title, dayEventName, timeOfDay}; 
+                markerObj.dayEventName = dayEventName;
+                markerObj.timeOfDay = timeOfDay;
+                markerObj.timeExact = timeExact;
                 postDayEvent($address.value, day, marker, `event${idNum}-day${dayNum}`, markerObj);
             }
 
-            markerObj.dayEventName = dayEventName;             
+            // markerObj.dayEventName = dayEventName;             
 
             const userMail = localStorage.getItem('user-email');
             if (userMail) saveMarkerToFirebase(userMail, dayNum, markerObj);  
@@ -317,7 +327,11 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
     // $dayEvent.querySelector('.day-text').textContent = dayEvent;
     $dayEvent.querySelector('.day-text').value = dayEvent;
 
-    $dayEvent.querySelector('.event-time-of-day').textContent = markerObj.timeOfDay || 'Undefined';
+    const $timeOfDaySpan = $dayEvent.querySelector('.event-time-of-day'); 
+    $timeOfDaySpan.timeOfDay = markerObj.timeOfDay || 'Undefined';
+    $timeOfDaySpan.timeExact = markerObj.timeExact || 'Undefined';
+
+    $timeOfDaySpan.textContent = markerObj.timeOfDay || 'Undefined';
 
     $dayEvent.marker = marker; 
     $dayEvent.markerObj = markerObj;
@@ -795,7 +809,8 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                     currentDay.markers.push(createdMarker);  
 
                     const timeOfDay = location.timeOfDay;
-                    const markerObj = timeOfDay ? {lat, lng, title, dayEventName, timeOfDay} : {lat, lng, title, dayEventName}; 
+                    const timeExact = location.timeExact;
+                    const markerObj = {lat, lng, title, dayEventName, timeOfDay, timeExact}; 
                     postDayEvent(dayEventName, dayClass, createdMarker, `event${(eventNum+2)}-day${dayNum}`, markerObj); 
                 }
 
