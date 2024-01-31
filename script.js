@@ -43,7 +43,7 @@ const $map = document.querySelector('#map'),
     // $downloadUserCSV = document.querySelector('.download-user-csv'), 
     // $downloadDBCSV = document.querySelector('.download-all-csv'),
     // $printedPlanBtn = document.querySelector('.printed-plan'),
-    $khonsuNotes = document.querySelector('.khonsu-notes .knotes'),
+    $khonsuNotes = document.querySelector('.section.notes'),
     $qrCodeContainer = document.querySelector('.khonsu-data.map-url-qrcode .map-url-qr'),
     // $hourlyBtn = document.querySelector('.view-hourly'),
     $addReservation = document.querySelector('.add-reservation'),
@@ -818,13 +818,26 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                 if ($currentDay && $currentDay.querySelectorAll('.single-event').length > 1) $dayEvents.querySelector(`${dayClass} .single-event`).classList.add('hide');  
             });
 
+            if (dayNum == 1) { 
+                const $notesTextarea = $khonsuNotes.querySelector('textarea.knotes');
+                $notesTextarea.value = locations.replaceAll('-','\n-').replace(/^\n/,''); 
+            }
+            else {
+                const $notesDiv = $khonsuNotes.querySelector('.khonsu-notes').cloneNode(true);
+                const $notesHeader = $notesDiv.querySelector('.knotes-title');
+                const $notesTextarea = $notesDiv.querySelector('textarea.knotes');
+                $notesHeader.textContent = `Khonsu Notes Day ${dayNum}`;
+                $notesTextarea.value = locations.replaceAll('-','\n-').replace(/^\n/,''); 
+                $khonsuNotes.append($notesDiv);
+            }
         }
         else {
-            if (entry.toLowerCase() === 'khonsunotes') {
+            // if (entry.toLowerCase() === 'khonsunotes') {
                 
-                $khonsuNotes.value = locations.replaceAll('-','\n-').replace(/^\n/,''); 
-            }
-            else if (entry.toLowerCase() === 'reservations') {
+            //     $khonsuNotes.value = locations.replaceAll('-','\n-').replace(/^\n/,''); 
+            // }
+            // else 
+            if (entry.toLowerCase() === 'reservations') {
                 // const $reservations = document.querySelector('.reservations'); 
                 const $reservation = $reservations.querySelector('.reserve');
                 locations.forEach(location => {
@@ -1087,19 +1100,6 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
 
 }
 
-// $hourlyBtn.addEventListener('click', e => {
-//     $dayEvents.classList.toggle('hide');
-//     $hourEvents.classList.toggle('hide');
-//     if ($dayEvents.classList.contains('hide')) {
-//         $hourlyBtn.value = 'View Days';
-//         $daysSelect.selectedIndex = 0; 
-//         $daysSelect.dispatchEvent(new Event('change')); 
-//     }
-//     else {
-//         $hourlyBtn.value = 'View Hourly';
-//     }
-// }); 
-
 
 $dayEvents.addEventListener('click', e => {
     if (!e.target.closest('.view-hourly')) return; 
@@ -1122,112 +1122,4 @@ $dayEvents.addEventListener('click', e => {
             $hourlyBtn.value = 'View Day';
         }
     });
-});
-
-/*
-{
-    const time = $hourlyBtn.value;
-    const $dayEvent = $hourlyBtn.closest('.day-event'); 
-
-    const $dayTimeSections = $dayEvent.querySelector('.day-time-sections'); 
-    const $fullDayEvents = $dayEvent.querySelector('.all-events.full-day'); 
-
-    const $hourEvents = $dayEvent.querySelector('.hour-events');
-    $hourEvents.classList.toggle('hide');
-    if (!$hourEvents.classList.contains('hide')) { 
-        $hourlyBtn.value = 'View Full Day';
-        $dayTimeSections.classList.remove('hide');
-
-        const $timeEvents = $dayEvent.querySelectorAll('.time-events');
-        $timeEvents.forEach(time => time.classList.add('hide')); 
-
-        $fullDayEvents.classList.add('hide');  
-
-        const timeOfDay = $dayTimeSections.value; 
-        if (timeOfDay.includes('morning')) {
-            const $mrnEvents = $hourEvents.querySelector('.morning');
-            $mrnEvents.classList.remove('hide');
-        }
-        else if (timeOfDay.includes('afternoon')) { 
-            const $afternoonEvents = $hourEvents.querySelector('.afternoon');
-            $afternoonEvents.classList.remove('hide');
-        }
-        else {
-            const $eveningEvents = $hourEvents.querySelector('.evening');
-            $eveningEvents.classList.remove('hide');
-        }
-    }
-    else {
-        $hourlyBtn.value = 'View Hourly';
-        // $dayTimeSections.selectedIndex = 0; 
-        $dayTimeSections.classList.add('hide');
-        $fullDayEvents.classList.remove('hide');  
-    }
-}
-*/
-
-
-/*
-$dayEvents.addEventListener('change', e => {
-    if (!e.target.closest('.day-time-sections')) return;
-
-    const $timeSelect = e.target;
-    const $dayEvent = $timeSelect.closest('.day-event'); 
-    const selectedTime = $timeSelect.value.trim();
-
-    const $hourEvents = $dayEvent.querySelector('.hour-events');
-    const $timeEvents = $dayEvent.querySelectorAll('.time-events');
-    $timeEvents.forEach(time => time.classList.add('hide')); 
-
-    if (selectedTime.includes('morning')) {
-        const $mrnEvents = $hourEvents.querySelector('.morning');
-        $mrnEvents.classList.remove('hide');
-    }
-    else if (selectedTime.includes('afternoon')) { 
-        const $afternoonEvents = $hourEvents.querySelector('.afternoon');
-        $afternoonEvents.classList.remove('hide');
-    }
-    else {
-        const $eveningEvents = $hourEvents.querySelector('.evening');
-        $eveningEvents.classList.remove('hide');
-    }
-});
-*/
-
-// $dayTimeSectionsSelect.addEventListener('change', e => {
-//     const $selectedTime = e.currentTarget.value.toLowerCase().trim();
-//     const $hrEvents = e.currentTarget.closest('.hour-events '); 
-//     const $otherTimes = $hrEvents.querySelectorAll(`.day-time:not(.${$selectedTime})`); 
-
-//     $hrEvents.querySelector(`.${$selectedTime}`)?.classList.remove('hide');
-//     $otherTimes.forEach(time => time.classList.add('hide'));
-
-//     if ($selectedTime.includes('morning')) {
-//         $dayTimesSelect.innerHTML = '';
-//         for (let i = 8; i < 12; i++) {
-//             createSelectOptions(`${i} a.m`);
-//         } 
-//     }
-//     else if ($selectedTime.includes('afternoon')) { 
-//         $dayTimesSelect.innerHTML = '';
-//         createSelectOptions('12 p.m');
-//         for (let i = 1; i < 6; i++) {
-//             createSelectOptions(`${i} p.m`);
-//         } 
-//     }
-//     else if ($selectedTime.includes('evening')) {
-//         $dayTimesSelect.innerHTML = ''; 
-//         for (let i = 6; i < 12; i++) {
-//             createSelectOptions(`${i} p.m`);
-//         } 
-//     }
-// });
-
-
-// function createSelectOptions(hr) {
-//     const $option = document.createElement('option');
-//     $option.value = hr;
-//     $option.textContent = hr; 
-//     $dayTimesSelect.append($option);
-// }
-
+}); 
