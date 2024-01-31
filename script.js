@@ -812,10 +812,6 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                     const timeExact = location.timeExact;
                     const markerObj = {lat, lng, title, dayEventName, timeOfDay, timeExact}; 
 
-                    console.log('location', location)
-                    console.log('timeOfDay', timeOfDay)
-                    console.log('timeExact', timeExact)
-
                     postDayEvent(dayEventName, dayClass, createdMarker, `event${(eventNum+2)}-day${dayNum}`, markerObj); 
                 }
 
