@@ -1083,10 +1083,10 @@ $dayEvents.addEventListener('change', async e => {
     const dayNum = $header.textContent.trim().split(/\s+/).pop();  
 
     if ($time && $time.classList.contains('time-exact')) {
-        $wrapper.timeExact = $time.value;
+        $wrapper.markerObj.timeExact = $time.value;
     }
     else if ($time && !$time.classList.contains('time-exact')) {
-        $wrapper.timeOfDay = $time.value;
+        $wrapper.markerObj.timeOfDay = $time.value;
     }
 
     //if ($dayText) {  
