@@ -392,24 +392,29 @@ async function addDayToFirebase(userMail, dayNum) {
 }
 
 
+$khonsuNotes.addEventListener('change', async e => {
+    // if (!e.target.closest('.knotes')) return;
+
+    // const userMail = localStorage.getItem('user-email'); 
+    // if (!userMail) return; 
+
+    // const $textarea = e.target;
+    // const dayNum = $textarea.closest('.khonsu-notes').querySelector('.knotes-title').textContent.trim().split(/\s+/).pop();
 
 
+    // const notes = e.target.value; 
+    // updateKhonsuDataEdits(userMail, notes, dayNum); 
+});
 
-async function updateKhonsuDataEdits(userMail, notes) {
+async function updateKhonsuDataEdits(userMail, notes, dayNum) {
     const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
     const dayObj = {};
-    dayObj['KhonsuNotes'] = notes; 
+    const underscores = dayNum.toString().split('').map(_ => '_').join('');  
+    dayObj[`${underscores}Day${dayNum}`] = notes; 
     dayObj.ModifiedAt = serverTimestamp(); 
 
     await updateDoc(existingMarkers, dayObj);
 }
-
-$khonsuNotes.addEventListener('change', async e => {
-    const userMail = localStorage.getItem('user-email'); 
-    if (!userMail) return; 
-    const notes = e.currentTarget.value; 
-    updateKhonsuDataEdits(userMail, notes); 
-});
 
 async function updateReservationsEdits(userMail, reservationData) {
     const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
