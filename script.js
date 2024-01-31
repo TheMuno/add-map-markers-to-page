@@ -317,7 +317,7 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
     // $dayEvent.querySelector('.day-text').textContent = dayEvent;
     $dayEvent.querySelector('.day-text').value = dayEvent;
 
-    $dayEvent.querySelector('.event-time-of-day').textContent = markerObj.timeOfDay || undefined;
+    $dayEvent.querySelector('.event-time-of-day').textContent = markerObj.timeOfDay || 'Undefined';
 
     $dayEvent.marker = marker; 
     $dayEvent.markerObj = markerObj;
