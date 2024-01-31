@@ -1114,10 +1114,12 @@ $dayEvents.addEventListener('click', e => {
         if (timeSpan.classList.contains('time-exact')) {
             timeSpan.textContent = timeOfDay;
             timeSpan.classList.remove('time-exact');
+            $hourlyBtn.textContent = 'View Hourly';
         }
         else {
             timeSpan.textContent = timeExact;
             timeSpan.classList.add('time-exact');
+            $hourlyBtn.textContent = 'View Day';
         }
     });
 });
