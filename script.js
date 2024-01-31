@@ -799,7 +799,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                 const dayClass = `.day-${dayNum}-event`; 
                 const $currentDay = $dayEvents.querySelector(dayClass); 
 
-                const { lat, lng, title, dayEventName } = location;
+                const { lat, lng, title, dayEventName, timeOfDay, timeExact, knotes } = location;
                 if (lat && lng) {
                     const locationInfo = {
                         name: title,
@@ -808,28 +808,30 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                     const createdMarker = createMarker(locationInfo);   
                     currentDay.markers.push(createdMarker);  
 
-                    const timeOfDay = location.timeOfDay;
-                    const timeExact = location.timeExact;
+                    // const timeOfDay = location.timeOfDay;
+                    // const timeExact = location.timeExact;
                     const markerObj = {lat, lng, title, dayEventName, timeOfDay, timeExact}; 
 
                     postDayEvent(dayEventName, dayClass, createdMarker, `event${(eventNum+2)}-day${dayNum}`, markerObj); 
                 }
 
                 if ($currentDay && $currentDay.querySelectorAll('.single-event').length > 1) $dayEvents.querySelector(`${dayClass} .single-event`).classList.add('hide');  
-            });
 
-            if (dayNum == 1) { 
-                const $notesTextarea = $khonsuNotes.querySelector('textarea.knotes');
-                $notesTextarea.value = locations.replaceAll('-','\n-').replace(/^\n/,''); 
-            }
-            else {
-                const $notesDiv = $khonsuNotes.querySelector('.khonsu-notes').cloneNode(true);
-                const $notesHeader = $notesDiv.querySelector('.knotes-title');
-                const $notesTextarea = $notesDiv.querySelector('textarea.knotes');
-                $notesHeader.textContent = `Khonsu Notes Day ${dayNum}`;
-                $notesTextarea.value = locations.replaceAll('-','\n-').replace(/^\n/,''); 
-                $khonsuNotes.append($notesDiv);
-            }
+                if (knotes) {
+                    if (dayNum == 1) { 
+                        const $notesTextarea = $khonsuNotes.querySelector('textarea.knotes');
+                        $notesTextarea.value = knotes.replaceAll('-','\n-').replace(/^\n/,''); 
+                    }
+                    else {
+                        const $notesDiv = $khonsuNotes.querySelector('.khonsu-notes').cloneNode(true);
+                        const $notesHeader = $notesDiv.querySelector('.knotes-title');
+                        const $notesTextarea = $notesDiv.querySelector('textarea.knotes');
+                        $notesHeader.textContent = `Khonsu Notes Day ${dayNum}`;
+                        $notesTextarea.value = knotes.replaceAll('-','\n-').replace(/^\n/,''); 
+                        $khonsuNotes.append($notesDiv);
+                    }
+                }
+            });
         }
         else {
             // if (entry.toLowerCase() === 'khonsunotes') {
