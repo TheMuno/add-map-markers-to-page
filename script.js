@@ -794,6 +794,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                     const createdMarker = createMarker(locationInfo);   
                     currentDay.markers.push(createdMarker);  
 
+                    console.log('location', location)
                     const timeOfDay = location.timeOfDay;
 
                     const markerObj = timeOfDay ? {lat, lng, title, dayEventName, timeOfDay} : {lat, lng, title, dayEventName}; 
