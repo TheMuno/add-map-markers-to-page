@@ -1099,11 +1099,30 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
 //     }
 // }); 
 
-/*
+
 $dayEvents.addEventListener('click', e => {
     if (!e.target.closest('.view-hourly')) return; 
 
     const $hourlyBtn = e.target;
+    const $dayEvent = $hourlyBtn.closest('.day-event'); 
+    $dayEvent.querySelectorAll('.all-events .single-event').forEach(dayEvent => {
+        const timeSpan = dayEvent.querySelector('.event-time-of-day xx');
+        const timeOfDay = timeSpan.timeOfDay;
+        const timeExact = timeSpan.timeExact;
+
+        if (timeSpan.classList.contains('time-exact')) {
+            timeSpan.textContent = timeOfDay;
+            timeSpan.classList.remove('time-exact');
+        }
+        else {
+            timeSpan.textContent = timeExact;
+            timeSpan.classList.add('time-exact');
+        }
+    });
+});
+
+/*
+{
     const time = $hourlyBtn.value;
     const $dayEvent = $hourlyBtn.closest('.day-event'); 
 
@@ -1141,8 +1160,11 @@ $dayEvents.addEventListener('click', e => {
         $dayTimeSections.classList.add('hide');
         $fullDayEvents.classList.remove('hide');  
     }
-});
+}
+*/
 
+
+/*
 $dayEvents.addEventListener('change', e => {
     if (!e.target.closest('.day-time-sections')) return;
 
