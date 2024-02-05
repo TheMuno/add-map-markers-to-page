@@ -758,21 +758,36 @@ function removeDay($day) {
 // }
 
 async function saveMarkerToFirebase(userMail, dayNum, markerObj) {  
-    const existingMarkers = doc(db, 'travelData', `User-${userMail}`, `days`, 'events');
+    const existingMarkers = doc(db, 'travelData', `User-${userMail}`);
     // const dayObj = {};
 
-    // const obj = {};
-    // obj.summary = '';
-    // obj.events = markerObj; 
+    const { dayEventName, lat, lng, title } = markerObj;
+    const eventObj = {
+        summary: '',
+        events: [
+            {
+                dayEventName,
+                lat,
+                lng,
+                title,
+                description: '',
+                imageURL: '',
+                KhonsuRecommends: true,
+                timeslot: '',
+                starttime: 'March212024',
+                endtime: 'March302024',
+                notes: '',
+                reservation: '',
+            }
+        ]
+    }; 
 
-    // dayObj.days = arrayUnion(markerObj);
-    // dayObj.modifiedAt = serverTimestamp(); 
+    dayObj.days = arrayUnion(eventObj);
+    dayObj.modifiedAt = serverTimestamp(); 
 
-    console.log('Save dayNum 2:', dayNum) 
+    console.log('Save dayNum::::', dayNum) 
 
-    // await updateDoc(existingMarkers, dayObj);
-
-    await updateDoc(existingMarkers, markerObj);
+    await updateDoc(existingMarkers, dayObj);
 }
 
 async function retrieveSavedMarkersFromFirebase(userMail) {
