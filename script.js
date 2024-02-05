@@ -763,7 +763,7 @@ async function saveMarkerToFirebase(userMail, dayNum, markerObj) {
     dayObj.days = arrayUnion(markerObj);
     dayObj.modifiedAt = serverTimestamp(); 
 
-    console.log('dayNum', dayNum) 
+    console.log('Save dayNum', dayNum) 
 
     await updateDoc(existingMarkers, dayObj);
 }
