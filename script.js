@@ -747,12 +747,23 @@ function removeDay($day) {
     await setDoc(userRef, { CreatedAt: serverTimestamp() }); 
 }(localStorage.getItem('user-email')); 
  
+// async function saveMarkerToFirebase(userMail, dayNum, markerObj) {  
+//     const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
+//     const dayObj = {};
+//     const underscores = dayNum.toString().split('').map(_ => '_').join('');  
+//     dayObj[`${underscores}Day${dayNum}`] = arrayUnion(markerObj); 
+//     dayObj.ModifiedAt = serverTimestamp(); 
+
+//     await updateDoc(existingMarkers, dayObj);
+// }
+
 async function saveMarkerToFirebase(userMail, dayNum, markerObj) {  
-    const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
+    const existingMarkers = doc(db, 'travelData', `User-${userMail}`);
     const dayObj = {};
-    const underscores = dayNum.toString().split('').map(_ => '_').join('');  
-    dayObj[`${underscores}Day${dayNum}`] = arrayUnion(markerObj); 
-    dayObj.ModifiedAt = serverTimestamp(); 
+    dayObj.days = arrayUnion(markerObj);
+    dayObj.modifiedAt = serverTimestamp(); 
+
+    console.log('dayNum', dayNum) 
 
     await updateDoc(existingMarkers, dayObj);
 }
