@@ -758,9 +758,10 @@ function removeDay($day) {
 // }
 
 async function saveMarkerToFirebase(userMail, dayNum, markerObj) {  
-    const existingMarkers = doc(db, 'travelData', `User-${userMail}`);
+    const userData = doc(db, 'travelData', `User-${userMail}`);
+    const docSnap = await getDoc(userData);
 
-    console.log('existingMarkers', existingMarkers)
+    console.log('docSnap', docSnap)
 
     const dayObj = {}; 
 
@@ -790,7 +791,7 @@ async function saveMarkerToFirebase(userMail, dayNum, markerObj) {
 
     console.log('Save dayNum::::', dayNum) 
 
-    await updateDoc(existingMarkers, dayObj);
+    await updateDoc(userData, dayObj);
 }
 
 async function retrieveSavedMarkersFromFirebase(userMail) {
