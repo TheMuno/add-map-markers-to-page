@@ -771,6 +771,8 @@ async function saveMarkerToFirebase(userMail, dayNum, markerObj) {
             summary: '',
             events: [], 
         };
+        // days.push(specificDay);
+        days.splice(dayArrIndex, 0, specificDay);
     }
 
     const dayEvents = specificDay.events;
