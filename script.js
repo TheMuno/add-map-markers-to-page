@@ -764,7 +764,15 @@ async function saveMarkerToFirebase(userMail, dayNum, markerObj) {
     const { days } = data;
 
     const dayArrIndex = dayNum-1;
-    const specificDay = days[dayArrIndex];
+    let specificDay = days[dayArrIndex];
+
+    if (!specificDay) {
+        specificDay = {
+            summary: '',
+            events: [], 
+        };
+    }
+
     const dayEvents = specificDay.events;
 
     const { dayEventName, lat, lng, title } = markerObj; 
@@ -785,42 +793,17 @@ async function saveMarkerToFirebase(userMail, dayNum, markerObj) {
 
     dayEvents.push(eventObj);
 
-
-    // days.splice(dayArrIndex, 1); 
-
-    // days.push(); 
-
-    // console.log('docSnap', theData)
-
     const dayObj = {}; 
-
-    // const { dayEventName, lat, lng, title } = markerObj;
-    // const eventObj = {
-    //     summary: '',
-    //     events: [
-    //         {
-    //             dayEventName,
-    //             lat,
-    //             lng,
-    //             title,
-    //             description: '',
-    //             imageURL: '',
-    //             KhonsuRecommends: true,
-    //             timeslot: '',
-    //             starttime: 'March212024',
-    //             endtime: 'March302024',
-    //             notes: '',
-    //             reservation: '',
-    //         }
-    //     ]
-    // }; 
-
-    dayObj.days = days; // arrayUnion(eventObj);
+    dayObj.days = days; 
     dayObj.modifiedAt = serverTimestamp(); 
 
     console.log('Saved to:', dayNum, 'days', days)  
 
     await updateDoc(userData, dayObj);
+}
+
+async function retrieveSavedMarkersFromFirebase(userMail) {
+
 }
 
 async function retrieveSavedMarkersFromFirebase(userMail) {
