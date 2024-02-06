@@ -763,7 +763,7 @@ async function saveMarkerToFirebase(userMail, dayNum, markerObj) {
     const data = await docSnap.data(); 
     const { days } = data;
 
-    dayArrIndex = dayNum-1;
+    const dayArrIndex = dayNum-1;
     const specificDay = days[dayArrIndex];
     const dayEvents = specificDay.events;
 
