@@ -760,37 +760,65 @@ function removeDay($day) {
 async function saveMarkerToFirebase(userMail, dayNum, markerObj) {  
     const userData = doc(db, 'travelData', `User-${userMail}`);
     const docSnap = await getDoc(userData);
-    const theData = await docSnap.data(); 
+    const data = await docSnap.data(); 
+    const { days } = data;
 
-    console.log('docSnap', theData)
+    dayArrIndex = dayNum-1;
+    const specificDay = days[dayArrIndex];
+    const dayEvents = specificDay.events;
+
+    const { dayEventName, lat, lng, title } = markerObj; 
+    const eventObj = {
+        dayEventName,
+        lat,
+        lng,
+        title,
+        description: '',
+        imageURL: '',
+        KhonsuRecommends: true,
+        timeslot: '',
+        starttime: 'March212024',
+        endtime: 'March302024',
+        notes: '',
+        reservation: '',
+    };
+
+    dayEvents.push(eventObj);
+
+
+    // days.splice(dayArrIndex, 1); 
+
+    // days.push(); 
+
+    // console.log('docSnap', theData)
 
     const dayObj = {}; 
 
-    const { dayEventName, lat, lng, title } = markerObj;
-    const eventObj = {
-        summary: '',
-        events: [
-            {
-                dayEventName,
-                lat,
-                lng,
-                title,
-                description: '',
-                imageURL: '',
-                KhonsuRecommends: true,
-                timeslot: '',
-                starttime: 'March212024',
-                endtime: 'March302024',
-                notes: '',
-                reservation: '',
-            }
-        ]
-    }; 
+    // const { dayEventName, lat, lng, title } = markerObj;
+    // const eventObj = {
+    //     summary: '',
+    //     events: [
+    //         {
+    //             dayEventName,
+    //             lat,
+    //             lng,
+    //             title,
+    //             description: '',
+    //             imageURL: '',
+    //             KhonsuRecommends: true,
+    //             timeslot: '',
+    //             starttime: 'March212024',
+    //             endtime: 'March302024',
+    //             notes: '',
+    //             reservation: '',
+    //         }
+    //     ]
+    // }; 
 
-    dayObj.days = arrayUnion(eventObj);
+    dayObj.days = days; // arrayUnion(eventObj);
     dayObj.modifiedAt = serverTimestamp(); 
 
-    console.log('Save dayNum::::', dayNum) 
+    console.log('Saved to:', dayNum, 'days', days)  
 
     await updateDoc(userData, dayObj);
 }
