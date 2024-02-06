@@ -802,9 +802,9 @@ async function saveMarkerToFirebase(userMail, dayNum, markerObj) {
     await updateDoc(userData, dayObj);
 }
 
-async function retrieveSavedMarkersFromFirebase(userMail) {
+// async function retrieveSavedMarkersFromFirebase(userMail) {
 
-}
+// }
 
 async function retrieveSavedMarkersFromFirebase(userMail) {
     const docRef = doc(db, 'Locations', `User-${userMail}`);
