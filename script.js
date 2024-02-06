@@ -760,7 +760,7 @@ function removeDay($day) {
 async function saveMarkerToFirebase(userMail, dayNum, markerObj) {  
     const userData = doc(db, 'travelData', `User-${userMail}`);
     const docSnap = await getDoc(userData);
-    const theData = await data(docSnap);
+    const theData = await docSnap.data(); 
 
     console.log('docSnap', theData)
 
