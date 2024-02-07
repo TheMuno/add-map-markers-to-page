@@ -168,12 +168,12 @@ const markerPopup = new google.maps.InfoWindow();
                 idNum = num; 
             }
 
-            const dayTimes = ['Morning', 'Afternoon', 'Evening'];
-            const clockTimes = ['08:00 AM', '09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', 
-                                '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM', 
-                                '06:00 PM', '07:00 PM', '08:00 PM', '09:00 PM', '10:00 PM',];
-            const timeOfDay = dayTimes[rand(0, 2)];
-            const timeExact = clockTimes[rand(0, 14)];
+            // const dayTimes = ['Morning', 'Afternoon', 'Evening'];
+            // const clockTimes = ['08:00 AM', '09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', 
+            //                     '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM', 
+            //                     '06:00 PM', '07:00 PM', '08:00 PM', '09:00 PM', '10:00 PM',];
+            // const timeOfDay = dayTimes[rand(0, 2)];
+            // const timeExact = clockTimes[rand(0, 14)];
 
             let dayEventName = ''; 
             if (numOfPlacesFound > 1) {
@@ -182,16 +182,16 @@ const markerPopup = new google.maps.InfoWindow();
 
                 // const markerObj = {lat, lng, title, dayEventName, timeOfDay}; 
                 markerObj.dayEventName = dayEventName;
-                markerObj.timeOfDay = timeOfDay;
-                markerObj.timeExact = timeExact;
+                // markerObj.timeOfDay = timeOfDay;
+                // markerObj.timeExact = timeExact;
                 postDayEvent(addressName, day, marker, `event${idNum}-day${dayNum}`, markerObj);
             }
             else {
                 dayEventName = $address.value; 
                 // const markerObj = {lat, lng, title, dayEventName, timeOfDay}; 
                 markerObj.dayEventName = dayEventName;
-                markerObj.timeOfDay = timeOfDay;
-                markerObj.timeExact = timeExact;
+                // markerObj.timeOfDay = timeOfDay;
+                // markerObj.timeExact = timeExact;
                 postDayEvent($address.value, day, marker, `event${idNum}-day${dayNum}`, markerObj);
             }
 
@@ -330,10 +330,10 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
     console.log('markerObj.timeslot', markerObj.timeslot)
 
     const $timeOfDaySpan = $dayEvent.querySelector('.event-time-of-day'); 
-    $timeOfDaySpan.timeslot = markerObj.timeslot || 'Undefined';
-    $timeOfDaySpan.timeExact = markerObj.timeExact || 'Undefined';
+    $timeOfDaySpan.timeslot = markerObj.timeslot || '';
+    $timeOfDaySpan.starttime = markerObj.starttime || '';
 
-    $timeOfDaySpan.value = markerObj.timeslot || 'Undefined';
+    $timeOfDaySpan.value = markerObj.timeslot || '';
 
     $dayEvent.marker = marker; 
     $dayEvent.markerObj = markerObj;
@@ -1179,55 +1179,142 @@ $dayEvents.addEventListener('change', async e => {
     const $header = $wrapper.closest('.day-event').querySelector('.day-head .header-text');
     const dayNum = $header.textContent.trim().split(/\s+/).pop();  
 
-    if ($time && $time.classList.contains('time-exact')) {
-        $wrapper.markerObj.timeExact = $time.value;
-    }
-    else if ($time && !$time.classList.contains('time-exact')) {
-        $wrapper.markerObj.timeOfDay = $time.value;
-    }
+    // if ($time && $time.classList.contains('time-exact')) {
+    //     $wrapper.markerObj.starttime = $time.value;
+    // }
+    // else if ($time && !$time.classList.contains('time-exact')) {
+    //     $wrapper.markerObj.timeslot = $time.value;
+    // }
+
+    const indexOfEditedEl = [...$wrapper.parentElement.querySelectorAll('.single-event')].indexOf($wrapper);
 
     //if ($dayText) {  
-        await updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText); 
+        await updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, indexOfEditedEl); 
     //}
     //else {
     //    const $time = e.target.closest('.event-time-of-day');
 
     //}
-});
+}); 
+
+async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, indexOfEditedEl) {
+    const userData = doc(db, 'travelData', `User-${userMail}`);
+    const docSnap = await getDoc(userData);
+    const data = await docSnap.data(); 
+    const { days } = data;
+    const dayArrIndex = dayNum-1;
+    let specificDay = days[dayArrIndex];
+
+    const dayEvents = specificDay.events;
+    // const specificEvent = dayEvents[indexOfEditedEl];
+
+    const $singleEvent = $dayText.closest('single-event');
+
+    const editedDayEventName = $singleEvent.querySelector('.day-text').value.trim();
+    $singleEvent.markerObj.dayEventName = editedDayEventName; 
+
+    const { lat, lng, title, dayEventName, timeslot, starttime } = $singleEvent.markerObj; 
+
+    const eventObj = {
+        dayEventName,
+        lat,
+        lng,
+        title,
+        description: '',
+        imageURL: '',
+        KhonsuRecommends: false,
+        timeslot,
+        starttime,
+        endtime: '',
+        notes: '',
+        reservation: '',
+    };
+
+    dayEvents.splice(indexOfEditedEl, 0, eventObj);
+    dayEvents.splice(indexOfEditedEl+1, 1); 
+
+    const dayObj = {}; 
+    dayObj.days = days; 
+    dayObj.modifiedAt = serverTimestamp(); 
+
+    await updateDoc(userData, dayObj);
+}
 
 // async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
+//     const existingMarkers = doc(db, 'travelData', `User-${userMail}`);
+//     let dayObj = {};
+//     const underscores = dayNum.toString().split('').map(_ => '_').join('');  
+
+//     const $allEvents = $dayText.closest('.all-events.full-day');
+//     const dayEvents = [...$allEvents.querySelectorAll('.single-event')].map(singleEvent => {
+//         const $timeSpan = singleEvent.querySelector('.event-time-of-day');
+//         const lat = singleEvent.markerObj?.lat; 
+//         const lng = singleEvent.markerObj?.lng; 
+//         const title = singleEvent.markerObj?.title; 
+//         const timeslot = singleEvent.markerObj?.timeslot; // $timeSpan.value; //
+//         const starttime = singleEvent.markerObj?.starttime; // $timeSpan.value; //
+//         const knotes = singleEvent.markerObj?.knotes;
+
+//         const editedDayEventName = singleEvent.querySelector('.day-text').value.trim();
+//         singleEvent.markerObj.dayEventName = editedDayEventName; 
+
+//         const markerObj = knotes ? {lat, lng, title, dayEventName: editedDayEventName, timeslot, starttime, knotes} 
+//         : {lat, lng, title, dayEventName: editedDayEventName, timeslot, starttime}; 
+//         return markerObj;
+//     });
+
+//     dayObj[`${underscores}Day${dayNum}`] = dayEvents;
+//     dayObj.ModifiedAt = serverTimestamp(); 
+
+//     await updateDoc(existingMarkers, dayObj); 
 
 // }
 
-async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
-    const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
-    let dayObj = {};
-    const underscores = dayNum.toString().split('').map(_ => '_').join('');  
+// async function saveMarkerToFirebase(userMail, dayNum, markerObj) {  
+//     const userData = doc(db, 'travelData', `User-${userMail}`);
+//     const docSnap = await getDoc(userData);
+//     const data = await docSnap.data(); 
+//     const { days } = data;
 
-    const $allEvents = $dayText.closest('.all-events.full-day');
-    const dayEvents = [...$allEvents.querySelectorAll('.single-event')].map(singleEvent => {
-        const $timeSpan = singleEvent.querySelector('.event-time-of-day');
-        const lat = singleEvent.markerObj?.lat; 
-        const lng = singleEvent.markerObj?.lng; 
-        const title = singleEvent.markerObj?.title; 
-        const timeOfDay = singleEvent.markerObj?.timeOfDay; // $timeSpan.value; //
-        const timeExact = singleEvent.markerObj?.timeExact; // $timeSpan.value; //
-        const knotes = singleEvent.markerObj?.knotes;
+//     const dayArrIndex = dayNum-1;
+//     let specificDay = days[dayArrIndex];
 
-        const editedDayEventName = singleEvent.querySelector('.day-text').value.trim();
-        singleEvent.markerObj.dayEventName = editedDayEventName; 
+//     if (!specificDay) {
+//         specificDay = {
+//             summary: '',
+//             events: [], 
+//         };
+//         days.splice(dayArrIndex, 0, specificDay);
+//     }
 
-        const markerObj = knotes ? {lat, lng, title, dayEventName: editedDayEventName, timeOfDay, timeExact, knotes} 
-        : {lat, lng, title, dayEventName: editedDayEventName, timeOfDay, timeExact}; 
-        return markerObj;
-    });
+//     const dayEvents = specificDay.events;
 
-    dayObj[`${underscores}Day${dayNum}`] = dayEvents;
-    dayObj.ModifiedAt = serverTimestamp(); 
+//     const { dayEventName, lat, lng, title } = markerObj; 
+//     const eventObj = {
+//         dayEventName,
+//         lat,
+//         lng,
+//         title,
+//         description: '',
+//         imageURL: '',
+//         KhonsuRecommends: true,
+//         timeslot: '',
+//         starttime: 'March212024',
+//         endtime: 'March302024',
+//         notes: '',
+//         reservation: '',
+//     };
 
-    await updateDoc(existingMarkers, dayObj); 
+//     dayEvents.push(eventObj);
 
-}
+//     const dayObj = {}; 
+//     dayObj.days = days; 
+//     dayObj.modifiedAt = serverTimestamp(); 
+
+//     // console.log('Saved to:', dayNum, 'days', days)  
+
+//     await updateDoc(userData, dayObj);
+// }
 
 
 $dayEvents.addEventListener('click', e => {
@@ -1237,18 +1324,46 @@ $dayEvents.addEventListener('click', e => {
     const $dayEvent = $hourlyBtn.closest('.day-event'); 
     $dayEvent.querySelectorAll('.all-events .single-event').forEach(dayEvent => {
         const timeSpan = dayEvent.querySelector('.event-time-of-day');
-        const timeOfDay = timeSpan.timeOfDay;
-        const timeExact = timeSpan.timeExact;
+        const timeslot = timeSpan.timeslot;
+        const starttime = timeSpan.starttime;
 
         if (timeSpan.classList.contains('time-exact')) {
-            timeSpan.value = timeOfDay;
+            timeSpan.value = timeslot;
             timeSpan.classList.remove('time-exact');
             $hourlyBtn.value = 'View Hourly';
         }
         else {
-            timeSpan.value = timeExact;
+            timeSpan.value = starttime;
             timeSpan.classList.add('time-exact');
             $hourlyBtn.value = 'View Day';
         }
     });
 }); 
+
+// const $allEvents = $dayText.closest('.all-events.full-day');
+    // const dayEvents2 = [...$allEvents.querySelectorAll('.single-event')].map(singleEvent => {
+    //     const { lat, lng, title, timeslot, starttime } = singleEvent.markerObj; 
+
+    //     const editedDayEventName = singleEvent.querySelector('.day-text').value.trim();
+    //     singleEvent.markerObj.dayEventName = editedDayEventName; 
+
+    //     // const saveObj = { lat, lng, title, dayEventName: editedDayEventName, timeslot, starttime };
+    //     // return saveObj;
+
+    //     const eventObj = {
+    //         dayEventName,
+    //         lat,
+    //         lng,
+    //         title,
+    //         description: '',
+    //         imageURL: '',
+    //         KhonsuRecommends: false,
+    //         timeslot,
+    //         starttime,
+    //         endtime: '',
+    //         notes: '',
+    //         reservation: '',
+    //     };
+    // });
+
+    // const { dayEventName, lat, lng, title } = markerObj; 
