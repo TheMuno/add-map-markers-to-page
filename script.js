@@ -771,7 +771,6 @@ async function saveMarkerToFirebase(userMail, dayNum, markerObj) {
             summary: '',
             events: [], 
         };
-        // days.push(specificDay);
         days.splice(dayArrIndex, 0, specificDay);
     }
 
@@ -799,15 +798,37 @@ async function saveMarkerToFirebase(userMail, dayNum, markerObj) {
     dayObj.days = days; 
     dayObj.modifiedAt = serverTimestamp(); 
 
-    console.log('Saved to:', dayNum, 'days', days)  
+    // console.log('Saved to:', dayNum, 'days', days)  
 
     await updateDoc(userData, dayObj);
 }
 
-// async function retrieveSavedMarkersFromFirebase(userMail) {
+async function retrieveSavedMarkersFromFirebase(userMail) {
+    const docRef = doc(db, 'Locations', `User-${userMail}`);
+    const docSnap = await getDoc(docRef);
 
-// }
+    if (!docSnap.exists()) {
+        // docSnap.data() will be undefined in this case
+        console.log('No user with such email!');
+        $noUser.textContent = 'No user with such email, sorry!';
+        setTimeout(()=> $noUser.textContent = '', 5000);
+        return; 
+    }     
 
+    const userData = sortObject(docSnap.data());
+
+    function sortObject(obj) {
+        return Object.keys(obj).sort().reduce((result, key) => {   
+            result[key] = obj[key];
+            return result;
+        }, {});
+    }
+    
+    console.log('unsorted:', docSnap.data())
+    console.log('sorted:', userData)
+}
+
+/*
 async function retrieveSavedMarkersFromFirebase(userMail) {
     const docRef = doc(db, 'Locations', `User-${userMail}`);
     const docSnap = await getDoc(docRef);
@@ -933,7 +954,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
         }, {});
     }
 }
-
+*/
 
 async function removeFirebaseSavedMarker(userMail, dayNum, $event) {
     const dayEventRef = doc(db, 'Locations', `User-${userMail}`);
