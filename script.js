@@ -1208,7 +1208,7 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, indexOfEd
     const dayEvents = specificDay.events;
     // const specificEvent = dayEvents[indexOfEditedEl];
 
-    const $singleEvent = $dayText.closest('single-event');
+    const $singleEvent = $dayText.closest('.single-event');
 
     const editedDayEventName = $singleEvent.querySelector('.day-text').value.trim();
     $singleEvent.markerObj.dayEventName = editedDayEventName; 
