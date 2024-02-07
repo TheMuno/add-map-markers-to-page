@@ -328,10 +328,10 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
     $dayEvent.querySelector('.day-text').value = dayEvent;
 
     const $timeOfDaySpan = $dayEvent.querySelector('.event-time-of-day'); 
-    $timeOfDaySpan.timeOfDay = markerObj.timeOfDay || 'Undefined';
+    $timeOfDaySpan.timeslot = markerObj.timeslot || 'Undefined';
     $timeOfDaySpan.timeExact = markerObj.timeExact || 'Undefined';
 
-    $timeOfDaySpan.value = markerObj.timeOfDay || 'Undefined';
+    $timeOfDaySpan.value = markerObj.timeslot || 'Undefined';
 
     $dayEvent.marker = marker; 
     $dayEvent.markerObj = markerObj;
@@ -741,10 +741,10 @@ function removeDay($day) {
 
 
 !async function createUserInFirebase(userMail) {
-    const userRef = doc(db, 'Locations', `User-${userMail}`);
+    const userRef = doc(db, 'travelData', `User-${userMail}`);
     const userSnap = await getDoc(userRef);
     if (userSnap.exists() || !userMail) return;
-    await setDoc(userRef, { CreatedAt: serverTimestamp() }); 
+    await setDoc(userRef, { createdAt: serverTimestamp() }); 
 }(localStorage.getItem('user-email')); 
  
 // async function saveMarkerToFirebase(userMail, dayNum, markerObj) {  
@@ -832,7 +832,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
             const dayClass = `.day-${dayNum}-event`; 
             const $currentDay = $dayEvents.querySelector(dayClass); 
 
-            const { lat, lng, title, dayEventName } = dayEvent;
+            const { lat, lng, title, dayEventName, timeslot, starttime, endtime } = dayEvent;
             if (lat && lng) {
                 const locationInfo = {
                     name: title,
@@ -841,7 +841,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                 const createdMarker = createMarker(locationInfo);   
                 currentDay.markers.push(createdMarker);  
 
-                const markerObj = { lat, lng, title, dayEventName }; 
+                const markerObj = { lat, lng, title, dayEventName, timeslot, starttime, endtime }; 
 
                 postDayEvent(dayEventName, dayClass, createdMarker, `event${(eventNum+2)}-day${dayNum}`, markerObj); 
             }
@@ -1192,6 +1192,10 @@ $dayEvents.addEventListener('change', async e => {
 
     //}
 });
+
+// async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
+
+// }
 
 async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
     const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
