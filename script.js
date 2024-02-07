@@ -828,7 +828,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
         console.log('Day::::', day)
 
-        dayEvents.forEach(dayEvent => {
+        dayEvents.forEach((dayEvent, eventNum) => {
             const dayClass = `.day-${dayNum}-event`; 
             const $currentDay = $dayEvents.querySelector(dayClass); 
 
