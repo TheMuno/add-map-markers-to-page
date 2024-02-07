@@ -804,7 +804,7 @@ async function saveMarkerToFirebase(userMail, dayNum, markerObj) {
 }
 
 async function retrieveSavedMarkersFromFirebase(userMail) {
-    const docRef = doc(db, 'Locations', `User-${userMail}`);
+    const docRef = doc(db, 'travelData', `User-${userMail}`);
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
