@@ -829,26 +829,30 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
         console.log('Day::::', day)
 
         dayEvents.forEach((dayEvent, eventNum) => {
-            const dayClass = `.day-${dayNum}-event`; 
-            const $currentDay = $dayEvents.querySelector(dayClass); 
-
-            const { lat, lng, title, dayEventName } = dayEvent;
-            if (lat && lng) {
-                const locationInfo = {
-                    name: title,
-                    latLng: {lat, lng}
-                };
-                const createdMarker = createMarker(locationInfo);   
-                currentDay.markers.push(createdMarker);  
-
-                const markerObj = { lat, lng, title, dayEventName }; 
-
-                postDayEvent(dayEventName, dayClass, createdMarker, `event${(eventNum+2)}-day${dayNum}`, markerObj); 
-            }
-
-            if ($currentDay && $currentDay.querySelectorAll('.single-event').length > 1) $dayEvents.querySelector(`${dayClass} .single-event`).classList.add('hide');  
+            setupDay(dayNum, dayEvent, eventNum, currentDay);
         });
     });
+
+    function setupDay(dayNum, dayEvent, currentDay) {
+        const dayClass = `.day-${dayNum}-event`; 
+        const $currentDay = $dayEvents.querySelector(dayClass); 
+
+        const { lat, lng, title, dayEventName } = dayEvent;
+        if (lat && lng) {
+            const locationInfo = {
+                name: title,
+                latLng: {lat, lng}
+            };
+            const createdMarker = createMarker(locationInfo);   
+            currentDay.markers.push(createdMarker);  
+
+            const markerObj = { lat, lng, title, dayEventName }; 
+
+            postDayEvent(dayEventName, dayClass, createdMarker, `event${(eventNum+2)}-day${dayNum}`, markerObj); 
+        }
+
+        if ($currentDay && $currentDay.querySelectorAll('.single-event').length > 1) $dayEvents.querySelector(`${dayClass} .single-event`).classList.add('hide'); 
+    }
 } 
 
 /*   * /
