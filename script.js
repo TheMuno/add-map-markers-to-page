@@ -829,11 +829,11 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
         console.log('Day::::', day)
 
         dayEvents.forEach((dayEvent, eventNum) => {
-            setupDay(dayNum, dayEvent, eventNum, currentDay);
+            setupDay(dayNum, dayEvent, eventNum, currentDay.markers);
         });
     });
 
-    function setupDay(dayNum, dayEvent, currentDay) {
+    function setupDay(dayNum, dayEvent, markers) {
         const dayClass = `.day-${dayNum}-event`; 
         const $currentDay = $dayEvents.querySelector(dayClass); 
 
@@ -844,7 +844,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                 latLng: {lat, lng}
             };
             const createdMarker = createMarker(locationInfo);   
-            currentDay.markers.push(createdMarker);  
+            markers.push(createdMarker);  
 
             const markerObj = { lat, lng, title, dayEventName }; 
 
