@@ -327,6 +327,8 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
     // $dayEvent.querySelector('.day-text').textContent = dayEvent;
     $dayEvent.querySelector('.day-text').value = dayEvent;
 
+    console.log('markerObj.timeslot', markerObj.timeslot)
+
     const $timeOfDaySpan = $dayEvent.querySelector('.event-time-of-day'); 
     $timeOfDaySpan.timeslot = markerObj.timeslot || 'Undefined';
     $timeOfDaySpan.timeExact = markerObj.timeExact || 'Undefined';
