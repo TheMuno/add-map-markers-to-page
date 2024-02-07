@@ -815,20 +815,22 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
         return; 
     }     
 
-    const userData = sortObject(docSnap.data());
+    const userData = docSnap.data();
+    const { days } = userData;
 
-    function sortObject(obj) {
-        return Object.keys(obj).sort().reduce((result, key) => {   
-            result[key] = obj[key];
-            return result;
-        }, {});
-    }
-    
-    console.log('unsorted:', docSnap.data())
-    console.log('sorted:', userData)
+    days.forEach((day, i) => {
+        const dayNum = i + 1;
+        const dayEvents = day.events;
+
+        currentDay = dayNum === 1 ? $daysSelect.options[1] : addOptionToDaysSelect(dayNum); 
+        currentDay.markers = currentDay.markers || []; 
+        $addDay.dayNum = dayNum;
+
+        console.log('Day::::', day)
+    });
 }
 
-/*
+/*   * /
 async function retrieveSavedMarkersFromFirebase(userMail) {
     const docRef = doc(db, 'Locations', `User-${userMail}`);
     const docSnap = await getDoc(docRef);
