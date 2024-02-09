@@ -51,7 +51,8 @@ const $map = document.querySelector('#map'),
     // $hourEvents = document.querySelector('.hour-events'),
     // $dayTimeSectionsSelect = document.querySelector('.day-time-sections'),
     // $dayTimesSelect = document.querySelector('.day-times');
-    $noUser = document.querySelector('.no-user');
+    $noUser = document.querySelector('.no-user'),
+    $mapUrl = document.querySelector('.map-url-link input');
     
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
     
@@ -848,7 +849,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
     }     
 
     const userData = docSnap.data();
-    const { days } = userData;
+    const { days, references } = userData;
 
     days.forEach((day, i) => {
         const dayNum = i + 1;
@@ -881,7 +882,15 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
             if ($currentDay && $currentDay.querySelectorAll('.single-event').length > 1) $dayEvents.querySelector(`${dayClass} .single-event`).classList.add('hide'); 
         });
     });
+
+    const { mapUrl } = references;
+    setupMapurlNQRCode(mapUrl); 
 } 
+
+function setupMapurlNQRCode(mapUrl) {
+    $mapUrl.value = mapUrl; 
+    generateQRCode(mapUrl, $qrCodeContainer); 
+}
 
 /*   * /
 async function retrieveSavedMarkersFromFirebase(userMail) {
