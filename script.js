@@ -884,7 +884,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
         const reservations = day.events.reservation;
 
-        const kNotes = day.event.notes;
+        const kNotes = day.events.notes;
         setupKhonsuNotes(kNotes);        
     });
 
