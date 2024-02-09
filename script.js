@@ -881,6 +881,11 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
             if ($currentDay && $currentDay.querySelectorAll('.single-event').length > 1) $dayEvents.querySelector(`${dayClass} .single-event`).classList.add('hide'); 
         });
+
+        const reservations = day.events.reservation;
+
+        const kNotes = day.event.notes;
+        setupKhonsuNotes(kNotes);        
     });
 
     const { mapUrl } = references;
@@ -890,6 +895,21 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 function setupMapurlNQRCode(mapUrl) {
     $mapUrl.value = mapUrl; 
     generateQRCode(mapUrl, $qrCodeContainer); 
+}
+
+function setupKhonsuNotes(kNotes) {
+    if (dayNum == 1) { 
+        const $notesTextarea = $khonsuNotes.querySelector('textarea.knotes');
+        $notesTextarea.value = kNotes; 
+    }
+    else {
+        const $notesDiv = $khonsuNotes.querySelector('.khonsu-notes').cloneNode(true);
+        const $notesHeader = $notesDiv.querySelector('.knotes-title');
+        const $notesTextarea = $notesDiv.querySelector('textarea.knotes');
+        $notesHeader.textContent = `Khonsu Notes Day ${dayNum}`;
+        $notesTextarea.value = kNotes; 
+        $khonsuNotes.append($notesDiv);
+    }
 }
 
 /*   * /
