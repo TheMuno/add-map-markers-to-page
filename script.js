@@ -1168,11 +1168,11 @@ async function updateFirebaseAfterSort($dayEvent) {
     console.log('2. days[dayArrIndex]', days[dayArrIndex])
     console.log('2. dayEvents', dayEvents)
 
-    // const dayObj = {}; 
-    // dayObj.days = days; 
-    // dayObj.modifiedAt = serverTimestamp(); 
+    const dayObj = {}; 
+    dayObj.days = days; 
+    dayObj.modifiedAt = serverTimestamp(); 
 
-    // await updateDoc(userData, dayObj);
+    await updateDoc(userData, dayObj);
 }
 
 $dayEvents.addEventListener('click', e => {
