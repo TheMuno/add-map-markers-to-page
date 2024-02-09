@@ -76,13 +76,13 @@ currentDay.markers = [];
 
 $daysSelect.selectedIndex = startingIndex;  
 
-// google.maps.event.addDomListener(window, 'load', () => {
-//     const userMail = localStorage.getItem('user-email');  
-//     if (userMail) retrieveSavedMarkersFromFirebase(userMail);
-// }); 
+google.maps.event.addDomListener(window, 'load', () => {
+    const userMail = localStorage.getItem('user-email');  
+    if (userMail) retrieveSavedMarkersFromFirebase(userMail);
+}); 
 
 // setTimeout(()=> retrieveSavedMarkersFromFirebase(localStorage.getItem('user-email')), 15 * 1000); 
-retrieveSavedMarkersFromFirebase(localStorage.getItem('user-email'));
+// retrieveSavedMarkersFromFirebase(localStorage.getItem('user-email'));
 
 $logoutBtn?.addEventListener('click', () => {
     localStorage.removeItem('user-email');
@@ -783,7 +783,7 @@ async function saveMarkerToFirebase(userMail, dayNum, markerObj) {
 
     const dayEvents = specificDay.events;
 
-    const { dayEventName, lat, lng, title } = markerObj; 
+    const { dayEventName, lat, lng, title, timeslot, starttime } = markerObj; 
     const eventObj = {
         dayEventName,
         lat,
@@ -792,8 +792,8 @@ async function saveMarkerToFirebase(userMail, dayNum, markerObj) {
         description: '',
         imageURL: '',
         KhonsuRecommends: true,
-        timeslot: '',
-        starttime: 'March212024',
+        timeslot,
+        starttime,
         endtime: 'March302024',
         notes: '',
         reservation: '',
@@ -814,9 +814,6 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
     const docRef = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(docRef);
 
-    console.log('userMail', userMail)
-    console.log('ran', docSnap)
-
     if (!docSnap.exists()) {
         // docSnap.data() will be undefined in this case
         console.log('No user with such email!');
@@ -827,8 +824,6 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
     const userData = docSnap.data();
     const { days } = userData;
-
-    console.log('userData', userData)
 
     days.forEach((day, i) => {
         const dayNum = i + 1;
