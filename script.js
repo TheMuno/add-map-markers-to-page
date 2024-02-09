@@ -813,6 +813,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
     const docRef = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(docRef);
 
+    console.log('userMail', userMail)
     console.log('ran', docSnap)
 
     if (!docSnap.exists()) {
