@@ -322,7 +322,7 @@ function postDayEvent(dayEvent, day, marker, eventId, markerObj) {
 function constructEvent(dayEvent, day, marker, eventId, markerObj) {
     const $day = $dayEvents.querySelector(day); 
 
-    const $fullDayEvents = $day.querySelector('.all-events.full-day'); 
+    const $fullDayEvents = $day.querySelector('.all-events'); 
 
     const $dayEvent = $day.querySelector('.single-event').cloneNode(true);   
     $dayEvent.classList.remove('hide'); 
@@ -687,7 +687,7 @@ $dayEvents.addEventListener('click', e => {
 
         const dayNum = $dayEvent.querySelector('.day-head').textContent.trim().split(/\s+/).pop();  //.slice(-1); 
         if (dayNum === '1') {
-            $dayEvent.querySelectorAll('.all-events.full-day .single-event:not(.hide)').forEach($event => $event.remove()); 
+            $dayEvent.querySelectorAll('.all-events .single-event:not(.hide)').forEach($event => $event.remove()); 
             $dayEvent.querySelector('.single-event.hide')?.classList.remove('hide'); 
             // $dayEvent.classList.add('hide'); 
 
@@ -1123,20 +1123,56 @@ async function updateFirebaseAfterSort($dayEvent) {
     const dayNum = $dayEvent.id.slice(-1); 
     const userMail = localStorage.getItem('user-email');
 
-    const eventsArr = [...$dayEvent.closest('.all-events.full-day').querySelectorAll('.single-event')].map(dayEvent => {
-        return dayEvent.markerObj;
+    const dayEvents = [...$dayEvent.closest('.all-events').querySelectorAll('.single-event')].map(dayEvent => {
+
+        const { lat, lng, title, dayEventName, timeslot, starttime } = dayEvent.markerObj; 
+
+        const eventObj = {
+            dayEventName,
+            lat,
+            lng,
+            title,
+            description: '',
+            imageURL: '',
+            KhonsuRecommends: false,
+            timeslot,
+            starttime,
+            endtime: '',
+            notes: '',
+            reservation: '',
+        };
+
+        return eventObj;
     });
 
-    const dayEventRef = doc(db, 'Locations', `User-${userMail}`);
-    const dayObj = {};
-    dayObj[`_Day${dayNum}`] = eventsArr; 
-    await updateDoc(dayEventRef, dayObj); 
+    // const dayEventRef = doc(db, 'travelData', `user-${userMail}`);
+    // const dayObj = {};
+    // dayObj[`_Day${dayNum}`] = eventsArr; 
+    // await updateDoc(dayEventRef, dayObj); 
+
+    const userData = doc(db, 'travelData', `user-${userMail}`);
+    const docSnap = await getDoc(userData);
+    const data = await docSnap.data(); 
+    const { days } = data;
+
+    const dayArrIndex = dayNum-1;
+    // let specificDay = days[dayArrIndex];
+
+    // const dayEvents = specificDay.events;
+
+    days[dayArrIndex] = dayEvents;
+
+    const dayObj = {}; 
+    dayObj.days = days; 
+    dayObj.modifiedAt = serverTimestamp(); 
+
+    await updateDoc(userData, dayObj);
 }
 
 $dayEvents.addEventListener('click', e => {
     if (e.target.closest('.sort-events')) {
         const $dayEvent = e.target.closest('.day-event');
-        const $allEvents = $dayEvent.querySelector('.all-events.full-day'); 
+        const $allEvents = $dayEvent.querySelector('.all-events'); 
         const $allEventsClone = $allEvents.cloneNode(true);
 
         const markerObjs = [...$allEvents.querySelectorAll('.single-event')].map(dayEvent => {
@@ -1156,14 +1192,14 @@ $dayEvents.addEventListener('click', e => {
         $img.addEventListener('click', e => {
             e.stopPropagation(); 
             const $closeBtn = e.currentTarget; 
-            const $sortedEvents = $closeBtn.closest('.modal-content').querySelector('.all-events.full-day');
+            const $sortedEvents = $closeBtn.closest('.modal-content').querySelector('.all-events');
             $allEvents.replaceWith($sortedEvents);
             $closeBtn.closest('.modal').classList.add('hide');  
         }); 
 
         $modal.addEventListener('click', e => { 
             if (e.target !== $modal) return;    
-            const $sortedEvents = e.target.querySelector('.all-events.full-day');
+            const $sortedEvents = e.target.querySelector('.all-events');
             $allEvents.replaceWith($sortedEvents);
             e.target.classList.add('hide'); 
         });
@@ -1193,13 +1229,7 @@ $dayEvents.addEventListener('change', async e => {
 
     const indexOfEditedEl = [...$wrapper.parentElement.querySelectorAll('.single-event')].indexOf($wrapper);
 
-    //if ($dayText) {  
-        await updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, indexOfEditedEl); 
-    //}
-    //else {
-    //    const $time = e.target.closest('.event-time-of-day');
-
-    //}
+    await updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, indexOfEditedEl); 
 }); 
 
 async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, indexOfEditedEl) {
@@ -1207,6 +1237,7 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, indexOfEd
     const docSnap = await getDoc(userData);
     const data = await docSnap.data(); 
     const { days } = data;
+
     const dayArrIndex = dayNum-1;
     let specificDay = days[dayArrIndex];
 
@@ -1219,8 +1250,6 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, indexOfEd
     $singleEvent.markerObj.dayEventName = editedDayEventName; 
 
     const { lat, lng, title, dayEventName, timeslot, starttime } = $singleEvent.markerObj; 
-
-    console.log('timeslot', timeslot, '\nstarttime', starttime) 
 
     const eventObj = {
         dayEventName,
@@ -1252,7 +1281,7 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, indexOfEd
     let dayObj = {};
     const underscores = dayNum.toString().split('').map(_ => '_').join('');  
 
-    const $allEvents = $dayText.closest('.all-events.full-day');
+    const $allEvents = $dayText.closest('.all-events');
     const dayEvents = [...$allEvents.querySelectorAll('.single-event')].map(singleEvent => {
         const $timeSpan = singleEvent.querySelector('.event-time-of-day');
         const lat = singleEvent.markerObj?.lat; 
@@ -1346,7 +1375,7 @@ $dayEvents.addEventListener('click', e => {
     });
 }); 
 
-// const $allEvents = $dayText.closest('.all-events.full-day');
+// const $allEvents = $dayText.closest('.all-events');
     // const dayEvents2 = [...$allEvents.querySelectorAll('.single-event')].map(singleEvent => {
     //     const { lat, lng, title, timeslot, starttime } = singleEvent.markerObj; 
 
