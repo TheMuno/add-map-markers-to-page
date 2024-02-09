@@ -177,6 +177,9 @@ const markerPopup = new google.maps.InfoWindow();
             // const timeOfDay = dayTimes[rand(0, 2)];
             // const timeExact = clockTimes[rand(0, 14)];
 
+            markerObj.timeslot = 'Morning';
+            markerObj.starttime = '08:00 AM';
+
             let dayEventName = ''; 
             if (numOfPlacesFound > 1) {
                 const addressName = `${place.name} ${place.formatted_address}`; 
@@ -184,8 +187,7 @@ const markerPopup = new google.maps.InfoWindow();
 
                 // const markerObj = {lat, lng, title, dayEventName, timeOfDay}; 
                 markerObj.dayEventName = dayEventName;
-                // markerObj.timeOfDay = timeOfDay;
-                // markerObj.timeExact = timeExact;
+                
                 postDayEvent(addressName, day, marker, `event${idNum}-day${dayNum}`, markerObj);
             }
             else {
@@ -807,9 +809,11 @@ async function saveMarkerToFirebase(userMail, dayNum, markerObj) {
     await updateDoc(userData, dayObj);
 }
 
-async function retrieveSavedMarkersFromFirebase(userMail) {
+async function retrieveSavedMarkersFromFirebase(userMail) {    
     const docRef = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(docRef);
+
+    console.log('ran', docSnap)
 
     if (!docSnap.exists()) {
         // docSnap.data() will be undefined in this case
