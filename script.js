@@ -327,7 +327,7 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
     // $dayEvent.querySelector('.day-text').textContent = dayEvent;
     $dayEvent.querySelector('.day-text').value = dayEvent;
 
-    console.log('markerObj.timeslot', markerObj.timeslot)
+    // console.log('markerObj.timeslot', markerObj.timeslot)
 
     const $timeOfDaySpan = $dayEvent.querySelector('.event-time-of-day'); 
     $timeOfDaySpan.timeslot = markerObj.timeslot || '';
@@ -828,7 +828,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
         currentDay.markers = currentDay.markers || []; 
         $addDay.dayNum = dayNum;
 
-        console.log('Day::::', day)
+        // console.log('Day::::', day)
 
         dayEvents.forEach((dayEvent, eventNum) => {
             const dayClass = `.day-${dayNum}-event`; 
@@ -994,7 +994,7 @@ async function removeFirebaseSavedDay(userMail, dayNum) {
     const underscores = dayNum.toString().split('').map(_ => '_').join('');  
     dayObj[`${underscores}Day${dayNum}`] = []; 
 
-    console.log('dayObj', dayObj)
+    // console.log('dayObj', dayObj)
 
     await updateDoc(dayEventRef, dayObj);  
 
