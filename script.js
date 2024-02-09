@@ -1163,7 +1163,7 @@ async function updateFirebaseAfterSort($dayEvent) {
     console.log('1. days[dayArrIndex]', days[dayArrIndex])
     console.log('1. dayEvents', dayEvents)
 
-    days[dayArrIndex] = dayEvents;
+    days[dayArrIndex].events = dayEvents;
 
     console.log('2. days[dayArrIndex]', days[dayArrIndex])
     console.log('2. dayEvents', dayEvents)
