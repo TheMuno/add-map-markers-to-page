@@ -1399,25 +1399,33 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, indexOfEd
 
 
 $dayEvents.addEventListener('click', e => {
-    if (!e.target.closest('.view-hourly')) return; 
+    if (!e.target.closest('.view-hourly')) return;  // event-exact-time-of-day
 
     const $hourlyBtn = e.target;
     const $dayEvent = $hourlyBtn.closest('.day-event'); 
     $dayEvent.querySelectorAll('.all-events .single-event').forEach(dayEvent => {
         const timeSpan = dayEvent.querySelector('.event-time-of-day');
+        const timeExact = dayEvent.querySelector('.event-exact-time-of-day'); 
+
         const timeslot = timeSpan.timeslot;
         const starttime = timeSpan.starttime;
 
-        if (timeSpan.classList.contains('time-exact')) {
-            timeSpan.value = timeslot;
-            timeSpan.classList.remove('time-exact');
-            $hourlyBtn.value = 'View Hourly';
-        }
-        else {
-            timeSpan.value = starttime;
-            timeSpan.classList.add('time-exact');
-            $hourlyBtn.value = 'View Day';
-        }
+        timeSpan.classList.toggle('hide');
+        timeExact.classList.toggle('hide');
+
+        timeSpan.value = timeslot;
+        timeExact.value = starttime;
+
+        // if (timeSpan.classList.contains('time-exact')) {
+        //     timeSpan.value = timeslot;
+        //     timeSpan.classList.remove('time-exact');
+        //     $hourlyBtn.value = 'View Hourly';
+        // }
+        // else {
+        //     timeSpan.value = starttime;
+        //     timeSpan.classList.add('time-exact');
+        //     $hourlyBtn.value = 'View Day';
+        // }
     });
 }); 
 
