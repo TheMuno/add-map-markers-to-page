@@ -385,14 +385,39 @@ $addDay.addEventListener('click', e => {
     addDayEventList(dayNum); 
 
     const userMail = localStorage.getItem('user-email'); 
-    if (userMail) addDayToFirebase(userMail, dayNum); 
+    if (userMail) addDayToFirebase(userMail); 
 });
  
-async function addDayToFirebase(userMail, dayNum) {  
-    const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
+async function addDayToFirebase(userMail) {  
+    const userData = doc(db, 'travelData', `user-${userMail}`);
+    const docSnap = await getDoc(userData);
+    const data = await docSnap.data(); 
+    const { days } = data;
+
+    const newDay = {
+        summary: '',
+        events: [
+            {
+                dayEventName: '',
+                lat: '',
+                lng: '',
+                title: '',
+                description: '',
+                imageURL: '',
+                KhonsuRecommends: true,
+                timeslot: '',
+                starttime: '',
+                endtime: '',
+                notes: '',
+                reservation: '',
+            }
+        ]
+    };
+
+    days.push(newDay);
+
     const dayObj = {};
-    const underscores = dayNum.toString().split('').map(_ => '_').join('');  
-    dayObj[`${underscores}Day${dayNum}`] = [];  
+    dayObj.days = days; 
     dayObj.ModifiedAt = serverTimestamp(); 
 
     await updateDoc(existingMarkers, dayObj); 
@@ -1145,28 +1170,14 @@ async function updateFirebaseAfterSort($dayEvent) {
         return eventObj;
     });
 
-    // const dayEventRef = doc(db, 'travelData', `user-${userMail}`);
-    // const dayObj = {};
-    // dayObj[`_Day${dayNum}`] = eventsArr; 
-    // await updateDoc(dayEventRef, dayObj); 
-
     const userData = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(userData);
     const data = await docSnap.data(); 
     const { days } = data;
 
     const dayArrIndex = dayNum-1;
-    // let specificDay = days[dayArrIndex];
-
-    // const dayEvents = specificDay.events;
-
-    console.log('1. days[dayArrIndex]', days[dayArrIndex])
-    console.log('1. dayEvents', dayEvents)
 
     days[dayArrIndex].events = dayEvents;
-
-    console.log('2. days[dayArrIndex]', days[dayArrIndex])
-    console.log('2. dayEvents', dayEvents)
 
     const dayObj = {}; 
     dayObj.days = days; 
