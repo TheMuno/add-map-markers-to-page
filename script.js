@@ -76,10 +76,12 @@ currentDay.markers = [];
 
 $daysSelect.selectedIndex = startingIndex;  
 
-google.maps.event.addDomListener(window, 'load', () => {
-    const userMail = localStorage.getItem('user-email');  
-    if (userMail) retrieveSavedMarkersFromFirebase(userMail);
-}); 
+// google.maps.event.addDomListener(window, 'load', () => {
+//     const userMail = localStorage.getItem('user-email');  
+//     if (userMail) retrieveSavedMarkersFromFirebase(userMail);
+// }); 
+
+retrieveSavedMarkersFromFirebase(userMail);
 
 $logoutBtn?.addEventListener('click', () => {
     localStorage.removeItem('user-email');
