@@ -81,7 +81,7 @@ $daysSelect.selectedIndex = startingIndex;
 //     if (userMail) retrieveSavedMarkersFromFirebase(userMail);
 // }); 
 
-retrieveSavedMarkersFromFirebase(userMail);
+retrieveSavedMarkersFromFirebase(localStorage.getItem('user-email'));
 
 $logoutBtn?.addEventListener('click', () => {
     localStorage.removeItem('user-email');
