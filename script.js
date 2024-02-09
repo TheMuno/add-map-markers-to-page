@@ -339,7 +339,7 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
     $timeOfDaySpan.timeslot = markerObj.timeslot || '';
     $timeOfDaySpan.starttime = markerObj.starttime || '';
 
-    $timeOfDaySpan.value = markerObj.timeslot || '';
+    $timeOfDaySpan.value = markerObj.timeslot.toLowerCase();
 
     $dayEvent.marker = marker; 
     $dayEvent.markerObj = markerObj;
