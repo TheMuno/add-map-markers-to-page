@@ -826,6 +826,8 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
     const userData = docSnap.data();
     const { days } = userData;
 
+    console.log('userData', userData)
+
     days.forEach((day, i) => {
         const dayNum = i + 1;
         const dayEvents = day.events;
