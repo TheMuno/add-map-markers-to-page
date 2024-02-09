@@ -885,7 +885,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
         const reservations = day.events.reservation;
 
         const kNotes = day.events.notes;
-        setupKhonsuNotes(kNotes);        
+        setupKhonsuNotes(kNotes, dayNum);        
     });
 
     const { mapUrl } = references;
@@ -897,7 +897,7 @@ function setupMapurlNQRCode(mapUrl) {
     generateQRCode(mapUrl, $qrCodeContainer); 
 }
 
-function setupKhonsuNotes(kNotes) {
+function setupKhonsuNotes(kNotes, dayNum) {
     if (dayNum == 1) { 
         const $notesTextarea = $khonsuNotes.querySelector('textarea.knotes');
         $notesTextarea.value = kNotes; 
