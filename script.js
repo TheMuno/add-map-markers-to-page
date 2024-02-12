@@ -704,7 +704,7 @@ $dayEvents.addEventListener('click', e => {
     }
     else if (e.target.closest('.remove-day')) {
         const userMail = localStorage.getItem('user-email');   
-        if (userMail) return; 
+        if (!userMail) return; 
 
         const $removeDay = e.target; 
         const $dayEvent = $removeDay.closest('.day-event');
