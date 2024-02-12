@@ -746,14 +746,14 @@ $dayEvents.addEventListener('click', e => {
     }
 });  
 
-function removeMarker($event, $removeMarker) {
-    $event.marker?.setMap(null); 
+function removeMarker($singleEvent, $removeMarker) {
+    $singleEvent.marker?.setMap(null); 
     const dayNum = $removeMarker.closest('.day-event').querySelector('.day-head').textContent.trim().split(/\s+/).pop(); //.slice(-1); 
     const currentDayMarkers = $daysSelect.options[dayNum].markers;
-    if (currentDayMarkers) currentDayMarkers.splice(currentDayMarkers.indexOf($event.marker), 1);   
+    if (currentDayMarkers) currentDayMarkers.splice(currentDayMarkers.indexOf($singleEvent.marker), 1);   
 
     const userMail = localStorage.getItem('user-email');   
-    if (userMail) removeFirebaseSavedMarker(userMail, dayNum, $event);  
+    if (userMail) removeFirebaseSavedMarker(userMail, dayNum, $singleEvent);  
 }  
 
 function removeDay($day) {
@@ -913,11 +913,53 @@ function setupKhonsuNotes(kNotes, dayNum) {
 
 
 
-async function removeFirebaseSavedMarker(userMail, dayNum, $event) {
-    const dayEventRef = doc(db, 'travelData', `user-${userMail}`);
+async function removeFirebaseSavedMarker(userMail, dayNum, $singleEvent) {
+    const userData = doc(db, 'travelData', `user-${userMail}`);
+    const docSnap = await getDoc(userData);
+    const data = await docSnap.data(); 
+    const { days } = data;
+
+    const dayArrIndex = dayNum-1;
+    let specificDay = days[dayArrIndex];
+    const dayEvents = specificDay.events;
+
+    const indexOfEditedEl = [...$singleEvent.closest('.all-events').querySelectorAll('.single-event')].indexOf($singleEvent);
+
+    
+    // const specificEvent = dayEvents[indexOfEditedEl];
+
+    // const $singleEvent = $dayText.closest('.single-event');
+
+    // const editedDayEventName = $singleEvent.querySelector('.day-text').value.trim();
+    // $singleEvent.markerObj.dayEventName = editedDayEventName; 
+
+    // const { lat, lng, title, dayEventName, timeslot, starttime } = $singleEvent.markerObj; 
+
+    // const eventObj = {
+    //     dayEventName,
+    //     lat,
+    //     lng,
+    //     title,
+    //     description: '',
+    //     imageURL: '',
+    //     KhonsuRecommends: false,
+    //     timeslot,
+    //     starttime,
+    //     endtime: '',
+    //     notes: '',
+    //     reservation: '',
+    // };
+
+    // dayEvents.splice(indexOfEditedEl, 0, eventObj);
+    dayEvents.splice(indexOfEditedEl, 1); 
+
+
+
+    // const dayEventRef = doc(db, 'travelData', `user-${userMail}`);
     const dayObj = {};
-    dayObj[`_Day${dayNum}`] = arrayRemove($event.markerObj); 
-    await updateDoc(dayEventRef, dayObj);  
+    dayObj.days = days; 
+
+    await updateDoc(userData, dayObj);  
 }  
 
 async function removeFirebaseSavedDay(userMail, dayNum) {
