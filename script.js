@@ -740,35 +740,9 @@ $dayEvents.addEventListener('click', e => {
         const lat = $event.marker.position?.lat() || $event.marker.lat;
         const lng = $event.marker.position?.lng() || $event.marker.lng; 
 
-        // if (prevLat && prevLng) {
-            // const url = `${directionsUrlBase}&origin=${prevLat},${prevLng}&destination=${destinationLat},${destinationLng}`;  
-            const url = `https://www.google.com/maps/place/${lat},${lng}`;
-            window.open(url); 
-        // }
-
-        // const position = { lat, lng };
-
-        // !async function initMap(position) {
-        //     // The location of Uluru
-            
-        //     // Request needed libraries.
-        //     const { Map } = await google.maps.importLibrary("maps");
-        //     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-          
-        //     // The map, centered at Uluru
-        //     map = new Map(document.getElementById("map"), {
-        //       zoom: 12,
-        //       center: position,
-        //       mapId: "DEMO_MAP_ID",
-        //     });
-          
-        //     // The marker, positioned at Uluru
-        //     const marker = new AdvancedMarkerElement({
-        //       map: map,
-        //       position: position,
-        //       title: "Uluru",
-        //     });
-        //   }(position);
+        // const url = `${directionsUrlBase}&origin=${prevLat},${prevLng}&destination=${destinationLat},${destinationLng}`;  
+        const url = `https://www.google.com/maps/place/${lat},${lng}`;
+        window.open(url); 
     }
 });  
 
@@ -937,158 +911,30 @@ function setupKhonsuNotes(kNotes, dayNum) {
     }
 }
 
-/*   * /
-async function retrieveSavedMarkersFromFirebase(userMail) {
-    const docRef = doc(db, 'Locations', `User-${userMail}`);
-    const docSnap = await getDoc(docRef);
 
-    if (!docSnap.exists()) {
-        // docSnap.data() will be undefined in this case
-        console.log('No user with such email!');
-        $noUser.textContent = 'No user with such email, sorry!';
-
-        // const $warnDiv = document.createElement('div');
-        // $warnDiv.className = 'warn-info';
-        // $warnDiv.textContent = 'No user with such email!';
-
-        // $userMail.parentElement.insertBefore($warnDiv, $userMail.nextElementSibling);
-
-        // setTimeout(()=>$warnDiv.remove(),5000);
-
-        setTimeout(()=> $noUser.textContent = '', 5000);
-
-        return; 
-    } 
-
-    const userData = sortObject(docSnap.data());
-
-    for (let [entry, locations] of Object.entries(userData)) { 
-        // if (!day.startsWith('_')) continue;
-
-        if (entry.startsWith('_')) {
-            const day = entry; 
-
-            const dayNum = Number(day.split('Day')[1]);  
-
-            if (dayNum === 1) {
-                currentDay = $daysSelect.options[1]; 
-                currentDay.markers = currentDay.markers || []; 
-                $addDay.dayNum = 1; 
-            }
-            else {  
-                currentDay = addOptionToDaysSelect(dayNum);  
-                currentDay.markers = currentDay.markers || []; 
-                $addDay.dayNum = dayNum;
-            }
-
-            locations.forEach((location, eventNum) => {
-                const dayClass = `.day-${dayNum}-event`; 
-                const $currentDay = $dayEvents.querySelector(dayClass); 
-
-                const { lat, lng, title, dayEventName, timeOfDay, timeExact, knotes } = location;
-                if (lat && lng) {
-                    const locationInfo = {
-                        name: title,
-                        latLng: {lat, lng}
-                    };
-                    const createdMarker = createMarker(locationInfo);   
-                    currentDay.markers.push(createdMarker);  
-
-                    // const timeOfDay = location.timeOfDay;
-                    // const timeExact = location.timeExact;
-                    const markerObj = {lat, lng, title, dayEventName, timeOfDay, timeExact}; 
-
-                    postDayEvent(dayEventName, dayClass, createdMarker, `event${(eventNum+2)}-day${dayNum}`, markerObj); 
-                }
-
-                if ($currentDay && $currentDay.querySelectorAll('.single-event').length > 1) $dayEvents.querySelector(`${dayClass} .single-event`).classList.add('hide');  
-
-                if (knotes) {
-                    if (dayNum == 1) { 
-                        const $notesTextarea = $khonsuNotes.querySelector('textarea.knotes');
-                        $notesTextarea.value = knotes.replaceAll('-','\n-').replace(/^\n/,''); 
-                    }
-                    else {
-                        const $notesDiv = $khonsuNotes.querySelector('.khonsu-notes').cloneNode(true);
-                        const $notesHeader = $notesDiv.querySelector('.knotes-title');
-                        const $notesTextarea = $notesDiv.querySelector('textarea.knotes');
-                        $notesHeader.textContent = `Khonsu Notes Day ${dayNum}`;
-                        $notesTextarea.value = knotes.replaceAll('-','\n-').replace(/^\n/,''); 
-                        $khonsuNotes.append($notesDiv);
-                    }
-                }
-            });
-        }
-        else {
-            // if (entry.toLowerCase() === 'khonsunotes') {
-                
-            //     $khonsuNotes.value = locations.replaceAll('-','\n-').replace(/^\n/,''); 
-            // }
-            // else 
-            if (entry.toLowerCase() === 'reservations') {
-                // const $reservations = document.querySelector('.reservations'); 
-                const $reservation = $reservations.querySelector('.reserve');
-                locations.forEach(location => {
-                    const $reservationClone = $reservation.cloneNode(true);
-                    $reservationClone.classList.remove('hide');
-
-                    const time = location.split('-')[0]?.trim();
-                    const info = location.split('-')[1]?.trim();
-
-                    $reservationClone.querySelector('.reserve-time').value = time;
-                    $reservationClone.querySelector('.reserve-info').value = info; 
-
-                    $reservations.querySelector('.reserves').append($reservationClone); 
-                });
-            }
-            else if (entry.toLowerCase() === 'mapurl') {
-                const $mapUrl = document.querySelector('.map-url-link input'); 
-                locations = locations.trim(); 
-                $mapUrl.value = locations; 
-                generateQRCode(locations, $qrCodeContainer); 
-            }
-            // else if (entry.toLowerCase() === 'qrcode') {
-                
-            // }
-        }
-
-    }
-
-    $daysSelect.selectedIndex = 0; 
-
-    function sortObject(obj) {
-        return Object.keys(obj).sort().reduce((result, key) => {   
-            result[key] = obj[key];
-            return result;
-        }, {});
-    }
-}
-*/
 
 async function removeFirebaseSavedMarker(userMail, dayNum, $event) {
-    const dayEventRef = doc(db, 'Locations', `User-${userMail}`);
+    const dayEventRef = doc(db, 'travelData', `user-${userMail}`);
     const dayObj = {};
     dayObj[`_Day${dayNum}`] = arrayRemove($event.markerObj); 
     await updateDoc(dayEventRef, dayObj);  
 }  
 
 async function removeFirebaseSavedDay(userMail, dayNum) {
-    const dayEventRef = doc(db, 'Locations', `User-${userMail}`);
-    const dayObj = {};
-    const underscores = dayNum.toString().split('').map(_ => '_').join('');  
-    dayObj[`${underscores}Day${dayNum}`] = []; 
+    const userData = doc(db, 'travelData', `user-${userMail}`);
+    const docSnap = await getDoc(userData);
+    const data = await docSnap.data(); 
+    const { days } = data;
 
-    // console.log('dayObj', dayObj)
+    const dayArrIndex = dayNum-1;
+    // let specificDay = days[dayArrIndex];
+
+    days.splice(dayArrIndex, 1);
+
+    const dayObj = {};
+    dayObj.days = days; 
 
     await updateDoc(dayEventRef, dayObj);  
-
-
-    // const dayToDelete = `${underscores}Day${dayNum}`;
-
-    // // Remove the 'capital' field from the document
-    // await updateDoc(dayEventRef, {
-    //     [dayToDelete]: deleteField()
-    // });
 }  
 
 
