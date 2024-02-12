@@ -688,12 +688,13 @@ function hideMarkers(day) {
 $dayEvents.addEventListener('click', e => {
     if (e.target.closest('.remove-marker')) {
         const $removeMarker = e.target; 
-        const $event = $removeMarker.closest('.single-event'); 
+        const $singleEvent = $removeMarker.closest('.single-event'); 
         const $dayEvent = $removeMarker.closest('.day-event');
         const eventNum = $dayEvent.querySelectorAll('.single-event:not(.hide)').length; 
+        const indexOfEditedEl = [...$singleEvent.closest('.all-events').querySelectorAll('.single-event')].indexOf($singleEvent);
         
-        removeMarker($event, $removeMarker); 
-        if ($dayEvent.querySelectorAll('.single-event').length > 1) $event.remove(); 
+        removeMarker($singleEvent, $removeMarker, indexOfEditedEl); 
+        if ($dayEvent.querySelectorAll('.single-event').length > 1) $singleEvent.remove(); 
 
         if (eventNum == 1) {
             $dayEvent.querySelector('.single-event.hide')?.classList.remove('hide'); 
@@ -746,14 +747,14 @@ $dayEvents.addEventListener('click', e => {
     }
 });  
 
-function removeMarker($singleEvent, $removeMarker) {
+function removeMarker($singleEvent, $removeMarker, indexOfEditedEl) {
     $singleEvent.marker?.setMap(null); 
     const dayNum = $removeMarker.closest('.day-event').querySelector('.day-head').textContent.trim().split(/\s+/).pop(); //.slice(-1); 
     const currentDayMarkers = $daysSelect.options[dayNum].markers;
     if (currentDayMarkers) currentDayMarkers.splice(currentDayMarkers.indexOf($singleEvent.marker), 1);   
 
     const userMail = localStorage.getItem('user-email');   
-    if (userMail) removeFirebaseSavedMarker(userMail, dayNum, $singleEvent);  
+    if (userMail) removeFirebaseSavedMarker(userMail, dayNum, indexOfEditedEl);  
 }  
 
 function removeDay($day) {
@@ -913,7 +914,7 @@ function setupKhonsuNotes(kNotes, dayNum) {
 
 
 
-async function removeFirebaseSavedMarker(userMail, dayNum, $singleEvent) {
+async function removeFirebaseSavedMarker(userMail, dayNum, indexOfEditedEl) {
     const userData = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(userData);
     const data = await docSnap.data(); 
@@ -923,7 +924,7 @@ async function removeFirebaseSavedMarker(userMail, dayNum, $singleEvent) {
     let specificDay = days[dayArrIndex];
     const dayEvents = specificDay.events;
 
-    const indexOfEditedEl = [...$singleEvent.closest('.all-events').querySelectorAll('.single-event')].indexOf($singleEvent);
+    
 
     
     // const specificEvent = dayEvents[indexOfEditedEl];
