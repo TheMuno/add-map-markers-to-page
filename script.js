@@ -936,7 +936,7 @@ async function removeFirebaseSavedDay(userMail, dayNum) {
     const dayObj = {};
     dayObj.days = days; 
 
-    await updateDoc(dayEventRef, dayObj);  
+    await updateDoc(userData, dayObj);  
 }  
 
 
