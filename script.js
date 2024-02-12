@@ -931,6 +931,8 @@ async function removeFirebaseSavedDay(userMail, dayNum) {
 
     days.splice(dayArrIndex, 1);
 
+    console.log('days', days)
+
     const dayObj = {};
     dayObj.days = days; 
 
