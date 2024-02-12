@@ -740,11 +740,11 @@ $dayEvents.addEventListener('click', e => {
         const lat = $event.marker.position?.lat() || $event.marker.lat;
         const lng = $event.marker.position?.lng() || $event.marker.lng; 
 
-        if (prevLat && prevLng) {
+        // if (prevLat && prevLng) {
             // const url = `${directionsUrlBase}&origin=${prevLat},${prevLng}&destination=${destinationLat},${destinationLng}`;  
             const url = `https://www.google.com/maps/place/${lat},${lng}`;
             window.open(url); 
-        }
+        // }
 
         // const position = { lat, lng };
 
