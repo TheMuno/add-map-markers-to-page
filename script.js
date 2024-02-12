@@ -633,7 +633,7 @@ $daysSelect.addEventListener('change', e => {
         }); 
 
         const selectedDay = $select.value.trim();
-        const $chosenDay = $dayEvents.querySelector(`.day-event[day=${selectedDay}]`);
+        const $chosenDay = $dayEvents.querySelector(`.day-event[day='${selectedDay}']`);
         
         // const $chosenDay = document.querySelector(`.day-event.day-${index}-event`); 
         if ($chosenDay) {
