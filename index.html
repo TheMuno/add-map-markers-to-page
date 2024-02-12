@@ -84,6 +84,10 @@
             width: 250px;
             height: 30px;
         }
+
+        .day-event.hide {
+            display: none;
+        }
     </style>   
 </head>
 <body>
@@ -120,7 +124,7 @@
     <div class="section"> 
         <div class="side-bar">
             <div class="day-events">
-                <div class="day-event day-1-event"> 
+                <div class="day-event day-1-event hide"> 
                     <div class="day-head">
                         <span class="header-text">Day 1</span>  
                         <img class="remove-day" src="Imgs/x-24.png" alt="">
@@ -148,17 +152,6 @@
                         <img class="remove-marker" src="Imgs/x.png" alt="">
                         <img class="get-directions" src="Imgs/directions.png" alt=""> 
                     </div>  
-                    <!-- <div class="hour-events hide"> 
-                        <div class="time-events morning">
-                            <div class="all-events"></div>
-                        </div>
-                        <div class="time-events afternoon">
-                            <div class="all-events"></div>
-                        </div>
-                        <div class="time-events evening">
-                            <div class="all-events"></div>
-                        </div>
-                    </div> -->
                     <div class="all-events full-day"></div> 
                     <div class="modal hide"> 
                         <div class="modal-content">
@@ -166,6 +159,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="all-days"></div>
             </div> 
         </div> 
         <div id="map"></div>
