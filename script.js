@@ -614,25 +614,6 @@ function addDayEventList(dayNum, headerText=`Day ${dayNum}`) {
     
     $dayEvent.classList.remove('hide');   
     $dayEvents.insertBefore($dayEvent, $dayEvents.querySelector(`.day-${dayNum+1}-event`)); 
-
-
-    // Hour Events 
-    // const $dayHrEvent = $hourEvents.querySelector('.day-event.day-1-event').cloneNode(true);
-    // $dayHrEvent.classList.remove('day-1-event');
-    // $dayHrEvent.classList.add(`day-${dayNum}-event`);
-    // $dayHrEvent.querySelector('.day-head .header-text').textContent = `Day ${dayNum}`; 
-
-    // if ($dayHrEvent.querySelector('.single-event.hide'))   {
-    //     $dayHrEvent.querySelectorAll('.single-event:not(.hide)').forEach(el => el.remove()); 
-    //     $dayHrEvent.querySelector('.single-event.hide').classList.remove('hide'); 
-    // }
-
-    // $dayHrEvent.querySelector('.remove-marker').classList.add('hide');
-    // $dayHrEvent.querySelector('.get-directions').classList.add('hide');
-
-    // $dayHrEvent.classList.remove('hide'); 
-    // // const selectedTime = $dayTimeSectionsSelect.value.trim(); 
-    // $hourEvents.querySelector('.day-time.morning').append($dayHrEvent);
 }
 
 function getCurrentDayNum() {
@@ -1383,6 +1364,8 @@ const fp = flatpickr(document.querySelector('input.travel-date'), {
     //altFormat: "K D M j",
     dateFormat: 'Y-m-d',
     onChange: function(selectedDates, dateStr, instance) {
+        $dayEvents.innerHTML = '';
+
         const startDate = new Date(selectedDates[0]);
         const endDate = new Date(selectedDates[1]);
         // console.log('selectedDates', selectedDates)
