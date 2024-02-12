@@ -734,16 +734,40 @@ $dayEvents.addEventListener('click', e => {
         const $event = $getDir.closest('.single-event'); 
         const $day = $event.closest('.day-event');  
 
-        const prevLat = $event.previousElementSibling.marker?.position.lat();
-        const prevLng = $event.previousElementSibling.marker?.position.lng();
+        // const prevLat = $event.previousElementSibling.marker?.position.lat();
+        // const prevLng = $event.previousElementSibling.marker?.position.lng();
 
-        const destinationLat = $event.marker.position?.lat() || $event.marker.lat;
-        const destinationLng = $event.marker.position?.lng() || $event.marker.lng; 
+        const lat = $event.marker.position?.lat() || $event.marker.lat;
+        const lng = $event.marker.position?.lng() || $event.marker.lng; 
 
-        if (prevLat && prevLng) {
-            const url = `${directionsUrlBase}&origin=${prevLat},${prevLng}&destination=${destinationLat},${destinationLng}`;  
-            window.open(url); 
-        }
+        // if (prevLat && prevLng) {
+        //     const url = `${directionsUrlBase}&origin=${prevLat},${prevLng}&destination=${destinationLat},${destinationLng}`;  
+        //     window.open(url); 
+        // }
+
+        const position = { lat, lng };
+
+        !async function initMap(position) {
+            // The location of Uluru
+            
+            // Request needed libraries.
+            const { Map } = await google.maps.importLibrary("maps");
+            const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+          
+            // The map, centered at Uluru
+            map = new Map(document.getElementById("map"), {
+              zoom: 12,
+              center: position,
+              mapId: "DEMO_MAP_ID",
+            });
+          
+            // The marker, positioned at Uluru
+            const marker = new AdvancedMarkerElement({
+              map: map,
+              position: position,
+              title: "Uluru",
+            });
+          }(position);
     }
 });  
 
