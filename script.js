@@ -596,11 +596,11 @@ function addOptionToDaysSelect(dayNum) {
     return $option; 
 }
 
-function addDayEventList(dayNum) {
+function addDayEventList(dayNum, headerText=`Day ${dayNum}`) {
     const $dayEvent = $dayEvents.children[0].cloneNode(true);
     $dayEvent.classList.remove('day-1-event');
     $dayEvent.classList.add(`day-${dayNum}-event`);
-    $dayEvent.querySelector('.day-head .header-text').textContent = `Day ${dayNum}`; 
+    $dayEvent.querySelector('.day-head .header-text').textContent = headerText; //`Day ${dayNum}`; 
 
     if ($dayEvent.querySelector('.single-event.hide'))   {
         $dayEvent.querySelectorAll('.single-event:not(.hide)').forEach(el => el.remove()); 
@@ -1383,13 +1383,19 @@ const fp = flatpickr(document.querySelector('input.travel-date'), {
     //altFormat: "K D M j",
     dateFormat: 'Y-m-d',
     onChange: function(selectedDates, dateStr, instance) {
-        const startDate = new Date(selectedDates[0]).getDate();
-        const endDate = new Date(selectedDates[1]).getDate();
+        const startDate = new Date(selectedDates[0]);
+        const endDate = new Date(selectedDates[1]);
         // console.log('selectedDates', selectedDates)
-        for(let i = startDate; i <= endDate; i++) {
-            addDayEventList(i);
+        for(let i = startDate.getDate(); i <= max, max = endDate.getDate(); i++) {
+            const dateStr = startDate.toDateString();
+            const day = dateStr.substring(0, dateStr.indexOf(' '));
+            const rest = dateStr.substring(day.length);
+            const headerText = `${day},${rest}`;
+
+            addDayEventList(i, headerText);
             console.log(i)
+
+            startDate.setDate( startDate.getDate() + 1 ); 
         }
     },
 });
-
