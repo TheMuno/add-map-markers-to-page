@@ -587,7 +587,7 @@ function updateDayNum($addDayBtn) {
     return dayNum; 
 } 
 
-function addOptionToDaysSelect(dayNum) {
+function addOptionToDaysSelect(dayNum, headerText=`Day ${dayNum}`) {
     const $option = document.createElement('option');
     $option.setAttribute('value', `day-${dayNum}`);
     $option.textContent = `Day ${dayNum}`;  
@@ -1379,9 +1379,11 @@ const fp = flatpickr(document.querySelector('input.travel-date'), {
             const headerText = `${day},${rest}`;
 
             addDayEventList(i, headerText);
+            addOptionToDaysSelect(i, headerText);
             console.log(i)
 
             startDate.setDate( startDate.getDate() + 1 ); 
         }
     },
 });
+
