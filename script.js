@@ -421,7 +421,7 @@ async function addDayToFirebase(userMail) {
     dayObj.days = days; 
     dayObj.ModifiedAt = serverTimestamp(); 
 
-    await updateDoc(existingMarkers, dayObj); 
+    await updateDoc(userData, dayObj); 
 }
 
 
@@ -1372,3 +1372,16 @@ $dayEvents.addEventListener('click', e => {
     // });
 
     // const { dayEventName, lat, lng, title } = markerObj; 
+
+
+document.querySelectorAll('.section.travel-dates input.travel-date').forEach(inp => {
+    flatpickr(inp, {
+        mode: 'range',
+        altInput: true,
+        enableTime: false,
+        altFormat: 'D M j',
+        //altFormat: "h:i K D M j",
+        //altFormat: "K D M j",
+        dateFormat: 'Y-m-d',
+    });
+});
