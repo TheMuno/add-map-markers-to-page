@@ -601,6 +601,7 @@ function addDayEventList(dayNum, headerText=`Day ${dayNum}`) {
     $dayEvent.classList.remove('day-1-event');
     $dayEvent.classList.add(`day-${dayNum}-event`);
     $dayEvent.querySelector('.day-head .header-text').textContent = headerText; //`Day ${dayNum}`; 
+    $dayEvent.setAttribute('day', headerText);
 
     if ($dayEvent.querySelector('.single-event.hide'))   {
         $dayEvent.querySelectorAll('.single-event:not(.hide)').forEach(el => el.remove()); 
@@ -629,8 +630,11 @@ $daysSelect.addEventListener('change', e => {
             day.classList.add('hide'); 
             hideMarkers(day); 
         }); 
+
+        const selectedDay = $select.value.trim();
+        const $chosenDay = $dayEvents.querySelector(`.day-event[day=${selectedDay}]`);
         
-        const $chosenDay = document.querySelector(`.day-event.day-${index}-event`); 
+        // const $chosenDay = document.querySelector(`.day-event.day-${index}-event`); 
         if ($chosenDay) {
             $chosenDay.classList.remove('hide'); 
             const $dayEvent = $chosenDay.closest('.day-event'); 
