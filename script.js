@@ -1382,4 +1382,8 @@ const fp = flatpickr(document.querySelector('input.travel-date'), {
     //altFormat: "h:i K D M j",
     //altFormat: "K D M j",
     dateFormat: 'Y-m-d',
+    onChange: function(selectedDates, dateStr, instance) {
+        console.log('selectedDates', selectedDates)
+    },
 });
+
