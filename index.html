@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <link rel="stylesheet" href="styles.css">  
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4&libraries=places&v=weekly&language=en" ></script>   
     <style>
@@ -97,7 +98,7 @@
         
         <button class="get-resource-btn" disabled onclick="authenticate().then(loadClient)">Authorize & Load</button>   -->
     </div>
-    <div class="section"> 
+    <div class="section travel-dates"> 
         <div>
             <input type="text" class="travel-date arrival" placeholder="Arrival Date">
             <input type="text" class="travel-date departure" placeholder="Departure Date">
@@ -218,6 +219,8 @@
       
     <script src="https://apis.google.com/js/api.js"></script>  
     <script src="https://unpkg.com/@bitjson/qr-code@1.0.2/dist/qr-code.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/form-data-json-convert/dist/form-data-json.min.js"></script>
     <script type="module" src="script.js"></script>  
     <!-- <script>
         const CLIENT_ID = '424207365074-g5444q1mhm5n5d04pu563ofqjup3j5e2.apps.googleusercontent.com'; 
