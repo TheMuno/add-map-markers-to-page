@@ -589,7 +589,8 @@ function updateDayNum($addDayBtn) {
 
 function addOptionToDaysSelect(dayNum, headerText=`Day ${dayNum}`) {
     const $option = document.createElement('option');
-    $option.setAttribute('value', `day-${dayNum}`);
+    // $option.setAttribute('value', `day-${dayNum}`);
+    $option.setAttribute('value', headerText);
     $option.textContent = headerText; //`Day ${dayNum}`;  
     $daysSelect.append($option); 
     $daysSelect.value = `day-${dayNum}`; 
