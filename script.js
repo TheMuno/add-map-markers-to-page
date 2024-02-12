@@ -1386,7 +1386,7 @@ const fp = flatpickr(document.querySelector('input.travel-date'), {
         const startDate = new Date(selectedDates[0]);
         const endDate = new Date(selectedDates[1]);
         // console.log('selectedDates', selectedDates)
-        for(let i = startDate.getDate(); i <= max, max = endDate.getDate(); i++) {
+        for(let i = startDate.getDate(), max = endDate.getDate(); i <= max; i++) {
             const dateStr = startDate.toDateString();
             const day = dateStr.substring(0, dateStr.indexOf(' '));
             const rest = dateStr.substring(day.length);
