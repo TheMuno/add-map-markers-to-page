@@ -740,34 +740,35 @@ $dayEvents.addEventListener('click', e => {
         const lat = $event.marker.position?.lat() || $event.marker.lat;
         const lng = $event.marker.position?.lng() || $event.marker.lng; 
 
-        // if (prevLat && prevLng) {
-        //     const url = `${directionsUrlBase}&origin=${prevLat},${prevLng}&destination=${destinationLat},${destinationLng}`;  
-        //     window.open(url); 
-        // }
+        if (prevLat && prevLng) {
+            // const url = `${directionsUrlBase}&origin=${prevLat},${prevLng}&destination=${destinationLat},${destinationLng}`;  
+            const url = `https://www.google.com/maps/place/${lat},${lng}`;
+            window.open(url); 
+        }
 
-        const position = { lat, lng };
+        // const position = { lat, lng };
 
-        !async function initMap(position) {
-            // The location of Uluru
+        // !async function initMap(position) {
+        //     // The location of Uluru
             
-            // Request needed libraries.
-            const { Map } = await google.maps.importLibrary("maps");
-            const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+        //     // Request needed libraries.
+        //     const { Map } = await google.maps.importLibrary("maps");
+        //     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
           
-            // The map, centered at Uluru
-            map = new Map(document.getElementById("map"), {
-              zoom: 12,
-              center: position,
-              mapId: "DEMO_MAP_ID",
-            });
+        //     // The map, centered at Uluru
+        //     map = new Map(document.getElementById("map"), {
+        //       zoom: 12,
+        //       center: position,
+        //       mapId: "DEMO_MAP_ID",
+        //     });
           
-            // The marker, positioned at Uluru
-            const marker = new AdvancedMarkerElement({
-              map: map,
-              position: position,
-              title: "Uluru",
-            });
-          }(position);
+        //     // The marker, positioned at Uluru
+        //     const marker = new AdvancedMarkerElement({
+        //       map: map,
+        //       position: position,
+        //       title: "Uluru",
+        //     });
+        //   }(position);
     }
 });  
 
