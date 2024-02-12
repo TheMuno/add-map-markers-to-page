@@ -598,7 +598,7 @@ function addOptionToDaysSelect(dayNum, headerText=`Day ${dayNum}`) {
 }
 
 function addDayEventList(dayNum, headerText=`Day ${dayNum}`) {
-    const $dayEvent = $dayEvents.children[0].cloneNode(true);
+    const $dayEvent = $dayEvents.querySelector('.day-1-event').cloneNode(true);
     $dayEvent.classList.remove('day-1-event');
     $dayEvent.classList.add(`day-${dayNum}-event`);
     $dayEvent.querySelector('.day-head .header-text').textContent = headerText; //`Day ${dayNum}`; 
@@ -614,8 +614,10 @@ function addDayEventList(dayNum, headerText=`Day ${dayNum}`) {
     $dayEvent.querySelector('.remove-marker').classList.add('hide');
     $dayEvent.querySelector('.get-directions').classList.add('hide');
     
-    $dayEvent.classList.remove('hide');   
-    $dayEvents.insertBefore($dayEvent, $dayEvents.querySelector(`.day-${dayNum+1}-event`)); 
+    $dayEvent.classList.remove('hide');  
+
+    const $parent = $dayEvents.querySelector('.all-days');
+    $parent.insertBefore($dayEvent, $dayEvents.querySelector(`.day-${dayNum+1}-event`)); 
 }
 
 function getCurrentDayNum() {
