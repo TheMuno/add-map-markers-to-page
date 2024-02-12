@@ -1374,7 +1374,7 @@ $dayEvents.addEventListener('click', e => {
     // const { dayEventName, lat, lng, title } = markerObj; 
 
 
-document.querySelectorAll('.section.travel-dates input.travel-date').forEach(inp => {
+document.querySelectorAll('section.travel-dates input.travel-date').forEach(inp => {
     flatpickr(inp, {
         mode: 'range',
         altInput: true,
