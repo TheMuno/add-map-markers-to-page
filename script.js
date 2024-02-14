@@ -75,7 +75,7 @@ const    $logoutBtn = document.querySelector('[data-wf-user-logout="Log out"]'),
 let currentDay = $daysSelect.options[startingIndex]; 
 currentDay.markers = [];
 
-$daysSelect.selectedIndex = startingIndex;  
+// $daysSelect.selectedIndex = startingIndex;  
 
 google.maps.event.addDomListener(window, 'load', () => {
     const userMail = localStorage.getItem('user-email');  
@@ -592,7 +592,8 @@ function addOptionToDaysSelect(dayNum, headerText=`Day ${dayNum}`) {
     // $option.setAttribute('value', `day-${dayNum}`);
     $option.setAttribute('value', headerText);
     $option.textContent = headerText; //`Day ${dayNum}`;  
-    $daysSelect.append($option); 
+    // $daysSelect.append($option); 
+    $daysSelect.insertBefore($option, document.querySelector('.add-day-option'));
     $daysSelect.value = `day-${dayNum}`; 
     return $option; 
 }
