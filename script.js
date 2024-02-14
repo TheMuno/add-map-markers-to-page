@@ -675,7 +675,7 @@ $daysSelect.addEventListener('change', e => {
 
     const dayNum = index; 
     let newDay = new Date($daysSelect.options[addDay-1].value);
-    newDay = prevDay.setDate( prevDay.getDate() + 1 );
+    newDay = newDay.setDate( newDay.getDate() + 1 );
     addDayEventList(dayNum, newDay); 
 });
 
