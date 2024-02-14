@@ -634,6 +634,8 @@ $daysSelect.addEventListener('change', e => {
     const addDay = $select.options[$select.options.length - 1].index;
     if (index !== addDay) return;
 
+    console.log('selected index', index, 'at', $select)
+
     if (index !== 0) {
         $dayEvents.querySelector('.all-days').querySelectorAll('.day-event').forEach(day => {
             day.classList.add('hide'); 
@@ -682,7 +684,7 @@ $daysSelect.addEventListener('change', e => {
     const rest = newDay.substring(day.length);
     const headerText = `${day},${rest}`;
 
-    console.log('headerText', headerText)
+    // console.log('headerText', headerText)
 
     addDayEventList(dayNum, headerText); 
 });
