@@ -663,6 +663,15 @@ $daysSelect.addEventListener('change', e => {
     currentDay = $select.options[ index ];   
 });  
 
+$daysSelect.addEventListener('change', e => {
+    const $select = e.currentTarget; 
+    let index = $select.selectedIndex; 
+    let addDay = $select.options[$select.options.length - 1].index;
+    if (index !== addDay) return;
+
+    console.log('Last clicked!!')
+});
+
 function showAllMarkers() {
     $dayEvents.querySelectorAll('.day-event').forEach(day => showMarkers(day)); 
 }
