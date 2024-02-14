@@ -630,6 +630,10 @@ function getCurrentDayNum() {
 $daysSelect.addEventListener('change', e => {
     const $select = e.currentTarget; 
     let index = $select.selectedIndex; 
+
+    const addDay = $select.options[$select.options.length - 1].index;
+    if (index !== addDay) return;
+
     if (index !== 0) {
         $dayEvents.querySelector('.all-days').querySelectorAll('.day-event').forEach(day => {
             day.classList.add('hide'); 
@@ -669,7 +673,10 @@ $daysSelect.addEventListener('change', e => {
     const addDay = $select.options[$select.options.length - 1].index;
     if (index !== addDay) return;
 
-    console.log('Last clicked!!')
+    const dayNum = index; 
+    let newDay = new Date($daysSelect.options[addDay-1].value);
+    newDay = prevDay.setDate( prevDay.getDate() + 1 );
+    addDayEventList(dayNum, newDay); 
 });
 
 function showAllMarkers() {
