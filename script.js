@@ -635,10 +635,7 @@ $daysSelect.addEventListener('change', e => {
     if (index === addDay) return;
 
     if (index !== 0) {
-        $dayEvents.querySelector('.all-days').querySelectorAll('.day-event').forEach(day => {
-            day.classList.add('hide'); 
-            hideMarkers(day); 
-        }); 
+        hideAllDayEvents(); 
 
         const selectedDay = $select.value.trim();
         const $chosenDay = $dayEvents.querySelector(`.day-event[day='${selectedDay}']`);
@@ -673,6 +670,8 @@ $daysSelect.addEventListener('change', e => {
     const addDay = $select.options[$select.options.length - 1].index;
     if (index !== addDay) return;
 
+    hideAllDayEvents(); 
+
     const dayNum = index; 
     let newDay = new Date($daysSelect.options[addDay-1].value);
     newDay = new Date(newDay.setDate( newDay.getDate() + 1 ))
@@ -684,6 +683,7 @@ $daysSelect.addEventListener('change', e => {
 
     addDayEventList(dayNum, headerText); 
     addOptionToDaysSelect(dayNum, headerText); 
+
     $select.selectedIndex = dayNum; 
 });
 
@@ -697,6 +697,13 @@ function showMarkers(day) {
 
 function hideMarkers(day) {
     day.querySelectorAll('.single-event:not(.hide)').forEach(dayEvent => dayEvent.marker?.setMap(null));
+}
+
+function hideAllDayEvents() {
+    $dayEvents.querySelector('.all-days').querySelectorAll('.day-event').forEach(day => {
+        day.classList.add('hide'); 
+        hideMarkers(day); 
+    }); 
 }
 
 $dayEvents.addEventListener('click', e => {
