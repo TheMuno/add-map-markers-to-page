@@ -632,9 +632,7 @@ $daysSelect.addEventListener('change', e => {
     let index = $select.selectedIndex; 
 
     const addDay = $select.options[$select.options.length - 1].index;
-    if (index !== addDay) return;
-
-    console.log('selected index', index, 'at', $select)
+    if (index === addDay) return;
 
     if (index !== 0) {
         $dayEvents.querySelector('.all-days').querySelectorAll('.day-event').forEach(day => {
