@@ -1373,7 +1373,7 @@ const fp = flatpickr(document.querySelector('input.travel-date'), {
     dateFormat: 'Y-m-d',
     onChange: function(selectedDates, dateStr, instance) {
         // $dayEvents.innerHTML = '';
-        [...$dayEvents.children].forEach((c, i) => {
+        [...$dayEvents.querySelector('.all-days').children].forEach((c, i) => {
             if (i !== 0) c.remove();
         });
 
