@@ -38,7 +38,7 @@ const $map = document.querySelector('#map'),
     $userMail = document.querySelector('.user-email'), 
     $address = document.querySelector('.user-input'),
     $daysSelect = document.querySelector('#days-select'), 
-    $addDay = document.querySelector('.add-day'),
+    // $addDay = document.querySelector('.add-day'),
     $dayEvents = document.querySelector('.day-events'),
     // $downloadUserCSV = document.querySelector('.download-user-csv'), 
     // $downloadDBCSV = document.querySelector('.download-all-csv'),
@@ -374,20 +374,20 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
     // }
 }
 
-$addDay.addEventListener('click', e => {
-    const $addDayBtn = e.currentTarget;
-    const dayNum = updateDayNum($addDayBtn); 
-    currentDay = addOptionToDaysSelect(dayNum); 
-    currentDay.markers = []; 
-    $address.value = '';  
+// $addDay.addEventListener('click', e => {
+//     const $addDayBtn = e.currentTarget;
+//     const dayNum = updateDayNum($addDayBtn); 
+//     currentDay = addOptionToDaysSelect(dayNum); 
+//     currentDay.markers = []; 
+//     $address.value = '';  
 
-    $dayEvents.querySelectorAll('.day-event').forEach(day => day.classList.add('hide')); 
+//     $dayEvents.querySelectorAll('.day-event').forEach(day => day.classList.add('hide')); 
 
-    addDayEventList(dayNum); 
+//     addDayEventList(dayNum); 
 
-    const userMail = localStorage.getItem('user-email'); 
-    if (userMail) addDayToFirebase(userMail); 
-});
+//     const userMail = localStorage.getItem('user-email'); 
+//     if (userMail) addDayToFirebase(userMail); 
+// });
  
 async function addDayToFirebase(userMail) {  
     const userData = doc(db, 'travelData', `user-${userMail}`);
@@ -581,11 +581,11 @@ document.querySelector('.khonsu-data.map-url .map-url-link input').addEventListe
 
 
 
-function updateDayNum($addDayBtn) {
-    const dayNum = ($addDayBtn.dayNum || 1) + 1;
-    $addDayBtn.dayNum = dayNum;  
-    return dayNum; 
-} 
+// function updateDayNum($addDayBtn) {
+//     const dayNum = ($addDayBtn.dayNum || 1) + 1;
+//     $addDayBtn.dayNum = dayNum;  
+//     return dayNum; 
+// } 
 
 function addOptionToDaysSelect(dayNum, headerText=`Day ${dayNum}`) {
     const $option = document.createElement('option');
@@ -863,7 +863,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
         currentDay = dayNum === 1 ? $daysSelect.options[1] : addOptionToDaysSelect(dayNum); 
         currentDay.markers = currentDay.markers || []; 
-        $addDay.dayNum = dayNum;
+        // $addDay.dayNum = dayNum;
 
         // console.log('Day::::', day)
 
