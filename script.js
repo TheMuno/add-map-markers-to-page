@@ -631,7 +631,7 @@ $daysSelect.addEventListener('change', e => {
     const $select = e.currentTarget; 
     let index = $select.selectedIndex; 
     if (index !== 0) {
-        $dayEvents.querySelectorAll('.day-event').forEach(day => {
+        $dayEvents.querySelector('.all-days').querySelectorAll('.day-event').forEach(day => {
             day.classList.add('hide'); 
             hideMarkers(day); 
         }); 
@@ -652,12 +652,12 @@ $daysSelect.addEventListener('change', e => {
         }
         else {
             const dayNum = index; 
-            addDayEventList(dayNum); 
+            addDayEventList(dayNum, selectedDay); 
         }
     }
     else {
         index = $select.options.length - 1; 
-        $dayEvents.querySelectorAll('.day-event').forEach(day => day.classList.remove('hide')); 
+        $dayEvents.querySelector('.all-days').querySelectorAll('.day-event').forEach(day => day.classList.remove('hide')); 
         showAllMarkers(); 
     }
     currentDay = $select.options[ index ];   
@@ -665,8 +665,8 @@ $daysSelect.addEventListener('change', e => {
 
 $daysSelect.addEventListener('change', e => {
     const $select = e.currentTarget; 
-    let index = $select.selectedIndex; 
-    let addDay = $select.options[$select.options.length - 1].index;
+    const index = $select.selectedIndex; 
+    const addDay = $select.options[$select.options.length - 1].index;
     if (index !== addDay) return;
 
     console.log('Last clicked!!')
