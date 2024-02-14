@@ -682,6 +682,8 @@ $daysSelect.addEventListener('change', e => {
     const rest = newDay.substring(day.length);
     const headerText = `${day},${rest}`;
 
+    console.log('headerText', headerText)
+
     addDayEventList(dayNum, headerText); 
 });
 
