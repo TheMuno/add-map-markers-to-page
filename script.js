@@ -675,8 +675,14 @@ $daysSelect.addEventListener('change', e => {
 
     const dayNum = index; 
     let newDay = new Date($daysSelect.options[addDay-1].value);
-    newDay = newDay.setDate( newDay.getDate() + 1 );
-    addDayEventList(dayNum, newDay); 
+    newDay = newDay.setDate( newDay.getDate() + 1 )
+                    .toDateString();
+    
+    const day = newDay.substring(0, newDay.indexOf(' '));
+    const rest = newDay.substring(day.length);
+    const headerText = `${day},${rest}`;
+
+    addDayEventList(dayNum, headerText); 
 });
 
 function showAllMarkers() {
