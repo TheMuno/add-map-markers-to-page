@@ -683,7 +683,8 @@ $daysSelect.addEventListener('change', e => {
     const headerText = `${day},${rest}`;
 
     addDayEventList(dayNum, headerText); 
-    addOptionToDaysSelect(dayNum, headerText);  
+    addOptionToDaysSelect(dayNum, headerText); 
+    $select.selectedIndex = dayNum; 
 });
 
 function showAllMarkers() {
