@@ -69,10 +69,10 @@ const    $logoutBtn = document.querySelector('[data-wf-user-logout="Log out"]'),
     initialCoords  = { lat: 40.7580, lng: -73.9855 },
     mapIcon = 'https://uploads-ssl.webflow.com/61268cc8812ac5956bad13e4/64ba87cd2730a9c6cf7c0d5a_pin%20(3).png', 
     directionsUrlBase = 'https://www.google.com/maps/dir/?api=1', 
-    startingIndex = 1,
+    // startingIndex = 1,
     googleSpreadsheetID = '1Zj1ae5faA8h7UwHvtYVtKoiA_G3LtQcuTOFV1Evq4BQ';   
 
-let currentDay = $daysSelect.options[startingIndex]; 
+let currentDay = {}; //$daysSelect.options[0];  // $daysSelect.options[startingIndex]; 
 currentDay.markers = [];
 
 console.log('currentDay', currentDay) 
@@ -626,7 +626,15 @@ function addDayEventList(dayNum, headerText=`Day ${dayNum}`) {
 }
 
 function getCurrentDayNum() {
-    const dayNum = $daysSelect.selectedIndex !== 0 ? $daysSelect.selectedIndex : $daysSelect.options.length - 1;  
+    let dayNum;
+    if ($daysSelect.selectedIndex === 0 && $daysSelect.querySelectorAll('option').length === 2) {
+        dayNum = 1;
+    }
+    else {
+        dayNum = $daysSelect.selectedIndex + 1;
+    }
+
+    // const dayNum = $daysSelect.selectedIndex !== 0 ? $daysSelect.selectedIndex : $daysSelect.options.length - 1;  
     return dayNum; 
 } 
 
@@ -879,7 +887,8 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
         const dayNum = i + 1;
         const dayEvents = day.events;
 
-        currentDay = dayNum === 1 ? $daysSelect.options[1] : addOptionToDaysSelect(dayNum); 
+        // currentDay = dayNum === 1 ? $daysSelect.options[1] : addOptionToDaysSelect(dayNum); 
+        currentDay = getCurrentDayNum();
         currentDay.markers = currentDay.markers || []; 
         // $addDay.dayNum = dayNum;
 
