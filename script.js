@@ -75,7 +75,7 @@ const    $logoutBtn = document.querySelector('[data-wf-user-logout="Log out"]'),
 let currentDay = $daysSelect.options[startingIndex]; 
 currentDay.markers = [];
 
-// $daysSelect.selectedIndex = startingIndex;  
+$daysSelect.selectedIndex = 0; // startingIndex;  
 
 google.maps.event.addDomListener(window, 'load', () => {
     const userMail = localStorage.getItem('user-email');  
