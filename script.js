@@ -87,6 +87,7 @@ google.maps.event.addDomListener(window, 'load', () => {
 
     if (!$allDays.innerHTML.trim()) {
         $address.setAttribute('disabled', true);
+        $address.setAttribute('placeholder','No Travel Dates Added');
     }
 }); 
 
