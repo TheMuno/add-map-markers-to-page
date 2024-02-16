@@ -37,6 +37,7 @@ document.querySelector('.user-email').addEventListener('change', e => {
 const $map = document.querySelector('#map'),
     $userMail = document.querySelector('.user-email'), 
     $address = document.querySelector('.user-input'),
+    $addressPlaceholder = $address.getAttribute('placeholder'),
     $daysSelect = document.querySelector('#days-select'), 
     // $addDay = document.querySelector('.add-day'),
     $dayEvents = document.querySelector('.day-events'),
@@ -1446,6 +1447,10 @@ const fp = flatpickr(document.querySelector('input.travel-date'), {
 
             startDate.setDate( startDate.getDate() + 1 ); 
         }
+
+        if ($allDays.innerHTML.trim()) return;
+        $address.removeAttribute('disabled');
+        $address.setAttribute('placeholder', $addressPlaceholder);
     },
 });
 
