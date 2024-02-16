@@ -1427,30 +1427,34 @@ const fp = flatpickr(document.querySelector('input.travel-date'), {
     //altFormat: "K D M j",
     dateFormat: 'Y-m-d',
     onChange: function(selectedDates, dateStr, instance) {
-        // $dayEvents.innerHTML = '';
-        [...$dayEvents.querySelector('.all-days').children].forEach((c, i) => {
-            if (i !== 0) c.remove();
-        });
-
-        const startDate = new Date(selectedDates[0]);
-        const endDate = new Date(selectedDates[1]);
-        // console.log('selectedDates', selectedDates)
-        for(let i = startDate.getDate(), max = endDate.getDate(); i <= max; i++) {
-            const dateStr = startDate.toDateString();
-            const day = dateStr.substring(0, dateStr.indexOf(' '));
-            const rest = dateStr.substring(day.length);
-            const headerText = `${day},${rest}`;
-
-            addDayEventList(i, headerText);
-            addOptionToDaysSelect(i, headerText);
-            console.log(i)
-
-            startDate.setDate( startDate.getDate() + 1 ); 
-        }
-
-        if ($allDays.innerHTML.trim()) return;
-        $address.removeAttribute('disabled');
-        $address.setAttribute('placeholder', $addressPlaceholder);
+        handleDatePickerChangeEvent(selectedDates); 
     },
 });
 
+function handleDatePickerChangeEvent(selectedDates) {
+    // $dayEvents.innerHTML = '';
+    [...$dayEvents.querySelector('.all-days').children].forEach((c, i) => {
+        if (i !== 0) c.remove();
+    });
+
+    const startDate = new Date(selectedDates[0]);
+    const endDate = new Date(selectedDates[1]);
+    // console.log('selectedDates', selectedDates)
+    for(let i = startDate.getDate(), max = endDate.getDate(); i <= max; i++) {
+        const startDateStr = startDate.toDateString();
+        const day = startDateStr.substring(0, startDateStr.indexOf(' '));
+        const rest = startDateStr.substring(day.length);
+        const headerText = `${day},${rest}`;
+
+        addDayEventList(i, headerText);
+        addOptionToDaysSelect(i, headerText);
+        console.log(i)
+
+        startDate.setDate( startDate.getDate() + 1 ); 
+    }
+
+    if ($allDays.innerHTML.trim()) return;
+    $address.removeAttribute('disabled');
+    $address.setAttribute('placeholder', $addressPlaceholder);
+    currentDay = $allDays.children[ $allDays.children.length - 1 ];
+}
