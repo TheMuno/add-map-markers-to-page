@@ -1429,9 +1429,12 @@ const fp = flatpickr(document.querySelector('input.travel-date'), {
     onChange: function(selectedDates, dateStr, instance) {
         handleDatePickerChangeEvent(selectedDates); 
     },
-    // onValueUpdate: function(selectedDates, dateStr, instance) {
-    //     console.log('Value updated:', selectedDates, dateStr, instance)
-    // }, 
+    onValueUpdate: function(selectedDates, dateStr, instance) {
+        if ($allDays.innerHTML.trim()) return;
+        $address.removeAttribute('disabled');
+        $address.setAttribute('placeholder', $addressPlaceholder);
+        currentDay = $allDays.children[ $allDays.children.length - 1 ];
+    }, 
 });
 
 function handleDatePickerChangeEvent(selectedDates) {
@@ -1443,7 +1446,11 @@ function handleDatePickerChangeEvent(selectedDates) {
     const startDate = new Date(selectedDates[0]);
     const endDate = new Date(selectedDates[1]);
     // console.log('selectedDates', selectedDates)
-    for(let i = startDate.getDate(), max = endDate.getDate(); i <= max; i++) {
+
+    const numberOfDays = (endDate.getDate() - startDate.getDate()) + 1;
+    let n = 0;
+
+    for(let i = 0; i <= numberOfDays; i++) {
         const startDateStr = startDate.toDateString();
         const day = startDateStr.substring(0, startDateStr.indexOf(' '));
         const rest = startDateStr.substring(day.length);
@@ -1451,13 +1458,8 @@ function handleDatePickerChangeEvent(selectedDates) {
 
         addDayEventList(i, headerText);
         addOptionToDaysSelect(i, headerText);
-        console.log(i)
+        console.log(`Day ${i}`)
 
         startDate.setDate( startDate.getDate() + 1 ); 
-    }
-
-    if ($allDays.innerHTML.trim()) return;
-    $address.removeAttribute('disabled');
-    $address.setAttribute('placeholder', $addressPlaceholder);
-    currentDay = $allDays.children[ $allDays.children.length - 1 ];
+    } 
 }
