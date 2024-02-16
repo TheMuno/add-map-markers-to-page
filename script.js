@@ -1436,7 +1436,7 @@ const fp = flatpickr(document.querySelector('input.travel-date'), {
     onValueUpdate: async (selectedDates, dateStr, instance) => {
         await handleDatePickerChangeEvent(selectedDates); 
 
-        if ($allDays.innerHTML.trim()) return;
+        if (!$allDays.innerHTML.trim()) return;
         $address.removeAttribute('disabled');
         $address.setAttribute('placeholder', $addressPlaceholder);
         // currentDay = $allDays.children[ $allDays.children.length - 1 ];
