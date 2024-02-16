@@ -833,6 +833,7 @@ function removeDay($day) {
 //     await updateDoc(existingMarkers, dayObj);
 // }
 
+
 async function saveMarkerToFirebase(userMail, dayNum, markerObj) {  
     const userData = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(userData);
@@ -878,6 +879,7 @@ async function saveMarkerToFirebase(userMail, dayNum, markerObj) {
 
     await updateDoc(userData, dayObj);
 }
+
 
 async function retrieveSavedMarkersFromFirebase(userMail) {    
     const docRef = doc(db, 'travelData', `user-${userMail}`);
@@ -1426,10 +1428,10 @@ const fp = flatpickr(document.querySelector('input.travel-date'), {
     //altFormat: "h:i K D M j",
     //altFormat: "K D M j",
     dateFormat: 'Y-m-d',
-    onChange: function(selectedDates, dateStr, instance) {
-        handleDatePickerChangeEvent(selectedDates); 
+    onChange: async (selectedDates, dateStr, instance) => {
+        await handleDatePickerChangeEvent(selectedDates); 
     },
-    onValueUpdate: function(selectedDates, dateStr, instance) {
+    onValueUpdate: (selectedDates, dateStr, instance) => {
         if ($allDays.innerHTML.trim()) return;
         $address.removeAttribute('disabled');
         $address.setAttribute('placeholder', $addressPlaceholder);
@@ -1437,11 +1439,13 @@ const fp = flatpickr(document.querySelector('input.travel-date'), {
     }, 
 });
 
-function handleDatePickerChangeEvent(selectedDates) {
+async function handleDatePickerChangeEvent(selectedDates) {
     // $dayEvents.innerHTML = '';
     [...$dayEvents.querySelector('.all-days').children].forEach((c, i) => {
         if (i !== 0) c.remove();
     });
+
+    const userMail = localStorage.getItem('user-email');
 
     const startDate = new Date(selectedDates[0]);
     const endDate = new Date(selectedDates[1]);
@@ -1449,6 +1453,11 @@ function handleDatePickerChangeEvent(selectedDates) {
 
     const numberOfDays = (endDate.getDate() - startDate.getDate()) + 1;
     let n = 0;
+
+    const userData = doc(db, 'travelData', `user-${userMail}`);
+    const docSnap = await getDoc(userData);
+    const data = await docSnap.data(); 
+    const { days } = data;
 
     for(let i = 0; i < numberOfDays; i++) {
         const startDateStr = startDate.toDateString();
@@ -1461,8 +1470,85 @@ function handleDatePickerChangeEvent(selectedDates) {
         addOptionToDaysSelect(dayNum, headerText);
         console.log(`Day ${dayNum}`)
 
+        // await saveMarkerToFirebase(userMail, dayNum);
+
+        const dayToSave = {};
+        dayToSave.summary = '';
+        dayToSave.dayDate = headerText;
+        dayToSave.events = {
+            dayEventName: '',
+            lat: 0,
+            lng: 0,
+            title: '',
+            description: '',
+            imageURL: '',
+            KhonsuRecommends: true,
+            timeslot: '',
+            starttime: '',
+            endtime: '',
+            notes: '',
+            reservation: '',
+        };
+
+        days.push(dayToSave); 
+
         startDate.setDate( startDate.getDate() + 1 ); 
     } 
 
     $daysSelect.selectedIndex = 0;
+
+    const dayObj = {}; 
+    dayObj.days = days; 
+    dayObj.modifiedAt = serverTimestamp(); 
+
+    await updateDoc(userData, dayObj);
 }
+
+/*
+async function saveMarkerToFirebase2(userMail, dayNum, markerObj={}) {  
+    const userData = doc(db, 'travelData', `user-${userMail}`);
+    const docSnap = await getDoc(userData);
+    const data = await docSnap.data(); 
+    const { days } = data;
+
+    const dayArrIndex = dayNum-1;
+    let specificDay = days[dayArrIndex];
+
+    if (!specificDay) {
+        specificDay = {
+            summary: '',
+            dayDate: '',
+            events: [], 
+        };
+        days.splice(dayArrIndex, 0, specificDay);
+    }
+
+    const dayEvents = specificDay.events;
+
+    const { dayEventName='', lat=0, lng=0, title='', timeslot=0, starttime='' } = markerObj; 
+    const eventObj = {
+        dayEventName,
+        lat,
+        lng,
+        title,
+        description: '',
+        imageURL: '',
+        KhonsuRecommends: true,
+        timeslot,
+        starttime,
+        endtime: '',
+        notes: '',
+        reservation: '',
+    };
+
+    dayEvents.push(eventObj);
+
+    const dayObj = {}; 
+    dayObj.days = days; 
+    dayObj.modifiedAt = serverTimestamp(); 
+
+    // console.log('Saved to:', dayNum, 'days', days)  
+
+    await updateDoc(userData, dayObj);
+}
+*/
