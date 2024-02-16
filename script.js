@@ -1450,7 +1450,7 @@ function handleDatePickerChangeEvent(selectedDates) {
     const numberOfDays = (endDate.getDate() - startDate.getDate()) + 1;
     let n = 0;
 
-    for(let i = 0; i <= numberOfDays; i++) {
+    for(let i = 0; i < numberOfDays; i++) {
         const startDateStr = startDate.toDateString();
         const day = startDateStr.substring(0, startDateStr.indexOf(' '));
         const rest = startDateStr.substring(day.length);
