@@ -1456,7 +1456,7 @@ function handleDatePickerChangeEvent(selectedDates) {
         const rest = startDateStr.substring(day.length);
         const headerText = `${day},${rest}`;
 
-        const dayNum = i++;
+        const dayNum = i + 1;
         addDayEventList(dayNum, headerText);
         addOptionToDaysSelect(dayNum, headerText);
         console.log(`Day ${dayNum}`)
