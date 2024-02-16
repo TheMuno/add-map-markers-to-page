@@ -1456,10 +1456,10 @@ function handleDatePickerChangeEvent(selectedDates) {
         const rest = startDateStr.substring(day.length);
         const headerText = `${day},${rest}`;
 
-        ++i;
-        addDayEventList(i, headerText);
-        addOptionToDaysSelect(i, headerText);
-        console.log(`Day ${i}`)
+        const dayNum = i++;
+        addDayEventList(dayNum, headerText);
+        addOptionToDaysSelect(dayNum, headerText);
+        console.log(`Day ${dayNum}`)
 
         startDate.setDate( startDate.getDate() + 1 ); 
     } 
