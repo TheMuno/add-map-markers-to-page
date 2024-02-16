@@ -162,6 +162,7 @@ const markerPopup = new google.maps.InfoWindow();
 
             console.log('currentDay on Marker added:', currentDay)
 
+            currentDay.markers = currentDay.markers || [];
             currentDay.markers.push(marker);
 
             const dayNum = getCurrentDayNum(); 
@@ -642,7 +643,7 @@ function getCurrentDayNum() {
         dayNum = 1;
     }
     else {
-        dayNum = $daysSelect.selectedIndex + 1;
+        dayNum = $daysSelect.selectedIndex;// + 1;
     }
 
     // const dayNum = $daysSelect.selectedIndex !== 0 ? $daysSelect.selectedIndex : $daysSelect.options.length - 1;  
@@ -845,6 +846,7 @@ async function saveMarkerToFirebase(userMail, dayNum, markerObj) {
 
     if (!specificDay) {
         specificDay = {
+            dayDate: '',
             summary: '',
             events: [], 
         };
@@ -853,7 +855,7 @@ async function saveMarkerToFirebase(userMail, dayNum, markerObj) {
 
     const dayEvents = specificDay.events;
 
-    const { dayEventName, lat, lng, title, timeslot, starttime } = markerObj; 
+    const { dayEventName='', lat=0, lng=0, title='', timeslot='', starttime='' } = markerObj; 
     const eventObj = {
         dayEventName,
         lat,
@@ -864,7 +866,7 @@ async function saveMarkerToFirebase(userMail, dayNum, markerObj) {
         KhonsuRecommends: true,
         timeslot,
         starttime,
-        endtime: 'March302024',
+        endtime: '',
         notes: '',
         reservation: '',
     };
@@ -1429,13 +1431,16 @@ const fp = flatpickr(document.querySelector('input.travel-date'), {
     //altFormat: "K D M j",
     dateFormat: 'Y-m-d',
     onChange: async (selectedDates, dateStr, instance) => {
-        await handleDatePickerChangeEvent(selectedDates); 
+        
     },
     onValueUpdate: (selectedDates, dateStr, instance) => {
+        await handleDatePickerChangeEvent(selectedDates); 
+
         if ($allDays.innerHTML.trim()) return;
         $address.removeAttribute('disabled');
         $address.setAttribute('placeholder', $addressPlaceholder);
-        currentDay = $allDays.children[ $allDays.children.length - 1 ];
+        // currentDay = $allDays.children[ $allDays.children.length - 1 ];
+        currentDay = $daysSelect.options[ $daysSelect.options.length - 2 ]; 
     }, 
 });
 
