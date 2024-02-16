@@ -1429,6 +1429,9 @@ const fp = flatpickr(document.querySelector('input.travel-date'), {
     onChange: function(selectedDates, dateStr, instance) {
         handleDatePickerChangeEvent(selectedDates); 
     },
+    onValueUpdate: function(selectedDates, dateStr, instance) {
+        console.log('Value updated:', selectedDates, dateStr, instance)
+    }, 
 });
 
 function handleDatePickerChangeEvent(selectedDates) {
