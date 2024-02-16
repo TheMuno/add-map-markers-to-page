@@ -82,7 +82,7 @@ $daysSelect.selectedIndex = 0; // startingIndex;
 
 google.maps.event.addDomListener(window, 'load', () => {
     const userMail = localStorage.getItem('user-email');  
-    if (userMail) retrieveSavedMarkersFromFirebase(userMail);
+    // if (userMail) retrieveSavedMarkersFromFirebase(userMail);
 }); 
 
 // setTimeout(()=> retrieveSavedMarkersFromFirebase(localStorage.getItem('user-email')), 15 * 1000); 
@@ -152,6 +152,8 @@ const markerPopup = new google.maps.InfoWindow();
             const marker = createMarker(place);   
 
             map.panTo(marker.position); 
+
+            console.log('currentDay on Marker added:', currentDay)
 
             currentDay.markers.push(marker);
 
