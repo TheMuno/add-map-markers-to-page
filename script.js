@@ -1480,20 +1480,21 @@ async function handleDatePickerChangeEvent(selectedDates) {
         const dayToSave = {};
         dayToSave.summary = '';
         dayToSave.dayDate = headerText;
-        dayToSave.events = [{
-            dayEventName: '',
-            lat: 0,
-            lng: 0,
-            title: '',
-            description: '',
-            imageURL: '',
-            KhonsuRecommends: true,
-            timeslot: '',
-            starttime: '',
-            endtime: '',
-            notes: '',
-            reservation: '',
-        }];
+        dayToSave.events = [];
+        // dayToSave.events = [{
+        //     dayEventName: '',
+        //     lat: 0,
+        //     lng: 0,
+        //     title: '',
+        //     description: '',
+        //     imageURL: '',
+        //     KhonsuRecommends: true,
+        //     timeslot: '',
+        //     starttime: '',
+        //     endtime: '',
+        //     notes: '',
+        //     reservation: '',
+        // }];
 
         days.push(dayToSave); 
 
