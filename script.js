@@ -1475,7 +1475,7 @@ async function handleDatePickerChangeEvent(selectedDates) {
         const dayToSave = {};
         dayToSave.summary = '';
         dayToSave.dayDate = headerText;
-        dayToSave.events = {
+        dayToSave.events = [{
             dayEventName: '',
             lat: 0,
             lng: 0,
@@ -1488,7 +1488,7 @@ async function handleDatePickerChangeEvent(selectedDates) {
             endtime: '',
             notes: '',
             reservation: '',
-        };
+        }];
 
         days.push(dayToSave); 
 
