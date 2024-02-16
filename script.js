@@ -40,6 +40,7 @@ const $map = document.querySelector('#map'),
     $daysSelect = document.querySelector('#days-select'), 
     // $addDay = document.querySelector('.add-day'),
     $dayEvents = document.querySelector('.day-events'),
+    $allDays = document.querySelector('.day-events .all-days'),
     // $downloadUserCSV = document.querySelector('.download-user-csv'), 
     // $downloadDBCSV = document.querySelector('.download-all-csv'),
     // $printedPlanBtn = document.querySelector('.printed-plan'),
@@ -83,6 +84,10 @@ $daysSelect.selectedIndex = 0; // startingIndex;
 google.maps.event.addDomListener(window, 'load', () => {
     const userMail = localStorage.getItem('user-email');  
     // if (userMail) retrieveSavedMarkersFromFirebase(userMail);
+
+    if (!$allDays.innerHTML.trim()) {
+        $address.setAttribute('disabled', true);
+    }
 }); 
 
 // setTimeout(()=> retrieveSavedMarkersFromFirebase(localStorage.getItem('user-email')), 15 * 1000); 
@@ -289,6 +294,8 @@ function createMarker(place) {
 
     return marker; 
 } 
+
+
 
 $map.addEventListener('click', e => { 
     if (!e.target.closest('.view-reviews')) return;
