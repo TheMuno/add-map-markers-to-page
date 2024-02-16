@@ -1433,7 +1433,7 @@ const fp = flatpickr(document.querySelector('input.travel-date'), {
     onChange: async (selectedDates, dateStr, instance) => {
         
     },
-    onValueUpdate: (selectedDates, dateStr, instance) => {
+    onValueUpdate: async (selectedDates, dateStr, instance) => {
         await handleDatePickerChangeEvent(selectedDates); 
 
         if ($allDays.innerHTML.trim()) return;
