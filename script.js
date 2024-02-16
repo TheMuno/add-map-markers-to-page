@@ -166,7 +166,7 @@ const markerPopup = new google.maps.InfoWindow();
             currentDay.markers.push(marker);
 
             const dayNum = getCurrentDayNum(); 
-            const day = `.day-${dayNum}-event`;    
+            const day = `.day-${dayNum}-event:not(.hide)`;    
             $dayEvents.querySelector(`${day} .single-event`)?.classList.add('hide');  
 
             const lat = marker.position.lat();
