@@ -845,17 +845,19 @@ async function removeFirebaseSavedDay(userMail, dayNum) {
     const userData = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(userData);
     const data = await docSnap.data(); 
-    const { days } = data;
+    const { days, deletedDays } = data;
 
     const dayArrIndex = dayNum-1;
     // let specificDay = days[dayArrIndex];
 
-    days.splice(dayArrIndex, 1);
+    const removedDay = days.splice(dayArrIndex, 1);
+    deletedDays.push(removedDay);
 
-    // console.log('days', days)
+    console.log('removedDay', removedDay)
 
     const dayObj = {};
     dayObj.days = days; 
+    dayObj.deletedDays = deletedDays; 
 
     await updateDoc(userData, dayObj);  
 }  
