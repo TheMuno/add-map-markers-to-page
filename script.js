@@ -850,7 +850,7 @@ async function removeFirebaseSavedDay(userMail, dayNum) {
     const dayArrIndex = dayNum-1;
     // let specificDay = days[dayArrIndex];
 
-    const removedDay = days.splice(dayArrIndex, 1);
+    const removedDay = days.splice(dayArrIndex, 1)[0];
     deletedDays.push(removedDay);
 
     console.log('removedDay', removedDay)
