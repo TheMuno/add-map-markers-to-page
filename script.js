@@ -762,8 +762,10 @@ $dayEvents.addEventListener('click', e => {
 
         function processDayRemoval() {
             const userMail = localStorage.getItem('user-email');  
-            alertify.error('No user logged in sorry!'); 
-            if (!userMail) return; 
+            if (!userMail) {
+                alertify.error('No user logged in sorry!'); 
+                return; 
+            }
 
             const $removeDay = e.target; 
             const $dayEvent = $removeDay.closest('.day-event');
