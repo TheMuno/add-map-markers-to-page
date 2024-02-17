@@ -42,6 +42,7 @@ const $map = document.querySelector('#map'),
     // $addDay = document.querySelector('.add-day'),
     $dayEvents = document.querySelector('.day-events'),
     $allDays = document.querySelector('.day-events .all-days'),
+    $noDays = document.querySelector('.day-events .no-days'),
     // $downloadUserCSV = document.querySelector('.download-user-csv'), 
     // $downloadDBCSV = document.querySelector('.download-all-csv'),
     // $printedPlanBtn = document.querySelector('.printed-plan'),
@@ -635,6 +636,8 @@ function addDayEventList(dayNum, headerText=`Day ${dayNum}`) {
     const $parent = $dayEvents.querySelector('.all-days');
     $parent.append($dayEvent);
     // $parent.insertBefore($dayEvent, $dayEvents.querySelector(`.day-${dayNum+1}-event`)); 
+
+    $noDays.classList.add('hide');
 }
 
 function getCurrentDayNum() {
@@ -756,23 +759,23 @@ $dayEvents.addEventListener('click', e => {
 
         removeDay($dayEvent); 
 
-        const dayNum = $dayEvent.querySelector('.day-head').textContent.trim().split(/\s+/).pop();  //.slice(-1); 
-        if (dayNum === '1') {
-            $dayEvent.querySelectorAll('.all-events .single-event:not(.hide)').forEach($event => $event.remove()); 
-            $dayEvent.querySelector('.single-event.hide')?.classList.remove('hide'); 
-            // $dayEvent.classList.add('hide'); 
+        // const dayNum = $dayEvent.querySelector('.day-head').textContent.trim().split(/\s+/).pop();  //.slice(-1); 
+        // if (dayNum === '1') {
+        //     $dayEvent.querySelectorAll('.all-events .single-event:not(.hide)').forEach($event => $event.remove()); 
+        //     $dayEvent.querySelector('.single-event.hide')?.classList.remove('hide'); 
+        //     // $dayEvent.classList.add('hide'); 
 
-            if ($dayEvents.querySelectorAll('.day-event').length !== 1) {
-                $dayEvent.classList.add('hide'); 
-            }
-        }
-        else {
-            $dayEvent.remove();  
+        //     if ($dayEvents.querySelectorAll('.day-event').length !== 1) {
+        //         $dayEvent.classList.add('hide'); 
+        //     }
+        // }
+        // else {
+        //     $dayEvent.remove();  
 
-            if ($dayEvents.querySelectorAll('.day-event').length === 1) {
-                $dayEvents.querySelector('.day-event.day-1-event').classList.remove('hide');
-            }
-        }
+        //     if ($dayEvents.querySelectorAll('.day-event').length === 1) {
+        //         $dayEvents.querySelector('.day-event.day-1-event').classList.remove('hide');
+        //     }
+        // }
     }
     else if (e.target.closest('.get-directions')) {    
         const $getDir = e.target;   
@@ -802,14 +805,22 @@ function removeMarker($singleEvent, $removeMarker, indexOfEditedEl) {
 }  
 
 function removeDay($day) {
-    const dayNum = [...$day.closest('.all-days').children].indexOf($day) + 1;
+    const $daysParentDiv = $day.closest('.all-days'); 
+    const dayNum = [...$daysParentDiv.children].indexOf($day) + 1;
 
     let currentDayMarkers = $daysSelect.options[dayNum]?.markers;
     if (currentDayMarkers) {
         currentDayMarkers.forEach(marker => {
             marker.setMap(null);
         });
-        currentDayMarkers = [];  
+        $daysSelect.options[dayNum].markers = [];  
+    }
+
+    $daysSelect.options[dayNum].remove();
+    $day.remove(); 
+
+    if ($daysParentDiv.children.length === 0) {
+        $noDays.classList.remove('hide');
     }
 
     const userMail = localStorage.getItem('user-email');
@@ -827,7 +838,7 @@ async function removeFirebaseSavedDay(userMail, dayNum) {
 
     days.splice(dayArrIndex, 1);
 
-    console.log('days', days)
+    // console.log('days', days)
 
     const dayObj = {};
     dayObj.days = days; 
