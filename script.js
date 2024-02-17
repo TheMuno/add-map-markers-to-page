@@ -637,7 +637,6 @@ function addDayEventList(dayNum, headerText=`Day ${dayNum}`) {
     $parent.append($dayEvent);
     // $parent.insertBefore($dayEvent, $dayEvents.querySelector(`.day-${dayNum+1}-event`)); 
 
-    console.log('addDayEventList triggered')
     $noDays.classList.add('hide');
 }
 
@@ -752,13 +751,25 @@ $dayEvents.addEventListener('click', e => {
         }
     }
     else if (e.target.closest('.remove-day')) {
-        const userMail = localStorage.getItem('user-email');   
-        if (!userMail) return; 
+        alertify.confirm('Remove Day?\nPlease confim',
+            () => {
+                // alertify.success('Ok');
+                processDayRemoval();
+            },
+            () => {
+                // alertify.error('Cancel');
+        });
 
-        const $removeDay = e.target; 
-        const $dayEvent = $removeDay.closest('.day-event');
+        function processDayRemoval() {
+            const userMail = localStorage.getItem('user-email');  
+            alertify.error('No user logged in sorry!'); 
+            if (!userMail) return; 
 
-        removeDay($dayEvent); 
+            const $removeDay = e.target; 
+            const $dayEvent = $removeDay.closest('.day-event');
+
+            removeDay($dayEvent);
+        } 
 
         // const dayNum = $dayEvent.querySelector('.day-head').textContent.trim().split(/\s+/).pop();  //.slice(-1); 
         // if (dayNum === '1') {
