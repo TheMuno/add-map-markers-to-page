@@ -154,7 +154,7 @@ const markerPopup = new google.maps.InfoWindow();
                 return;
             }
 
-            console.log('place', place)  
+            // console.log('place', place)  
 
             const marker = createMarker(place);   
 
@@ -802,9 +802,9 @@ function removeMarker($singleEvent, $removeMarker, indexOfEditedEl) {
 }  
 
 function removeDay($day) {
-    const dayNum = $day.querySelector('.day-head').textContent.trim().split(/\s+/).pop(); 
+    const dayNum = [...$day.closest('.all-days').children].indexOf($day) + 1;
 
-    let currentDayMarkers = $daysSelect.options[dayNum].markers;
+    let currentDayMarkers = $daysSelect.options[dayNum]?.markers;
     if (currentDayMarkers) {
         currentDayMarkers.forEach(marker => {
             marker.setMap(null);
@@ -816,6 +816,24 @@ function removeDay($day) {
     removeFirebaseSavedDay(userMail, dayNum);
 }
 
+async function removeFirebaseSavedDay(userMail, dayNum) {
+    const userData = doc(db, 'travelData', `user-${userMail}`);
+    const docSnap = await getDoc(userData);
+    const data = await docSnap.data(); 
+    const { days } = data;
+
+    const dayArrIndex = dayNum-1;
+    // let specificDay = days[dayArrIndex];
+
+    days.splice(dayArrIndex, 1);
+
+    console.log('days', days)
+
+    const dayObj = {};
+    dayObj.days = days; 
+
+    await updateDoc(userData, dayObj);  
+}  
 
 !async function createUserInFirebase(userMail) {
     const userRef = doc(db, 'travelData', `user-${userMail}`);
@@ -1005,25 +1023,6 @@ async function removeFirebaseSavedMarker(userMail, dayNum, indexOfEditedEl) {
 
 
     // const dayEventRef = doc(db, 'travelData', `user-${userMail}`);
-    const dayObj = {};
-    dayObj.days = days; 
-
-    await updateDoc(userData, dayObj);  
-}  
-
-async function removeFirebaseSavedDay(userMail, dayNum) {
-    const userData = doc(db, 'travelData', `user-${userMail}`);
-    const docSnap = await getDoc(userData);
-    const data = await docSnap.data(); 
-    const { days } = data;
-
-    const dayArrIndex = dayNum-1;
-    // let specificDay = days[dayArrIndex];
-
-    days.splice(dayArrIndex, 1);
-
-    console.log('days', days)
-
     const dayObj = {};
     dayObj.days = days; 
 
