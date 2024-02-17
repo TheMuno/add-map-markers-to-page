@@ -341,7 +341,7 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
 
     const $fullDayEvents = $day.querySelector('.all-events'); 
 
-    const $dayEvent = $day.querySelector('.single-event').cloneNode(true);   
+    const $dayEvent = $dayEvents.querySelector('[data-clone]').cloneNode(true); //$day.querySelector('.single-event').cloneNode(true);   
     $dayEvent.classList.remove('hide'); 
     $dayEvent.id = eventId;
     $dayEvent.querySelector('.remove-marker').classList.remove('hide'); 
@@ -368,43 +368,8 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
     // console.log('markerObj.timeOfDay', markerObj.timeOfDay, '\nmarkerObj', markerObj)
 
     $fullDayEvents.append($dayEvent); 
-
-    // $dayEvent.timeOfDay = markerObj.timeOfDay; 
-    // if (!markerObj.timeOfDay) return;    
-
-    // const $mrngEvents = $day.querySelector('.time-events.morning .all-events');
-    // const $afternoonEvents = $day.querySelector('.time-events.afternoon .all-events');
-    // const $eveningEvents = $day.querySelector('.time-events.evening .all-events');
-    // const $timedDayEvent = $dayEvent.cloneNode(true);
-    // if (markerObj.timeOfDay.toLowerCase().trim().includes('morning')) { 
-    //     console.log('Includes morning')
-    //     $mrngEvents.append($timedDayEvent); 
-    // }
-    // else if (markerObj.timeOfDay.toLowerCase().trim().includes('afternoon')) {
-    //     console.log('Includes afternoon')
-    //     $afternoonEvents.append($timedDayEvent); 
-    // }
-    // else if (markerObj.timeOfDay.toLowerCase().trim().includes('evening')) {
-    //     console.log('Includes evening')
-    //     $eveningEvents.append($timedDayEvent); 
-    // }
 }
 
-// $addDay.addEventListener('click', e => {
-//     const $addDayBtn = e.currentTarget;
-//     const dayNum = updateDayNum($addDayBtn); 
-//     currentDay = addOptionToDaysSelect(dayNum); 
-//     currentDay.markers = []; 
-//     $address.value = '';  
-
-//     $dayEvents.querySelectorAll('.day-event').forEach(day => day.classList.add('hide')); 
-
-//     addDayEventList(dayNum); 
-
-//     const userMail = localStorage.getItem('user-email'); 
-//     if (userMail) addDayToFirebase(userMail); 
-// });
- 
 async function addDayToFirebase(userMail) {  
     const userData = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(userData);
@@ -577,10 +542,6 @@ function generateQRCode(link, container) {
 
     container.innerHTML = '';
     container.append($qrCode);
-
-    // <qr-code id="qr1" contents="https://www.google.com/" module-color="#1c7d43" position-ring-color="#13532d" position-center-color="#70c559">
-    //     <img src="https://assets-global.website-files.com/61268cc8812ac5956bad13e4/6138485d84bf820d8e9ef952_khonsu%20logo%20white.svg" slot="icon" />
-    // </qr-code>
 }
 
 document.querySelector('.khonsu-data.map-url .map-url-link input').addEventListener('change', e => {
@@ -590,18 +551,6 @@ document.querySelector('.khonsu-data.map-url .map-url-link input').addEventListe
     updateKhonsuDataMapUrl(userMail, mapUrl); 
 });
 
-
-
-
-
-
-
-
-// function updateDayNum($addDayBtn) {
-//     const dayNum = ($addDayBtn.dayNum || 1) + 1;
-//     $addDayBtn.dayNum = dayNum;  
-//     return dayNum; 
-// } 
 
 function addOptionToDaysSelect(dayNum, headerText=`Day ${dayNum}`) {
     const $option = document.createElement('option');
@@ -614,9 +563,9 @@ function addOptionToDaysSelect(dayNum, headerText=`Day ${dayNum}`) {
     return $option; 
 }
 
-function addDayEventList(dayNum, headerText=`Day ${dayNum}`) {
+function addDayEventList(dayNum, headerText=`Day ${dayNum}`, parenDiv='.all-days') {
     const $dayEvent = $dayEvents.querySelector('.day-1-event').cloneNode(true);
-    $dayEvent.classList.remove('day-1-event');
+    $dayEvent.classList.remove('day-0-event');
     $dayEvent.classList.add(`day-${dayNum}-event`);
     $dayEvent.querySelector('.day-head .header-text').textContent = headerText; //`Day ${dayNum}`; 
     $dayEvent.setAttribute('day', headerText);
@@ -633,10 +582,11 @@ function addDayEventList(dayNum, headerText=`Day ${dayNum}`) {
     
     $dayEvent.classList.remove('hide');  
 
-    const $parent = $dayEvents.querySelector('.all-days');
+    const $parent = $dayEvents.querySelector(parenDiv);
     $parent.append($dayEvent);
     // $parent.insertBefore($dayEvent, $dayEvents.querySelector(`.day-${dayNum+1}-event`)); 
 
+    if (!$parent.classList.contains('all-days')) return;
     $noDays.classList.add('hide');
 }
 
@@ -772,32 +722,11 @@ $dayEvents.addEventListener('click', e => {
 
             removeDay($dayEvent);
         } 
-
-        // const dayNum = $dayEvent.querySelector('.day-head').textContent.trim().split(/\s+/).pop();  //.slice(-1); 
-        // if (dayNum === '1') {
-        //     $dayEvent.querySelectorAll('.all-events .single-event:not(.hide)').forEach($event => $event.remove()); 
-        //     $dayEvent.querySelector('.single-event.hide')?.classList.remove('hide'); 
-        //     // $dayEvent.classList.add('hide'); 
-
-        //     if ($dayEvents.querySelectorAll('.day-event').length !== 1) {
-        //         $dayEvent.classList.add('hide'); 
-        //     }
-        // }
-        // else {
-        //     $dayEvent.remove();  
-
-        //     if ($dayEvents.querySelectorAll('.day-event').length === 1) {
-        //         $dayEvents.querySelector('.day-event.day-1-event').classList.remove('hide');
-        //     }
-        // }
     }
     else if (e.target.closest('.get-directions')) {    
         const $getDir = e.target;   
         const $event = $getDir.closest('.single-event'); 
         const $day = $event.closest('.day-event');  
-
-        // const prevLat = $event.previousElementSibling.marker?.position.lat();
-        // const prevLng = $event.previousElementSibling.marker?.position.lng();
 
         const lat = $event.marker.position?.lat() || $event.marker.lat;
         const lng = $event.marker.position?.lng() || $event.marker.lng; 
@@ -852,8 +781,9 @@ async function removeFirebaseSavedDay(userMail, dayNum) {
 
     const removedDay = days.splice(dayArrIndex, 1)[0];
     deletedDays.push(removedDay);
+    pushDayToRemovedDaysSection(removedDay, dayNum);
 
-    console.log('removedDay', removedDay)
+    // console.log('removedDay', removedDay)
 
     const dayObj = {};
     dayObj.days = days; 
@@ -862,6 +792,27 @@ async function removeFirebaseSavedDay(userMail, dayNum) {
     await updateDoc(userData, dayObj);  
 }  
 
+function pushDayToRemovedDaysSection(removedDay, dayNum) {
+    const { dayDate, events } = removedDay;
+    addDayEventList(dayNum, dayDate, '.removed-days .all-events');
+
+    events.forEach((dayActivity, eventNum) => {
+        const { lat , lng, title='', dayEventName, timeslot, starttime, endtime } = dayActivity;
+        if (lat && lng) {
+            const locationInfo = {
+                name: title,
+                latLng: {lat, lng}
+            };
+            const createdMarker = createMarker(locationInfo);   
+            // currentDay.markers.push(createdMarker);  
+    
+            const markerObj = { lat, lng, title, dayEventName, timeslot, starttime, endtime }; 
+    
+            postDayEvent(dayEventName, '.removed-days', createdMarker, `event${(eventNum+1)}-day${dayNum}`, markerObj); 
+        }
+    });
+}
+
 !async function createUserInFirebase(userMail) {
     const userRef = doc(db, 'travelData', `user-${userMail}`);
     const userSnap = await getDoc(userRef);
@@ -869,17 +820,6 @@ async function removeFirebaseSavedDay(userMail, dayNum) {
     await setDoc(userRef, { createdAt: serverTimestamp() }); 
 }(localStorage.getItem('user-email')); 
  
-// async function saveMarkerToFirebase(userMail, dayNum, markerObj) {  
-//     const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
-//     const dayObj = {};
-//     const underscores = dayNum.toString().split('').map(_ => '_').join('');  
-//     dayObj[`${underscores}Day${dayNum}`] = arrayUnion(markerObj); 
-//     dayObj.ModifiedAt = serverTimestamp(); 
-
-//     await updateDoc(existingMarkers, dayObj);
-// }
-
-
 async function saveMarkerToFirebase(userMail, dayNum, markerObj) {  
     const userData = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(userData);
@@ -1017,39 +957,7 @@ async function removeFirebaseSavedMarker(userMail, dayNum, indexOfEditedEl) {
     let specificDay = days[dayArrIndex];
     const dayEvents = specificDay.events;
 
-    
-
-    
-    // const specificEvent = dayEvents[indexOfEditedEl];
-
-    // const $singleEvent = $dayText.closest('.single-event');
-
-    // const editedDayEventName = $singleEvent.querySelector('.day-text').value.trim();
-    // $singleEvent.markerObj.dayEventName = editedDayEventName; 
-
-    // const { lat, lng, title, dayEventName, timeslot, starttime } = $singleEvent.markerObj; 
-
-    // const eventObj = {
-    //     dayEventName,
-    //     lat,
-    //     lng,
-    //     title,
-    //     description: '',
-    //     imageURL: '',
-    //     KhonsuRecommends: false,
-    //     timeslot,
-    //     starttime,
-    //     endtime: '',
-    //     notes: '',
-    //     reservation: '',
-    // };
-
-    // dayEvents.splice(indexOfEditedEl, 0, eventObj);
     dayEvents.splice(indexOfEditedEl, 1); 
-
-
-
-    // const dayEventRef = doc(db, 'travelData', `user-${userMail}`);
     const dayObj = {};
     dayObj.days = days; 
 
@@ -1312,81 +1220,6 @@ async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, indexOfEd
     await updateDoc(userData, dayObj);
 }
 
-/*async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText) {
-    const existingMarkers = doc(db, 'travelData', `user-${userMail}`);
-    let dayObj = {};
-    const underscores = dayNum.toString().split('').map(_ => '_').join('');  
-
-    const $allEvents = $dayText.closest('.all-events');
-    const dayEvents = [...$allEvents.querySelectorAll('.single-event')].map(singleEvent => {
-        const $timeSpan = singleEvent.querySelector('.event-time-of-day');
-        const lat = singleEvent.markerObj?.lat; 
-        const lng = singleEvent.markerObj?.lng; 
-        const title = singleEvent.markerObj?.title; 
-        const timeslot = singleEvent.markerObj?.timeslot; // $timeSpan.value; //
-        const starttime = singleEvent.markerObj?.starttime; // $timeSpan.value; //
-        const knotes = singleEvent.markerObj?.knotes;
-
-        const editedDayEventName = singleEvent.querySelector('.day-text').value.trim();
-        singleEvent.markerObj.dayEventName = editedDayEventName; 
-
-        const markerObj = knotes ? {lat, lng, title, dayEventName: editedDayEventName, timeslot, starttime, knotes} 
-        : {lat, lng, title, dayEventName: editedDayEventName, timeslot, starttime}; 
-        return markerObj;
-    });
-
-    dayObj[`${underscores}Day${dayNum}`] = dayEvents;
-    dayObj.ModifiedAt = serverTimestamp(); 
-
-    await updateDoc(existingMarkers, dayObj); 
-}*/
-
-// async function saveMarkerToFirebase(userMail, dayNum, markerObj) {  
-//     const userData = doc(db, 'travelData', `user-${userMail}`);
-//     const docSnap = await getDoc(userData);
-//     const data = await docSnap.data(); 
-//     const { days } = data;
-
-//     const dayArrIndex = dayNum-1;
-//     let specificDay = days[dayArrIndex];
-
-//     if (!specificDay) {
-//         specificDay = {
-//             summary: '',
-//             events: [], 
-//         };
-//         days.splice(dayArrIndex, 0, specificDay);
-//     }
-
-//     const dayEvents = specificDay.events;
-
-//     const { dayEventName, lat, lng, title } = markerObj; 
-//     const eventObj = {
-//         dayEventName,
-//         lat,
-//         lng,
-//         title,
-//         description: '',
-//         imageURL: '',
-//         KhonsuRecommends: true,
-//         timeslot: '',
-//         starttime: 'March212024',
-//         endtime: 'March302024',
-//         notes: '',
-//         reservation: '',
-//     };
-
-//     dayEvents.push(eventObj);
-
-//     const dayObj = {}; 
-//     dayObj.days = days; 
-//     dayObj.modifiedAt = serverTimestamp(); 
-
-//     // console.log('Saved to:', dayNum, 'days', days)  
-
-//     await updateDoc(userData, dayObj);
-// }
-
 
 $dayEvents.addEventListener('click', e => {
     if (!e.target.closest('.view-hourly')) return;  // event-exact-time-of-day
@@ -1405,47 +1238,8 @@ $dayEvents.addEventListener('click', e => {
 
         timeSpan.value = timeslot;
         timeExact.value = starttime;
-
-        // if (timeSpan.classList.contains('time-exact')) {
-        //     timeSpan.value = timeslot;
-        //     timeSpan.classList.remove('time-exact');
-        //     $hourlyBtn.value = 'View Hourly';
-        // }
-        // else {
-        //     timeSpan.value = starttime;
-        //     timeSpan.classList.add('time-exact');
-        //     $hourlyBtn.value = 'View Day';
-        // }
     });
 }); 
-
-// const $allEvents = $dayText.closest('.all-events');
-    // const dayEvents2 = [...$allEvents.querySelectorAll('.single-event')].map(singleEvent => {
-    //     const { lat, lng, title, timeslot, starttime } = singleEvent.markerObj; 
-
-    //     const editedDayEventName = singleEvent.querySelector('.day-text').value.trim();
-    //     singleEvent.markerObj.dayEventName = editedDayEventName; 
-
-    //     // const saveObj = { lat, lng, title, dayEventName: editedDayEventName, timeslot, starttime };
-    //     // return saveObj;
-
-    //     const eventObj = {
-    //         dayEventName,
-    //         lat,
-    //         lng,
-    //         title,
-    //         description: '',
-    //         imageURL: '',
-    //         KhonsuRecommends: false,
-    //         timeslot,
-    //         starttime,
-    //         endtime: '',
-    //         notes: '',
-    //         reservation: '',
-    //     };
-    // });
-
-    // const { dayEventName, lat, lng, title } = markerObj; 
 
 
 const fp = flatpickr(document.querySelector('input.travel-date'), {
@@ -1507,20 +1301,6 @@ async function handleDatePickerChangeEvent(selectedDates) {
         dayToSave.summary = '';
         dayToSave.dayDate = headerText;
         dayToSave.events = [];
-        // dayToSave.events = [{
-        //     dayEventName: '',
-        //     lat: 0,
-        //     lng: 0,
-        //     title: '',
-        //     description: '',
-        //     imageURL: '',
-        //     KhonsuRecommends: true,
-        //     timeslot: '',
-        //     starttime: '',
-        //     endtime: '',
-        //     notes: '',
-        //     reservation: '',
-        // }];
 
         days.push(dayToSave); 
 
@@ -1534,53 +1314,4 @@ async function handleDatePickerChangeEvent(selectedDates) {
     dayObj.modifiedAt = serverTimestamp(); 
 
     await updateDoc(userData, dayObj);
-}
-
-/*
-async function saveMarkerToFirebase2(userMail, dayNum, markerObj={}) {  
-    const userData = doc(db, 'travelData', `user-${userMail}`);
-    const docSnap = await getDoc(userData);
-    const data = await docSnap.data(); 
-    const { days } = data;
-
-    const dayArrIndex = dayNum-1;
-    let specificDay = days[dayArrIndex];
-
-    if (!specificDay) {
-        specificDay = {
-            summary: '',
-            dayDate: '',
-            events: [], 
-        };
-        days.splice(dayArrIndex, 0, specificDay);
-    }
-
-    const dayEvents = specificDay.events;
-
-    const { dayEventName='', lat=0, lng=0, title='', timeslot=0, starttime='' } = markerObj; 
-    const eventObj = {
-        dayEventName,
-        lat,
-        lng,
-        title,
-        description: '',
-        imageURL: '',
-        KhonsuRecommends: true,
-        timeslot,
-        starttime,
-        endtime: '',
-        notes: '',
-        reservation: '',
-    };
-
-    dayEvents.push(eventObj);
-
-    const dayObj = {}; 
-    dayObj.days = days; 
-    dayObj.modifiedAt = serverTimestamp(); 
-
-    // console.log('Saved to:', dayNum, 'days', days)  
-
-    await updateDoc(userData, dayObj);
-}
-*/
+} 

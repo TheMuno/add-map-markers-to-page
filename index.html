@@ -102,6 +102,14 @@
         .no-days.hide {
             display: none;
         }
+
+        .removed-days.hide {
+            display: none;
+        }
+
+        .heading {
+            text-align: center;
+        }
     </style>   
 </head>
 <body>
@@ -139,7 +147,7 @@
     <div class="section"> 
         <div class="side-bar">
             <div class="day-events">
-                <div class="day-event day-1-event hide"> 
+                <div class="day-event day-0-event hide"> 
                     <div class="day-head">
                         <span class="header-text">Day 1</span>  
                         <img class="remove-day" src="Imgs/x-24.png" alt="">
@@ -156,7 +164,7 @@
                         </div>
                     </div>
 
-                    <div class="single-event" id="event-1" draggable="true">
+                    <div class="single-event" id="event-1" draggable="true" data-clone="true">
                         <select name="event-time-of-day" id="event-time-of-day" class="event-time-of-day">
                             <option value="morning">Morning</option>
                             <option value="afternoon">Afternoon</option>
@@ -176,8 +184,9 @@
                 </div>
                 <div class="all-days"></div> 
                 <div class="no-days">No days added!</div>  
-                <div class="removed-days">
-                    <div class="day-head">Removed Days</div>
+                <div class="removed-days hide">
+                    <div class="heading">Removed Days</div>
+                    <div class="all-events"></div>
                 </div>
             </div> 
         </div> 
