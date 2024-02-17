@@ -341,7 +341,7 @@ function constructEvent(dayEvent, day, marker, eventId, markerObj) {
 
     const $fullDayEvents = $day.querySelector('.all-events'); 
 
-    const $dayEvent = $dayEvents.querySelector('[data-clone]').cloneNode(true); //$day.querySelector('.single-event').cloneNode(true);   
+    const $dayEvent = $dayEvents.querySelector('[data-clone="single-event"]').cloneNode(true); //$day.querySelector('.single-event').cloneNode(true);   
     $dayEvent.classList.remove('hide'); 
     $dayEvent.id = eventId;
     $dayEvent.querySelector('.remove-marker').classList.remove('hide'); 
@@ -564,7 +564,7 @@ function addOptionToDaysSelect(dayNum, headerText=`Day ${dayNum}`) {
 }
 
 function addDayEventList(dayNum, headerText=`Day ${dayNum}`, parenDiv='.all-days') {
-    const $dayEvent = $dayEvents.querySelector('.day-1-event').cloneNode(true);
+    const $dayEvent = $dayEvents.querySelector('[data-clone="day-event"]').cloneNode(true);
     $dayEvent.classList.remove('day-0-event');
     $dayEvent.classList.add(`day-${dayNum}-event`);
     $dayEvent.querySelector('.day-head .header-text').textContent = headerText; //`Day ${dayNum}`; 
