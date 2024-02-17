@@ -637,6 +637,7 @@ function addDayEventList(dayNum, headerText=`Day ${dayNum}`) {
     $parent.append($dayEvent);
     // $parent.insertBefore($dayEvent, $dayEvents.querySelector(`.day-${dayNum+1}-event`)); 
 
+    console.log('addDayEventList triggered')
     $noDays.classList.add('hide');
 }
 
