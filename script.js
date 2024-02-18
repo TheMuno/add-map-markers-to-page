@@ -750,7 +750,7 @@ function removeMarker($singleEvent, $removeMarker, indexOfEditedEl) {
     if (userMail) removeFirebaseSavedMarker(userMail, dayNum, indexOfEditedEl);  
 }  
 
-function removeDay($day) {
+async function removeDay($day) {
     const $daysParentDiv = $day.closest('.all-days'); 
     const dayNum = [...$daysParentDiv.children].indexOf($day) + 1;
 
@@ -769,13 +769,12 @@ function removeDay($day) {
         $noDays.classList.remove('hide');
     }
 
+    const userMail = localStorage.getItem('user-email');
+    await removeFirebaseSavedDay(userMail, dayNum);
+
     if ($dayEvents.querySelector('.removed-days .all-events').children.length > 0) {
-        // $removedDaysDiv.classList.remove('hide');
         $showRemoved.classList.remove('hide');
     }
-
-    const userMail = localStorage.getItem('user-email');
-    removeFirebaseSavedDay(userMail, dayNum);
 }
 
 $showRemoved.addEventListener('click', () => {
