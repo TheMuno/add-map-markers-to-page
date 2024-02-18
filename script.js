@@ -778,7 +778,7 @@ async function removeDay($day) {
 }
 
 $showRemoved.addEventListener('click', e => {
-    const $btn = e.currentTarget;
+    const $btn = e.currentTarget.querySelector('input[type=button]');
     $dayEvents.querySelector('.removed-days').classList.remove('hide');
 
     $btn.classList.toggle('active');
