@@ -777,9 +777,18 @@ async function removeDay($day) {
     }
 }
 
-$showRemoved.addEventListener('click', () => {
+$showRemoved.addEventListener('click', e => {
+    const $btn = e.currentTarget;
     $dayEvents.querySelector('.removed-days').classList.remove('hide');
-});
+
+    $btn.classList.toggle('active');
+    if ($btn.classList.contains('active')) {
+        $btn.value = 'Hide removed days >>';
+    }
+    else {
+        $btn.value = 'Show removed days >>';
+    }
+}); 
 
 async function removeFirebaseSavedDay(userMail, dayNum) {
     const userData = doc(db, 'travelData', `user-${userMail}`);
