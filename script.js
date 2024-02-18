@@ -43,6 +43,7 @@ const $map = document.querySelector('#map'),
     $dayEvents = document.querySelector('.day-events'),
     $allDays = document.querySelector('.day-events .all-days'),
     $noDays = document.querySelector('.day-events .no-days'),
+    $showRemoved = $dayEvents.querySelector('.show-removed'),
     // $downloadUserCSV = document.querySelector('.download-user-csv'), 
     // $downloadDBCSV = document.querySelector('.download-all-csv'),
     // $printedPlanBtn = document.querySelector('.printed-plan'),
@@ -721,6 +722,8 @@ $dayEvents.addEventListener('click', e => {
             const $dayEvent = $removeDay.closest('.day-event');
 
             removeDay($dayEvent);
+            
+
         } 
     }
     else if (e.target.closest('.get-directions')) {    
@@ -766,9 +769,18 @@ function removeDay($day) {
         $noDays.classList.remove('hide');
     }
 
+    if ($dayEvents.querySelector('.removed-days .all-events').children.length) {
+        // $removedDaysDiv.classList.remove('hide');
+        $showRemoved.classList.remove('hide');
+    }
+
     const userMail = localStorage.getItem('user-email');
     removeFirebaseSavedDay(userMail, dayNum);
 }
+
+$showRemoved.addEventListener('click', () => {
+    $dayEvents.querySelector('.removed-days').classList.remove('hide');
+});
 
 async function removeFirebaseSavedDay(userMail, dayNum) {
     const userData = doc(db, 'travelData', `user-${userMail}`);
