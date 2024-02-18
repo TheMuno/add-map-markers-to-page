@@ -779,14 +779,14 @@ async function removeDay($day) {
 
 $showRemoved.addEventListener('click', e => {
     const $btn = e.currentTarget.querySelector('input[type=button]');
-    $dayEvents.querySelector('.removed-days').classList.remove('hide');
-
     $btn.classList.toggle('active');
     if ($btn.classList.contains('active')) {
         $btn.value = 'Hide removed days >>';
+        $dayEvents.querySelector('.removed-days').classList.remove('hide');
     }
     else {
         $btn.value = 'Show removed days >>';
+        $dayEvents.querySelector('.removed-days').classList.add('hide');
     }
 }); 
 
