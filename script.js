@@ -769,7 +769,7 @@ function removeDay($day) {
         $noDays.classList.remove('hide');
     }
 
-    if ($dayEvents.querySelector('.removed-days .all-events').children.length) {
+    if ($dayEvents.querySelector('.removed-days .all-events').children.length > 0) {
         // $removedDaysDiv.classList.remove('hide');
         $showRemoved.classList.remove('hide');
     }
