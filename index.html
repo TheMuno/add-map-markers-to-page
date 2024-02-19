@@ -141,14 +141,21 @@
             margin-top: 10px;
         }
 
-        .user-trip-notes {
+        .user-trip-data {
             display: flex;
-            flex-direction: column;
-            width: 60%;
+            /* flex-direction: column; */
+            width: 70%;
+            justify-content: space-between;
         }
 
-        .user-trip-notes .title {
+        .user-trip-data .title {
             text-align: center;
+        }
+
+        .user-trip-data .trip-data {
+            width: 49%;
+            display: flex;
+            flex-direction: column;
         }
 
         .days-select-label {
@@ -179,7 +186,7 @@
             <!-- <div class="user-hotel-div">
                 <input type="text" class="user-hotel" placeholder="User Hotel">
             </div> -->
-            <div class="user-trip-notes">
+            <div class="user-trip-data">
                 <div>
                     <label class="title" for="trip-notes">Trip Notes</label>
                     <textarea name="trip-notes" class="trip-notes" cols="30" rows="10"></textarea>
