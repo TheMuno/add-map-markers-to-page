@@ -814,7 +814,7 @@ async function removeFirebaseSavedDay(userMail, dayNum) {
 
 function pushDayToRemovedDaysSection(removedDay, dayNum) {
     const { dayDate, events } = removedDay;
-    addDayEventList(dayNum, dayDate);
+    addDayEventList(dayNum, dayDate, '.removed-days .all-days');
 
     events.forEach((dayActivity, eventNum) => {
         const { lat , lng, title='', dayEventName, timeslot, starttime, endtime } = dayActivity;
