@@ -431,14 +431,6 @@ async function updateKhonsuDataEdits(userMail, notes, dayNum) {
     await updateDoc(existingMarkers, dayObj);
 }
 
-async function updateReservationsEdits(userMail, reservationData) {
-    const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
-    const dayObj = {};
-    dayObj['Reservations'] = reservationData; 
-    dayObj.ModifiedAt = serverTimestamp(); 
-
-    await updateDoc(existingMarkers, dayObj);
-}
 
 $reservations.addEventListener('change', async e => {
     const userMail = localStorage.getItem('user-email'); 
@@ -450,7 +442,7 @@ $reservations.addEventListener('change', async e => {
         return `${time} - ${info}`; 
     });
 
-    updateReservationsEdits(userMail, reservationData); 
+    // updateReservationsEdits(userMail, reservationData); 
 });
 
 
@@ -462,6 +454,11 @@ $addReservation.addEventListener('click', e => {
 
     $reserveClone.querySelector('.reserve-time').value = '';
     $reserveClone.querySelector('.reserve-info').value = '';
+
+    flatpickr($reserveClone, {
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+    });
     
     $reservations.querySelector('.reserves').append($reserveClone);
     // $reservations.insertBefore($reserveClone, $reservations.querySelector('.add-reservation')); 
@@ -481,8 +478,17 @@ $reservations.addEventListener('click', e => {
         return `${time} - ${info}`; 
     });
     
-    updateReservationsEdits(userMail, reservationData);
+    // updateReservationsEdits(userMail, reservationData);
 });
+
+async function updateReservationsEdits(userMail, reservationData) {
+    const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
+    const dayObj = {};
+    dayObj['Reservations'] = reservationData; 
+    dayObj.ModifiedAt = serverTimestamp(); 
+
+    await updateDoc(existingMarkers, dayObj);
+}
 
 // function removeFirebaseReservations($removeBtn) {
 //     const eventsArr = [...$dayEvent.closest('.all-events').querySelectorAll('.single-event')].map(dayEvent => {
@@ -1344,13 +1350,7 @@ async function handleDatePickerChangeEvent(selectedDates) {
 
 
 const fp2 = flatpickr(document.querySelector('[data-pick-date]'), {
-    // mode: 'range',
-    // altInput: true,
     enableTime: true,
-    // altFormat: 'D M j',
-    //altFormat: "h:i K D M j",
-    //altFormat: "K D M j",
-    // dateFormat: 'Y-m-d',
     dateFormat: "Y-m-d H:i",
     onChange: async (selectedDates, dateStr, instance) => {
         
