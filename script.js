@@ -772,7 +772,7 @@ async function removeDay($day) {
     const userMail = localStorage.getItem('user-email');
     await removeFirebaseSavedDay(userMail, dayNum);
 
-    if ($dayEvents.querySelector('.removed-days .all-events').children.length > 0) {
+    if ($dayEvents.querySelector('.removed-days .all-days').children.length > 0) {
         $showRemoved.classList.remove('hide');
     }
 }
