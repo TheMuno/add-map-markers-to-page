@@ -1266,7 +1266,7 @@ $dayEvents.addEventListener('click', e => {
     });
 }); 
 
-document.querySelectorAll('[pick-date]').forEach(datePicker => {
+document.querySelectorAll('[data-pick-date]').forEach(datePicker => {
     const fp = flatpickr(datePicker, {
         mode: 'range',
         altInput: true,
