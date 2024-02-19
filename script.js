@@ -456,10 +456,13 @@ $reservations.addEventListener('change', async e => {
 
 $addReservation.addEventListener('click', e => {
     const $reservations = e.currentTarget.closest('.reservations'); 
-    const $reserves = $reservations.querySelector('.reserves'); 
-    const $reserve = $reserves.querySelector('.reserve');
+    const $reserve = $reservations.querySelector('.reserves .reserve');
     const $reserveClone = $reserve.cloneNode(true);
     $reserveClone.classList.remove('hide');
+
+    $reserveClone.querySelector('.reserve-time').value = '';
+    $reserveClone.querySelector('.reserve-info').value = '';
+    
     $reservations.querySelector('.reserves').append($reserveClone);
     // $reservations.insertBefore($reserveClone, $reservations.querySelector('.add-reservation')); 
 });
@@ -802,7 +805,7 @@ async function removeFirebaseSavedDay(userMail, dayNum) {
 
     const removedDay = days.splice(dayArrIndex, 1)[0];
     deletedDays.push(removedDay);
-    console.log('removedDay', removedDay)
+    // console.log('removedDay', removedDay)
     pushDayToRemovedDaysSection(removedDay, dayNum);
 
     // console.log('removedDay', removedDay)
@@ -1263,28 +1266,30 @@ $dayEvents.addEventListener('click', e => {
     });
 }); 
 
-
-const fp = flatpickr(document.querySelector('input.travel-date'), {
-    mode: 'range',
-    altInput: true,
-    enableTime: false,
-    altFormat: 'D M j',
-    //altFormat: "h:i K D M j",
-    //altFormat: "K D M j",
-    dateFormat: 'Y-m-d',
-    onChange: async (selectedDates, dateStr, instance) => {
-        
-    },
-    onValueUpdate: async (selectedDates, dateStr, instance) => {
-        await handleDatePickerChangeEvent(selectedDates); 
-
-        if (!$allDays.innerHTML.trim()) return;
-        $address.removeAttribute('disabled');
-        $address.setAttribute('placeholder', $addressPlaceholder);
-        // currentDay = $allDays.children[ $allDays.children.length - 1 ];
-        currentDay = $daysSelect.options[ $daysSelect.options.length - 2 ]; 
-    }, 
+document.querySelectorAll('[pick-date]').forEach(datePicker => {
+    const fp = flatpickr(datePicker, {
+        mode: 'range',
+        altInput: true,
+        enableTime: false,
+        altFormat: 'D M j',
+        //altFormat: "h:i K D M j",
+        //altFormat: "K D M j",
+        dateFormat: 'Y-m-d',
+        onChange: async (selectedDates, dateStr, instance) => {
+            
+        },
+        onValueUpdate: async (selectedDates, dateStr, instance) => {
+            await handleDatePickerChangeEvent(selectedDates); 
+    
+            if (!$allDays.innerHTML.trim()) return;
+            $address.removeAttribute('disabled');
+            $address.setAttribute('placeholder', $addressPlaceholder);
+            // currentDay = $allDays.children[ $allDays.children.length - 1 ];
+            currentDay = $daysSelect.options[ $daysSelect.options.length - 2 ]; 
+        }, 
+    });
 });
+
 
 async function handleDatePickerChangeEvent(selectedDates) {
     // $dayEvents.innerHTML = '';
