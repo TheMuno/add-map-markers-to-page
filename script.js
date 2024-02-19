@@ -454,14 +454,14 @@ $addReservation.addEventListener('click', e => {
 
     $reserveClone.querySelector('.reserve-time').value = '';
     $reserveClone.querySelector('.reserve-info').value = '';
-    
-    $reservations.querySelector('.reserves').append($reserveClone);
-    // $reservations.insertBefore($reserveClone, $reservations.querySelector('.add-reservation')); 
 
-    flatpickr($reserveClone, {
+    flatpickr($reserveClone.querySelector('.reserve-time'), {
         enableTime: true,
         dateFormat: "Y-m-d H:i",
     });
+    
+    $reservations.querySelector('.reserves').append($reserveClone);
+    // $reservations.insertBefore($reserveClone, $reservations.querySelector('.add-reservation')); 
 });
 
 $reservations.addEventListener('click', e => {
