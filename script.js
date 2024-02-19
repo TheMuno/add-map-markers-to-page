@@ -774,6 +774,7 @@ async function removeDay($day) {
 
     if ($dayEvents.querySelector('.removed-days .all-days').children.length > 0) {
         $showRemoved.classList.remove('hide');
+        $showRemoved.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'});
     }
 }
 
