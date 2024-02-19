@@ -10,6 +10,15 @@
     <link rel="stylesheet" href="styles.css">  
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4&libraries=places&v=weekly&language=en" ></script>   
     <style>
+        body {
+            margin: 0;
+        }
+
+        .top-section {
+            background-color: rgba(0,0,0,0.1);
+            padding: 1px 0;
+        }
+
         .day-top-buttons {
             margin: 2px 0; 
             display: flex;
@@ -82,7 +91,7 @@
         }
 
         .travel-date{
-            width: 250px;
+            width: 300px;
             height: 30px;
         }
 
@@ -127,8 +136,9 @@
 
         .user-hotel {
             /* width: 100%; */
-            width: 250px;
+            width: 300px;
             height: 30px; 
+            margin-top: 10px;
         }
 
         .user-trip-notes {
@@ -143,32 +153,34 @@
     </style>   
 </head>
 <body>
-    <div class="section reset-justify">
-        <label for="user-email">Email:</label> 
-        <input type="text" placeholder="user@mail.com" class="user-email">
-        <div class="no-user"></div>
-        <!-- <label for="download-csv">Download CSV</label> -->
-        <!-- <input type="button" value="Download Current User CSV" class="get-resource-btn download-user-csv"> 
-        <input type="button" value="Download All Users CSV" class="get-resource-btn download-all-csv">   
-        <input type="button" value="Get Printed Plan" class="get-resource-btn printed-plan">  
-        
-        <button class="get-resource-btn" disabled onclick="authenticate().then(loadClient)">Authorize & Load</button>   -->
+    <div class="top-section">
+        <div class="section reset-justify">
+            <label for="user-email">Email:</label> 
+            <input type="text" placeholder="user@mail.com" class="user-email">
+            <div class="no-user"></div>
+            <!-- <label for="download-csv">Download CSV</label> -->
+            <!-- <input type="button" value="Download Current User CSV" class="get-resource-btn download-user-csv"> 
+            <input type="button" value="Download All Users CSV" class="get-resource-btn download-all-csv">   
+            <input type="button" value="Get Printed Plan" class="get-resource-btn printed-plan">  
+            
+            <button class="get-resource-btn" disabled onclick="authenticate().then(loadClient)">Authorize & Load</button>   -->
+        </div>
+        <div class="section travel-dates"> 
+            <div class="user-travel-info">
+                <input type="text" class="travel-date arrival" placeholder="Travel Dates">
+                <input type="text" class="user-hotel" placeholder="User Hotel">
+                <!-- <input type="text" class="travel-date departure" placeholder="Departure Date"> -->
+            </div>
+            <!-- <div class="user-hotel-div">
+                <input type="text" class="user-hotel" placeholder="User Hotel">
+            </div> -->
+            <div class="user-trip-notes">
+                <label class="title" for="trip-notes">Trip Notes</label>
+                <textarea name="trip-notes" class="trip-notes" cols="30" rows="10"></textarea>
+                <!-- <input type="button" value="Submit" class="save-trip-notes"> -->
+            </div>
+        </div> 
     </div>
-    <div class="section travel-dates"> 
-        <div class="user-travel-info">
-            <input type="text" class="travel-date arrival" placeholder="Travel Dates">
-            <input type="text" class="user-hotel" placeholder="User Hotel">
-            <!-- <input type="text" class="travel-date departure" placeholder="Departure Date"> -->
-        </div>
-        <!-- <div class="user-hotel-div">
-            <input type="text" class="user-hotel" placeholder="User Hotel">
-        </div> -->
-        <div class="user-trip-notes">
-            <label class="title" for="trip-notes">Trip Notes</label>
-            <textarea name="trip-notes" class="trip-notes" cols="30" rows="10"></textarea>
-            <!-- <input type="button" value="Submit" class="save-trip-notes"> -->
-        </div>
-    </div> 
     <div class="section header">
         <div class="header--left">
             <!-- <input type="button" value="+ Day" class="add-day"> -->
