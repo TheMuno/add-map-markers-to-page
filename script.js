@@ -1266,30 +1266,28 @@ $dayEvents.addEventListener('click', e => {
     });
 }); 
 
-document.querySelectorAll('[data-pick-date]').forEach(datePicker => {
-    const fp = flatpickr(datePicker, {
-        mode: 'range',
-        altInput: true,
-        enableTime: false,
-        altFormat: 'D M j',
-        //altFormat: "h:i K D M j",
-        //altFormat: "K D M j",
-        dateFormat: 'Y-m-d',
-        onChange: async (selectedDates, dateStr, instance) => {
-            
-        },
-        onValueUpdate: async (selectedDates, dateStr, instance) => {
-            await handleDatePickerChangeEvent(selectedDates); 
-    
-            if (!$allDays.innerHTML.trim()) return;
-            $address.removeAttribute('disabled');
-            $address.setAttribute('placeholder', $addressPlaceholder);
-            // currentDay = $allDays.children[ $allDays.children.length - 1 ];
-            currentDay = $daysSelect.options[ $daysSelect.options.length - 2 ]; 
-        }, 
-    });
-});
 
+const fp = flatpickr(document.querySelector('input.travel-date'), {
+    mode: 'range',
+    altInput: true,
+    enableTime: false,
+    altFormat: 'D M j',
+    //altFormat: "h:i K D M j",
+    //altFormat: "K D M j",
+    dateFormat: 'Y-m-d',
+    onChange: async (selectedDates, dateStr, instance) => {
+        
+    },
+    onValueUpdate: async (selectedDates, dateStr, instance) => {
+        await handleDatePickerChangeEvent(selectedDates); 
+
+        if (!$allDays.innerHTML.trim()) return;
+        $address.removeAttribute('disabled');
+        $address.setAttribute('placeholder', $addressPlaceholder);
+        // currentDay = $allDays.children[ $allDays.children.length - 1 ];
+        currentDay = $daysSelect.options[ $daysSelect.options.length - 2 ]; 
+    }, 
+});
 
 async function handleDatePickerChangeEvent(selectedDates) {
     // $dayEvents.innerHTML = '';
@@ -1342,3 +1340,23 @@ async function handleDatePickerChangeEvent(selectedDates) {
 
     await updateDoc(userData, dayObj);
 } 
+
+
+
+const fp2 = flatpickr(document.querySelector('[data-pick-date]'), {
+    // mode: 'range',
+    // altInput: true,
+    enableTime: true,
+    // altFormat: 'D M j',
+    //altFormat: "h:i K D M j",
+    //altFormat: "K D M j",
+    // dateFormat: 'Y-m-d',
+    dateFormat: "Y-m-d H:i",
+    onChange: async (selectedDates, dateStr, instance) => {
+        
+    },
+    onValueUpdate: async (selectedDates, dateStr, instance) => {
+        
+    }, 
+});
+
