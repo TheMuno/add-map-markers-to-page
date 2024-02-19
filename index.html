@@ -150,6 +150,11 @@
         .user-trip-notes .title {
             text-align: center;
         }
+
+        .days-select-label {
+            display: flex;
+            align-items: center;
+        } 
     </style>   
 </head>
 <body> 
@@ -184,7 +189,7 @@
     <div class="section header">
         <div class="header--left">
             <!-- <input type="button" value="+ Day" class="add-day"> -->
-            <label for="days-select">Select Day:</label>
+            <label for="days-select" class="days-select-label">Select Day:</label>
             <select name="days" id="days-select">
                 <option value="*">All</option> 
                 <!-- <option value="day-1">Day 1</option>  -->

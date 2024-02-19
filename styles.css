@@ -108,7 +108,8 @@
 
 #days-select {
     /* width: 60%;  */
-    width: 100%;
+    /* width: 100%; */
+    width: 78%;
     height: 40px; 
     font-size: inherit;
 }
