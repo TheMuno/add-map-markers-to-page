@@ -597,7 +597,7 @@ function addDayActivitiesListContainer(dayDate, parenDiv='.all-days') {
     //     $dayEvent.querySelector('.single-event.hide').classList.remove('hide'); 
     // }
 
-    $dayEvent.querySelector('.all-days').innerHTML = '';
+    // $dayEvent.querySelector('.all-days').innerHTML = '';
 
     // $dayEvent.querySelectorAll('.map_list-icon').forEach(icon => icon.classList.add('hide')); 
 
