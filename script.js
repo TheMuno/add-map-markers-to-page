@@ -221,6 +221,7 @@ const markerPopup = new google.maps.InfoWindow();
                 postDayActivity($address.value, dayIdentifier, marker, eventId, markerObj);
             }
 
+
             // markerObj.dayEventName = dayEventName;             
 
             const userMail = localStorage.getItem('user-email');
@@ -348,7 +349,7 @@ function postDayActivity(dayEvent, day, marker, eventId, markerObj) {
 function constructActivity(dayEvent, day, marker, eventId, markerObj) {
     const $day = $dayActivities.querySelector(day); 
 
-    const $fullDayActivities = $day.querySelector('.all-events'); 
+    const $fullDayActivities = $day.querySelector('.all-activities'); 
 
     const $dayActivity = $dayActivities.querySelector('[data-clone="single-event"]').cloneNode(true); //$day.querySelector('.single-event').cloneNode(true);   
     $dayActivity.removeAttribute('data-clone');
@@ -500,7 +501,7 @@ async function updateReservationsEdits(userMail, reservationData) {
 }
 
 // function removeFirebaseReservations($removeBtn) {
-//     const eventsArr = [...$dayEvent.closest('.all-events').querySelectorAll('.single-event')].map(dayEvent => {
+//     const eventsArr = [...$dayEvent.closest('.all-activities').querySelectorAll('.single-event')].map(dayEvent => {
 //         return dayEvent.markerObj;
 //     });
 
@@ -592,10 +593,10 @@ function addDayActivitiesListContainer(dayDate, parenDiv='.all-days') {
     $dayEvent.querySelector('.day-head .header-text').textContent = dayDate; // headerText; //`Day ${dayNum}`; 
     // $dayEvent.setAttribute('day', headerText);
 
-    // if ($dayEvent.querySelector('.single-event.hide'))   {
-    //     $dayEvent.querySelectorAll('.single-event:not(.hide)').forEach(el => el.remove()); 
-    //     $dayEvent.querySelector('.single-event.hide').classList.remove('hide'); 
-    // }
+    if ($dayEvent.querySelector('.single-event.hide'))   {
+        $dayEvent.querySelectorAll('.single-event:not(.hide)').forEach(el => el.remove()); 
+        $dayEvent.querySelector('.single-event.hide').classList.remove('hide'); 
+    }
 
     // $dayEvent.querySelector('.all-days').innerHTML = '';
 
@@ -712,7 +713,7 @@ $dayActivities.addEventListener('click', e => {
         const $singleEvent = $removeMarker.closest('.single-event'); 
         const $dayEvent = $removeMarker.closest('.day-event');
         const eventNum = $dayEvent.querySelectorAll('.single-event:not(.hide)').length; 
-        const indexOfEditedEl = [...$singleEvent.closest('.all-events').querySelectorAll('.single-event')].indexOf($singleEvent);
+        const indexOfEditedEl = [...$singleEvent.closest('.all-activities').querySelectorAll('.single-event')].indexOf($singleEvent);
         
         removeMarker($singleEvent, $removeMarker, indexOfEditedEl); 
         if ($dayEvent.querySelectorAll('.single-event').length > 1) $singleEvent.remove(); 
@@ -1170,7 +1171,7 @@ async function updateFirebaseAfterSort($dayEvent) {
     const dayNum = $dayEvent.id.slice(-1); 
     const userMail = localStorage.getItem('user-email');
 
-    const dayEvents = [...$dayEvent.closest('.all-events').querySelectorAll('.single-event')].map(dayEvent => {
+    const dayEvents = [...$dayEvent.closest('.all-activities').querySelectorAll('.single-event')].map(dayEvent => {
 
         const { lat, lng, title, dayEventName, timeslot, starttime } = dayEvent.markerObj; 
 
@@ -1211,7 +1212,7 @@ async function updateFirebaseAfterSort($dayEvent) {
 $dayActivities.addEventListener('click', e => {
     if (e.target.closest('.sort-events')) {
         const $dayEvent = e.target.closest('.day-event');
-        const $allEvents = $dayEvent.querySelector('.all-events'); 
+        const $allEvents = $dayEvent.querySelector('.all-activities'); 
         const $allEventsClone = $allEvents.cloneNode(true);
 
         const markerObjs = [...$allEvents.querySelectorAll('.single-event')].map(dayEvent => {
@@ -1231,14 +1232,14 @@ $dayActivities.addEventListener('click', e => {
         $img.addEventListener('click', e => {
             e.stopPropagation(); 
             const $closeBtn = e.currentTarget; 
-            const $sortedEvents = $closeBtn.closest('.modal-content').querySelector('.all-events');
+            const $sortedEvents = $closeBtn.closest('.modal-content').querySelector('.all-activities');
             $allEvents.replaceWith($sortedEvents);
             $closeBtn.closest('.modal').classList.add('hide');  
         }); 
 
         $modal.addEventListener('click', e => { 
             if (e.target !== $modal) return;    
-            const $sortedEvents = e.target.querySelector('.all-events');
+            const $sortedEvents = e.target.querySelector('.all-activities');
             $allEvents.replaceWith($sortedEvents);
             e.target.classList.add('hide'); 
         });
@@ -1321,7 +1322,7 @@ $dayActivities.addEventListener('click', e => {
 
     const $hourlyBtn = e.target;
     const $dayEvent = $hourlyBtn.closest('.day-event'); 
-    $dayEvent.querySelectorAll('.all-events .single-event').forEach(dayEvent => {
+    $dayEvent.querySelectorAll('.all-activities .single-event').forEach(dayEvent => {
         const timeSpan = dayEvent.querySelector('.event-time-of-day');
         const timeExact = dayEvent.querySelector('.event-exact-time-of-day'); 
 
