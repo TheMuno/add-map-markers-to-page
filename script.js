@@ -910,13 +910,20 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
     const data = await docSnap.data(); 
     const { days } = data;
 
+    console.log('days', days)
+
     const $allDays = $dayEvents.querySelector('.all-days'); 
     days.forEach(day => {
         const { dayDate, events:dayActivities } = day;
         const dayIdentifier = `[day="${dayDate.trim()}"]`;
 
+        console.log('dayIdentifier', dayIdentifier)
+
         dayActivities.forEach(activity => {
             const $currentDay = $allDays.querySelector(dayIdentifier);
+
+            console.log('$currentDay', $currentDay)
+
             if (!$currentDay) return;
 
             const { dayEventName, lat, lng, title, timeslot, starttime, endtime } = activity;
