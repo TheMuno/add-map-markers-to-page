@@ -165,8 +165,15 @@ const markerPopup = new google.maps.InfoWindow();
             currentDay.markers.push(marker);
 
             const dayNum = getCurrentDayNum(); 
-            const day = `.day-${dayNum}-event:not(.hide)`;    
-            $dayEvents.querySelector(`${day} .single-event`)?.classList.add('hide');  
+            // const day = `.day-${dayNum}-event:not(.hide)`;  
+
+            const selectedIndex = $daysSelect.selectedIndex;
+            let dayDate = $daysSelect.options[selectedIndex].value; 
+            if (selectedIndex === 0) {
+                dayDate = $daysSelect.options[ $daysSelect.options.length - 2 ]?.value; 
+            }
+
+            // $dayEvents.querySelector(`${day} .single-event`)?.classList.add('hide');  
 
             const lat = marker.position.lat();
             const lng = marker.position.lng();
@@ -176,13 +183,13 @@ const markerPopup = new google.maps.InfoWindow();
 
             $address.n = ($address.n || 1) + 1; 
 
-            let idNum = 2; 
-            const lastId = $dayEvents.querySelector(`${day} > .single-event:last-child:not(.hide)`)?.id;
-            if (lastId) {
-                let num = Number(lastId.split('-')[0].slice(-1));  
-                num += 1;
-                idNum = num; 
-            }
+            // let idNum = 2; 
+            // const lastId = $dayEvents.querySelector(`${day} > .single-event:last-child:not(.hide)`)?.id;
+            // if (lastId) {
+            //     let num = Number(lastId.split('-')[0].slice(-1));  
+            //     num += 1;
+            //     idNum = num; 
+            // }
 
             // const dayTimes = ['Morning', 'Afternoon', 'Evening'];
             // const clockTimes = ['08:00 AM', '09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', 
@@ -194,6 +201,7 @@ const markerPopup = new google.maps.InfoWindow();
             markerObj.timeslot = 'Morning';
             markerObj.starttime = '08:00 AM';
 
+            const eventId = dayDate.toLowerCase().replace(/,\s+|\s+/g,'-');
             let dayEventName = ''; 
             if (numOfPlacesFound > 1) {
                 const addressName = `${place.name} ${place.formatted_address}`; 
@@ -202,7 +210,7 @@ const markerPopup = new google.maps.InfoWindow();
                 // const markerObj = {lat, lng, title, dayEventName, timeOfDay}; 
                 markerObj.dayEventName = dayEventName;
                 
-                postDayEvent(addressName, day, marker, `event${idNum}-day${dayNum}`, markerObj);
+                postDayEvent(addressName, dayDate, marker, eventId, markerObj);
             }
             else {
                 dayEventName = $address.value; 
@@ -210,7 +218,7 @@ const markerPopup = new google.maps.InfoWindow();
                 markerObj.dayEventName = dayEventName;
                 // markerObj.timeOfDay = timeOfDay;
                 // markerObj.timeExact = timeExact;
-                postDayEvent($address.value, day, marker, `event${idNum}-day${dayNum}`, markerObj);
+                postDayEvent($address.value, dayDate, marker, eventId, markerObj);
             }
 
             // markerObj.dayEventName = dayEventName;             
