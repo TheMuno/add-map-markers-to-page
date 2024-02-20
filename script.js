@@ -86,16 +86,13 @@ $daysSelect.selectedIndex = 0; // startingIndex;
 
 google.maps.event.addDomListener(window, 'load', () => {
     const userMail = localStorage.getItem('user-email');  
-    // if (userMail) retrieveSavedMarkersFromFirebase(userMail);
+    if (userMail) retrieveSavedMarkersFromFirebase(userMail);
 
     if (!$allDays.innerHTML.trim()) {
         $address.setAttribute('disabled', true);
         $address.setAttribute('placeholder','No Travel Dates Added');
     }
 }); 
-
-// setTimeout(()=> retrieveSavedMarkersFromFirebase(localStorage.getItem('user-email')), 15 * 1000); 
-// retrieveSavedMarkersFromFirebase(localStorage.getItem('user-email'));
 
 $logoutBtn?.addEventListener('click', () => {
     localStorage.removeItem('user-email');
@@ -898,7 +895,49 @@ async function saveMarkerToFirebase(userMail, dayNum, markerObj) {
     await updateDoc(userData, dayObj);
 }
 
+async function retrieveSavedMarkersFromFirebase(userMail) {    
+    const userData = doc(db, 'travelData', `user-${userMail}`);
+    const docSnap = await getDoc(userData);
 
+    if (!docSnap.exists()) {
+        // docSnap.data() will be undefined in this case
+        console.log('No user with such email!');
+        $noUser.textContent = 'No user with such email, sorry!';
+        setTimeout(()=> $noUser.textContent = '', 5000);
+        return; 
+    } 
+
+    const data = await docSnap.data(); 
+    const { days } = data;
+
+    const $allDays = $dayEvents.querySelector('.all-days'); 
+    days.forEach(day => {
+        const { dayDate, events:dayActivities } = day;
+        const dayIdentifier = `[day="${dayDate.trim()}"]`;
+
+        dayActivities.forEach(activity => {
+            const $currentDay = $allDays.querySelector(dayIdentifier);
+            if (!$currentDay) return;
+
+            const { dayEventName, lat, lng, title, timeslot, starttime, endtime } = activity;
+            if (lat && lng) {
+                const locationInfo = {
+                    name: title,
+                    latLng: {lat, lng}
+                };
+                const createdMarker = createMarker(locationInfo);   
+                // currentDay.markers.push(createdMarker);  
+
+                const markerObj = { lat, lng, title, dayEventName, timeslot, starttime, endtime }; 
+
+                const eventId = dayDate.toLowerCase().replace(/,\s+|\s+/g,'-');
+                postDayEvent(dayEventName, dayIdentifier, createdMarker, eventId, markerObj); 
+            }
+        });
+    });
+}
+
+/*
 async function retrieveSavedMarkersFromFirebase(userMail) {    
     const docRef = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(docRef);
@@ -955,6 +994,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
     const { mapUrl } = references;
     setupMapurlNQRCode(mapUrl); 
 } 
+*/
 
 function setupMapurlNQRCode(mapUrl) {
     $mapUrl.value = mapUrl; 
