@@ -322,16 +322,19 @@ function postDayEvent(dayEvent, day, marker, eventId, markerObj) {
         constructEvent(dayEvent, day, marker, eventId, markerObj); 
     }
     else {
-        const dayNum = day.split('-')[1]; 
-        addDayEventList(dayNum); 
-        constructEvent(dayEvent, day, marker, eventId, markerObj); 
-
-        if ($dayEvents.querySelector(`.day-${dayNum}-event`)) {
-            const $hiddenEvent = $dayEvents.querySelector(`.day-${dayNum}-event`).querySelector('.single-event');
-            $hiddenEvent.classList.add('hide'); 
-            $hiddenEvent.id = `event-${dayNum}`;
-        }  
+        console.log('No Day found to add in activities')
     }
+    // else {
+    //     const dayNum = day.split('-')[1]; 
+    //     addDayActivitiesListContainerContainer(dayNum); 
+    //     constructEvent(dayEvent, day, marker, eventId, markerObj); 
+
+    //     // if ($dayEvents.querySelector(`.day-${dayNum}-event`)) {
+    //     //     const $hiddenEvent = $dayEvents.querySelector(`.day-${dayNum}-event`).querySelector('.single-event');
+    //     //     $hiddenEvent.classList.add('hide'); 
+    //     //     $hiddenEvent.id = `event-${dayNum}`;
+    //     // }  
+    // }
 }
 
 function constructEvent(dayEvent, day, marker, eventId, markerObj) {
@@ -570,12 +573,15 @@ function addOptionToDaysSelect(dayNum, headerText=`Day ${dayNum}`) {
     return $option; 
 }
 
-function addDayEventList(dayNum, headerText=`Day ${dayNum}`, parenDiv='.all-days') {
+// function addDayActivitiesListContainerContainer(dayDate, headerText=`Day ${dayNum}`, parenDiv='.all-days') {
+function addDayActivitiesListContainerContainer(dayDate, parenDiv='.all-days') {
     const $dayEvent = $dayEvents.querySelector('[data-clone="day-event"]').cloneNode(true);
+    $dayEvent.removeAttribute('data-clone');
     $dayEvent.classList.remove('day-0-event');
-    $dayEvent.classList.add(`day-${dayNum}-event`);
-    $dayEvent.querySelector('.day-head .header-text').textContent = headerText; //`Day ${dayNum}`; 
-    $dayEvent.setAttribute('day', headerText);
+    // $dayEvent.classList.add(`day-${dayNum}-event`);
+    $dayEvent.setAttribute('day', dayDate);
+    $dayEvent.querySelector('.day-head .header-text').textContent = dayDate; // headerText; //`Day ${dayNum}`; 
+    // $dayEvent.setAttribute('day', headerText);
 
     if ($dayEvent.querySelector('.single-event.hide'))   {
         $dayEvent.querySelectorAll('.single-event:not(.hide)').forEach(el => el.remove()); 
@@ -636,7 +642,7 @@ $daysSelect.addEventListener('change', e => {
         }
         else {
             const dayNum = index; 
-            addDayEventList(dayNum, selectedDay); 
+            addDayActivitiesListContainerContainer(selectedDay); 
         }
     }
     else {
@@ -662,10 +668,10 @@ $daysSelect.addEventListener('change', e => {
     
     const day = newDay.substring(0, newDay.indexOf(' '));
     const rest = newDay.substring(day.length);
-    const headerText = `${day},${rest}`;
+    const dayDate = `${day},${rest}`;
 
-    addDayEventList(dayNum, headerText); 
-    addOptionToDaysSelect(dayNum, headerText); 
+    addDayActivitiesListContainerContainer(dayDate); 
+    addOptionToDaysSelect(dayNum, dayDate); 
 
     $select.selectedIndex = dayNum; 
 });
@@ -822,7 +828,7 @@ async function removeFirebaseSavedDay(userMail, dayNum) {
 
 function pushDayToRemovedDaysSection(removedDay, dayNum) {
     const { dayDate, events } = removedDay;
-    addDayEventList(dayNum, dayDate, '.removed-days .all-days');
+    addDayActivitiesListContainerContainer(dayDate, '.removed-days .all-days');
 
     events.forEach((dayActivity, eventNum) => {
         const { lat , lng, title='', dayEventName, timeslot, starttime, endtime } = dayActivity;
@@ -1366,18 +1372,18 @@ async function handleDatePickerChangeEvent(selectedDates) {
         const startDateStr = startDate.toDateString();
         const day = startDateStr.substring(0, startDateStr.indexOf(' '));
         const rest = startDateStr.substring(day.length);
-        const headerText = `${day},${rest}`;
+        const dayDate = `${day},${rest}`;
 
         const dayNum = i + 1;
-        addDayEventList(dayNum, headerText);
-        addOptionToDaysSelect(dayNum, headerText);
+        addDayActivitiesListContainerContainer(dayDate);
+        addOptionToDaysSelect(dayNum, dayDate);
         console.log(`Day ${dayNum}`)
 
         // await saveMarkerToFirebase(userMail, dayNum);
 
         const dayToSave = {};
         dayToSave.summary = '';
-        dayToSave.dayDate = headerText;
+        dayToSave.dayDate = dayDate;
         dayToSave.events = [];
 
         days.push(dayToSave); 
