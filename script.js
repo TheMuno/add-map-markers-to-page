@@ -172,7 +172,7 @@ const markerPopup = new google.maps.InfoWindow();
             if (selectedIndex === 0) {
                 dayDate = $daysSelect.options[ $daysSelect.options.length - 2 ]?.value; 
             }
-
+            const dayIdentifier = `[day="${dayDate.trim()}"]`;
             // $dayEvents.querySelector(`${day} .single-event`)?.classList.add('hide');  
 
             const lat = marker.position.lat();
@@ -210,7 +210,7 @@ const markerPopup = new google.maps.InfoWindow();
                 // const markerObj = {lat, lng, title, dayEventName, timeOfDay}; 
                 markerObj.dayEventName = dayEventName;
                 
-                postDayEvent(addressName, dayDate, marker, eventId, markerObj);
+                postDayEvent(addressName, dayIdentifier, marker, eventId, markerObj);
             }
             else {
                 dayEventName = $address.value; 
@@ -218,7 +218,7 @@ const markerPopup = new google.maps.InfoWindow();
                 markerObj.dayEventName = dayEventName;
                 // markerObj.timeOfDay = timeOfDay;
                 // markerObj.timeExact = timeExact;
-                postDayEvent($address.value, dayDate, marker, eventId, markerObj);
+                postDayEvent($address.value, dayIdentifier, marker, eventId, markerObj);
             }
 
             // markerObj.dayEventName = dayEventName;             
