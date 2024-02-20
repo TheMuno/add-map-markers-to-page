@@ -210,7 +210,7 @@ const markerPopup = new google.maps.InfoWindow();
                 // const markerObj = {lat, lng, title, dayEventName, timeOfDay}; 
                 markerObj.dayEventName = dayEventName;
                 
-                postDayEvent(addressName, dayIdentifier, marker, eventId, markerObj);
+                postDayActivity(addressName, dayIdentifier, marker, eventId, markerObj);
             }
             else {
                 dayEventName = $address.value; 
@@ -218,7 +218,7 @@ const markerPopup = new google.maps.InfoWindow();
                 markerObj.dayEventName = dayEventName;
                 // markerObj.timeOfDay = timeOfDay;
                 // markerObj.timeExact = timeExact;
-                postDayEvent($address.value, dayIdentifier, marker, eventId, markerObj);
+                postDayActivity($address.value, dayIdentifier, marker, eventId, markerObj);
             }
 
             // markerObj.dayEventName = dayEventName;             
@@ -324,7 +324,7 @@ $map.addEventListener('click', e => {
 }); 
 
 
-function postDayEvent(dayEvent, day, marker, eventId, markerObj) {
+function postDayActivity(dayEvent, day, marker, eventId, markerObj) {
     const $day = $dayEvents.querySelector(day);  
     if ($day) {
         constructEvent(dayEvent, day, marker, eventId, markerObj); 
@@ -850,7 +850,7 @@ function pushDayToRemovedDaysSection(removedDay, dayNum) {
     
             const markerObj = { lat, lng, title, dayEventName, timeslot, starttime, endtime }; 
     
-            postDayEvent(dayEventName, '.removed-days', createdMarker, `event${(eventNum+1)}-day${dayNum}`, markerObj); 
+            postDayActivity(dayEventName, '.removed-days', createdMarker, `event${(eventNum+1)}-day${dayNum}`, markerObj); 
         }
     });
 }
@@ -952,7 +952,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                 const markerObj = { lat, lng, title, dayEventName, timeslot, starttime, endtime }; 
 
                 const eventId = dayDate.toLowerCase().replace(/,\s+|\s+/g,'-');
-                postDayEvent(dayEventName, dayIdentifier, createdMarker, eventId, markerObj); 
+                postDayActivity(dayEventName, dayIdentifier, createdMarker, eventId, markerObj); 
             }
         });
     });
@@ -1000,7 +1000,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
                 const markerObj = { lat, lng, title, dayEventName, timeslot, starttime, endtime }; 
 
-                postDayEvent(dayEventName, dayClass, createdMarker, `event${(eventNum+2)}-day${dayNum}`, markerObj); 
+                postDayActivity(dayEventName, dayClass, createdMarker, `event${(eventNum+2)}-day${dayNum}`, markerObj); 
             }
 
             if ($currentDay && $currentDay.querySelectorAll('.single-event').length > 1) $dayEvents.querySelector(`${dayClass} .single-event`).classList.add('hide'); 
