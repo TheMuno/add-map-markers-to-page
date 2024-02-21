@@ -225,7 +225,7 @@ const markerPopup = new google.maps.InfoWindow();
             // markerObj.dayEventName = dayEventName;             
 
             const userMail = localStorage.getItem('user-email');
-            if (userMail) saveMarkerToFirebase(userMail, dayNum, markerObj);  
+            if (userMail) saveMarkerToFirebase(userMail, dayDate, markerObj);  
 
         });
 
@@ -868,18 +868,25 @@ function pushDayToRemovedDaysSection(removedDay, dayNum) {
     await setDoc(userRef, { createdAt: serverTimestamp() }); 
 }(localStorage.getItem('user-email')); 
  
-async function saveMarkerToFirebase(userMail, dayNum, markerObj) {  
+// async function saveMarkerToFirebase(userMail, dayNum, dayDate, markerObj) { 
+async function saveMarkerToFirebase(userMail, dayDate, markerObj) {  
     const userData = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(userData);
     const data = await docSnap.data(); 
     const { days } = data;
 
-    const dayArrIndex = dayNum-1;
+    let dayArrIndex = $daysSelect.selectedIndex;
+    if ($daysSelect.selectedIndex === 0) {
+        dayArrIndex = $daysSelect.options[$daysSelect.options.length - 2].index; 
+    }
+
+    // const dayArrIndex = dayNum-1;
+    // let specificDay = days[dayArrIndex];
     let specificDay = days[dayArrIndex];
 
     if (!specificDay) {
         specificDay = {
-            dayDate: '',
+            dayDate,
             summary: '',
             events: [], 
         };
