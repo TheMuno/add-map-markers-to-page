@@ -572,14 +572,15 @@ document.querySelector('.khonsu-data.map-url .map-url-link input').addEventListe
 });
 
 
-function addOptionToDaysSelect(dayNum, headerText=`Day ${dayNum}`) {
+// function addOptionToDaysSelect(dayNum, headerText=`Day ${dayNum}`) {
+function addOptionToDaysSelect(headerText) {
     const $option = document.createElement('option');
     // $option.setAttribute('value', `day-${dayNum}`);
     $option.setAttribute('value', headerText);
     $option.textContent = headerText; //`Day ${dayNum}`;  
     // $daysSelect.append($option); 
     $daysSelect.insertBefore($option, document.querySelector('.add-day-option'));
-    $daysSelect.value = `day-${dayNum}`; 
+    $daysSelect.value = headerText; 
     return $option; 
 }
 
@@ -685,7 +686,7 @@ $daysSelect.addEventListener('change', e => {
     const dayDate = `${day},${rest}`;
 
     addDayActivitiesListContainer(dayDate); 
-    addOptionToDaysSelect(dayNum, dayDate); 
+    addOptionToDaysSelect(dayDate); 
 
     $select.selectedIndex = dayNum; 
 });
@@ -947,6 +948,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
         console.log('dayIdentifier', dayIdentifier)
 
         addDayActivitiesListContainer(dayDate);
+        addOptionToDaysSelect(dayDate);
 
         dayActivities.forEach(activity => {
             const $currentDay = $allDays.querySelector(dayIdentifier);
@@ -1399,7 +1401,7 @@ async function handleDatePickerChangeEvent(selectedDates) {
 
         const dayNum = i + 1;
         addDayActivitiesListContainer(dayDate);
-        addOptionToDaysSelect(dayNum, dayDate);
+        addOptionToDaysSelect(dayDate);
         console.log(`Day ${dayNum}`)
 
         // await saveMarkerToFirebase(userMail, dayNum);
