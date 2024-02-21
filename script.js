@@ -973,6 +973,9 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
             }
         });
     });
+
+    $daysSelect.selectedIndex = 0; 
+    if (days.length) resetAddressField(); 
 }
 
 /*
@@ -1366,8 +1369,7 @@ const fp = flatpickr(document.querySelector('input.travel-date'), {
         await handleDatePickerChangeEvent(selectedDates); 
 
         if (!$allDays.innerHTML.trim()) return;
-        $address.removeAttribute('disabled');
-        $address.setAttribute('placeholder', $addressPlaceholder);
+        resetAddressField();
         // currentDay = $allDays.children[ $allDays.children.length - 1 ];
         currentDay = $daysSelect.options[ $daysSelect.options.length - 2 ]; 
     }, 
@@ -1438,3 +1440,7 @@ const fp2 = flatpickr(document.querySelector('[data-pick-date]'), {
     }, 
 });
 
+function resetAddressField() {
+    $address.removeAttribute('disabled');
+    $address.setAttribute('placeholder', $addressPlaceholder);
+}
