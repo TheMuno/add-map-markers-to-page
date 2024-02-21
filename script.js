@@ -607,6 +607,8 @@ function addDayActivitiesListContainer(dayDate, parenDiv='.all-days') {
     
     $dayEvent.classList.remove('hide');  
 
+    $dayEvent.querySelector('.single-event').classList.add('hide');
+
     const $parent = $dayActivities.querySelector(parenDiv);
     $parent.append($dayEvent);
     // $parent.insertBefore($dayEvent, $dayActivities.querySelector(`.day-${dayNum+1}-event`)); 
