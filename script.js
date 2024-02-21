@@ -938,6 +938,9 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
         console.log('dayIdentifier', dayIdentifier)
 
         dayActivities.forEach(activity => {
+
+            addDayActivitiesListContainer(dayDate);
+            
             const $currentDay = $allDays.querySelector(dayIdentifier);
 
             console.log('$currentDay', $currentDay)
