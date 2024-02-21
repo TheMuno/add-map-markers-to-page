@@ -937,12 +937,9 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
         console.log('dayIdentifier', dayIdentifier)
 
+        addDayActivitiesListContainer(dayDate);
+
         dayActivities.forEach(activity => {
-
-            console.log('activity', activity)
-
-            addDayActivitiesListContainer(dayDate);
-
             const $currentDay = $allDays.querySelector(dayIdentifier);
 
             console.log('$currentDay', $currentDay)
@@ -1354,15 +1351,15 @@ const fp = flatpickr(document.querySelector('input.travel-date'), {
     onChange: async (selectedDates, dateStr, instance) => {
         
     },
-    // onValueUpdate: async (selectedDates, dateStr, instance) => {
-    //     await handleDatePickerChangeEvent(selectedDates); 
+    onValueUpdate: async (selectedDates, dateStr, instance) => {
+        await handleDatePickerChangeEvent(selectedDates); 
 
-    //     if (!$allDays.innerHTML.trim()) return;
-    //     $address.removeAttribute('disabled');
-    //     $address.setAttribute('placeholder', $addressPlaceholder);
-    //     // currentDay = $allDays.children[ $allDays.children.length - 1 ];
-    //     currentDay = $daysSelect.options[ $daysSelect.options.length - 2 ]; 
-    // }, 
+        if (!$allDays.innerHTML.trim()) return;
+        $address.removeAttribute('disabled');
+        $address.setAttribute('placeholder', $addressPlaceholder);
+        // currentDay = $allDays.children[ $allDays.children.length - 1 ];
+        currentDay = $daysSelect.options[ $daysSelect.options.length - 2 ]; 
+    }, 
 });
 
 async function handleDatePickerChangeEvent(selectedDates) {
