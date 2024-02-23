@@ -1454,3 +1454,15 @@ function resetAddressField() {
     $address.removeAttribute('disabled');
     $address.setAttribute('placeholder', $addressPlaceholder);
 }
+
+
+
+window.onclick = function(e) {
+    if (e.target == $mapResultsOverlay) {
+        $mapResultsOverlay.classList.add('hide');
+    }
+}
+
+document.querySelector('.map-results-content .close').addEventListener('click', () => {
+    $mapResultsOverlay.classList.add('hide');
+});
