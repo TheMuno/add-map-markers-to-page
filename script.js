@@ -56,7 +56,9 @@ const $map = document.querySelector('#map'),
     // $dayTimeSectionsSelect = document.querySelector('.day-time-sections'),
     // $dayTimesSelect = document.querySelector('.day-times');
     $noUser = document.querySelector('.no-user'),
-    $mapUrl = document.querySelector('.map-url-link input');
+    $mapUrl = document.querySelector('.map-url-link input'),
+    $mapResultsOverlay = document.querySelector('.map-results-overlay'),
+    $mapResultsContent = $mapResultsOverlay.querySelector('.map-results-content');
     
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
     
@@ -210,7 +212,13 @@ const markerPopup = new google.maps.InfoWindow();
                 // const markerObj = {lat, lng, title, dayEventName, timeOfDay}; 
                 markerObj.dayEventName = dayEventName;
                 
-                postDayActivity(addressName, dayIdentifier, marker, eventId, markerObj);
+                // postDayActivity(addressName, dayIdentifier, marker, eventId, markerObj);
+
+                const $mapResult = document.createElement('div');
+                $mapResult.className = 'map-result';
+                $mapResult.textContent = dayEventName;
+                $mapResultsContent.append($mapResult);
+                $mapResultsOverlay.classList.remove('hide');
             }
             else {
                 dayEventName = $address.value; 

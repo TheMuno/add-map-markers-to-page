@@ -168,7 +168,6 @@
         } 
 
         .map-results-overlay {
-            
             position: fixed; /* Stay in place */
             z-index: 1; /* Sit on top */
             /* padding-top: 100px; /* Location of the box */
@@ -182,7 +181,9 @@
 
             display: flex;
             align-items: center;
+        }
 
+        .map-results-overlay.hide {
             display: none; /* Hidden by default */
         }
 
@@ -309,7 +310,7 @@
             </div> 
         </div> 
         <div id="map"></div>
-        <div class="map-results-overlay">
+        <div class="map-results-overlay hide">
             <div class="map-results-content">
                 <span class="close">&times;</span>
                 <div class="map-result"></div>
