@@ -148,6 +148,7 @@ const markerPopup = new google.maps.InfoWindow();
         // For each place, get the icon, name and location.
         const bounds = new google.maps.LatLngBounds();
 
+        $mapResultsContent.querySelector('.map-results').innerHTML = '';
         const numOfPlacesFound = places.length; 
         places.forEach((place) => {
             if (!place.geometry || !place.geometry.location) {
@@ -205,7 +206,7 @@ const markerPopup = new google.maps.InfoWindow();
 
             const eventId = dayDate.toLowerCase().replace(/,\s+|\s+/g,'-');
             let dayEventName = ''; 
-            $mapResultsContent.querySelector('.map-results').innerHTML = '';
+            
             if (numOfPlacesFound > 1) {
                 const addressName = `${place.name} ${place.formatted_address}`; 
                 dayEventName = addressName; 
