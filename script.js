@@ -205,6 +205,7 @@ const markerPopup = new google.maps.InfoWindow();
 
             const eventId = dayDate.toLowerCase().replace(/,\s+|\s+/g,'-');
             let dayEventName = ''; 
+            $mapResultsContent.querySelector('.map-results').innerHTML = '';
             if (numOfPlacesFound > 1) {
                 const addressName = `${place.name} ${place.formatted_address}`; 
                 dayEventName = addressName; 
@@ -216,7 +217,7 @@ const markerPopup = new google.maps.InfoWindow();
 
                 const $mapResult = document.createElement('div');
                 $mapResult.className = 'map-result';
-                $mapResult.textContent = dayEventName;
+                $mapResult.querySelector('.map-results').textContent = dayEventName;
                 $mapResultsContent.append($mapResult);
                 $mapResultsOverlay.classList.remove('hide');
             }
