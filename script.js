@@ -217,8 +217,8 @@ const markerPopup = new google.maps.InfoWindow();
 
                 const $mapResult = document.createElement('div');
                 $mapResult.className = 'map-result';
-                $mapResult.querySelector('.map-results').textContent = dayEventName;
-                $mapResultsContent.append($mapResult);
+                $mapResult.textContent = dayEventName;
+                $mapResultsContent.querySelector('.map-results').append($mapResult);
                 $mapResultsOverlay.classList.remove('hide');
             }
             else {
