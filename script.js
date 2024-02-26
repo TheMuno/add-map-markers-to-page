@@ -302,6 +302,9 @@ $map.addEventListener('click', e => {
 function postDayActivity(dayEvent, day, marker, eventId, markerObj) {
     const $day = $dayActivities.querySelector(day);  
     if ($day) {
+        if (!$day.querySelector('.single-event').classList.contains('hide')) {
+            $day.querySelector('.single-event').classList.add('hide');
+        }
         constructActivity(dayEvent, day, marker, eventId, markerObj); 
     }
     else {
