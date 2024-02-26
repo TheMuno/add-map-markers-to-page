@@ -124,14 +124,6 @@ const markerPopup = new google.maps.InfoWindow();
         center: initialCoords,
     });
 
-    // Request libraries when needed, not in the script tag.
-    // const { Map } = await google.maps.importLibrary("maps");
-    // // Short namespaces can be used.
-    // map = new Map($map, {
-    //     center: initialCoords,
-    //     zoom: mapZoom,
-    // });
-
     // Create the search box and link it to the UI element.
     const searchBox = new google.maps.places.SearchBox($address);
     
@@ -149,105 +141,72 @@ const markerPopup = new google.maps.InfoWindow();
         const bounds = new google.maps.LatLngBounds();
 
         $mapResultsContent.querySelector('.map-results').innerHTML = '';
+
+        const selectedIndex = $daysSelect.selectedIndex;
+        let dayDate = $daysSelect.options[selectedIndex].value; 
+        if (selectedIndex === 0) {
+            dayDate = $daysSelect.options[ $daysSelect.options.length - 2 ]?.value; 
+        }
+        const dayIdentifier = `[day="${dayDate.trim()}"]`;
+
         const numOfPlacesFound = places.length; 
         places.forEach((place) => {
             if (!place.geometry || !place.geometry.location) {
                 alert('Sorry, try again\nNo cordinates found'); 
                 return;
-            }
-
-            // console.log('place', place)  
-
-            const marker = createMarker(place);   
-
-            map.panTo(marker.position); 
-
-            console.log('currentDay on Marker added:', currentDay)
-
-            currentDay.markers = currentDay.markers || [];
-            currentDay.markers.push(marker);
-
-            const dayNum = getCurrentDayNum(); 
-            // const day = `.day-${dayNum}-event:not(.hide)`;  
-
-            const selectedIndex = $daysSelect.selectedIndex;
-            let dayDate = $daysSelect.options[selectedIndex].value; 
-            if (selectedIndex === 0) {
-                dayDate = $daysSelect.options[ $daysSelect.options.length - 2 ]?.value; 
-            }
-            const dayIdentifier = `[day="${dayDate.trim()}"]`;
-            // $dayActivities.querySelector(`${day} .single-event`)?.classList.add('hide');  
-
-            const lat = marker.position.lat();
-            const lng = marker.position.lng();
-            const title = marker.title; 
- 
-            const markerObj = {lat, lng, title}; 
-
-            $address.n = ($address.n || 1) + 1; 
-
-            // let idNum = 2; 
-            // const lastId = $dayActivities.querySelector(`${day} > .single-event:last-child:not(.hide)`)?.id;
-            // if (lastId) {
-            //     let num = Number(lastId.split('-')[0].slice(-1));  
-            //     num += 1;
-            //     idNum = num; 
-            // }
-
-            // const dayTimes = ['Morning', 'Afternoon', 'Evening'];
-            // const clockTimes = ['08:00 AM', '09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', 
-            //                     '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM', 
-            //                     '06:00 PM', '07:00 PM', '08:00 PM', '09:00 PM', '10:00 PM',];
-            // const timeOfDay = dayTimes[rand(0, 2)];
-            // const timeExact = clockTimes[rand(0, 14)];
-
-            markerObj.timeslot = 'Morning';
-            markerObj.starttime = '08:00 AM';
-
-            const eventId = dayDate.toLowerCase().replace(/,\s+|\s+/g,'-');
-            let dayEventName = ''; 
+            }            
             
-            if (numOfPlacesFound > 1) {
-                const addressName = `${place.name} ${place.formatted_address}`; 
-                dayEventName = addressName; 
+            if (numOfPlacesFound === 1) {
+                const marker = createMarker(place);   
 
-                // const markerObj = {lat, lng, title, dayEventName, timeOfDay}; 
-                markerObj.dayEventName = dayEventName;
-                
-                // postDayActivity(addressName, dayIdentifier, marker, eventId, markerObj);
+                map.panTo(marker.position); 
 
-                const $mapResult = document.createElement('div');
-                $mapResult.className = 'map-result';
-                $mapResult.textContent = dayEventName;
-                $mapResultsContent.querySelector('.map-results').append($mapResult);
-                $mapResultsContent.querySelector('.results-header .user-search-result').textContent = $address.value.trim();
-                $mapResultsOverlay.classList.remove('hide');
-            }
-            else {
-                dayEventName = $address.value; 
-                // const markerObj = {lat, lng, title, dayEventName, timeOfDay}; 
+                currentDay.markers = currentDay.markers || [];
+                currentDay.markers.push(marker); 
+
+                const lat = marker.position.lat();
+                const lng = marker.position.lng();
+                const title = marker.title; 
+    
+                const markerObj = {lat, lng, title}; 
+
+                const dayEventName = $address.value; 
+                 
                 markerObj.dayEventName = dayEventName;
-                // markerObj.timeOfDay = timeOfDay;
-                // markerObj.timeExact = timeExact;
+
+                const eventId = dayDate.toLowerCase().replace(/,\s+|\s+/g,'-');
+
                 postDayActivity($address.value, dayIdentifier, marker, eventId, markerObj);
+
+
+                const userMail = localStorage.getItem('user-email');
+                // if (userMail) saveMarkerToFirebase(userMail, dayDate, markerObj); 
+                const dayNum = getCurrentDayNum(); 
+                if (userMail) saveMarkerToFirebase(userMail, dayNum, dayDate, markerObj);  
             }
-
-
-            // markerObj.dayEventName = dayEventName;             
-
-            const userMail = localStorage.getItem('user-email');
-            // if (userMail) saveMarkerToFirebase(userMail, dayDate, markerObj); 
-            if (userMail) saveMarkerToFirebase(userMail, dayNum, dayDate, markerObj);   
+            else if (numOfPlacesFound > 1) {
+                // const addressName = `${place.name} ${place.formatted_address}`; 
+                // const dayEventName = addressName; 
+                // markerObj.dayEventName = dayEventName;
+                
+                const userSearchResult = $address.value.trim(); 
+                addMapResultsToModalPopup(dayEventName, userSearchResult); 
+            }    
 
         });
 
         $address.value = '';  
     });
-
-    function rand(min, max) { 
-        return Math.floor(Math.random() * (max - min + 1) + min)
-    }
 }();
+
+function addMapResultsToModalPopup(dayEventName, userSearchResult) {
+    const $mapResult = document.createElement('div');
+    $mapResult.className = 'map-result';
+    $mapResult.textContent = dayEventName;
+    $mapResultsContent.querySelector('.map-results').append($mapResult);
+    $mapResultsContent.querySelector('.results-header .user-search-result').textContent = userSearchResult;
+    $mapResultsOverlay.classList.remove('hide');
+}
 
 function createMarker(place) {
     const { name, formatted_address, geometry, latLng, website, current_opening_hours, opening_hours, formatted_phone_number, reviews } = place; 
