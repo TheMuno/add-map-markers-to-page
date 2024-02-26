@@ -220,6 +220,7 @@ const markerPopup = new google.maps.InfoWindow();
                 $mapResult.className = 'map-result';
                 $mapResult.textContent = dayEventName;
                 $mapResultsContent.querySelector('.map-results').append($mapResult);
+                $mapResultsContent.querySelector('.results-header').textContent = $address.value.trim();
                 $mapResultsOverlay.classList.remove('hide');
             }
             else {

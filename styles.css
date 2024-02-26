@@ -711,9 +711,12 @@ body {
 }
 
 .map-results-overlay .map-result.active { 
-    background-color: gray;
+    background-color: #a9a0a0;
     color: white; 
+    font-style: italic;
 }
 
-
+.map-results-overlay .results-header {
+    margin-bottom: 10px;
+}
 
