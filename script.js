@@ -1465,6 +1465,13 @@ window.onclick = function(e) {
     }
 }
 
-document.querySelector('.map-results-content .close').addEventListener('click', () => {
+$mapResultsContent.querySelector('.close').addEventListener('click', () => {
     $mapResultsOverlay.classList.add('hide');
+});
+
+$mapResultsContent.addEventListener('click', e => {
+    if (!e.target.closest('.map-result')) return;
+
+    const $mapResult = e.target.closest('.map-result');
+    $mapResult.classList.toggle('active');
 });
