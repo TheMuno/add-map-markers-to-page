@@ -186,7 +186,7 @@ const markerPopup = new google.maps.InfoWindow();
             else if (numOfPlacesFound > 1) {
                 const addressName = `${place.name} ${place.formatted_address}`; 
                 const dayEventName = addressName; 
-                markerObj.dayEventName = dayEventName;
+                // markerObj.dayEventName = dayEventName;
                 
                 const userSearchResult = $address.value.trim(); 
                 addMapResultsToModalPopup(dayEventName, userSearchResult); 
