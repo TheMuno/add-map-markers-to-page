@@ -1422,13 +1422,18 @@ function resetAddressField() {
 
 
 
-window.onclick = function(e) {
+window.onclick = e => {
     if (e.target == $mapResultsOverlay) {
-        $mapResultsOverlay.classList.add('hide');
+        // $mapResultsOverlay.classList.add('hide');
+        handleMapOverlayClose(); 
     }
 }
 
 $mapResultsContent.querySelector('.close').addEventListener('click', async () => {
+    handleMapOverlayClose(); 
+});
+
+function handleMapOverlayClose() {
     $mapResultsOverlay.classList.add('hide');
 
     const selectedMapResults = $mapResultsContent.querySelectorAll('.map-results .map-result.active'); 
@@ -1443,26 +1448,26 @@ $mapResultsContent.querySelector('.close').addEventListener('click', async () =>
 
         createNSaveMarkerToDB(mapPlaceObject, dayEventName, dayIdentifier, dayDate);
     }
-});
+}
 
-$mapResultsContent.addEventListener('dblclick', async e => {
-    if (!e.target.closest('.map-result')) return;
+// $mapResultsContent.addEventListener('dblclick', async e => {
+//     if (!e.target.closest('.map-result')) return;
 
-    $mapResultsOverlay.classList.add('hide');
+//     $mapResultsOverlay.classList.add('hide');
 
-    const selectedMapResults = $mapResultsContent.querySelectorAll('.map-results .map-result.active'); 
-    for await (const mapResult of selectedMapResults) {
-        const { mapPlaceObject, dayEventName, dayIdentifier, dayDate } = mapResult;
+//     const selectedMapResults = $mapResultsContent.querySelectorAll('.map-results .map-result.active'); 
+//     for await (const mapResult of selectedMapResults) {
+//         const { mapPlaceObject, dayEventName, dayIdentifier, dayDate } = mapResult;
 
-        console.log('mapResult', mapResult)
-        console.log('mapPlaceObject', mapPlaceObject)
-        console.log('dayEventName', dayEventName)
-        console.log('dayIdentifier', dayIdentifier)
-        console.log('dayDate', dayDate)
+//         console.log('mapResult', mapResult)
+//         console.log('mapPlaceObject', mapPlaceObject)
+//         console.log('dayEventName', dayEventName)
+//         console.log('dayIdentifier', dayIdentifier)
+//         console.log('dayDate', dayDate)
 
-        createNSaveMarkerToDB(mapPlaceObject, dayEventName, dayIdentifier, dayDate);
-    }
-});
+//         createNSaveMarkerToDB(mapPlaceObject, dayEventName, dayIdentifier, dayDate);
+//     }
+// });
 
 $mapResultsContent.addEventListener('click', e => {
     if (!e.target.closest('.map-result')) return;
