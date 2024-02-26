@@ -1441,7 +1441,7 @@ $mapResultsContent.querySelector('.close').addEventListener('click', async () =>
         console.log('dayIdentifier', dayIdentifier)
         console.log('dayDate', dayDate)
 
-        createNSaveMarkerToDB(mapPlaceObject, $address, dayEventName, dayIdentifier, dayDate);
+        createNSaveMarkerToDB(mapPlaceObject, dayEventName, dayIdentifier, dayDate);
     }
 });
 
@@ -1452,7 +1452,7 @@ $mapResultsContent.addEventListener('click', e => {
     $mapResult.classList.toggle('active');
 });
 
-async function createNSaveMarkerToDB(place, $address, dayEventName, dayIdentifier, dayDate) {
+async function createNSaveMarkerToDB(place, dayEventName, dayIdentifier, dayDate) {
     const marker = createMarker(place);   
 
     map.panTo(marker.position); 
@@ -1471,7 +1471,7 @@ async function createNSaveMarkerToDB(place, $address, dayEventName, dayIdentifie
 
     const eventId = dayDate.toLowerCase().replace(/,\s+|\s+/g,'-');
 
-    postDayActivity($address.value, dayIdentifier, marker, eventId, markerObj);
+    postDayActivity(dayEventName, dayIdentifier, marker, eventId, markerObj);
 
 
     const userMail = localStorage.getItem('user-email');
