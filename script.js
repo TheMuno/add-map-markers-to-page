@@ -1445,6 +1445,25 @@ $mapResultsContent.querySelector('.close').addEventListener('click', async () =>
     }
 });
 
+$mapResultsContent.addEventListener('dblclick', async () => {
+    if (!e.target.closest('.map-result')) return;
+
+    $mapResultsOverlay.classList.add('hide');
+
+    const selectedMapResults = $mapResultsContent.querySelectorAll('.map-results .map-result.active'); 
+    for await (const mapResult of selectedMapResults) {
+        const { mapPlaceObject, dayEventName, dayIdentifier, dayDate } = mapResult;
+
+        console.log('mapResult', mapResult)
+        console.log('mapPlaceObject', mapPlaceObject)
+        console.log('dayEventName', dayEventName)
+        console.log('dayIdentifier', dayIdentifier)
+        console.log('dayDate', dayDate)
+
+        createNSaveMarkerToDB(mapPlaceObject, dayEventName, dayIdentifier, dayDate);
+    }
+});
+
 $mapResultsContent.addEventListener('click', e => {
     if (!e.target.closest('.map-result')) return;
 
