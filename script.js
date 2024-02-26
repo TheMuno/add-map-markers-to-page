@@ -1432,6 +1432,12 @@ $mapResultsContent.querySelector('.close').addEventListener('click', async () =>
     const selectedMapResults = $mapResultsContent.querySelectorAll('.map-results .map-result.active'); 
     for await (const mapResult of selectedMapResults) {
         const { place:mapPlaceObject, dayEventName, dayIdentifier } = mapResult;
+
+        console.log('mapResult', mapResult)
+        console.log('mapPlaceObject', mapPlaceObject)
+        console.log('dayEventName', dayEventName)
+        console.log('dayIdentifier', dayIdentifier)
+
         createNSaveMarkerToDB(mapPlaceObject, $address, dayEventName, dayIdentifier);
     }
 });
