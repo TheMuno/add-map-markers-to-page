@@ -154,7 +154,9 @@ const markerPopup = new google.maps.InfoWindow();
             if (!place.geometry || !place.geometry.location) {
                 alert('Sorry, try again\nNo cordinates found'); 
                 return;
-            }            
+            }         
+            
+            const dayEventName = $address.value; 
             
             if (numOfPlacesFound === 1) {
                 const marker = createMarker(place);   
@@ -168,10 +170,7 @@ const markerPopup = new google.maps.InfoWindow();
                 const lng = marker.position.lng();
                 const title = marker.title; 
     
-                const markerObj = {lat, lng, title}; 
-
-                const dayEventName = $address.value; 
-                 
+                const markerObj = {lat, lng, title};                  
                 markerObj.dayEventName = dayEventName;
 
                 const eventId = dayDate.toLowerCase().replace(/,\s+|\s+/g,'-');
