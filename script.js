@@ -1457,7 +1457,7 @@ async function createNSaveMarkerToDB(place, $address, dayEventName, dayIdentifie
 
     const markerObj = {lat, lng, title}; 
 
-    const dayEventName = $address.value; 
+    // const dayEventName = $address.value; 
     markerObj.dayEventName = dayEventName;
 
     const eventId = dayDate.toLowerCase().replace(/,\s+|\s+/g,'-');
