@@ -1476,9 +1476,9 @@ $mapResultsContent.addEventListener('click', e => {
     $mapResult.classList.toggle('active');
 });
 
-$mapResultsContent.addEventListener('keyup', e => {
+$mapResultsContent.addEventListener('keypress', e => {
     if (!e.target.closest('.map-result')) return;
-    if (!e.keyName === 'Enter') return; 
+    if (!e.key === 'Enter') return; 
 
     handleMapOverlayClose();
 });
