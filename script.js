@@ -189,7 +189,7 @@ const markerPopup = new google.maps.InfoWindow();
                 // markerObj.dayEventName = dayEventName;
                 
                 const userSearchTerm = $address.value.trim(); 
-                addMapResultsToModalPopup(dayEventName, userSearchTerm, place, dayIdentifier); 
+                addMapResultsToModalPopup(dayEventName, userSearchTerm, place, dayIdentifier, dayDate); 
             }    
 
         });
@@ -198,7 +198,7 @@ const markerPopup = new google.maps.InfoWindow();
     });
 }();
 
-function addMapResultsToModalPopup(dayEventName, userSearchTerm, mapPlaceObject, dayIdentifier) {
+function addMapResultsToModalPopup(dayEventName, userSearchTerm, mapPlaceObject, dayIdentifier, dayDate) {
     const $mapResult = document.createElement('div');
     $mapResult.className = 'map-result';
     $mapResult.textContent = dayEventName;
@@ -207,6 +207,7 @@ function addMapResultsToModalPopup(dayEventName, userSearchTerm, mapPlaceObject,
     $mapResult.mapPlaceObject = mapPlaceObject;
     $mapResult.dayEventName = dayEventName;
     $mapResult.dayIdentifier = dayIdentifier;
+    $mapResult.dayDate = dayDate;
     $mapResultsOverlay.classList.remove('hide');
 }
 
@@ -1432,14 +1433,15 @@ $mapResultsContent.querySelector('.close').addEventListener('click', async () =>
 
     const selectedMapResults = $mapResultsContent.querySelectorAll('.map-results .map-result.active'); 
     for await (const mapResult of selectedMapResults) {
-        const { mapPlaceObject, dayEventName, dayIdentifier } = mapResult;
+        const { mapPlaceObject, dayEventName, dayIdentifier, dayDate } = mapResult;
 
         console.log('mapResult', mapResult)
         console.log('mapPlaceObject', mapPlaceObject)
         console.log('dayEventName', dayEventName)
         console.log('dayIdentifier', dayIdentifier)
+        console.log('dayDate', dayDate)
 
-        createNSaveMarkerToDB(mapPlaceObject, $address, dayEventName, dayIdentifier);
+        createNSaveMarkerToDB(mapPlaceObject, $address, dayEventName, dayIdentifier, dayDate);
     }
 });
 
@@ -1450,7 +1452,7 @@ $mapResultsContent.addEventListener('click', e => {
     $mapResult.classList.toggle('active');
 });
 
-async function createNSaveMarkerToDB(place, $address, dayEventName, dayIdentifier) {
+async function createNSaveMarkerToDB(place, $address, dayEventName, dayIdentifier, dayDate) {
     const marker = createMarker(place);   
 
     map.panTo(marker.position); 
