@@ -154,9 +154,7 @@ const markerPopup = new google.maps.InfoWindow();
             if (!place.geometry || !place.geometry.location) {
                 alert('Sorry, try again\nNo cordinates found'); 
                 return;
-            }         
-            
-            const dayEventName = $address.value; 
+            }            
             
             if (numOfPlacesFound === 1) {
                 const marker = createMarker(place);   
@@ -170,7 +168,9 @@ const markerPopup = new google.maps.InfoWindow();
                 const lng = marker.position.lng();
                 const title = marker.title; 
     
-                const markerObj = {lat, lng, title};                  
+                const markerObj = {lat, lng, title}; 
+
+                const dayEventName = $address.value; 
                 markerObj.dayEventName = dayEventName;
 
                 const eventId = dayDate.toLowerCase().replace(/,\s+|\s+/g,'-');
@@ -184,9 +184,9 @@ const markerPopup = new google.maps.InfoWindow();
                 if (userMail) saveMarkerToFirebase(userMail, dayNum, dayDate, markerObj);  
             }
             else if (numOfPlacesFound > 1) {
-                // const addressName = `${place.name} ${place.formatted_address}`; 
-                // const dayEventName = addressName; 
-                // markerObj.dayEventName = dayEventName;
+                const addressName = `${place.name} ${place.formatted_address}`; 
+                const dayEventName = addressName; 
+                markerObj.dayEventName = dayEventName;
                 
                 const userSearchResult = $address.value.trim(); 
                 addMapResultsToModalPopup(dayEventName, userSearchResult); 
