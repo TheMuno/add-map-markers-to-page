@@ -1430,10 +1430,10 @@ window.onclick = e => {
 }
 
 $mapResultsContent.querySelector('.close').addEventListener('click', async () => {
-    handleMapOverlayClose(); 
+    await handleMapOverlayClose(); 
 });
 
-function handleMapOverlayClose() {
+async function handleMapOverlayClose() {
     $mapResultsOverlay.classList.add('hide');
 
     const selectedMapResults = $mapResultsContent.querySelectorAll('.map-results .map-result.active'); 
