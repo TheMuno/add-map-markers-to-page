@@ -205,6 +205,7 @@ function addMapResultsToModalPopup(dayEventName, userSearchTerm, mapPlaceObject,
     $mapResultsContent.querySelector('.map-results').append($mapResult);
     $mapResultsContent.querySelector('.results-header .user-search-result').textContent = userSearchTerm;
     $mapResult.mapPlaceObject = mapPlaceObject;
+    $mapResult.dayEventName = dayEventName;
     $mapResult.dayIdentifier = dayIdentifier;
     $mapResultsOverlay.classList.remove('hide');
 }
@@ -1431,7 +1432,7 @@ $mapResultsContent.querySelector('.close').addEventListener('click', async () =>
 
     const selectedMapResults = $mapResultsContent.querySelectorAll('.map-results .map-result.active'); 
     for await (const mapResult of selectedMapResults) {
-        const { place:mapPlaceObject, dayEventName, dayIdentifier } = mapResult;
+        const { mapPlaceObject, dayEventName, dayIdentifier } = mapResult;
 
         console.log('mapResult', mapResult)
         console.log('mapPlaceObject', mapPlaceObject)
