@@ -1440,11 +1440,11 @@ async function handleMapOverlayClose() {
     for await (const mapResult of selectedMapResults) {
         const { mapPlaceObject, dayEventName, dayIdentifier, dayDate } = mapResult;
 
-        console.log('mapResult', mapResult)
-        console.log('mapPlaceObject', mapPlaceObject)
-        console.log('dayEventName', dayEventName)
-        console.log('dayIdentifier', dayIdentifier)
-        console.log('dayDate', dayDate)
+        // console.log('mapResult', mapResult)
+        // console.log('mapPlaceObject', mapPlaceObject)
+        // console.log('dayEventName', dayEventName)
+        // console.log('dayIdentifier', dayIdentifier)
+        // console.log('dayDate', dayDate)
 
         createNSaveMarkerToDB(mapPlaceObject, dayEventName, dayIdentifier, dayDate);
     }
@@ -1474,6 +1474,13 @@ $mapResultsContent.addEventListener('click', e => {
 
     const $mapResult = e.target.closest('.map-result');
     $mapResult.classList.toggle('active');
+});
+
+$mapResultsContent.addEventListener('keyup', e => {
+    if (!e.target.closest('.map-result')) return;
+    if (!e.keyName === 'Enter') return; 
+
+    handleMapOverlayClose();
 });
 
 async function createNSaveMarkerToDB(place, dayEventName, dayIdentifier, dayDate) {
