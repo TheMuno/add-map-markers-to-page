@@ -200,9 +200,13 @@
 
         .map-results-overlay .close {
             color: #aaaaaa;
-            float: right;
+            /* float: right; */
             font-size: 28px;
             font-weight: bold;
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 10px; 
         }
 
         .map-results-overlay .close:hover,
@@ -212,11 +216,22 @@
             cursor: pointer;
         }
 
-        .map-result { 
+        .map-results-overlay .map-results { 
+            margin-top: 25px;
+        }
+
+        .map-results-overlay .map-result { 
             /* background-color: rgba(0,0,0,0.1); */
             padding: 10px;
          }
-        .map-result:nth-child(odd) { background-color: rgba(0,0,0,0.1); }
+
+        .map-results-overlay .map-result:nth-child(odd) { 
+            background-color: rgba(0,0,0,0.1); 
+        }
+
+        .map-results-overlay .map-result:hover { 
+            background-color: gray;
+        }
     </style>   
 </head>
 <body> 
@@ -317,9 +332,9 @@
             </div> 
         </div> 
         <div id="map"></div>
-        <div class="map-results-overlay hide">
+        <div class="map-results-overlay hide">      
             <div class="map-results-content">
-                <span class="close">&times;</span>
+                <span class="close">&times;</span>     
                 <div class="map-results"></div>
             </div>
         </div>
