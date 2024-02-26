@@ -1445,7 +1445,7 @@ $mapResultsContent.querySelector('.close').addEventListener('click', async () =>
     }
 });
 
-$mapResultsContent.addEventListener('dblclick', async () => {
+$mapResultsContent.addEventListener('dblclick', async e => {
     if (!e.target.closest('.map-result')) return;
 
     $mapResultsOverlay.classList.add('hide');
