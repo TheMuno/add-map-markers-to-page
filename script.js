@@ -913,14 +913,17 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
     const data = await docSnap.data(); 
     const { days } = data;
 
-    console.log('days', days)
+    console.log('days in db:', days)
 
     const $allDays = $dayActivities.querySelector('.all-days'); 
     days.forEach(day => {
+
+        console.log('A day from db:', day)
+
         const { dayDate, events:dayActivities } = day;
         const dayIdentifier = `[day="${dayDate.trim()}"]`;
 
-        console.log('dayIdentifier', dayIdentifier)
+        console.log('dayIdentifier while looping thru days from db:', dayIdentifier)
 
         addDayActivitiesListContainer(dayDate);
         addOptionToDaysSelect(dayDate);
@@ -1476,16 +1479,15 @@ $mapResultsContent.addEventListener('click', e => {
     $mapResult.classList.toggle('active');
 });
 
-$mapResultsContent.addEventListener('keypress', e => {
-    console.log('e.key', e.key)
-    if (!e.target.closest('.map-result')) return;
+// $mapResultsContent.addEventListener('keypress', e => {
+//     if (!e.target.closest('.map-result')) return;
 
-    console.log('e.key', e.key)
+//     console.log('e.key', e.key)
 
-    if (!e.key === 'Enter') return; 
+//     if (!e.key === 'Enter') return; 
 
-    handleMapOverlayClose();
-});
+//     handleMapOverlayClose();
+// });
 
 async function createNSaveMarkerToDB(place, dayEventName, dayIdentifier, dayDate) {
     const marker = createMarker(place);   
