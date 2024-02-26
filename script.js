@@ -1478,6 +1478,9 @@ $mapResultsContent.addEventListener('click', e => {
 
 $mapResultsContent.addEventListener('keypress', e => {
     if (!e.target.closest('.map-result')) return;
+
+    console.log('e.key', e.key)
+
     if (!e.key === 'Enter') return; 
 
     handleMapOverlayClose();
