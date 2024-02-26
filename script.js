@@ -188,8 +188,8 @@ const markerPopup = new google.maps.InfoWindow();
                 const dayEventName = addressName; 
                 // markerObj.dayEventName = dayEventName;
                 
-                const userSearchResult = $address.value.trim(); 
-                addMapResultsToModalPopup(dayEventName, userSearchResult); 
+                const userSearchTerm = $address.value.trim(); 
+                addMapResultsToModalPopup(dayEventName, userSearchTerm, place, dayIdentifier); 
             }    
 
         });
@@ -198,12 +198,14 @@ const markerPopup = new google.maps.InfoWindow();
     });
 }();
 
-function addMapResultsToModalPopup(dayEventName, userSearchResult) {
+function addMapResultsToModalPopup(dayEventName, userSearchTerm, mapPlaceObject, dayIdentifier) {
     const $mapResult = document.createElement('div');
     $mapResult.className = 'map-result';
     $mapResult.textContent = dayEventName;
     $mapResultsContent.querySelector('.map-results').append($mapResult);
-    $mapResultsContent.querySelector('.results-header .user-search-result').textContent = userSearchResult;
+    $mapResultsContent.querySelector('.results-header .user-search-result').textContent = userSearchTerm;
+    $mapResult.mapPlaceObject = mapPlaceObject;
+    $mapResult.dayIdentifier = dayIdentifier;
     $mapResultsOverlay.classList.remove('hide');
 }
 
@@ -1424,8 +1426,14 @@ window.onclick = function(e) {
     }
 }
 
-$mapResultsContent.querySelector('.close').addEventListener('click', () => {
+$mapResultsContent.querySelector('.close').addEventListener('click', async () => {
     $mapResultsOverlay.classList.add('hide');
+
+    const selectedMapResults = $mapResultsContent.querySelectorAll('.map-results .map-result.active'); 
+    for await (const mapResult of selectedMapResults) {
+        const { place:mapPlaceObject, dayEventName, dayIdentifier } = mapResult;
+        createNSaveMarkerToDB(mapPlaceObject, $address, dayEventName, dayIdentifier);
+    }
 });
 
 $mapResultsContent.addEventListener('click', e => {
@@ -1434,3 +1442,33 @@ $mapResultsContent.addEventListener('click', e => {
     const $mapResult = e.target.closest('.map-result');
     $mapResult.classList.toggle('active');
 });
+
+async function createNSaveMarkerToDB(place, $address, dayEventName, dayIdentifier) {
+    const marker = createMarker(place);   
+
+    map.panTo(marker.position); 
+
+    // currentDay.markers = currentDay.markers || [];
+    // currentDay.markers.push(marker); 
+
+    const lat = marker.position.lat();
+    const lng = marker.position.lng();
+    const title = marker.title; 
+
+    const markerObj = {lat, lng, title}; 
+
+    const dayEventName = $address.value; 
+    markerObj.dayEventName = dayEventName;
+
+    const eventId = dayDate.toLowerCase().replace(/,\s+|\s+/g,'-');
+
+    postDayActivity($address.value, dayIdentifier, marker, eventId, markerObj);
+
+
+    const userMail = localStorage.getItem('user-email');
+    // if (userMail) saveMarkerToFirebase(userMail, dayDate, markerObj); 
+    const dayNum = getCurrentDayNum(); 
+    if (!userMail) return; 
+    await saveMarkerToFirebase(userMail, dayNum, dayDate, markerObj); 
+}
+
