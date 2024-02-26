@@ -340,7 +340,7 @@ function constructActivity(dayEvent, day, marker, eventId, markerObj) {
     $timeOfDaySpan.timeslot = markerObj.timeslot || '';
     $timeOfDaySpan.starttime = markerObj.starttime || '';
 
-    $timeOfDaySpan.value = markerObj?.timeslot.toLowerCase() || '';
+    $timeOfDaySpan.value = markerObj.timeslot ? markerObj.timeslot.toLowerCase() : '';
 
     $dayActivity.marker = marker; 
     $dayActivity.markerObj = markerObj;
