@@ -1477,6 +1477,7 @@ $mapResultsContent.addEventListener('click', e => {
 });
 
 $mapResultsContent.addEventListener('keypress', e => {
+    console.log('e.key', e.key)
     if (!e.target.closest('.map-result')) return;
 
     console.log('e.key', e.key)
