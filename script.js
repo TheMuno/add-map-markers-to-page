@@ -1624,6 +1624,11 @@ $mapResultsContent.addEventListener('click', e => {
 // true);
 
 window.addEventListener('keydown', e => {
+
+        console.log('e.defaultPrevented', e.defaultPrevented)
+        console.log('e.key', e.key)
+        console.log('$mapResultsOverlay.classList', $mapResultsOverlay.classList)
+
         if (e.defaultPrevented) return; 
         if (e.key !== 'Enter' || !$mapResultsOverlay.classList.contains('hide')) return; 
 
