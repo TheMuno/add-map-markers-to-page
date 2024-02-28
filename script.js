@@ -286,7 +286,7 @@ function createMarker(place) {
       </div>
       <div class="location-row location-operating-hrs">${operatingHrs ? operatingHrs : '<i>missing_operating_hours</i>'}</div>
       <div class="location-row">Phone Number: ${phoneNumber ? `<a href="${phoneNumber}">${phoneNumber}</a>` : '<i>missing_contact</i>'}</div>
-      <div class="location-row">Website: ${address ? `<a href="${address}">Visit Site</a>` : '<i>missing_link</i>'}</div>
+      <div class="location-row">Website: ${address ? `<a target="_blank" href="${address}">Visit Site</a>` : '<i>missing_link</i>'}</div>
       `;   
 
       // <div class="location-row">Phone Number: ${formatted_phone_number ? `<a href="${formatted_phone_number}">${formatted_phone_number}</a>` : '<i>missing_contact</i>'}</div>
@@ -918,7 +918,7 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
     const dayEvents = specificDay.events;
 
     const { dayEventName='', lat=0, lng=0, title='', timeslot='', starttime='', 
-    reviewsContent='', operatingHrs='', formatted_phone_number='', website='' } = markerObj; 
+    reviewsContent='', operatingHrs='', phoneNumber='', address='' } = markerObj; 
     const eventObj = {
         dayEventName,
         lat,
@@ -934,8 +934,8 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
         reservation: '',
         reviews: reviewsContent,
         operatingHours: operatingHrs,
-        phoneNumber: formatted_phone_number,
-        address: website,
+        phoneNumber,
+        address,
     };
 
     dayEvents.push(eventObj);
