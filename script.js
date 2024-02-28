@@ -943,7 +943,12 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
     function setupDays(parentContainerClass, daysArr) {
         const $parentContainer = $dayActivities.querySelector(parentContainerClass); 
-        console.log('$parentContainer 1::::::', $parentContainer)
+
+        console.log('parentContainerClass:::::::', parentContainerClass)
+        console.log('$dayActivities.querySelector', $dayActivities.querySelector(parentContainerClass))
+        console.log('$dayActivities.querySelector', $dayActivities.querySelector('.removed-days .all-days'))
+        console.log('$parentContainer::::::', $parentContainer)
+
         daysArr.forEach(day => {
 
             // console.log('A day from db:', day)
