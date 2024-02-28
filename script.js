@@ -213,7 +213,7 @@ function addMapResultsToModalPopup(dayEventName, userSearchTerm, mapPlaceObject,
 }
 
 function createMarker(place) {
-    const { name, formatted_address, geometry, latLng, website, current_opening_hours, opening_hours, formatted_phone_number, reviews } = place; 
+    const { name, formatted_address, geometry, latLng, address:website, current_opening_hours, opening_hours, phoneNumber:formatted_phone_number, reviews } = place; 
 
     // console.log('the place', place)  
 
@@ -278,9 +278,12 @@ function createMarker(place) {
         : '<i>missing_reviews</i>'}</div> 
       </div>
       <div class="location-row location-operating-hrs">${operatingHrs ? operatingHrs : '<i>missing_operating_hours</i>'}</div>
-      <div class="location-row">Phone Number: ${formatted_phone_number ? `<a href="${formatted_phone_number}">${formatted_phone_number}</a>` : '<i>missing_contact</i>'}</div>
-      <div class="location-row">Website: ${website ? `<a href="${website}">Visit Site</a>` : '<i>missing_link</i>'}</div>
+      <div class="location-row">Phone Number: ${phoneNumber ? `<a href="${phoneNumber}">${phoneNumber}</a>` : '<i>missing_contact</i>'}</div>
+      <div class="location-row">Website: ${address ? `<a href="${address}">Visit Site</a>` : '<i>missing_link</i>'}</div>
       `;   
+
+      // <div class="location-row">Phone Number: ${formatted_phone_number ? `<a href="${formatted_phone_number}">${formatted_phone_number}</a>` : '<i>missing_contact</i>'}</div>
+      // <div class="location-row">Website: ${website ? `<a href="${website}">Visit Site</a>` : '<i>missing_link</i>'}</div>
 
     marker.addListener('click', () => { 
         markerPopup.close();
