@@ -1646,7 +1646,7 @@ window.addEventListener('keydown', e => {
           break;
         case "Enter":
           // Do something for "enter" or "return" key press.
-          console.log('Enter')
+          console.log('The Enter')
           break;
         case " ":
           // Do something for "space" key press.
