@@ -1581,7 +1581,7 @@ async function handleMapOverlayClose() {
 
     const selectedMapResults = $mapResultsContent.querySelectorAll('.map-results .map-result.active'); 
     for await (const mapResult of selectedMapResults) {
-        const { mapPlaceObject, dayEventName, dayIdentifier, dayDate } = mapResult;
+        // const { mapPlaceObject, dayEventName, dayIdentifier, dayDate } = mapResult;
 
         // console.log('mapResult', mapResult)
         // console.log('mapPlaceObject', mapPlaceObject)
@@ -1589,38 +1589,17 @@ async function handleMapOverlayClose() {
         // console.log('dayIdentifier', dayIdentifier)
         // console.log('dayDate', dayDate)
 
-        createNSaveMarkerToDB(mapPlaceObject, dayEventName, dayIdentifier, dayDate);
+        createNSaveMarkerToDB(mapResult);
     }
 }
 
 $mapResultsContent.addEventListener('dblclick', async e => {
-    if (!e.target.closest('.map-result')) return;
+    const mapResult = e.target.closest('.map-result');
+    if (!mapResult) return;
 
     $mapResultsOverlay.classList.add('hide');
-
-    const mapResult = e.target.closest('.map-result');
-    const { mapPlaceObject, dayEventName, dayIdentifier, dayDate } = mapResult;
-
-    console.log('mapResult', mapResult)
-    console.log('mapPlaceObject', mapPlaceObject)
-    console.log('dayEventName', dayEventName)
-    console.log('dayIdentifier', dayIdentifier)
-    console.log('dayDate', dayDate)
-
-    createNSaveMarkerToDB(mapPlaceObject, dayEventName, dayIdentifier, dayDate);
-
-    // const selectedMapResults = $mapResultsContent.querySelectorAll('.map-results .map-result.active'); 
-    // for await (const mapResult of selectedMapResults) {
-    //     const { mapPlaceObject, dayEventName, dayIdentifier, dayDate } = mapResult;
-
-    //     console.log('mapResult', mapResult)
-    //     console.log('mapPlaceObject', mapPlaceObject)
-    //     console.log('dayEventName', dayEventName)
-    //     console.log('dayIdentifier', dayIdentifier)
-    //     console.log('dayDate', dayDate)
-
-    //     createNSaveMarkerToDB(mapPlaceObject, dayEventName, dayIdentifier, dayDate);
-    // }
+    // const { mapPlaceObject, dayEventName, dayIdentifier, dayDate } = mapResult;
+    createNSaveMarkerToDB(mapResult);
 });
 
 $mapResultsContent.addEventListener('click', e => {
@@ -1640,7 +1619,7 @@ $mapResultsContent.addEventListener('click', e => {
 //     handleMapOverlayClose();
 // });
 
-async function createNSaveMarkerToDB(place, dayEventName, dayIdentifier, dayDate) {
+async function createNSaveMarkerToDB({mapPlaceObject:place, dayEventName, dayIdentifier, dayDate}) {
     const { marker } = createMarker(place);   
 
     map.panTo(marker.position); 
