@@ -1610,7 +1610,7 @@ $mapResultsContent.addEventListener('click', e => {
 });
 
 $mapResultsContent.addEventListener('keydown', e => {
-
+    e.preventDefault();
     console.log("e.target.closest('.map-result')", e.target.closest('.map-result'))
 
     if (!e.target.closest('.map-result')) return;
@@ -1620,7 +1620,8 @@ $mapResultsContent.addEventListener('keydown', e => {
     // if (!e.key === 'Enter') return; 
 
     // handleMapOverlayClose();
-});
+},
+true);
 
 window.addEventListener('keydown', e => {
     //   if (e.defaultPrevented) {
