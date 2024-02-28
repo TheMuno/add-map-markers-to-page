@@ -158,7 +158,8 @@ const markerPopup = new google.maps.InfoWindow();
             }            
             
             if (numOfPlacesFound === 1) {
-                const { marker, reviewsContent, operatingHrs, formatted_phone_number, website } = createMarker(place);   
+                // const { marker, reviewsContent, operatingHrs, formatted_phone_number, website } = createMarker(place);  
+                const { marker, reviewsContent, operatingHrs, phoneNumber, address } = createMarker(place);   
 
                 map.panTo(marker.position); 
 
@@ -169,7 +170,7 @@ const markerPopup = new google.maps.InfoWindow();
                 const lng = marker.position.lng();
                 const title = marker.title; 
     
-                const markerObj = { lat, lng, title, reviewsContent, operatingHrs, formatted_phone_number, website }; 
+                const markerObj = { lat, lng, title, reviewsContent, operatingHrs, phoneNumber, address }; 
 
                 const dayEventName = $address.value; 
                 markerObj.dayEventName = dayEventName;
@@ -292,7 +293,8 @@ function createMarker(place) {
         markerPopup.open(marker.getMap(), marker);
     });
 
-    return { marker, reviewsContent, operatingHrs, formatted_phone_number, website }; 
+    // return { marker, reviewsContent, operatingHrs, formatted_phone_number, website }; 
+    return { marker, reviewsContent, operatingHrs, phoneNumber, address }; 
 } 
 
 function isString(x) {
