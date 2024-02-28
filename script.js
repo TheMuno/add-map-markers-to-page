@@ -1609,15 +1609,18 @@ $mapResultsContent.addEventListener('click', e => {
     $mapResult.classList.toggle('active');
 });
 
-// $mapResultsContent.addEventListener('keypress', e => {
-//     if (!e.target.closest('.map-result')) return;
+$mapResultsContent.addEventListener('keypress', e => {
 
-//     console.log('e.key', e.key)
+    console.log("e.target.closest('.map-result')", e.target.closest('.map-result'))
 
-//     if (!e.key === 'Enter') return; 
+    if (!e.target.closest('.map-result')) return;
 
-//     handleMapOverlayClose();
-// });
+    // console.log('e.key', e.key)
+
+    // if (!e.key === 'Enter') return; 
+
+    // handleMapOverlayClose();
+});
 
 async function createNSaveMarkerToDB({mapPlaceObject:place, dayEventName, dayIdentifier, dayDate}) {
     const { marker } = createMarker(place);   
