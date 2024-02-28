@@ -170,6 +170,7 @@ const markerPopup = new google.maps.InfoWindow();
                 const lng = marker.position.lng();
                 const title = marker.title; 
     
+                // const markerObj = { lat, lng, title, reviewsContent, operatingHrs, formatted_phone_number, website }; 
                 const markerObj = { lat, lng, title, reviewsContent, operatingHrs, phoneNumber, address }; 
 
                 const dayEventName = $address.value; 
@@ -215,6 +216,11 @@ function addMapResultsToModalPopup(dayEventName, userSearchTerm, mapPlaceObject,
 
 function createMarker(place) {
     const { name, formatted_address, geometry, latLng, website:address, current_opening_hours, opening_hours, formatted_phone_number:phoneNumber, reviews } = place; 
+
+    console.log(
+        'address:', address,
+        '\nphoneNumber:', phoneNumber
+    )
 
     // console.log('the place', place)  
 
