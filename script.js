@@ -969,12 +969,39 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
                 if (!$currentDay) return;
 
-                const { dayEventName, lat, lng, title, timeslot, starttime, endtime } = activity;
+                const { dayEventName, lat, lng, title, timeslot, starttime, endtime, 
+                    reviews, operatingHours, phoneNumber, address } = activity;
                 if (lat && lng) {
                     const locationInfo = {
                         name: title,
-                        latLng: {lat, lng}
+                        latLng: {lat, lng},
+                        reviews,
+                        operatingHours,
+                        phoneNumber,
+                        address,
                     };
+
+                    // const { dayEventName='', lat=0, lng=0, title='', timeslot='', starttime='', 
+                    // reviewsContent='', operatingHrs='', formatted_phone_number='', website='' } = markerObj; 
+                    // const eventObj = {
+                    //     dayEventName,
+                    //     lat,
+                    //     lng,
+                    //     title,
+                    //     description: '',
+                    //     imageURL: '',
+                    //     KhonsuRecommends: true,
+                    //     timeslot,
+                    //     starttime,
+                    //     endtime: '',
+                    //     notes: '',
+                    //     reservation: '',
+                    //     reviews: reviewsContent,
+                    //     operatingHours: operatingHrs,
+                    //     phoneNumber: formatted_phone_number,
+                    //     address: website,
+                    // };
+
                     const { marker:createdMarker } = createMarker(locationInfo);   
                     // currentDay.markers.push(createdMarker);  
 
