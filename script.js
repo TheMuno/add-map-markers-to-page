@@ -146,6 +146,7 @@ const markerPopup = new google.maps.InfoWindow();
         let dayDate = $daysSelect.options[selectedIndex].value; 
         if (selectedIndex === 0) { // Show All 
             dayDate = $daysSelect.options[ $daysSelect.options.length - 2 ]?.value; 
+            // dayDate = $daysSelect.options[1]?.value; 
         }
         const dayIdentifier = `[day="${dayDate.trim()}"]`;
 
