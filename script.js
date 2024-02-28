@@ -1630,26 +1630,34 @@ window.addEventListener('keydown', e => {
       switch (e.key) {
         case "ArrowDown":
           // Do something for "down arrow" key press.
+          console.log('arrow-down')
           break;
         case "ArrowUp":
           // Do something for "up arrow" key press.
+          console.log('arrow-up')
           break;
         case "ArrowLeft":
           // Do something for "left arrow" key press.
+          console.log('arrow-left')
           break;
         case "ArrowRight":
           // Do something for "right arrow" key press.
+          console.log('arrow-right')
           break;
         case "Enter":
           // Do something for "enter" or "return" key press.
+          console.log('Enter')
           break;
         case " ":
           // Do something for "space" key press.
+          console.log('Space Key')
           break;
         case "Escape":
           // Do something for "esc" key press.
+          console.log('Esc')
           break;
         default:
+            console.log('Another key', e.key)
           return; // Quit when this doesn't handle the key event.
       }
   
