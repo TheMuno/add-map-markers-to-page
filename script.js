@@ -1594,11 +1594,20 @@ async function handleMapOverlayClose() {
 }
 
 $mapResultsContent.addEventListener('dblclick', async e => {
-    console.log('e.target.closest(".map-result")', e.target.closest('.map-result'))
+    if (!e.target.closest('.map-result')) return;
 
-    // if (!e.target.closest('.map-result')) return;
+    $mapResultsOverlay.classList.add('hide');
 
-    // $mapResultsOverlay.classList.add('hide');
+    const mapResult = e.target.closest('.map-result');
+    const { mapPlaceObject, dayEventName, dayIdentifier, dayDate } = mapResult;
+
+    console.log('mapResult', mapResult)
+    console.log('mapPlaceObject', mapPlaceObject)
+    console.log('dayEventName', dayEventName)
+    console.log('dayIdentifier', dayIdentifier)
+    console.log('dayDate', dayDate)
+
+    // createNSaveMarkerToDB(mapPlaceObject, dayEventName, dayIdentifier, dayDate);
 
     // const selectedMapResults = $mapResultsContent.querySelectorAll('.map-results .map-result.active'); 
     // for await (const mapResult of selectedMapResults) {
