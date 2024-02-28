@@ -1630,7 +1630,7 @@ window.addEventListener('keydown', e => {
         console.log('$mapResultsOverlay.classList', $mapResultsOverlay.classList)
 
         if (e.defaultPrevented) return; 
-        if (e.key !== 'Enter' || !$mapResultsOverlay.classList.contains('hide')) return; 
+        if (e.key !== 'Enter' || $mapResultsOverlay.classList.contains('hide')) return; 
 
         console.log('PART 2 e.defaultPrevented', e.defaultPrevented)
         console.log('PART 2 e.key', e.key)
