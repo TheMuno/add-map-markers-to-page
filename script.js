@@ -1624,19 +1624,11 @@ $mapResultsContent.addEventListener('click', e => {
 // true);
 
 window.addEventListener('keydown', e => {
-
-        console.log('e.defaultPrevented', e.defaultPrevented)
-        console.log('e.key', e.key)
-        console.log('$mapResultsOverlay.classList', $mapResultsOverlay.classList)
-
         if (e.defaultPrevented) return; 
         if (e.key !== 'Enter' || $mapResultsOverlay.classList.contains('hide')) return; 
 
-        console.log('PART 2 e.defaultPrevented', e.defaultPrevented)
-        console.log('PART 2 e.key', e.key)
-        console.log('PART 2 $mapResultsOverlay.classList', $mapResultsOverlay.classList)
-
-        handleMapOverlayClose();
+        const selectedMapResults = $mapResultsContent.querySelectorAll('.map-results .map-result.active');
+        if (selectedMapResults.length) handleMapOverlayClose();
 
         e.preventDefault();
     },
