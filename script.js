@@ -953,7 +953,8 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
             
             if ($allDays.classList.contains('removed-days')) {
-                addDayActivitiesListContainer(dayDate, '.removed-days .all-days');
+                addDayActivitiesListContainer(dayDate, $parentContainer);
+                console.log('$parentContainer', $parentContainer)
             }
             else {
                 addDayActivitiesListContainer(dayDate);
