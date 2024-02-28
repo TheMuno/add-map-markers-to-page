@@ -242,22 +242,32 @@ function createMarker(place) {
 
     let operatingHrs, reviewsContent; 
     if(hrs) {
-        operatingHrs = hrs.map(hr => {
-            return `<div>${hr}</div>`;
-        }).join('');
+        if (isString(hrs)) {
+            operatingHrs = hrs;
+        }
+        else {
+            operatingHrs = hrs.map(hr => {
+                return `<div>${hr}</div>`;
+            }).join('');
+        }
     }
 
     if (reviews) {
-        reviewsContent = reviews.map(review => {
-            const { author_name, author_url, profile_photo_url, rating, relative_time_description, text } = review;
-            return `<div class="review-data">
-              <div class="review-data-row location-review-pic">${profile_photo_url ? `<img src="${profile_photo_url}">` : ''}</div>  
-              <div class="review-data-row location-review-time">${relative_time_description ? relative_time_description : '<i>missing_time_posted</i>'}</div>
-              <div class="review-data-row location-review-title"><a href="${author_url ? author_url : '#'}">${author_name}</a></div>
-              <div class="review-data-row location-review-rating">Rating: ${rating}</div>
-              <div class="review-data-row location-review-text">${text}</div>
-            </div>`;
-        }).join('');  
+        if (isString(reviews)) {
+            reviewsContent = reviews;
+        }
+        else {
+            reviewsContent = reviews.map(review => {
+                const { author_name, author_url, profile_photo_url, rating, relative_time_description, text } = review;
+                return `<div class="review-data">
+                <div class="review-data-row location-review-pic">${profile_photo_url ? `<img src="${profile_photo_url}">` : ''}</div>  
+                <div class="review-data-row location-review-time">${relative_time_description ? relative_time_description : '<i>missing_time_posted</i>'}</div>
+                <div class="review-data-row location-review-title"><a href="${author_url ? author_url : '#'}">${author_name}</a></div>
+                <div class="review-data-row location-review-rating">Rating: ${rating}</div>
+                <div class="review-data-row location-review-text">${text}</div>
+                </div>`;
+            }).join('');  
+        }
     }
 
     const contentString = `
@@ -282,7 +292,9 @@ function createMarker(place) {
     return { marker, reviewsContent, operatingHrs, formatted_phone_number, website }; 
 } 
 
-
+function isString(x) {
+    return Object.prototype.toString.call(x) === '[object String]';
+}
 
 $map.addEventListener('click', e => { 
     if (!e.target.closest('.view-reviews')) return;
