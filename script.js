@@ -1609,7 +1609,7 @@ $mapResultsContent.addEventListener('click', e => {
     $mapResult.classList.toggle('active');
 });
 
-$mapResultsContent.addEventListener('keypress', e => {
+$mapResultsContent.addEventListener('keydown', e => {
 
     console.log("e.target.closest('.map-result')", e.target.closest('.map-result'))
 
