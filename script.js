@@ -931,19 +931,68 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
     } 
 
     const data = await docSnap.data(); 
-    const { days } = data;
+    const { days, deletedDays } = data;
 
-    console.log('days in db:', days)
+    // console.log('days in db:', days)
 
+    setupDays('.all-days', days); 
+    setupDays('.removed-days .all-days', deletedDays); 
+
+    function setupDays($parentContainer, daysArr) {
+        const $allDays = $dayActivities.querySelector($parentContainer); 
+        daysArr.forEach(day => {
+
+            // console.log('A day from db:', day)
+
+            const { dayDate, events:dayActivities } = day;
+            const dayIdentifier = `[day="${dayDate.trim()}"]`;
+
+            // console.log('dayIdentifier while looping thru days from db:', dayIdentifier)
+
+            
+            if ($allDays.classList.contains('removed-days')) {
+                addDayActivitiesListContainer(dayDate, '.removed-days .all-days');
+            }
+            else {
+                addDayActivitiesListContainer(dayDate);
+                addOptionToDaysSelect(dayDate);
+            }
+
+            dayActivities.forEach(activity => {
+                const $currentDay = $allDays.querySelector(dayIdentifier);
+
+                // console.log('$currentDay', $currentDay)
+
+                if (!$currentDay) return;
+
+                const { dayEventName, lat, lng, title, timeslot, starttime, endtime } = activity;
+                if (lat && lng) {
+                    const locationInfo = {
+                        name: title,
+                        latLng: {lat, lng}
+                    };
+                    const createdMarker = createMarker(locationInfo);   
+                    // currentDay.markers.push(createdMarker);  
+
+                    const markerObj = { lat, lng, title, dayEventName, timeslot, starttime, endtime }; 
+
+                    const eventId = dayDate.toLowerCase().replace(/,\s+|\s+/g,'-');
+                    postDayActivity(dayEventName, dayIdentifier, createdMarker, eventId, markerObj); 
+                }
+            });
+        });
+    }
+
+    /*
     const $allDays = $dayActivities.querySelector('.all-days'); 
     days.forEach(day => {
 
-        console.log('A day from db:', day)
+        // console.log('A day from db:', day)
 
         const { dayDate, events:dayActivities } = day;
         const dayIdentifier = `[day="${dayDate.trim()}"]`;
 
-        console.log('dayIdentifier while looping thru days from db:', dayIdentifier)
+        // console.log('dayIdentifier while looping thru days from db:', dayIdentifier)
 
         addDayActivitiesListContainer(dayDate);
         addOptionToDaysSelect(dayDate);
@@ -951,7 +1000,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
         dayActivities.forEach(activity => {
             const $currentDay = $allDays.querySelector(dayIdentifier);
 
-            console.log('$currentDay', $currentDay)
+            // console.log('$currentDay', $currentDay)
 
             if (!$currentDay) return;
 
@@ -971,6 +1020,16 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
             }
         });
     });
+
+    deletedDays.forEach(day => {
+        const { dayDate, events:dayActivities } = day;
+        const dayIdentifier = `[day="${dayDate.trim()}"]`;
+
+        addDayActivitiesListContainer(dayDate, '.removed-days .all-days');
+
+
+    });
+    */
 
     $daysSelect.selectedIndex = 0; 
     if (days.length) resetAddressField(); 
