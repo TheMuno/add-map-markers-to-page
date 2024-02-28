@@ -1607,7 +1607,7 @@ $mapResultsContent.addEventListener('dblclick', async e => {
     console.log('dayIdentifier', dayIdentifier)
     console.log('dayDate', dayDate)
 
-    // createNSaveMarkerToDB(mapPlaceObject, dayEventName, dayIdentifier, dayDate);
+    createNSaveMarkerToDB(mapPlaceObject, dayEventName, dayIdentifier, dayDate);
 
     // const selectedMapResults = $mapResultsContent.querySelectorAll('.map-results .map-result.active'); 
     // for await (const mapResult of selectedMapResults) {
