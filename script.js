@@ -951,11 +951,11 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
             // console.log('dayIdentifier while looping thru days from db:', dayIdentifier)
 
-            
-            // if ($allDays.classList.contains('removed-days')) {
+            console.log('$allDays.classList', $allDays.classList)
+            if ($allDays.classList.contains('removed-days')) {
                 addDayActivitiesListContainer(dayDate, $parentContainer);
-            //     console.log('$parentContainer', $parentContainer)
-            // }
+                console.log('$parentContainer', $parentContainer)
+            }
             // else {
             //     addDayActivitiesListContainer(dayDate);
             //     addOptionToDaysSelect(dayDate);
