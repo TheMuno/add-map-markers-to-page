@@ -213,7 +213,7 @@ function addMapResultsToModalPopup(dayEventName, userSearchTerm, mapPlaceObject,
 }
 
 function createMarker(place) {
-    const { name, formatted_address, geometry, latLng, address:website, current_opening_hours, opening_hours, phoneNumber:formatted_phone_number, reviews } = place; 
+    const { name, formatted_address, geometry, latLng, website:address, current_opening_hours, opening_hours, formatted_phone_number:phoneNumber, reviews } = place; 
 
     // console.log('the place', place)  
 
