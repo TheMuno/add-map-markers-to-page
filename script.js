@@ -952,14 +952,14 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
             // console.log('dayIdentifier while looping thru days from db:', dayIdentifier)
 
             
-            if ($allDays.classList.contains('removed-days')) {
-                addDayActivitiesListContainer(dayDate, $parentContainer);
-                console.log('$parentContainer', $parentContainer)
-            }
-            else {
-                addDayActivitiesListContainer(dayDate);
-                addOptionToDaysSelect(dayDate);
-            }
+            // if ($allDays.classList.contains('removed-days')) {
+            //     addDayActivitiesListContainer(dayDate, $parentContainer);
+            //     console.log('$parentContainer', $parentContainer)
+            // }
+            // else {
+            //     addDayActivitiesListContainer(dayDate);
+            //     addOptionToDaysSelect(dayDate);
+            // }
 
             dayActivities.forEach(activity => {
                 const $currentDay = $allDays.querySelector(dayIdentifier);
