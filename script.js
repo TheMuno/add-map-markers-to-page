@@ -158,7 +158,7 @@ const markerPopup = new google.maps.InfoWindow();
             }            
             
             if (numOfPlacesFound === 1) {
-                const marker = createMarker(place);   
+                const { marker, reviewsContent, operatingHrs, formatted_phone_number, website } = createMarker(place);   
 
                 map.panTo(marker.position); 
 
@@ -169,7 +169,7 @@ const markerPopup = new google.maps.InfoWindow();
                 const lng = marker.position.lng();
                 const title = marker.title; 
     
-                const markerObj = {lat, lng, title}; 
+                const markerObj = { lat, lng, title, reviewsContent, operatingHrs, formatted_phone_number, website }; 
 
                 const dayEventName = $address.value; 
                 markerObj.dayEventName = dayEventName;
@@ -279,7 +279,7 @@ function createMarker(place) {
         markerPopup.open(marker.getMap(), marker);
     });
 
-    return marker; 
+    return { marker, reviewsContent, operatingHrs, formatted_phone_number, website }; 
 } 
 
 
@@ -833,7 +833,7 @@ function pushDayToRemovedDaysSection(removedDay, dayNum) {
                 name: title,
                 latLng: {lat, lng}
             };
-            const createdMarker = createMarker(locationInfo);   
+            const { marker:createdMarker } = createMarker(locationInfo);   
             // currentDay.markers.push(createdMarker);  
     
             const markerObj = { lat, lng, title, dayEventName, timeslot, starttime, endtime }; 
@@ -894,7 +894,8 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
 
     const dayEvents = specificDay.events;
 
-    const { dayEventName='', lat=0, lng=0, title='', timeslot='', starttime='' } = markerObj; 
+    const { dayEventName='', lat=0, lng=0, title='', timeslot='', starttime='', 
+    reviewsContent='', operatingHrs='', formatted_phone_number='', website='' } = markerObj; 
     const eventObj = {
         dayEventName,
         lat,
@@ -908,6 +909,10 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
         endtime: '',
         notes: '',
         reservation: '',
+        reviews: reviewsContent,
+        operatingHours: operatingHrs,
+        phoneNumber: formatted_phone_number,
+        address: website,
     };
 
     dayEvents.push(eventObj);
@@ -970,7 +975,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                         name: title,
                         latLng: {lat, lng}
                     };
-                    const createdMarker = createMarker(locationInfo);   
+                    const { marker:createdMarker } = createMarker(locationInfo);   
                     // currentDay.markers.push(createdMarker);  
 
                     const markerObj = { lat, lng, title, dayEventName, timeslot, starttime, endtime }; 
@@ -1568,7 +1573,7 @@ $mapResultsContent.addEventListener('click', e => {
 // });
 
 async function createNSaveMarkerToDB(place, dayEventName, dayIdentifier, dayDate) {
-    const marker = createMarker(place);   
+    const { marker } = createMarker(place);   
 
     map.panTo(marker.position); 
 
