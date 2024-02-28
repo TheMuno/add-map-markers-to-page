@@ -854,14 +854,23 @@ async function saveMarkerToFirebase(userMail, dayNum, dayDate, markerObj) {
     const data = await docSnap.data(); 
     const { days } = data;
 
-    // let dayArrIndex = $daysSelect.selectedIndex;
-    // if ($daysSelect.selectedIndex === 0) {
-    //     dayArrIndex = $daysSelect.options[$daysSelect.options.length - 2].index; 
-    // }
+    const specificDay2 = days.filter(day => {
+        return day.dayDate.includes(dayDate)
+    });
 
-    const dayArrIndex = dayNum-1;
-    let specificDay = days[dayArrIndex];
+    console.log('days', days)
+    console.log('specificDay', specificDay2)
+
+    return; 
+
+    let dayArrIndex = $daysSelect.selectedIndex;
+    if ($daysSelect.selectedIndex === 0) {
+        dayArrIndex = $daysSelect.options[$daysSelect.options.length - 2].index; 
+    }
+
+    // const dayArrIndex = dayNum-1;
     // let specificDay = days[dayArrIndex];
+    let specificDay = days[dayArrIndex];
 
     if (!specificDay) {
         specificDay = {
@@ -1520,4 +1529,5 @@ async function createNSaveMarkerToDB(place, dayEventName, dayIdentifier, dayDate
     if (!userMail) return; 
     await saveMarkerToFirebase(userMail, dayNum, dayDate, markerObj); 
 }
+
 
