@@ -216,6 +216,7 @@ function addMapResultsToModalPopup(dayEventName, userSearchTerm, mapPlaceObject,
 
 function createMarker(place) {
     let { name, formatted_address, geometry, latLng, website:address, current_opening_hours, opening_hours, formatted_phone_number:phoneNumber, reviews } = place; 
+    let operatingHrs, reviewsContent; 
     
     if (!phoneNumber) {
         phoneNumber = place.phoneNumber;
@@ -253,7 +254,7 @@ function createMarker(place) {
         position : position,  
     });
 
-    let operatingHrs, reviewsContent; 
+    
     if(hrs) {
         if (isString(hrs)) {
             operatingHrs = hrs;
