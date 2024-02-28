@@ -1662,7 +1662,7 @@ window.addEventListener('keydown', e => {
       }
   
       // Cancel the default action to avoid it being handled twice
-      e.preventDefault();
+    //   e.preventDefault();
     },
     true,
 );
