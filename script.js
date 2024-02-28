@@ -854,8 +854,15 @@ async function saveMarkerToFirebase(userMail, dayNum, dayDate, markerObj) {
     const data = await docSnap.data(); 
     const { days } = data;
 
-    const specificDay = days.filter(day => day.dayDate.includes(dayDate))?.[0];
-    const dayArrIndex = days[specificDay];
+    let specificDay, dayArrIndex;
+    days.forEach((day, i) => {
+        if (day.dayDate.includes(dayDate)) {
+            specificDay = day; 
+            dayArrIndex = i; 
+        }
+    });
+
+    // const dayArrIndex = days[specificDay];
 
     console.log('days', days)
     console.log('specificDay', specificDay)
