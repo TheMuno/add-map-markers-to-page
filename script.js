@@ -1609,61 +1609,27 @@ $mapResultsContent.addEventListener('click', e => {
     $mapResult.classList.toggle('active');
 });
 
-$mapResultsContent.addEventListener('keydown', e => {
-    e.preventDefault();
-    console.log("e.target.closest('.map-result')", e.target.closest('.map-result'))
+// $mapResultsContent.addEventListener('keydown', e => {
+//     e.preventDefault();
+//     console.log("e.target.closest('.map-result')", e.target.closest('.map-result'))
 
-    if (!e.target.closest('.map-result')) return;
+//     if (!e.target.closest('.map-result')) return;
 
-    // console.log('e.key', e.key)
+//     // console.log('e.key', e.key)
 
-    // if (!e.key === 'Enter') return; 
+//     // if (!e.key === 'Enter') return; 
 
-    // handleMapOverlayClose();
-},
-true);
+//     // handleMapOverlayClose();
+// },
+// true);
 
 window.addEventListener('keydown', e => {
-    //   if (e.defaultPrevented) {
-    //     return; // Do nothing if the event was already processed
-    //   }
-  
-      switch (e.key) {
-        case "ArrowDown":
-          // Do something for "down arrow" key press.
-          console.log('arrow-down')
-          break;
-        case "ArrowUp":
-          // Do something for "up arrow" key press.
-          console.log('arrow-up')
-          break;
-        case "ArrowLeft":
-          // Do something for "left arrow" key press.
-          console.log('arrow-left')
-          break;
-        case "ArrowRight":
-          // Do something for "right arrow" key press.
-          console.log('arrow-right')
-          break;
-        case "Enter":
-          // Do something for "enter" or "return" key press.
-          console.log('The Enter')
-          break;
-        case " ":
-          // Do something for "space" key press.
-          console.log('Space Key')
-          break;
-        case "Escape":
-          // Do something for "esc" key press.
-          console.log('Esc')
-          break;
-        default:
-            console.log('Another key', e.key)
-          return; // Quit when this doesn't handle the key event.
-      }
-  
-      // Cancel the default action to avoid it being handled twice
-    //   e.preventDefault();
+        if (e.defaultPrevented) return; 
+        if (e.key !== 'Enter' || !$mapResultsOverlay.classList.contains('hide')) return; 
+
+        handleMapOverlayClose();
+
+        e.preventDefault();
     },
     true,
 );
