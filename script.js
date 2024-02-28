@@ -1623,9 +1623,9 @@ $mapResultsContent.addEventListener('keydown', e => {
 });
 
 window.addEventListener('keydown', e => {
-      if (e.defaultPrevented) {
-        return; // Do nothing if the event was already processed
-      }
+    //   if (e.defaultPrevented) {
+    //     return; // Do nothing if the event was already processed
+    //   }
   
       switch (e.key) {
         case "ArrowDown":
