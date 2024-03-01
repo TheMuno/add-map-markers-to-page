@@ -164,7 +164,7 @@ const markerPopup = new google.maps.InfoWindow();
                 // const { marker, reviewsContent, operatingHrs, formatted_phone_number, website } = createMarker(place);  
                 const { marker, reviewsContent, operatingHrs, phoneNumber, address } = createMarker(place);   
 
-                console.log('createMarker(place)', createMarker(place))
+                // console.log('createMarker(place)', createMarker(place))
 
                 map.panTo(marker.position); 
 
@@ -185,7 +185,7 @@ const markerPopup = new google.maps.InfoWindow();
 
                 postDayActivity($address.value, dayIdentifier, marker, eventId, markerObj);
 
-                console.log('mapPlaceObject', place )
+                // console.log('mapPlaceObject', place )
 
 
                 const userMail = localStorage.getItem('user-email');
@@ -957,7 +957,7 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
         address,
     };
 
-    console.log('eventObj', eventObj)
+    // console.log('eventObj', eventObj)
 
     dayEvents.push(eventObj);
 
@@ -1650,6 +1650,8 @@ async function createNSaveMarkerToDB({mapPlaceObject:place, dayEventName, dayIde
 
     // const markerObj = {lat, lng, title}; 
     const markerObj = { lat, lng, title, reviewsContent, operatingHrs, phoneNumber, address }; 
+
+    console.log('markerObj', markerObj)
 
     // const dayEventName = $address.value; 
     markerObj.dayEventName = dayEventName;
