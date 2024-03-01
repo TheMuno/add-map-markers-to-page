@@ -1476,17 +1476,90 @@ $dayActivities.addEventListener('change', async e => {
 
     const indexOfEditedEl = [...$wrapper.parentElement.querySelectorAll('.single-event')].indexOf($wrapper);
 
-    await updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, indexOfEditedEl); 
+    const $dayEvent = $wrapper.closest('.day-event');
+    const dayDate = $dayEvent.querySelector('.day-head').textContent.trim(); 
+
+    // await updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, indexOfEditedEl); 
+    await updateFirebaseOnDayTextEdit(userMail, dayDate, $dayText, indexOfEditedEl); 
 }); 
 
-async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, indexOfEditedEl) {
+$dayActivities.addEventListener('change', async e => {
+    if (!e.target.closest('.location-more-info')) return;
+
+    const userMail = localStorage.getItem('user-email');
+    if (!userMail) return; 
+
+    const $locationMoreInfo = e.target.closest('.location-more-info');
+    const $dayActivity = $locationMoreInfo.closest('.single-event');
+    const $dayEvent = $locationMoreInfo.closest('.day-event');
+    const dayDate = $dayEvent.querySelector('.day-head').textContent.trim(); 
+
+    const locationMoreInfo = $locationMoreInfo.value; 
+    const indexOfEditedEl = [...$dayActivity.parentElement.querySelectorAll('.single-event')].indexOf($dayActivity);
+    
+    await updateFirebaseOnLocationMoreInfoEdit(userMail, locationMoreInfo, dayDate, $dayActivity, indexOfEditedEl); 
+});
+
+async function updateFirebaseOnLocationMoreInfoEdit(userMail, locationMoreInfo, dayDate, $dayActivity, indexOfEditedEl) {
     const userData = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(userData);
     const data = await docSnap.data(); 
     const { days } = data;
 
-    const dayArrIndex = dayNum-1;
-    let specificDay = days[dayArrIndex];
+    let specificDay, dayArrIndex;
+    days.forEach((day, i) => {
+        if (day.dayDate.includes(dayDate)) {
+            specificDay = day; 
+            dayArrIndex = i; 
+        }
+    });
+
+    const dayEvents = specificDay.events;
+
+    const { lat, lng, title, dayEventName, timeslot, starttime } = $dayActivity.markerObj; 
+
+    const eventObj = {
+        dayEventName,
+        lat,
+        lng,
+        title,
+        description: locationMoreInfo,
+        imageURL: '',
+        KhonsuRecommends: false,
+        timeslot,
+        starttime,
+        endtime: '',
+        notes: '',
+        reservation: '',
+    };
+
+    dayEvents.splice(indexOfEditedEl, 0, eventObj);
+    dayEvents.splice(indexOfEditedEl+1, 1); 
+
+    const dayObj = {}; 
+    dayObj.days = days; 
+    dayObj.modifiedAt = serverTimestamp(); 
+
+    await updateDoc(userData, dayObj);
+}
+
+// async function updateFirebaseOnDayTextEdit(userMail, dayNum, $dayText, indexOfEditedEl) {
+async function updateFirebaseOnDayTextEdit(userMail, dayDate, $dayText, indexOfEditedEl) {
+    const userData = doc(db, 'travelData', `user-${userMail}`);
+    const docSnap = await getDoc(userData);
+    const data = await docSnap.data(); 
+    const { days } = data;
+
+    let specificDay, dayArrIndex;
+    days.forEach((day, i) => {
+        if (day.dayDate.includes(dayDate)) {
+            specificDay = day; 
+            dayArrIndex = i; 
+        }
+    });
+
+    // const dayArrIndex = dayNum-1;
+    // let specificDay = days[dayArrIndex];
 
     const dayEvents = specificDay.events;
     // const specificEvent = dayEvents[indexOfEditedEl];
