@@ -200,7 +200,7 @@ const markerPopup = new google.maps.InfoWindow();
                 const dayEventName = addressName; 
                 // markerObj.dayEventName = dayEventName;
 
-                // console.log('mapPlaceObject', place )
+                console.log('reviews', reviews)
 
                 const reviewsContent = reviews.map(review => {
                     const { author_name, author_url, profile_photo_url, rating, relative_time_description, text } = review;
