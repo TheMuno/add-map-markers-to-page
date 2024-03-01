@@ -764,7 +764,7 @@ function hideAllDayEvents() {
 
 $dayActivities.addEventListener('click', e => {
     if (e.target.closest('.remove-marker')) {
-        alertify.confirm('Remove Marker?\nPlease confim',
+        alertify.confirm('Remove Location?\nPlease confim',
             () => {
                 // alertify.success('Ok');
                 processMarkerRemoval();
