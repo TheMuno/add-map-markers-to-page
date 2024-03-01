@@ -893,6 +893,7 @@ async function removeDay($day) {
 
     if ($daysParentDiv.children.length === 0) {
         $noDays.classList.remove('hide');
+        $noDays.textContent = 'No days added!';
     }
 
     const userMail = localStorage.getItem('user-email');
