@@ -199,7 +199,7 @@ const markerPopup = new google.maps.InfoWindow();
                 const { name, formatted_address, reviews, opening_hours, formatted_phone_number:phoneNumber, website:address } = place; 
                 let reviewsContent, hrs, operatingHrs;
                 if (opening_hours) {
-                    hrs = weekday_text;
+                    hrs = opening_hours.weekday_text;
                 }
 
                 const addressName = `${name} ${formatted_address}`; 
