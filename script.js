@@ -219,7 +219,7 @@ function addMapResultsToModalPopup(dayEventName, userSearchTerm, mapPlaceObject,
     $mapResult.dayDate = dayDate;
     $mapResultsOverlay.classList.remove('hide');
 
-    console.log('mapPlaceObject', mapPlaceObject)
+    console.log('mapPlaceObject::', mapPlaceObject)
 }
 
 function createMarker(place) {
