@@ -1636,7 +1636,8 @@ async function createNSaveMarkerToDB({mapPlaceObject:place, dayEventName, dayIde
     const lng = marker.position.lng();
     const title = marker.title; 
 
-    const markerObj = {lat, lng, title}; 
+    // const markerObj = {lat, lng, title}; 
+    const markerObj = { lat, lng, title, reviewsContent, operatingHrs, phoneNumber, address }; 
 
     // const dayEventName = $address.value; 
     markerObj.dayEventName = dayEventName;
