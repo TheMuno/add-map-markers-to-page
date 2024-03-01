@@ -196,27 +196,36 @@ const markerPopup = new google.maps.InfoWindow();
             else if (numOfPlacesFound > 1) {
                 // const { marker, reviewsContent, operatingHrs, phoneNumber, address } = createMarker(place);  
                 console.log('place', place)
-                const { name, formatted_address, reviews, opening_hours: { weekday_text:hrs }, formatted_phone_number:phoneNumber, website:address } = place; 
+                const { name, formatted_address, reviews, opening_hours, formatted_phone_number:phoneNumber, website:address } = place; 
+                let reviewsContent, hrs, operatingHrs;
+                if (opening_hours) {
+                    hrs = weekday_text;
+                }
+
                 const addressName = `${name} ${formatted_address}`; 
                 const dayEventName = addressName; 
                 // markerObj.dayEventName = dayEventName;
 
                 console.log('reviews', reviews)
 
-                const reviewsContent = reviews.map(review => {
-                    const { author_name, author_url, profile_photo_url, rating, relative_time_description, text } = review;
-                    return `<div class="review-data">
-                    <div class="review-data-row location-review-pic">${profile_photo_url ? `<img src="${profile_photo_url}">` : ''}</div>  
-                    <div class="review-data-row location-review-time">${relative_time_description ? relative_time_description : '<i>missing_time_posted</i>'}</div>
-                    <div class="review-data-row location-review-title"><a href="${author_url ? author_url : '#'}">${author_name}</a></div>
-                    <div class="review-data-row location-review-rating">Rating: ${rating}</div>
-                    <div class="review-data-row location-review-text">${text}</div>
-                    </div>`;
-                }).join(''); 
+                if (reviews) {
+                    reviewsContent = reviews.map(review => {
+                        const { author_name, author_url, profile_photo_url, rating, relative_time_description, text } = review;
+                        return `<div class="review-data">
+                        <div class="review-data-row location-review-pic">${profile_photo_url ? `<img src="${profile_photo_url}">` : ''}</div>  
+                        <div class="review-data-row location-review-time">${relative_time_description ? relative_time_description : '<i>missing_time_posted</i>'}</div>
+                        <div class="review-data-row location-review-title"><a href="${author_url ? author_url : '#'}">${author_name}</a></div>
+                        <div class="review-data-row location-review-rating">Rating: ${rating}</div>
+                        <div class="review-data-row location-review-text">${text}</div>
+                        </div>`;
+                    }).join(''); 
+                }
 
-                const operatingHrs = hrs.map(hr => {
-                    return `<div>${hr}</div>`;
-                }).join('');
+                if (hrs) {
+                    operatingHrs = hrs.map(hr => {
+                        return `<div>${hr}</div>`;
+                    }).join('');
+                }
 
                 const placeLocationDetails = { reviewsContent, operatingHrs, phoneNumber, address };
                 
