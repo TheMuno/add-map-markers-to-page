@@ -764,23 +764,34 @@ function hideAllDayEvents() {
 
 $dayActivities.addEventListener('click', e => {
     if (e.target.closest('.remove-marker')) {
-        const $removeMarker = e.target; 
-        const $singleEvent = $removeMarker.closest('.single-event'); 
-        const $dayEvent = $removeMarker.closest('.day-event');
-        const $allActivities = $dayEvent.querySelector('.all-activities'); 
-        const eventNum = $allActivities.querySelectorAll('.single-event').length; 
-        const indexOfEditedEl = [...$singleEvent.closest('.all-activities').querySelectorAll('.single-event')].indexOf($singleEvent);
-        const dayDate = $dayEvent.querySelector('.day-head').textContent.trim(); 
-        
-        // removeMarker($singleEvent, $removeMarker, indexOfEditedEl); 
-        removeMarker($singleEvent, dayDate, indexOfEditedEl);
-        $singleEvent.remove(); 
-        // if ($allActivities.querySelectorAll('.single-event').length === 0) $dayEvent.querySelector('.single-event.hide').classList.remove('hide');  
+        alertify.confirm('Remove Marker?\nPlease confim',
+            () => {
+                // alertify.success('Ok');
+                processMarkerRemoval();
+            },
+            () => {
+                alertify.error('Marker removal terribly failed!');
+        });
 
-        if (eventNum == 1) {
-            $dayEvent.querySelector('.single-event.hide')?.classList.remove('hide'); 
-            if ( Number( $dayEvent.querySelector('.day-head').textContent.trim().slice(-1) ) !== 1 ) {
-                $dayEvent.classList.add('hide'); 
+        function processMarkerRemoval() {
+            const $removeMarker = e.target; 
+            const $singleEvent = $removeMarker.closest('.single-event'); 
+            const $dayEvent = $removeMarker.closest('.day-event');
+            const $allActivities = $dayEvent.querySelector('.all-activities'); 
+            const eventNum = $allActivities.querySelectorAll('.single-event').length; 
+            const indexOfEditedEl = [...$singleEvent.closest('.all-activities').querySelectorAll('.single-event')].indexOf($singleEvent);
+            const dayDate = $dayEvent.querySelector('.day-head').textContent.trim(); 
+            
+            // removeMarker($singleEvent, $removeMarker, indexOfEditedEl); 
+            removeMarker($singleEvent, dayDate, indexOfEditedEl);
+            $singleEvent.remove(); 
+            // if ($allActivities.querySelectorAll('.single-event').length === 0) $dayEvent.querySelector('.single-event.hide').classList.remove('hide');  
+
+            if (eventNum == 1) {
+                $dayEvent.querySelector('.single-event.hide')?.classList.remove('hide'); 
+                if ( Number( $dayEvent.querySelector('.day-head').textContent.trim().slice(-1) ) !== 1 ) {
+                    $dayEvent.classList.add('hide'); 
+                }
             }
         }
     }
@@ -791,7 +802,7 @@ $dayActivities.addEventListener('click', e => {
                 processDayRemoval();
             },
             () => {
-                // alertify.error('Cancel');
+                alertify.error('Day removal terribly failed!');
         });
 
         function processDayRemoval() {
@@ -805,8 +816,6 @@ $dayActivities.addEventListener('click', e => {
             const $dayEvent = $removeDay.closest('.day-event');
 
             removeDay($dayEvent);
-            
-
         } 
     }
     else if (e.target.closest('.get-directions')) {    
