@@ -192,7 +192,8 @@ const markerPopup = new google.maps.InfoWindow();
                 // if (userMail) saveMarkerToFirebase(userMail, dayNum, dayDate, markerObj);  
             }
             else if (numOfPlacesFound > 1) {
-                const addressName = `${place.name} ${place.formatted_address}`; 
+                const { name, formatted_address } = place; 
+                const addressName = `${name} ${formatted_address}`; 
                 const dayEventName = addressName; 
                 // markerObj.dayEventName = dayEventName;
                 
@@ -217,6 +218,8 @@ function addMapResultsToModalPopup(dayEventName, userSearchTerm, mapPlaceObject,
     $mapResult.dayIdentifier = dayIdentifier;
     $mapResult.dayDate = dayDate;
     $mapResultsOverlay.classList.remove('hide');
+
+    console.log('mapPlaceObject', mapPlaceObject)
 }
 
 function createMarker(place) {
