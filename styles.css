@@ -553,7 +553,8 @@ body {
 }
 
 .single-event .day-text {
-    width: 60%;
+    /* width: 60%; */
+    width: 55%;
 }
 
 .single-event.hide {
