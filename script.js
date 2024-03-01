@@ -1732,3 +1732,15 @@ async function createNSaveMarkerToDB({mapPlaceObject:place, placeLocationDetails
 }
 
 
+$dayActivities.addEventListener('click', e => {
+    if (!e.target.closest('.expand-more-info')) return;
+
+    const $expandBtn = e.target.closest('.expand-more-info');
+    $expandBtn.querySelectorAll('.arrow').forEach(arrow => {
+        arrow.classList.toggle('down');
+    });
+
+    const $locationMoreInfo = $expandBtn.closest('.single-event').querySelector('.location-more-info');
+    $locationMoreInfo.classList.toggle('hide');
+});
+
