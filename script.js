@@ -96,6 +96,7 @@ google.maps.event.addDomListener(window, 'load', () => {
     if (!$allDays.innerHTML.trim()) {
         $address.setAttribute('disabled', true);
         $address.setAttribute('placeholder','No Travel Dates Added');
+        $noDays.textContent = 'No days added!';
     }
 }); 
 
@@ -892,8 +893,8 @@ async function removeDay($day) {
     $day.remove(); 
 
     if ($daysParentDiv.children.length === 0) {
-        $noDays.classList.remove('hide');
         $noDays.textContent = 'No days added!';
+        $noDays.classList.remove('hide');
     }
 
     const userMail = localStorage.getItem('user-email');
