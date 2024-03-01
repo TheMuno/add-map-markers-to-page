@@ -194,15 +194,33 @@ const markerPopup = new google.maps.InfoWindow();
                 // if (userMail) saveMarkerToFirebase(userMail, dayNum, dayDate, markerObj);  
             }
             else if (numOfPlacesFound > 1) {
-                const { name, formatted_address } = place; 
+                // const { marker, reviewsContent, operatingHrs, phoneNumber, address } = createMarker(place);  
+                const { name, formatted_address, reviews, opening_hours: { weekday_text:hrs }, formatted_phone_number:phoneNumber, website:address } = place; 
                 const addressName = `${name} ${formatted_address}`; 
                 const dayEventName = addressName; 
                 // markerObj.dayEventName = dayEventName;
 
                 // console.log('mapPlaceObject', place )
+
+                const reviewsContent = reviews.map(review => {
+                    const { author_name, author_url, profile_photo_url, rating, relative_time_description, text } = review;
+                    return `<div class="review-data">
+                    <div class="review-data-row location-review-pic">${profile_photo_url ? `<img src="${profile_photo_url}">` : ''}</div>  
+                    <div class="review-data-row location-review-time">${relative_time_description ? relative_time_description : '<i>missing_time_posted</i>'}</div>
+                    <div class="review-data-row location-review-title"><a href="${author_url ? author_url : '#'}">${author_name}</a></div>
+                    <div class="review-data-row location-review-rating">Rating: ${rating}</div>
+                    <div class="review-data-row location-review-text">${text}</div>
+                    </div>`;
+                }).join(''); 
+
+                const operatingHrs = hrs.map(hr => {
+                    return `<div>${hr}</div>`;
+                }).join('');
+
+                const placeLocationDetails = { reviewsContent, operatingHrs, phoneNumber, address };
                 
                 const userSearchTerm = $address.value.trim(); 
-                addMapResultsToModalPopup(dayEventName, userSearchTerm, place, dayIdentifier, dayDate); 
+                addMapResultsToModalPopup(dayEventName, userSearchTerm, place, placeLocationDetails, dayIdentifier, dayDate); 
             }    
 
         });
@@ -211,13 +229,14 @@ const markerPopup = new google.maps.InfoWindow();
     });
 }();
 
-function addMapResultsToModalPopup(dayEventName, userSearchTerm, mapPlaceObject, dayIdentifier, dayDate) {
+function addMapResultsToModalPopup(dayEventName, userSearchTerm, mapPlaceObject, placeLocationDetails, dayIdentifier, dayDate) {
     const $mapResult = document.createElement('div');
     $mapResult.className = 'map-result';
     $mapResult.textContent = dayEventName;
     $mapResultsContent.querySelector('.map-results').append($mapResult);
     $mapResultsContent.querySelector('.results-header .user-search-result').textContent = userSearchTerm;
     $mapResult.mapPlaceObject = mapPlaceObject;
+    $mapResult.placeLocationDetails = placeLocationDetails;
     $mapResult.dayEventName = dayEventName;
     $mapResult.dayIdentifier = dayIdentifier;
     $mapResult.dayDate = dayDate;
@@ -1635,9 +1654,10 @@ window.addEventListener('keydown', e => {
     true,
 );
 
-async function createNSaveMarkerToDB({mapPlaceObject:place, dayEventName, dayIdentifier, dayDate}) {
-    // const { marker } = createMarker(place);   
-    const { marker, reviewsContent, operatingHrs, phoneNumber, address } = createMarker(place);  
+async function createNSaveMarkerToDB({mapPlaceObject:place, placeLocationDetails, dayEventName, dayIdentifier, dayDate}) {
+    const { marker } = createMarker(place);   
+    // const { marker, reviewsContent, operatingHrs, phoneNumber, address } = createMarker(place);  
+    const { reviewsContent, operatingHrs, phoneNumber, address } = placeLocationDetails;
 
     console.log('place:::', place)
 
