@@ -195,7 +195,7 @@ const markerPopup = new google.maps.InfoWindow();
             }
             else if (numOfPlacesFound > 1) {
                 // const { marker, reviewsContent, operatingHrs, phoneNumber, address } = createMarker(place);  
-                console.log('place', place)
+                // console.log('place', place)
                 const { name, formatted_address, reviews, opening_hours, formatted_phone_number:phoneNumber, website:address } = place; 
                 let reviewsContent, hrs, operatingHrs;
                 if (opening_hours) {
@@ -206,7 +206,7 @@ const markerPopup = new google.maps.InfoWindow();
                 const dayEventName = addressName; 
                 // markerObj.dayEventName = dayEventName;
 
-                console.log('reviews', reviews)
+                // console.log('reviews', reviews)
 
                 if (reviews) {
                     reviewsContent = reviews.map(review => {
@@ -767,11 +767,15 @@ $dayActivities.addEventListener('click', e => {
         const $removeMarker = e.target; 
         const $singleEvent = $removeMarker.closest('.single-event'); 
         const $dayEvent = $removeMarker.closest('.day-event');
-        const eventNum = $dayEvent.querySelectorAll('.single-event:not(.hide)').length; 
+        const $allActivities = $dayEvent.querySelector('.all-activities'); 
+        const eventNum = $allActivities.querySelectorAll('.single-event').length; 
         const indexOfEditedEl = [...$singleEvent.closest('.all-activities').querySelectorAll('.single-event')].indexOf($singleEvent);
+        const dayDate = $dayEvent.querySelector('.day-head').textContent.trim(); 
         
-        removeMarker($singleEvent, $removeMarker, indexOfEditedEl); 
-        if ($dayEvent.querySelectorAll('.single-event').length > 1) $singleEvent.remove(); 
+        // removeMarker($singleEvent, $removeMarker, indexOfEditedEl); 
+        removeMarker($singleEvent, dayDate, indexOfEditedEl);
+        $singleEvent.remove(); 
+        // if ($allActivities.querySelectorAll('.single-event').length === 0) $dayEvent.querySelector('.single-event.hide').classList.remove('hide');  
 
         if (eventNum == 1) {
             $dayEvent.querySelector('.single-event.hide')?.classList.remove('hide'); 
@@ -819,15 +823,47 @@ $dayActivities.addEventListener('click', e => {
     }
 });  
 
-function removeMarker($singleEvent, $removeMarker, indexOfEditedEl) {
-    $singleEvent.marker?.setMap(null); 
-    const dayNum = $removeMarker.closest('.day-event').querySelector('.day-head').textContent.trim().split(/\s+/).pop(); //.slice(-1); 
-    const currentDayMarkers = $daysSelect.options[dayNum].markers;
-    if (currentDayMarkers) currentDayMarkers.splice(currentDayMarkers.indexOf($singleEvent.marker), 1);   
-
+// function removeMarker($singleEvent, $removeMarker, indexOfEditedEl) {
+function removeMarker($singleEvent, dayDate, indexOfEditedEl) {
     const userMail = localStorage.getItem('user-email');   
-    if (userMail) removeFirebaseSavedMarker(userMail, dayNum, indexOfEditedEl);  
+    if (!userMail) return; 
+    // removeFirebaseSavedMarker(userMail, dayNum, indexOfEditedEl);  
+    removeFirebaseSavedMarker(userMail, dayDate, indexOfEditedEl);  
+
+    $singleEvent.marker?.setMap(null); 
+    // const dayNum = $removeMarker.closest('.day-event').querySelector('.day-head').textContent.trim().split(/\s+/).pop(); //.slice(-1); 
+    // const currentDayMarkers = $daysSelect.options[dayNum].markers;
+    // if (currentDayMarkers) currentDayMarkers.splice(currentDayMarkers.indexOf($singleEvent.marker), 1);   
 }  
+
+// async function removeFirebaseSavedMarker(userMail, dayNum, dayDate, indexOfEditedEl) {
+async function removeFirebaseSavedMarker(userMail, dayDate, indexOfEditedEl) {
+    const userData = doc(db, 'travelData', `user-${userMail}`);
+    const docSnap = await getDoc(userData);
+    const data = await docSnap.data(); 
+    const { days } = data;
+
+
+    let specificDay, dayArrIndex;
+    days.forEach((day, i) => {
+        if (day.dayDate.includes(dayDate)) {
+            specificDay = day; 
+            dayArrIndex = i; 
+        }
+    });
+
+
+
+    // const dayArrIndex = dayNum-1;
+    // let specificDay = days[dayArrIndex];
+    const dayEvents = specificDay.events;
+
+    dayEvents.splice(indexOfEditedEl, 1); 
+    const dayObj = {};
+    dayObj.days = days; 
+
+    await updateDoc(userData, dayObj);  
+} 
 
 async function removeDay($day) {
     const $daysParentDiv = $day.closest('.all-days'); 
@@ -1217,25 +1253,6 @@ function setupKhonsuNotes(kNotes, dayNum) {
         $khonsuNotes.append($notesDiv);
     }
 }
-
-
-
-async function removeFirebaseSavedMarker(userMail, dayNum, indexOfEditedEl) {
-    const userData = doc(db, 'travelData', `user-${userMail}`);
-    const docSnap = await getDoc(userData);
-    const data = await docSnap.data(); 
-    const { days } = data;
-
-    const dayArrIndex = dayNum-1;
-    let specificDay = days[dayArrIndex];
-    const dayEvents = specificDay.events;
-
-    dayEvents.splice(indexOfEditedEl, 1); 
-    const dayObj = {};
-    dayObj.days = days; 
-
-    await updateDoc(userData, dayObj);  
-}  
 
 
 $dayActivities.addEventListener('touchstart', e => {
