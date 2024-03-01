@@ -727,6 +727,7 @@ body {
     padding: 2px;
     border-radius: 5px;
     width: fit-content;
+    display: inline-block;
 }
 
 .margin-right-3px {
