@@ -947,6 +947,8 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
         address,
     };
 
+    console.log('eventObj', eventObj)
+
     dayEvents.push(eventObj);
 
     const dayObj = {}; 
