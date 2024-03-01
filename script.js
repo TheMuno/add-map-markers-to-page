@@ -87,6 +87,9 @@ console.log('currentDay.markers', currentDay.markers)
 $daysSelect.selectedIndex = 0; // startingIndex;  
 
 google.maps.event.addDomListener(window, 'load', () => {
+    $noDays.textContent = 'fetching...';
+    $noDays.classList.remove('hide');
+
     const userMail = localStorage.getItem('user-email');  
     if (userMail) retrieveSavedMarkersFromFirebase(userMail);
 
