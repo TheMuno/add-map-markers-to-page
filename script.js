@@ -410,6 +410,7 @@ function constructActivity(dayEvent, day, marker, eventId, markerObj) {
     $dayActivity.querySelector('.get-directions').classList.remove('hide'); 
     // $dayActivity.querySelector('.day-text').textContent = dayEvent;
     $dayActivity.querySelector('.day-text').value = dayEvent;
+    $dayActivity.querySelector('.location-more-info').value = markerObj.description;
 
     // console.log('markerObj.timeslot', markerObj.timeslot)
 
@@ -1091,7 +1092,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
                 if (!$currentDay) return;
 
-                const { dayEventName, lat, lng, title, timeslot, starttime, endtime, 
+                const { dayEventName, description, lat, lng, title, timeslot, starttime, endtime, 
                     reviews, operatingHours, phoneNumber, address } = activity;
                 if (lat && lng) {
                     const locationInfo = {
@@ -1127,7 +1128,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                     const { marker:createdMarker } = createMarker(locationInfo);   
                     // currentDay.markers.push(createdMarker);  
 
-                    const markerObj = { lat, lng, title, dayEventName, timeslot, starttime, endtime }; 
+                    const markerObj = { lat, lng, title, dayEventName, description, timeslot, starttime, endtime }; 
 
                     const eventId = dayDate.toLowerCase().replace(/,\s+|\s+/g,'-');
                     postDayActivity(dayEventName, dayIdentifier, createdMarker, eventId, markerObj); 
