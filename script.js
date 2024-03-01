@@ -770,7 +770,8 @@ $dayActivities.addEventListener('click', e => {
                 processMarkerRemoval();
             },
             () => {
-                alertify.error('Marker removal terribly failed!');
+                // alertify.error('Marker removal terribly failed!');
+                console.log('Not removed');
         });
 
         function processMarkerRemoval() {
@@ -789,9 +790,9 @@ $dayActivities.addEventListener('click', e => {
 
             if (eventNum == 1) {
                 $dayEvent.querySelector('.single-event.hide')?.classList.remove('hide'); 
-                if ( Number( $dayEvent.querySelector('.day-head').textContent.trim().slice(-1) ) !== 1 ) {
-                    $dayEvent.classList.add('hide'); 
-                }
+                // if ( Number( $dayEvent.querySelector('.day-head').textContent.trim().slice(-1) ) !== 1 ) {
+                //     $dayEvent.classList.add('hide'); 
+                // }
             }
         }
     }
@@ -802,7 +803,8 @@ $dayActivities.addEventListener('click', e => {
                 processDayRemoval();
             },
             () => {
-                alertify.error('Day removal terribly failed!');
+                // alertify.error('Day removal terribly failed!');
+                console.log('Not removed');
         });
 
         function processDayRemoval() {
