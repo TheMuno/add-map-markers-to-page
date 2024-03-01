@@ -195,6 +195,7 @@ const markerPopup = new google.maps.InfoWindow();
             }
             else if (numOfPlacesFound > 1) {
                 // const { marker, reviewsContent, operatingHrs, phoneNumber, address } = createMarker(place);  
+                console.log('place', place)
                 const { name, formatted_address, reviews, opening_hours: { weekday_text:hrs }, formatted_phone_number:phoneNumber, website:address } = place; 
                 const addressName = `${name} ${formatted_address}`; 
                 const dayEventName = addressName; 
