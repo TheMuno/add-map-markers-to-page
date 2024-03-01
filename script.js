@@ -196,6 +196,8 @@ const markerPopup = new google.maps.InfoWindow();
                 const addressName = `${name} ${formatted_address}`; 
                 const dayEventName = addressName; 
                 // markerObj.dayEventName = dayEventName;
+
+                console.log('mapPlaceObject', place )
                 
                 const userSearchTerm = $address.value.trim(); 
                 addMapResultsToModalPopup(dayEventName, userSearchTerm, place, dayIdentifier, dayDate); 
@@ -219,7 +221,7 @@ function addMapResultsToModalPopup(dayEventName, userSearchTerm, mapPlaceObject,
     $mapResult.dayDate = dayDate;
     $mapResultsOverlay.classList.remove('hide');
 
-    console.log('mapPlaceObject::', mapPlaceObject)
+    // console.log('mapPlaceObject::', mapPlaceObject)
 }
 
 function createMarker(place) {
