@@ -1639,6 +1639,8 @@ async function createNSaveMarkerToDB({mapPlaceObject:place, dayEventName, dayIde
     // const { marker } = createMarker(place);   
     const { marker, reviewsContent, operatingHrs, phoneNumber, address } = createMarker(place);  
 
+    console.log('place:::', place)
+
     map.panTo(marker.position); 
 
     // currentDay.markers = currentDay.markers || [];
