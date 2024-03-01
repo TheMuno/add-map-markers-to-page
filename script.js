@@ -185,6 +185,8 @@ const markerPopup = new google.maps.InfoWindow();
 
                 postDayActivity($address.value, dayIdentifier, marker, eventId, markerObj);
 
+                console.log('mapPlaceObject', place )
+
 
                 const userMail = localStorage.getItem('user-email');
                 if (userMail) saveMarkerToFirebase(userMail, dayDate, markerObj); 
@@ -197,7 +199,7 @@ const markerPopup = new google.maps.InfoWindow();
                 const dayEventName = addressName; 
                 // markerObj.dayEventName = dayEventName;
 
-                console.log('mapPlaceObject', place )
+                // console.log('mapPlaceObject', place )
                 
                 const userSearchTerm = $address.value.trim(); 
                 addMapResultsToModalPopup(dayEventName, userSearchTerm, place, dayIdentifier, dayDate); 
