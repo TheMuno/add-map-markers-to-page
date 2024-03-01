@@ -161,6 +161,8 @@ const markerPopup = new google.maps.InfoWindow();
                 // const { marker, reviewsContent, operatingHrs, formatted_phone_number, website } = createMarker(place);  
                 const { marker, reviewsContent, operatingHrs, phoneNumber, address } = createMarker(place);   
 
+                console.log('createMarker(place)', createMarker(place))
+
                 map.panTo(marker.position); 
 
                 currentDay.markers = currentDay.markers || [];
@@ -1609,20 +1611,6 @@ $mapResultsContent.addEventListener('click', e => {
     $mapResult.classList.toggle('active');
 });
 
-// $mapResultsContent.addEventListener('keydown', e => {
-//     e.preventDefault();
-//     console.log("e.target.closest('.map-result')", e.target.closest('.map-result'))
-
-//     if (!e.target.closest('.map-result')) return;
-
-//     // console.log('e.key', e.key)
-
-//     // if (!e.key === 'Enter') return; 
-
-//     // handleMapOverlayClose();
-// },
-// true);
-
 window.addEventListener('keydown', e => {
         if (e.defaultPrevented) return; 
         if (e.key !== 'Enter' || $mapResultsOverlay.classList.contains('hide')) return; 
@@ -1636,7 +1624,8 @@ window.addEventListener('keydown', e => {
 );
 
 async function createNSaveMarkerToDB({mapPlaceObject:place, dayEventName, dayIdentifier, dayDate}) {
-    const { marker } = createMarker(place);   
+    // const { marker } = createMarker(place);   
+    const { marker, reviewsContent, operatingHrs, phoneNumber, address } = createMarker(place);  
 
     map.panTo(marker.position); 
 
