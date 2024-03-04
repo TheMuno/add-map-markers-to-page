@@ -269,11 +269,9 @@ function createMarker(place) {
     console.log('current_opening_hours:::::', current_opening_hours)
     console.log('opening_hours:::::', opening_hours)
 
-    if (!phoneNumber) {
-        phoneNumber = place.phoneNumber;
-        address = place.address;
-        operatingHrs = place.operatingHours;
-    }
+    if (!phoneNumber) phoneNumber = place.phoneNumber;
+    if (!address) address = place.address || place.website;
+    if (!operatingHrs) operatingHrs = place.operatingHours;
 
     // console.log(
     //     'address:', address,
