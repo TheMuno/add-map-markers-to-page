@@ -263,6 +263,11 @@ function createMarker(place) {
     let operatingHrs, reviewsContent, ratingTag; 
 
     console.log('rating:::::', rating)
+    console.log('reviews:::::', reviews)
+    console.log('address:::::', address)
+    console.log('phoneNumber:::::', phoneNumber)
+    console.log('current_opening_hours:::::', current_opening_hours)
+    console.log('opening_hours:::::', opening_hours)
 
     if (!phoneNumber) {
         phoneNumber = place.phoneNumber;
@@ -270,10 +275,10 @@ function createMarker(place) {
         operatingHrs = place.operatingHours;
     }
 
-    console.log(
-        'address:', address,
-        '\nphoneNumber:', phoneNumber
-    )
+    // console.log(
+    //     'address:', address,
+    //     '\nphoneNumber:', phoneNumber
+    // )
 
     // console.log('the place', place)  
 
