@@ -257,8 +257,12 @@ function addMapResultsToModalPopup(dayEventName, userSearchTerm, mapPlaceObject,
 }
 
 function createMarker(place) {
-    let { name, formatted_address, geometry, latLng, website:address, current_opening_hours, opening_hours, formatted_phone_number:phoneNumber, reviews } = place; 
+    let { name, formatted_address, geometry, latLng, website:address, 
+        current_opening_hours, opening_hours, formatted_phone_number:phoneNumber, 
+        reviews, rating } = place; 
     let operatingHrs, reviewsContent, ratingTag; 
+
+    console.log('rating:::::', rating)
 
     if (!phoneNumber) {
         phoneNumber = place.phoneNumber;
