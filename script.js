@@ -330,10 +330,11 @@ function createMarker(place) {
         }
     }
 
-    // if (rating) {
-    //     ratingTag = `<meter class="average-rating" min="0" max="5" value="${rating}" title="${rating} out of 5 stars">${rating} out of 5</meter>`;
-    //     return ratingTag;
-    // } <div class="location-row">Rating: ${rating ? ratingTag : '<i>missing_rating</i>'}</div>
+    if (rating) {
+        ratingTag = `<meter class="average-rating" min="0" max="5" value="${rating}" title="${rating} out of 5 stars">${rating} out of 5</meter>`;
+        return ratingTag;
+        // <div class="location-row">Rating: ${rating ? ratingTag : '<i>missing_rating</i>'}</div>
+    } 
 
     const contentString = `
     <div class="location-popup-content">
