@@ -337,7 +337,7 @@ function createMarker(place) {
     const contentString = `
     <div class="location-popup-content">
     <div class="location-row location-title">${name}</div>
-      <div class="location-row">Rating: ${rating ? ratingTag : '<i>missing_rating</i>'}</div>
+      <div class="location-row">${rating ? `Rating: ${ratingTag} ${rating}` : '<i>missing_rating</i>'}</div>
       <div class="location-row location-reviews">${reviewsContent 
         ? `<div class="view-reviews"><span class="view-reviews-text">View Reviews</span> <i class="arrow right"></i></div><div class="reviews-list hide">${reviewsContent}</div>`
         : '<i>missing_reviews</i>'}</div> 
