@@ -257,8 +257,8 @@ function addMapResultsToModalPopup(dayEventName, userSearchTerm, mapPlaceObject,
 }
 
 function createMarker(place) {
-    let { name, formatted_address, geometry, latLng, website:address, current_opening_hours, opening_hours, formatted_phone_number:phoneNumber, reviews } = place; 
-    let operatingHrs, reviewsContent; 
+    let { name, formatted_address, geometry, latLng, website:address, current_opening_hours, opening_hours, formatted_phone_number:phoneNumber, reviews, rating } = place; 
+    let operatingHrs, reviewsContent, ratingTag; 
 
     if (!phoneNumber) {
         phoneNumber = place.phoneNumber;
@@ -326,9 +326,16 @@ function createMarker(place) {
         }
     }
 
+    if (rating) {
+        rating = rating.trim();
+        ratingTag = `<meter class="average-rating" min="0" max="5" value="${rating}" title="${rating} out of 5 stars">${rating} out of 5</meter>`;
+        return ratingTag;
+    }
+
     const contentString = `
     <div class="location-popup-content">
     <div class="location-row location-title">${name}</div>
+      <div class="location-row">Rating: ${rating ? ratingTag : '<i>missing_rating</i>'}</div>
       <div class="location-row location-reviews">${reviewsContent 
         ? `<div class="view-reviews"><span class="view-reviews-text">View Reviews</span> <i class="arrow right"></i></div><div class="reviews-list hide">${reviewsContent}</div>`
         : '<i>missing_reviews</i>'}</div> 
