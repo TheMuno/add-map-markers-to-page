@@ -327,8 +327,6 @@ function createMarker(place) {
     }
 
     if (rating) {
-        console.log('rating::::', rating)
-        rating = rating.trim();
         ratingTag = `<meter class="average-rating" min="0" max="5" value="${rating}" title="${rating} out of 5 stars">${rating} out of 5</meter>`;
         return ratingTag;
     }
