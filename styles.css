@@ -239,6 +239,10 @@ img.remove-day {
     margin-top: 10px;
 }
 
+.reservations .reserves:first-child {
+    display: none;;
+}
+
 .reservations .reserve.hide,
 .reservations .sample-reservation.hide {
     display: none;
