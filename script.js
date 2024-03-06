@@ -505,25 +505,26 @@ async function updateKhonsuDataEdits(userMail, notes, dayNum) {
     await updateDoc(existingMarkers, dayObj);
 }
 
-const $sampleReservation = $reservations.querySelector('.sample-reservation');
+function setupReservations() {
+    const $sampleReservation = $reservations.querySelector('.sample-reservation');
+    $dayActivities.querySelectorAll('.all-days .day-event').forEach(day => {
+        const $reservationClone = $sampleReservation.cloneNode(true);
+        $reservationClone.classList.remove('hide');
 
-$dayActivities.querySelectorAll('.all-days .day-event').forEach(day => {
-    const $reservationClone = $sampleReservation.cloneNode(true);
-    $reservationClone.classList.remove('hide');
+        $reservationClone.querySelector('.day-text').textContent = `${day.querySelector('.day-head')} Reservations`;
+        
+        day.querySelectorAll('.all-activities .single-event').forEach(dayActivity => {
+            const $reserveClone = $reservationClone.querySelector('.reserves .reserve').cloneNode(true); 
+            const $reserveLabel = $reserveClone.querySelector('label'); 
+            $reserveLabel.textContent = dayActivity.value.split(',')[0]; 
+            $reserveLabel.setAttribute('title', dayActivity.value);
 
-    $reservationClone.querySelector('.day-text').textContent = `${day.querySelector('.day-head')} Reservations`;
-    
-    day.querySelectorAll('.all-activities .single-event').forEach(dayActivity => {
-        const $reserveClone = $reservationClone.querySelector('.reserves .reserve').cloneNode(true); 
-        const $reserveLabel = $reserveClone.querySelector('label'); 
-        $reserveLabel.textContent = dayActivity.value.split(',')[0]; 
-        $reserveLabel.setAttribute('title', dayActivity.value);
+            $reservationClone.append($reserveClone); 
+        });
 
-        $reservationClone.append($reserveClone); 
+        $reservations.querySelector('.all-reservations').append($reservationClone);
     });
-
-    $reservations.querySelector('.all-reservations').append($reservationClone);
-});
+}
 
 $reservations.addEventListener('change', async e => {
     const userMail = localStorage.getItem('user-email'); 
@@ -1099,6 +1100,8 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
     setupDays('.all-days', days);
     setupDays('.removed-days .all-days', deletedDays); 
+
+    setupReservations();
 
     function setupDays(parentContainerClass, daysArr) {
         const $parentContainer = $dayActivities.querySelector(parentContainerClass); 

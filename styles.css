@@ -239,7 +239,8 @@ img.remove-day {
     margin-top: 10px;
 }
 
-.reservations .reserve.hide {
+.reservations .reserve.hide,
+.reservations .sample-reservation.hide {
     display: none;
 }
 
