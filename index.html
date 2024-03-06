@@ -123,16 +123,27 @@
     </div>
     <div class="section">
         <div class="khonsu-data reservations">
-            <label for="day-text">Reservations</label>
-            <div class="reserves">
-                <div class="reserve">
-                    <input type="text" class="reserve-time" data-pick-date="true"><input type="text" class="reserve-info">
-                    <img class="remove-reservation" src="Imgs/x.png" alt=""> 
+            <div class="sample-reservation hide">
+                <label for="day-text center-label">Reservations</label>
+                <div class="reserves">
+                    <div class="reserve">
+                        <div>
+                            <label>Reserve Label</label> 
+                        </div>
+                        <div>
+                            <input type="text" class="reserve-time" data-pick-date="true" placeholder="add reservation time">
+                        </div>
+                        <div>
+                            <input type="text" class="reserve-info" placeholder="add reservation info"> 
+                            <img class="remove-reservation" src="Imgs/x.png" alt=""> 
+                        </div>
+                    </div>
                 </div>
+                <!-- <input type="button" value="Add Reservation" class="add-reservation"> -->
+                <!-- <input type="button" value="Submit" class="save-khonsu-data save-reservations"> -->
             </div>
-            <input type="button" value="Add Reservation" class="add-reservation">
-            <input type="button" value="Submit" class="save-khonsu-data save-reservations">
-        </div>
+            <div class="all-reservations"></div>
+        </div> 
         <div class="khonsu-data map-url">
             <label for="map-url-link">Map Url</label>
             <div class="map-url-link">

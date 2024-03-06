@@ -505,6 +505,25 @@ async function updateKhonsuDataEdits(userMail, notes, dayNum) {
     await updateDoc(existingMarkers, dayObj);
 }
 
+const $sampleReservation = $reservations.querySelector('.sample-reservation');
+
+$dayActivities.querySelectorAll('.all-days .day-event').forEach(day => {
+    const $reservationClone = $sampleReservation.cloneNode(true);
+    $reservationClone.classList.remove('hide');
+
+    $reservationClone.querySelector('.day-text').textContent = `${day.querySelector('.day-head')} Reservations`;
+    
+    day.querySelectorAll('.all-activities .single-event').forEach(dayActivity => {
+        const $reserveClone = $reservationClone.querySelector('.reserves .reserve').cloneNode(true); 
+        const $reserveLabel = $reserveClone.querySelector('label'); 
+        $reserveLabel.textContent = dayActivity.value.split(',')[0]; 
+        $reserveLabel.setAttribute('title', dayActivity.value);
+
+        $reservationClone.append($reserveClone); 
+    });
+
+    $reservations.querySelector('.all-reservations').append($reservationClone);
+});
 
 $reservations.addEventListener('change', async e => {
     const userMail = localStorage.getItem('user-email'); 
@@ -520,23 +539,23 @@ $reservations.addEventListener('change', async e => {
 });
 
 
-$addReservation.addEventListener('click', e => {
-    const $reservations = e.currentTarget.closest('.reservations'); 
-    const $reserve = $reservations.querySelector('.reserves .reserve');
-    const $reserveClone = $reserve.cloneNode(true);
-    $reserveClone.classList.remove('hide');
+// $addReservation.addEventListener('click', e => {
+//     const $reservations = e.currentTarget.closest('.reservations'); 
+//     const $reserve = $reservations.querySelector('.reserves .reserve');
+//     const $reserveClone = $reserve.cloneNode(true);
+//     $reserveClone.classList.remove('hide');
 
-    $reserveClone.querySelector('.reserve-time').value = '';
-    $reserveClone.querySelector('.reserve-info').value = '';
+//     $reserveClone.querySelector('.reserve-time').value = '';
+//     $reserveClone.querySelector('.reserve-info').value = '';
 
-    flatpickr($reserveClone.querySelector('.reserve-time'), {
-        enableTime: true,
-        dateFormat: "Y-m-d H:i",
-    });
+//     flatpickr($reserveClone.querySelector('.reserve-time'), {
+//         enableTime: true,
+//         dateFormat: "Y-m-d H:i",
+//     });
     
-    $reservations.querySelector('.reserves').append($reserveClone);
-    // $reservations.insertBefore($reserveClone, $reservations.querySelector('.add-reservation')); 
-});
+//     $reservations.querySelector('.reserves').append($reserveClone);
+//     // $reservations.insertBefore($reserveClone, $reservations.querySelector('.add-reservation')); 
+// });
 
 $reservations.addEventListener('click', e => {
     const userMail = localStorage.getItem('user-email'); 
