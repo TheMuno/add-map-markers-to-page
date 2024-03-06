@@ -239,7 +239,7 @@ img.remove-day {
     margin-top: 10px;
 }
 
-.reservations .reserves:first-child {
+.reservations .reserve:first-child {
     display: none;;
 }
 
