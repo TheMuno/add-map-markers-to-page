@@ -262,12 +262,12 @@ function createMarker(place) {
         reviews, rating } = place; 
     let operatingHrs, reviewsContent, ratingTag; 
 
-    console.log('rating:::::', rating)
-    console.log('reviews:::::', reviews)
-    console.log('address:::::', address)
-    console.log('phoneNumber:::::', phoneNumber)
-    console.log('current_opening_hours:::::', current_opening_hours)
-    console.log('opening_hours:::::', opening_hours)
+    // console.log('rating:::::', rating)
+    // console.log('reviews:::::', reviews)
+    // console.log('address:::::', address)
+    // console.log('phoneNumber:::::', phoneNumber)
+    // console.log('current_opening_hours:::::', current_opening_hours)
+    // console.log('opening_hours:::::', opening_hours)
 
     if (!phoneNumber) phoneNumber = place.phoneNumber;
     if (!address) address = place.address || place.website;
