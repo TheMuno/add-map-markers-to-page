@@ -516,8 +516,9 @@ function setupReservations() {
         day.querySelectorAll('.all-activities .single-event').forEach(dayActivity => {
             const $reserveClone = $reservationClone.querySelector('.reserves .reserve').cloneNode(true); 
             const $reserveLabel = $reserveClone.querySelector('label'); 
-            $reserveLabel.textContent = dayActivity.value.split(',')[0]; 
-            $reserveLabel.setAttribute('title', dayActivity.value);
+            const dayActivityName = dayActivity.querySelector('.day-text');
+            $reserveLabel.textContent = dayActivityName.value.split(',')[0]; 
+            $reserveLabel.setAttribute('title', dayActivityName.value);
 
             $reservationClone.append($reserveClone); 
         });
