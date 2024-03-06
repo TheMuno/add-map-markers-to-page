@@ -235,6 +235,10 @@ img.remove-day {
     /* width:500px; */
 }
 
+.reservations .reservation {
+    margin-top: 50px;
+}
+
 .reservations .reserve {
     margin-top: 10px;
 }

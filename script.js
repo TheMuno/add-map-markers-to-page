@@ -510,6 +510,7 @@ function setupReservations() {
     $dayActivities.querySelectorAll('.all-days .day-event').forEach(day => {
         const $reservationClone = $sampleReservation.cloneNode(true);
         $reservationClone.classList.remove('hide');
+        $reservationClone.classList.remove('sample-reservation');
 
         $reservationClone.querySelector('.day-text').textContent = `${day.querySelector('.day-head').textContent} Reservations`;
         
