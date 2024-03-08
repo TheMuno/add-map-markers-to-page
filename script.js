@@ -1851,12 +1851,15 @@ $dayActivities.addEventListener('click', e => {
 
 $toggleHive.addEventListener('click', e => {
     $hiveList.closest('.hive').classList.toggle('hide');
-    // if (e.currentTarget.classList.contains('hide')) {
-    //     $hiveWrapper.querySelector('label').textContent = toggleHiveInitialText;
-    // }
-    // else {
-    //     $hiveWrapper.querySelector('label').textContent = 'Hide Hive';
-    // }    
+
+    if ($hiveList.closest('.hive').classList.contains('hide')) {
+        console.log('Yes!')
+    }
+    else {
+        console.log('No!')
+    }
+
+    // $hiveList.markers.forEach(marker => marker.setMap(map));   
 });
 
 async function pullinHiveDataFromDB(userMail) {
