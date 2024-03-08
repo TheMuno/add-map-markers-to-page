@@ -1874,7 +1874,7 @@ $hiveList.addEventListener('click', e => {
 
     // map.panTo(marker.position); 
 
-    const hiveItemPos = $hiveList.querySelectorAll('.hive-item').indexOf($hiveItem);
+    const hiveItemPos = [...$hiveList.querySelectorAll('.hive-item')].indexOf($hiveItem);
     const marker = $hiveList.markers[hiveItemPos];
     map.panTo(marker.position); 
 });
