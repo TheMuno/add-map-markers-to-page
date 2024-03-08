@@ -448,7 +448,7 @@ function constructActivity(dayEvent, day, marker, eventId, markerObj) {
 
     if (!$addToHive.checked) return;
 
-    const $hiveItem = document.createElement('.hive-item');
+    const $hiveItem = document.createElement('div');
     $hiveItem.className = 'hive-item';
     $hiveItem.textContent = dayEvent;
     $hiveList.append($hiveItem);
