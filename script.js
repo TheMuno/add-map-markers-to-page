@@ -1731,18 +1731,18 @@ async function handleDatePickerChangeEvent(selectedDates) {
 } 
 
 
-document.querySelectorAll('[data-pick-date]').forEach(inp => {
-    flatpickr(inp, {
-        enableTime: true,
-        dateFormat: "Y-m-d H:i",
-        onChange: async (selectedDates, dateStr, instance) => {
+// document.querySelectorAll('[data-pick-date]').forEach(inp => {
+//     flatpickr(inp, {
+//         enableTime: true,
+//         dateFormat: "Y-m-d H:i",
+//         onChange: async (selectedDates, dateStr, instance) => {
             
-        },
-        onValueUpdate: async (selectedDates, dateStr, instance) => {
+//         },
+//         onValueUpdate: async (selectedDates, dateStr, instance) => {
             
-        }, 
-    });
-});
+//         }, 
+//     });
+// });
 
 
 function resetAddressField() {
