@@ -862,5 +862,6 @@ body {
 
 .hive-fieldsets .hive-filter-wrapper-fieldset {
     height: fit-content;
+    display: flex;
 } 
 
