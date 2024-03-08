@@ -1033,7 +1033,7 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
     const userData = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(userData);
     const data = await docSnap.data(); 
-    const { days } = data;
+    const { days, hive } = data;
 
     let specificDay, dayArrIndex;
     days.forEach((day, i) => {
@@ -1099,9 +1099,17 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
 
     const dayObj = {}; 
     dayObj.days = days; 
+    if ($addToHive.checked) dayObj.hive = arrayUnion(dayEventName); 
     dayObj.modifiedAt = serverTimestamp(); 
 
     // console.log('Saved to:', dayNum, 'days', days)  
+
+    // if ($addToHive.checked) {
+    //     arrayUnion(); 
+    //     await updateDoc(userData, {
+    //         hive: arrayUnion(dayEventName)
+    //     });
+    // }
 
     await updateDoc(userData, dayObj);
 }
