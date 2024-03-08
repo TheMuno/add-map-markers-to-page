@@ -1869,13 +1869,21 @@ $toggleHive.addEventListener('click', e => {
 $hiveList.addEventListener('click', e => {
     if (!e.target.closest('.hive-item')) return;
 
+    const $allHiveItems = $hiveList.querySelectorAll('.hive-item'); 
+    $allHiveItems.forEach(item => item.classList.remove('active'));
     const $hiveItem = e.target.closest('.hive-item');
     $hiveItem.classList.toggle('active');
 
     // map.panTo(marker.position); 
 
-    const hiveItemPos = [...$hiveList.querySelectorAll('.hive-item')].indexOf($hiveItem);
+    const hiveItemPos = [...$allHiveItems].indexOf($hiveItem);
     const marker = $hiveList.markers[hiveItemPos];
     map.panTo(marker.position); 
+
+    markerPopup.close();
+    // markerPopup.setContent(marker.getTitle());
+    // markerPopup.setContent(contentString);
+    markerPopup.open(marker.getMap(), marker);
+    
 });
 
