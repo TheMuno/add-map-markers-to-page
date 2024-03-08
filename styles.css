@@ -799,6 +799,10 @@ body {
 .khonsu-data.hive {
     width: 60%;
     height: 600px;
+    margin-top: 50px;
+}
+
+.hive-list {
     overflow: auto; 
 }
 
@@ -810,3 +814,6 @@ body {
     background-color: rgba(0,0,0,0.1); 
 }
 
+.align-top {
+    align-items: unset;
+}
