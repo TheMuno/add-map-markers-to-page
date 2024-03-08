@@ -1819,6 +1819,6 @@ $dayActivities.addEventListener('click', e => {
 });
 
 $toggleHive.addEventListener('click', e => {
-    $hiveList.classList.toggle('hide');
+    $hiveList.closest('.hive').classList.toggle('hide');
 });
 
