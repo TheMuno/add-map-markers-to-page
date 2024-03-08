@@ -526,6 +526,19 @@ function setupReservations() {
 
         $reservations.querySelector('.all-reservations').append($reservationClone);
     });
+
+    $reservations.querySelectorAll('[data-pick-date]').forEach(inp => {
+        flatpickr(inp, {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            onChange: async (selectedDates, dateStr, instance) => {
+                
+            },
+            onValueUpdate: async (selectedDates, dateStr, instance) => {
+                
+            }, 
+        });
+    });
 }
 
 $reservations.addEventListener('change', async e => {
@@ -1729,20 +1742,6 @@ async function handleDatePickerChangeEvent(selectedDates) {
 
     await updateDoc(userData, dayObj);
 } 
-
-
-// document.querySelectorAll('[data-pick-date]').forEach(inp => {
-//     flatpickr(inp, {
-//         enableTime: true,
-//         dateFormat: "Y-m-d H:i",
-//         onChange: async (selectedDates, dateStr, instance) => {
-            
-//         },
-//         onValueUpdate: async (selectedDates, dateStr, instance) => {
-            
-//         }, 
-//     });
-// });
 
 
 function resetAddressField() {
