@@ -1856,7 +1856,7 @@ $dayActivities.addEventListener('click', e => {
 });
 
 $toggleHive.addEventListener('click', e => {
-    const $hive = $hiveWrapper.querySelector('.hive');
+    const $hive = $hiveList.closest('.hive');
     $hive.classList.toggle('hide');
     $hiveWrapper.querySelector('.hive-filters').classList.toggle('hide');
 
