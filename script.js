@@ -59,7 +59,7 @@ const $map = document.querySelector('#map'),
     $mapUrl = document.querySelector('.map-url-link input'),
     $mapResultsOverlay = document.querySelector('.map-results-overlay'),
     $mapResultsContent = $mapResultsOverlay.querySelector('.map-results-content'),
-    $addToHiveBtn = document.querySelector('.add-to-hive'),
+    // $addToHiveBtn = document.querySelector('.add-to-hive'),
     $hiveList = document.querySelector('.khonsu-data.hive .hive-list');
     
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
@@ -446,15 +446,8 @@ function constructActivity(dayEvent, day, marker, eventId, markerObj) {
 
     $fullDayActivities.append($dayActivity); 
 
-    if (!$addToHiveBtn.checked) return;
-    addToHive(dayEvent); 
-}
-
-function addToHive(dayEventName) {
-    const $hiveItem = document.createElement('div');
-    $hiveItem.className = 'hive-item';
-    $hiveItem.textContent = dayEventName;
-    $hiveList.append($hiveItem);
+    // if (!$addToHiveBtn.checked) return;
+    // addToHive(dayEvent); 
 }
 
 async function addDayToFirebase(userMail) {  
@@ -1102,7 +1095,7 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
 
     const dayObj = {}; 
     dayObj.days = days; 
-    if ($addToHiveBtn.checked) dayObj.hive = arrayUnion(dayEventName); 
+    // if ($addToHiveBtn.checked) dayObj.hive = arrayUnion(dayEventName); 
     dayObj.modifiedAt = serverTimestamp(); 
 
     // console.log('Saved to:', dayNum, 'days', days)  
@@ -1198,6 +1191,13 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
     }
 
 
+}
+
+function addToHive(dayEventName) {
+    const $hiveItem = document.createElement('div');
+    $hiveItem.className = 'hive-item';
+    $hiveItem.textContent = dayEventName;
+    $hiveList.append($hiveItem);
 }
 
 /*
