@@ -59,7 +59,7 @@ const $map = document.querySelector('#map'),
     $mapUrl = document.querySelector('.map-url-link input'),
     $mapResultsOverlay = document.querySelector('.map-results-overlay'),
     $mapResultsContent = $mapResultsOverlay.querySelector('.map-results-content'),
-    $addToHive = document.querySelector('.add-to-hive'),
+    $addToHiveBtn = document.querySelector('.add-to-hive'),
     $hiveList = document.querySelector('.khonsu-data.hive .hive-list');
     
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
@@ -446,11 +446,14 @@ function constructActivity(dayEvent, day, marker, eventId, markerObj) {
 
     $fullDayActivities.append($dayActivity); 
 
-    if (!$addToHive.checked) return;
+    if (!$addToHiveBtn.checked) return;
+    addToHive(dayEvent); 
+}
 
+function addToHive(dayEventName) {
     const $hiveItem = document.createElement('div');
     $hiveItem.className = 'hive-item';
-    $hiveItem.textContent = dayEvent;
+    $hiveItem.textContent = dayEventName;
     $hiveList.append($hiveItem);
 }
 
@@ -1099,12 +1102,12 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
 
     const dayObj = {}; 
     dayObj.days = days; 
-    if ($addToHive.checked) dayObj.hive = arrayUnion(dayEventName); 
+    if ($addToHiveBtn.checked) dayObj.hive = arrayUnion(dayEventName); 
     dayObj.modifiedAt = serverTimestamp(); 
 
     // console.log('Saved to:', dayNum, 'days', days)  
 
-    // if ($addToHive.checked) {
+    // if ($addToHiveBtn.checked) {
     //     arrayUnion(); 
     //     await updateDoc(userData, {
     //         hive: arrayUnion(dayEventName)
@@ -1127,7 +1130,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
     } 
 
     const data = await docSnap.data(); 
-    const { days, deletedDays, references } = data;
+    const { days, deletedDays, references, hive } = data;
 
     // console.log('days in db:', days)
 
@@ -1141,6 +1144,10 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
     const { mapUrl } = references;
     setupMapurlNQRCode(mapUrl); 
+
+    hive.forEach(hiveItem => {
+        addToHive(hiveItem); 
+    });
 
     function setupDays(parentContainerClass, daysArr) {
         const $parentContainer = $dayActivities.querySelector(parentContainerClass); 
