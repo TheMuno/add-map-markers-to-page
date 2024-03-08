@@ -80,6 +80,8 @@ const    $logoutBtn = document.querySelector('[data-wf-user-logout="Log out"]'),
     initialCoords  = { lat: 40.7580, lng: -73.9855 },
     mapIcon = 'https://uploads-ssl.webflow.com/61268cc8812ac5956bad13e4/64ba87cd2730a9c6cf7c0d5a_pin%20(3).png', 
     orangeMapIcon = 'Imgs/pin_orange.png',
+    cameraMapIcon = 'Imgs/camera-pin.png',
+    fatOrangeMapIcon = 'Imgs/fat-pin.png',
     directionsUrlBase = 'https://www.google.com/maps/dir/?api=1', 
     // startingIndex = 1,
     googleSpreadsheetID = '1Zj1ae5faA8h7UwHvtYVtKoiA_G3LtQcuTOFV1Evq4BQ';   
@@ -1226,7 +1228,9 @@ function addToHive(hiveItem) {
         address,
     };
 
-    icon.url = orangeMapIcon;
+    // icon.url = orangeMapIcon;
+    icon.url = fatOrangeMapIcon;
+    // icon.url = cameraMapIcon;
     const { marker } = createMarker(locationInfo, icon); 
     marker.setMap(null); 
 
