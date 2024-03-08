@@ -1731,17 +1731,19 @@ async function handleDatePickerChangeEvent(selectedDates) {
 } 
 
 
-
-const fp2 = flatpickr(document.querySelector('[data-pick-date]'), {
-    enableTime: true,
-    dateFormat: "Y-m-d H:i",
-    onChange: async (selectedDates, dateStr, instance) => {
-        
-    },
-    onValueUpdate: async (selectedDates, dateStr, instance) => {
-        
-    }, 
+document.querySelectorAll('[data-pick-date]').forEach(inp => {
+    flatpickr(inp, {
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        onChange: async (selectedDates, dateStr, instance) => {
+            
+        },
+        onValueUpdate: async (selectedDates, dateStr, instance) => {
+            
+        }, 
+    });
 });
+
 
 function resetAddressField() {
     $address.removeAttribute('disabled');
@@ -1809,7 +1811,7 @@ window.addEventListener('keydown', e => {
 async function createNSaveMarkerToDB({mapPlaceObject:place, placeLocationDetails, dayEventName, dayIdentifier, dayDate}) {
     const { marker } = createMarker(place);   
     // const { marker, reviewsContent, operatingHrs, phoneNumber, address } = createMarker(place);  
-    const { reviewsContent, operatingHrs, phoneNumber, address } = placeLocationDetails;
+    const { rating, reviewsContent, operatingHrs, phoneNumber, address } = placeLocationDetails;
 
     console.log('place:::', place)
 
@@ -1823,7 +1825,7 @@ async function createNSaveMarkerToDB({mapPlaceObject:place, placeLocationDetails
     const title = marker.title; 
 
     // const markerObj = {lat, lng, title}; 
-    const markerObj = { lat, lng, title, reviewsContent, operatingHrs, phoneNumber, address }; 
+    const markerObj = { lat, lng, title, rating, reviewsContent, operatingHrs, phoneNumber, address }; 
 
     console.log('markerObj', markerObj)
 
