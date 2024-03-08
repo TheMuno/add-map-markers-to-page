@@ -842,7 +842,7 @@ body {
 }
 
 .inline {
-    display: inline;
+    /* display: inline; */
 }
 
 .hive-fieldsets {
