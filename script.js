@@ -60,7 +60,9 @@ const $map = document.querySelector('#map'),
     $mapResultsOverlay = document.querySelector('.map-results-overlay'),
     $mapResultsContent = $mapResultsOverlay.querySelector('.map-results-content'),
     // $addToHiveBtn = document.querySelector('.add-to-hive'),
-    $toggleHive = document.querySelector('.toggle-hive'),
+    $hiveWrapper = $btn.closest('.toggle-hive-wrapper'), 
+    $toggleHive = $hiveWrapper.querySelector('.toggle-hive'),
+    toggleHiveInitialText = $hiveWrapper.querySelector('label').textContent,
     $hiveList = document.querySelector('.khonsu-data.hive .hive-list');
     
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
@@ -1820,5 +1822,11 @@ $dayActivities.addEventListener('click', e => {
 
 $toggleHive.addEventListener('click', e => {
     $hiveList.closest('.hive').classList.toggle('hide');
+    if (e.currentTarget.classList.contains('hide')) {
+        $hiveWrapper.querySelector('label').textContent = toggleHiveInitialText;
+    }
+    else {
+        $hiveWrapper.querySelector('label').textContent = 'Hide Hive';
+    }    
 });
 
