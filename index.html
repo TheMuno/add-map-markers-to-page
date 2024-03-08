@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="styles.css">  
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4&libraries=places&v=weekly&language=en" ></script>   
     <style>
-        
+        .hive-filters.hide {
+            display: none;
+        }
     </style>   
 </head>
 <body> 
@@ -131,7 +133,7 @@
                 <input type="checkbox" name="toggle-hive" id="toggle-hive" class="toggle-hive">
                 <label for="toggle-hive">Show Hive</label>
             </div>
-            <div class="hive-filters">
+            <div class="hive-filters hide">
                 <div class="day-text">Filter by:</div>
                 <fieldset>
                     <legend>Good For</legend>
