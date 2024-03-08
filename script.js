@@ -1229,8 +1229,8 @@ function addToHive(hiveItem) {
     };
 
     // icon.url = orangeMapIcon;
-    // icon.url = fatOrangeMapIcon;
-    icon.url = cameraMapIcon;
+    icon.url = fatOrangeMapIcon;
+    // icon.url = cameraMapIcon;
     const { marker } = createMarker(locationInfo, icon); 
     marker.setMap(null); 
 
