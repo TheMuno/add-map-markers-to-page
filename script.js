@@ -1917,21 +1917,23 @@ function openMarkerWithInfo(marker, $hiveItem) {
     markerPopup.open(marker.getMap(), marker);
 }
 
-$hiveFilterCheckboxes.addEventListener('click', e => {
-    const $btn = e.currentTarget.querySelector('input[type=checkbox]');
-    const btnVal = $btn.name; 
-    const btnGroup = $btn.closest('.hive-filter-wrapper-fieldset').querySelector('legend').textContent.trim().toLowerCase();
-
-    $hiveList.querySelectorAll('.hive-item').forEach(hiveItem => {
-        const filterObj = hiveItem.locationInfo.filter;
-        for (const [filterKey, filterVal] of Object.entries(filterObj)) {
-            if (!filterKey.includes(btnGroup)) continue;
-
-            if (filterVal.includes(btnVal)) {
-                // hiveItem.classList.remove('hide');
-                hiveItem.classList.add('got-it');
+$hiveFilterCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('click', e => {
+        const $btn = e.currentTarget.querySelector('input[type=checkbox]');
+        const btnVal = $btn.name; 
+        const btnGroup = $btn.closest('.hive-filter-wrapper-fieldset').querySelector('legend').textContent.trim().toLowerCase();
+    
+        $hiveList.querySelectorAll('.hive-item').forEach(hiveItem => {
+            const filterObj = hiveItem.locationInfo.filter;
+            for (const [filterKey, filterVal] of Object.entries(filterObj)) {
+                if (!filterKey.includes(btnGroup)) continue;
+    
+                if (filterVal.includes(btnVal)) {
+                    // hiveItem.classList.remove('hide');
+                    hiveItem.classList.add('got-it');
+                }
             }
-        }
+        });
     });
 });
 
