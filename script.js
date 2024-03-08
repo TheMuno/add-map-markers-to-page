@@ -1872,7 +1872,7 @@ $hiveList.addEventListener('click', e => {
     const $allHiveItems = $hiveList.querySelectorAll('.hive-item'); 
     $allHiveItems.forEach(item => item.classList.remove('active'));
     const $hiveItem = e.target.closest('.hive-item');
-    $hiveItem.classList.toggle('active');
+    $hiveItem.classList.add('active');
 
     if ($hiveItem.classList.contains('active')) {
         const hiveItemPos = [...$allHiveItems].indexOf($hiveItem);
