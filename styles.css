@@ -797,7 +797,9 @@ body {
 }
 
 .khonsu-data.hive {
-    width: 60%; 
+    width: 60%;
+    height: 600px;
+    overflow: auto; 
 }
 
 .hive-list .hive-item {
@@ -807,3 +809,4 @@ body {
 .hive-list .hive-item:nth-child(odd) {
     background-color: rgba(0,0,0,0.1); 
 }
+
