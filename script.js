@@ -163,7 +163,7 @@ const markerPopup = new google.maps.InfoWindow();
             
             if (numOfPlacesFound === 1) {
                 // const { marker, reviewsContent, operatingHrs, formatted_phone_number, website } = createMarker(place);  
-                const { marker, reviewsContent, operatingHrs, phoneNumber, address } = createMarker(place);   
+                const { marker, rating, reviewsContent, operatingHrs, phoneNumber, address } = createMarker(place);   
 
                 // console.log('createMarker(place)', createMarker(place))
 
@@ -177,7 +177,7 @@ const markerPopup = new google.maps.InfoWindow();
                 const title = marker.title; 
     
                 // const markerObj = { lat, lng, title, reviewsContent, operatingHrs, formatted_phone_number, website }; 
-                const markerObj = { lat, lng, title, reviewsContent, operatingHrs, phoneNumber, address }; 
+                const markerObj = { lat, lng, title, rating, reviewsContent, operatingHrs, phoneNumber, address }; 
 
                 const dayEventName = $address.value; 
                 markerObj.dayEventName = dayEventName;
@@ -361,7 +361,7 @@ function createMarker(place) {
     });
 
     // return { marker, reviewsContent, operatingHrs, formatted_phone_number, website }; 
-    return { marker, reviewsContent, operatingHrs, phoneNumber, address }; 
+    return { marker, rating, reviewsContent, operatingHrs, phoneNumber, address }; 
 } 
 
 function isString(x) {
@@ -1050,7 +1050,7 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
     const dayEvents = specificDay.events;
 
     const { dayEventName='', lat=0, lng=0, title='', timeslot='', starttime='', 
-    reviewsContent='', operatingHrs='', phoneNumber='', address='' } = markerObj; 
+    rating=0, reviewsContent='', operatingHrs='', phoneNumber='', address='' } = markerObj; 
     const eventObj = {
         dayEventName,
         lat,
@@ -1064,6 +1064,7 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
         endtime: '',
         notes: '',
         reservation: '',
+        rating,
         reviews: reviewsContent,
         operatingHours: operatingHrs,
         phoneNumber,
