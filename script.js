@@ -1130,11 +1130,12 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                 if (!$currentDay) return;
 
                 const { dayEventName, description, lat, lng, title, timeslot, starttime, endtime, 
-                    reviews, operatingHours, phoneNumber, address } = activity;
+                    rating, reviews, operatingHours, phoneNumber, address } = activity;
                 if (lat && lng) {
                     const locationInfo = {
                         name: title,
                         latLng: {lat, lng},
+                        rating,
                         reviews,
                         operatingHours,
                         phoneNumber,
