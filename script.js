@@ -63,6 +63,7 @@ const $map = document.querySelector('#map'),
     $hiveWrapper = document.querySelector('.toggle-hive-wrapper'), 
     $toggleHive = $hiveWrapper.querySelector('.toggle-hive'),
     $toggleHiveFilters = $hiveWrapper.querySelector('.toggle-hive-filters'),
+    $hiveFilterCheckboxes = $hiveWrapper.querySelectorAll('.hive-filter'),
     // toggleHiveInitialText = $hiveWrapper.querySelector('label').textContent,
     $hiveList = document.querySelector('.khonsu-data.hive .hive-list');
     
@@ -1212,7 +1213,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 }
 
 function addToHive(hiveItem) {
-    const { dayEventName, title, lat, lng, rating, reviews, operatingHours, phoneNumber, address } = hiveItem; 
+    const { dayEventName, title, lat, lng, rating, reviews, operatingHours, phoneNumber, address, filter } = hiveItem; 
     const locationInfo = {
         name: title,
         latLng: {lat, lng},
@@ -1221,6 +1222,7 @@ function addToHive(hiveItem) {
         operatingHours,
         phoneNumber,
         address,
+        filter,
     };
 
     const $hiveItem = document.createElement('div');
@@ -1887,11 +1889,11 @@ $hiveList.addEventListener('click', e => {
         $hiveItem.classList.add('active');
         const hiveItemPos = [...$allHiveItems].indexOf($hiveItem);
         const marker = $hiveList.markers[hiveItemPos];
-        setupMarkerInfo(marker, $hiveItem);
+        openMarkerWithInfo(marker, $hiveItem);
     } 
 });
 
-function setupMarkerInfo(marker, $hiveItem) {
+function openMarkerWithInfo(marker, $hiveItem) {
     map.panTo(marker.position); 
 
     const { name, rating, reviews, operatingHours, phoneNumber, address } = $hiveItem.locationInfo;
@@ -1914,4 +1916,22 @@ function setupMarkerInfo(marker, $hiveItem) {
     markerPopup.setContent(contentString);
     markerPopup.open(marker.getMap(), marker);
 }
+
+$hiveFilterCheckboxes.addEventListener('click', e => {
+    const $btn = e.currentTarget.querySelector('input[type=checkbox]');
+    const btnVal = $btn.name; 
+    const btnGroup = $btn.closest('.hive-filter-wrapper-fieldset').querySelector('legend').textContent.trim().toLowerCase();
+
+    $hiveList.querySelectorAll('.hive-item').forEach(hiveItem => {
+        const filterObj = hiveItem.locationInfo.filter;
+        for (const [filterKey, filterVal] of Object.entries(filterObj)) {
+            if (!filterKey.includes(btnGroup)) continue;
+
+            if (filterVal.includes(btnVal)) {
+                // hiveItem.classList.remove('hide');
+                hiveItem.classList.add('got-it');
+            }
+        }
+    });
+});
 
