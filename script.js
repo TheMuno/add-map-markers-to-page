@@ -1856,9 +1856,11 @@ $dayActivities.addEventListener('click', e => {
 });
 
 $toggleHive.addEventListener('click', e => {
-    $hiveList.closest('.hive').classList.toggle('hide');
+    const $hive = $hiveWrapper.querySelector('.hive');
+    $hive.classList.toggle('hide');
+    $hiveWrapper.querySelector('.hive-filters').classList.toggle('hide');
 
-    if ($hiveList.closest('.hive').classList.contains('hide')) {
+    if ($hive.classList.contains('hide')) {
         $hiveList.markers.forEach(marker => marker.setMap(null));   
     }
     else {
