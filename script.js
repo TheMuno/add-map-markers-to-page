@@ -60,6 +60,7 @@ const $map = document.querySelector('#map'),
     $mapResultsOverlay = document.querySelector('.map-results-overlay'),
     $mapResultsContent = $mapResultsOverlay.querySelector('.map-results-content'),
     // $addToHiveBtn = document.querySelector('.add-to-hive'),
+    $toggleHive = document.querySelector('.toggle-hive'),
     $hiveList = document.querySelector('.khonsu-data.hive .hive-list');
     
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
@@ -1815,5 +1816,9 @@ $dayActivities.addEventListener('click', e => {
 
     const $locationMoreInfo = $expandBtn.closest('.single-event').querySelector('.location-more-info');
     $locationMoreInfo.classList.toggle('hide');
+});
+
+$toggleHive.addEventListener('click', e => {
+    $hiveList.classList.toggle('hide');
 });
 

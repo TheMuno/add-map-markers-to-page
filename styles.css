@@ -761,6 +761,10 @@ body {
     margin-bottom: 2px;
 }
 
+.margin-top-50px {
+    margin-top: 50px;
+}
+
 .location-more-info {
     width: 80%;
     height: 50px;
@@ -806,6 +810,10 @@ body {
     margin-top: 50px;
 }
 
+.khonsu-data.hive.hide {
+    display: none;
+}
+
 .hive-list {
     overflow: auto; 
 }
@@ -821,3 +829,8 @@ body {
 .align-top {
     align-items: unset;
 }
+
+.toggle-hive-wrapper {
+    margin-bottom: 20px;
+}
+
