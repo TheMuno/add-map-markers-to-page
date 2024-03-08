@@ -663,12 +663,12 @@ function generateQRCode(link, container) {
     container.append($qrCode);
 }
 
-document.querySelector('.khonsu-data.map-url .map-url-link input').addEventListener('change', e => {
-    const userMail = localStorage.getItem('user-email'); 
-    if (!userMail) return; 
-    const mapUrl = e.currentTarget.value; 
-    updateKhonsuDataMapUrl(userMail, mapUrl); 
-});
+// document.querySelector('.khonsu-data.map-url .map-url-link input').addEventListener('change', e => {
+//     const userMail = localStorage.getItem('user-email'); 
+//     if (!userMail) return; 
+//     const mapUrl = e.currentTarget.value; 
+//     updateKhonsuDataMapUrl(userMail, mapUrl); 
+// });
 
 
 // function addOptionToDaysSelect(dayNum, headerText=`Day ${dayNum}`) {
@@ -1110,14 +1110,20 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
     } 
 
     const data = await docSnap.data(); 
-    const { days, deletedDays } = data;
+    const { days, deletedDays, references } = data;
 
     // console.log('days in db:', days)
 
     setupDays('.all-days', days);
     setupDays('.removed-days .all-days', deletedDays); 
 
+    $daysSelect.selectedIndex = 0; 
+    if (days.length) resetAddressField(); 
+
     setupReservations();
+
+    const { mapUrl } = references;
+    setupMapurlNQRCode(mapUrl); 
 
     function setupDays(parentContainerClass, daysArr) {
         const $parentContainer = $dayActivities.querySelector(parentContainerClass); 
@@ -1155,27 +1161,6 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                         address,
                     };
 
-                    // const { dayEventName='', lat=0, lng=0, title='', timeslot='', starttime='', 
-                    // reviewsContent='', operatingHrs='', formatted_phone_number='', website='' } = markerObj; 
-                    // const eventObj = {
-                    //     dayEventName,
-                    //     lat,
-                    //     lng,
-                    //     title,
-                    //     description: '',
-                    //     imageURL: '',
-                    //     KhonsuRecommends: true,
-                    //     timeslot,
-                    //     starttime,
-                    //     endtime: '',
-                    //     notes: '',
-                    //     reservation: '',
-                    //     reviews: reviewsContent,
-                    //     operatingHours: operatingHrs,
-                    //     phoneNumber: formatted_phone_number,
-                    //     address: website,
-                    // };
-
                     const { marker:createdMarker } = createMarker(locationInfo);   
                     // currentDay.markers.push(createdMarker);  
 
@@ -1188,56 +1173,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
         });
     }
 
-    /*
-    const $allDays = $dayActivities.querySelector('.all-days'); 
-    days.forEach(day => {
 
-        // console.log('A day from db:', day)
-
-        const { dayDate, events:dayActivities } = day;
-        const dayIdentifier = `[day="${dayDate.trim()}"]`;
-
-        // console.log('dayIdentifier while looping thru days from db:', dayIdentifier)
-
-        addDayActivitiesListContainer(dayDate);
-        addOptionToDaysSelect(dayDate);
-
-        dayActivities.forEach(activity => {
-            const $currentDay = $allDays.querySelector(dayIdentifier);
-
-            // console.log('$currentDay', $currentDay)
-
-            if (!$currentDay) return;
-
-            const { dayEventName, lat, lng, title, timeslot, starttime, endtime } = activity;
-            if (lat && lng) {
-                const locationInfo = {
-                    name: title,
-                    latLng: {lat, lng}
-                };
-                const createdMarker = createMarker(locationInfo);   
-                // currentDay.markers.push(createdMarker);  
-
-                const markerObj = { lat, lng, title, dayEventName, timeslot, starttime, endtime }; 
-
-                const eventId = dayDate.toLowerCase().replace(/,\s+|\s+/g,'-');
-                postDayActivity(dayEventName, dayIdentifier, createdMarker, eventId, markerObj); 
-            }
-        });
-    });
-
-    deletedDays.forEach(day => {
-        const { dayDate, events:dayActivities } = day;
-        const dayIdentifier = `[day="${dayDate.trim()}"]`;
-
-        addDayActivitiesListContainer(dayDate, '.removed-days .all-days');
-
-
-    });
-    */
-
-    $daysSelect.selectedIndex = 0; 
-    if (days.length) resetAddressField(); 
 }
 
 /*
