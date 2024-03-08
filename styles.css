@@ -792,3 +792,18 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
+.center-content {
+    justify-content: center;
+}
+
+.khonsu-data.hive {
+    width: 60%; 
+}
+
+.hive-list .hive-item {
+    padding: 10px;
+}
+
+.hive-list .hive-item:nth-child(odd) {
+    background-color: rgba(0,0,0,0.1); 
+}

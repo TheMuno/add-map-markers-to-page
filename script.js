@@ -58,7 +58,9 @@ const $map = document.querySelector('#map'),
     $noUser = document.querySelector('.no-user'),
     $mapUrl = document.querySelector('.map-url-link input'),
     $mapResultsOverlay = document.querySelector('.map-results-overlay'),
-    $mapResultsContent = $mapResultsOverlay.querySelector('.map-results-content');
+    $mapResultsContent = $mapResultsOverlay.querySelector('.map-results-content'),
+    $addToHive = document.querySelector('.add-to-hive'),
+    $hiveList = document.querySelector('.khonsu-data.hive .hive-list');
     
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
     
@@ -443,6 +445,13 @@ function constructActivity(dayEvent, day, marker, eventId, markerObj) {
     // console.log('markerObj.timeOfDay', markerObj.timeOfDay, '\nmarkerObj', markerObj)
 
     $fullDayActivities.append($dayActivity); 
+
+    if (!$addToHive.checked) return;
+
+    const $hiveItem = document.createElement('.hive-item');
+    $hiveItem.className = 'hive-item';
+    $hiveItem.textContent = dayEvent;
+    $hiveList.append($hiveItem);
 }
 
 async function addDayToFirebase(userMail) {  
