@@ -79,6 +79,7 @@ const    $logoutBtn = document.querySelector('[data-wf-user-logout="Log out"]'),
     mapZoom = 13,
     initialCoords  = { lat: 40.7580, lng: -73.9855 },
     mapIcon = 'https://uploads-ssl.webflow.com/61268cc8812ac5956bad13e4/64ba87cd2730a9c6cf7c0d5a_pin%20(3).png', 
+    orangeMapIcon = 'Imgs/pin_orange.png',
     directionsUrlBase = 'https://www.google.com/maps/dir/?api=1', 
     // startingIndex = 1,
     googleSpreadsheetID = '1Zj1ae5faA8h7UwHvtYVtKoiA_G3LtQcuTOFV1Evq4BQ';   
@@ -261,7 +262,7 @@ function addMapResultsToModalPopup(dayEventName, userSearchTerm, mapPlaceObject,
     // console.log('mapPlaceObject::', mapPlaceObject)
 }
 
-function createMarker(place) {
+function createMarker(place, icon=icon) {
     let { name, formatted_address, geometry, latLng, website:address, 
         current_opening_hours, opening_hours, formatted_phone_number:phoneNumber, 
         reviews, rating } = place; 
@@ -1225,7 +1226,8 @@ function addToHive(hiveItem) {
         address,
     };
 
-    const { marker } = createMarker(locationInfo); 
+    icon.url = orangeMapIcon;
+    const { marker } = createMarker(locationInfo, icon); 
     marker.setMap(null); 
 
     $hiveList.markers = $hiveList.markers || [];
@@ -1859,14 +1861,4 @@ $toggleHive.addEventListener('click', e => {
         $hiveList.markers.forEach(marker => marker.setMap(map));   
     }  
 });
-
-async function pullinHiveDataFromDB(userMail) {
-    const userData = doc(db, 'travelData', `user-${userMail}`);
-    const docSnap = await getDoc(userData);
-
-    if (!docSnap.exists()) return; 
-
-    const data = await docSnap.data(); 
-    const { hive } = data;
-}
 
