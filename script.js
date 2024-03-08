@@ -1871,5 +1871,11 @@ $hiveList.addEventListener('click', e => {
 
     const $hiveItem = e.target.closest('.hive-item');
     $hiveItem.classList.toggle('active');
+
+    // map.panTo(marker.position); 
+
+    const hiveItemPos = $hiveList.querySelectorAll('.hive-item').indexOf($hiveItem);
+    const marker = $hiveList.markers[hiveItemPos];
+    map.panTo(marker.position); 
 });
 
