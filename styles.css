@@ -807,7 +807,7 @@ body {
 .khonsu-data.hive {
     width: 60%;
     height: 600px;
-    margin-top: 50px;
+    /* margin-top: 50px; */
 }
 
 .khonsu-data.hive.hide {
