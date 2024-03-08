@@ -1874,44 +1874,37 @@ $hiveList.addEventListener('click', e => {
     const $hiveItem = e.target.closest('.hive-item');
     $hiveItem.classList.toggle('active');
 
-    // map.panTo(marker.position); 
+    if ($hiveItem.classList.contains('active')) {
+        const hiveItemPos = [...$allHiveItems].indexOf($hiveItem);
+        const marker = $hiveList.markers[hiveItemPos];
+        setupMarkerInfo(marker, $hiveItem); 
+    }
+    else {
+        markerPopup.close();
+    } 
+});
 
-    const hiveItemPos = [...$allHiveItems].indexOf($hiveItem);
-    const marker = $hiveList.markers[hiveItemPos];
+function setupMarkerInfo(marker, $hiveItem) {
     map.panTo(marker.position); 
 
-    // const locationInfo = $hiveItem.locationInfo;
     const { name, rating, reviews, operatingHours, phoneNumber, address } = $hiveItem.locationInfo;
     const ratingTag = `<meter class="average-rating" min="0" max="5" value="${rating}" title="${rating} out of 5 stars">${rating} out of 5</meter>`;
-
-    // locationInfo = {
-    //     name: title,
-    //     latLng: {lat, lng},
-    //     rating,
-    //     reviews,
-    //     operatingHours,
-    //     phoneNumber,
-    //     address,
-    // };
 
     const contentString = `
     <div class="location-popup-content">
     <div class="location-row location-title">${name}</div>
-      <div class="location-row">${rating ? `Rating: ${rating} ${ratingTag}` : '<i>missing_rating</i>'}</div>
-      <div class="location-row location-reviews">${reviews 
+        <div class="location-row">${rating ? `Rating: ${rating} ${ratingTag}` : '<i>missing_rating</i>'}</div>
+        <div class="location-row location-reviews">${reviews 
         ? `<div class="view-reviews"><span class="view-reviews-text">View Reviews</span> <i class="arrow right"></i></div><div class="reviews-list hide">${reviews}</div>`
         : '<i>missing_reviews</i>'}</div> 
-      </div>
-      <div class="location-row location-operating-hrs">${operatingHours ? operatingHours : '<i>missing_operating_hours</i>'}</div>
-      <div class="location-row">Phone Number: ${phoneNumber ? `<a href="${phoneNumber}">${phoneNumber}</a>` : '<i>missing_contact</i>'}</div>
-      <div class="location-row">Website: ${address ? `<a target="_blank" href="${address}">Visit Site</a>` : '<i>missing_link</i>'}</div>
-      `; 
+        </div>
+        <div class="location-row location-operating-hrs">${operatingHours ? operatingHours : '<i>missing_operating_hours</i>'}</div>
+        <div class="location-row">Phone Number: ${phoneNumber ? `<a href="${phoneNumber}">${phoneNumber}</a>` : '<i>missing_contact</i>'}</div>
+        <div class="location-row">Website: ${address ? `<a target="_blank" href="${address}">Visit Site</a>` : '<i>missing_link</i>'}</div>
+        `; 
 
     markerPopup.close();
-    // markerPopup.setContent(marker.getTitle());
     markerPopup.setContent(contentString);
     markerPopup.open(marker.getMap(), marker);
+}
 
-});
-
- 
