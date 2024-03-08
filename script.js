@@ -1094,11 +1094,24 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
 
     // console.log('eventObj', eventObj)
 
+    const hiveObj = {
+        dayEventName,
+        lat,
+        lng,
+        title,
+        rating,
+        reviews: reviewsContent,
+        operatingHours: operatingHrs,
+        phoneNumber,
+        address,
+    }
+
     dayEvents.push(eventObj);
 
     const dayObj = {}; 
     dayObj.days = days; 
     // if ($addToHiveBtn.checked) dayObj.hive = arrayUnion(dayEventName); 
+    dayObj.hive = arrayUnion(hiveObj); 
     dayObj.modifiedAt = serverTimestamp(); 
 
     // console.log('Saved to:', dayNum, 'days', days)  
@@ -1192,15 +1205,31 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
             });
         });
     }
-
-
 }
 
-function addToHive(dayEventName) {
+function addToHive(hiveItem) {
+    const { dayEventName, title, lat, lng, rating, reviews, operatingHours, phoneNumber, address } = hiveItem; 
+
     const $hiveItem = document.createElement('div');
     $hiveItem.className = 'hive-item';
     $hiveItem.textContent = dayEventName;
     $hiveList.append($hiveItem);
+
+    const locationInfo = {
+        name: title,
+        latLng: {lat, lng},
+        rating,
+        reviews,
+        operatingHours,
+        phoneNumber,
+        address,
+    };
+
+    const { marker } = createMarker(locationInfo); 
+    marker.setMap(null); 
+
+    $hiveList.markers = $hiveList.markers || [];
+    $hiveList.markers.push(marker);
 }
 
 /*
@@ -1829,4 +1858,14 @@ $toggleHive.addEventListener('click', e => {
     //     $hiveWrapper.querySelector('label').textContent = 'Hide Hive';
     // }    
 });
+
+async function pullinHiveDataFromDB(userMail) {
+    const userData = doc(db, 'travelData', `user-${userMail}`);
+    const docSnap = await getDoc(userData);
+
+    if (!docSnap.exists()) return; 
+
+    const data = await docSnap.data(); 
+    const { hive } = data;
+}
 
