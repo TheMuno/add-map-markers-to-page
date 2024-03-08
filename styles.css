@@ -860,7 +860,7 @@ body {
     display: flex;
 } 
 
-.hive-fieldsets fieldset {
+.hive-fieldsets .hive-filter-wrapper-fieldset {
     height: fit-content;
 } 
 
