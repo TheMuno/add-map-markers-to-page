@@ -1929,7 +1929,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
                 if (!filterKey.includes(btnGroup)) continue;
     
-                if (filterVal.includes(btnVal)) {
+                if (btnVal.includes(filterVal)) {
                     // hiveItem.classList.remove('hide');
                     hiveItem.classList.add('got-it');
                 }
