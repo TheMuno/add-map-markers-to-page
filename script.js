@@ -1922,16 +1922,21 @@ $hiveFilterCheckboxes.forEach(checkbox => {
         const $btn = e.currentTarget.querySelector('input[type=checkbox]');
         const btnVal = $btn.name; 
         const btnGroup = $btn.closest('.hive-filter-wrapper-fieldset').querySelector('legend').textContent.trim().toLowerCase();
+        const $hiveItems = $hiveList.querySelectorAll('.hive-item');
     
+        $hiveItems.forEach(item => {
+            item.classList.add('hide');
+        });
+
         $hiveList.querySelectorAll('.hive-item').forEach(hiveItem => {
             const filterObj = hiveItem.locationInfo.filter;
             if (!filterObj) return; 
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
-                if (!filterKey.includes(btnGroup)) continue;
+                if (!btnGroup.includes(filterKey)) continue;
     
                 if (btnVal.includes(filterVal)) {
-                    // hiveItem.classList.remove('hide');
-                    hiveItem.classList.add('got-it');
+                    hiveItem.classList.remove('hide');
+                    // hiveItem.classList.add('got-it');
                 }
             }
         });
