@@ -262,7 +262,7 @@ function addMapResultsToModalPopup(dayEventName, userSearchTerm, mapPlaceObject,
     // console.log('mapPlaceObject::', mapPlaceObject)
 }
 
-function createMarker(place, icon=icon) {
+function createMarker(place, mapIcon=icon) {
     let { name, formatted_address, geometry, latLng, website:address, 
         current_opening_hours, opening_hours, formatted_phone_number:phoneNumber, 
         reviews, rating } = place; 
@@ -304,7 +304,7 @@ function createMarker(place, icon=icon) {
 
     const marker = new google.maps.Marker({
         map,
-        icon,
+        icon: mapIcon,
         title : name, 
         position : position,  
     });
