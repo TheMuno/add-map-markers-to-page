@@ -1868,9 +1868,6 @@ $toggleHive.addEventListener('click', e => {
 
 $hiveList.addEventListener('click', e => {
     if (!e.target.closest('.hive-item')) return;
-
-    // const $allHiveItems = $hiveList.querySelectorAll('.hive-item'); 
-    // $allHiveItems.forEach(item => item.classList.remove('active'));
     const $hiveItem = e.target.closest('.hive-item');
     
     if ($hiveItem.classList.contains('active')) {
