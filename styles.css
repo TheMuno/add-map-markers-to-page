@@ -826,6 +826,17 @@ body {
     background-color: rgba(0,0,0,0.1); 
 }
 
+.hive-list .hive-item:hover { 
+    background-color: gray;
+    color: white; 
+}
+
+.hive-list .hive-item.active { 
+    background-color: #a9a0a0;
+    color: white; 
+    font-style: italic;
+}
+
 .align-top {
     align-items: unset;
 }
@@ -848,3 +859,8 @@ body {
 .hive-fieldsets {
     display: flex;
 } 
+
+.hive-fieldsets fieldset {
+    height: fit-content;
+} 
+

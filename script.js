@@ -1866,3 +1866,10 @@ $toggleHive.addEventListener('click', e => {
     }  
 });
 
+$hiveList.addEventListener('click', e => {
+    if (!e.target.closest('.hive-item')) return;
+
+    const $hiveItem = e.target.closest('.hive-item');
+    $hiveItem.classList.toggle('active');
+});
+
