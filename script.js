@@ -1925,6 +1925,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
     
         $hiveList.querySelectorAll('.hive-item').forEach(hiveItem => {
             const filterObj = hiveItem.locationInfo.filter;
+            if (!filterObj) return; 
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
                 if (!filterKey.includes(btnGroup)) continue;
     
