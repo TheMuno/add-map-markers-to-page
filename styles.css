@@ -832,8 +832,19 @@ body {
 
 .toggle-hive-wrapper {
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .flex-column {
     flex-direction: column;
 }
+
+.inline {
+    display: inline;
+}
+
+.hive-fieldsets {
+    display: flex;
+} 
