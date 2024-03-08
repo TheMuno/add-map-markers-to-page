@@ -1853,13 +1853,11 @@ $toggleHive.addEventListener('click', e => {
     $hiveList.closest('.hive').classList.toggle('hide');
 
     if ($hiveList.closest('.hive').classList.contains('hide')) {
-        console.log('Yes!')
+        $hiveList.markers.forEach(marker => marker.setMap(null));   
     }
     else {
-        console.log('No!')
-    }
-
-    // $hiveList.markers.forEach(marker => marker.setMap(map));   
+        $hiveList.markers.forEach(marker => marker.setMap(map));   
+    }  
 });
 
 async function pullinHiveDataFromDB(userMail) {
