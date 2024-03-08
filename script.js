@@ -62,6 +62,7 @@ const $map = document.querySelector('#map'),
     // $addToHiveBtn = document.querySelector('.add-to-hive'),
     $hiveWrapper = document.querySelector('.toggle-hive-wrapper'), 
     $toggleHive = $hiveWrapper.querySelector('.toggle-hive'),
+    $toggleHiveFilters = $hiveWrapper.querySelector('.toggle-hive-filters'),
     // toggleHiveInitialText = $hiveWrapper.querySelector('label').textContent,
     $hiveList = document.querySelector('.khonsu-data.hive .hive-list');
     
@@ -1858,7 +1859,7 @@ $dayActivities.addEventListener('click', e => {
 $toggleHive.addEventListener('click', e => {
     const $hive = $hiveList.closest('.hive');
     $hive.classList.toggle('hide');
-    $hiveWrapper.querySelector('.hive-filters').classList.toggle('hide');
+    $hiveWrapper.querySelector('.toggle-hive-filters-wrapper').classList.toggle('hide');
 
     if ($hive.classList.contains('hide')) {
         $hiveList.markers.forEach(marker => marker.setMap(null));   
@@ -1866,6 +1867,10 @@ $toggleHive.addEventListener('click', e => {
     else {
         $hiveList.markers.forEach(marker => marker.setMap(map));   
     }  
+});
+
+$toggleHiveFilters.addEventListener('click', e => {
+    $hiveWrapper.querySelector('.hive-filters').classList.toggle('hide');
 });
 
 $hiveList.addEventListener('click', e => {

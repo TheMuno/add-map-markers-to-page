@@ -837,6 +837,10 @@ body {
     font-style: italic;
 }
 
+.hive-list .hive-item.hide {
+    display: none;
+}
+
 .align-top {
     align-items: unset;
 }
@@ -858,10 +862,15 @@ body {
 
 .hive-fieldsets {
     display: flex;
+    font-size: 0.8em; 
 } 
 
 .hive-fieldsets .hive-filter-wrapper-fieldset {
     height: fit-content;
     display: flex;
 } 
+
+.toggle-hive-filters-wrapper.hide {
+    display: none;
+}
 
