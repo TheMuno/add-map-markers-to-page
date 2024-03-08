@@ -757,6 +757,10 @@ body {
     margin-right: 3px;
 }
 
+.margin-bottom-2px {
+    margin-bottom: 2px;
+}
+
 .location-more-info {
     width: 80%;
     height: 50px;
