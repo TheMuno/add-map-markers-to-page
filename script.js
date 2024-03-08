@@ -1212,12 +1212,6 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 
 function addToHive(hiveItem) {
     const { dayEventName, title, lat, lng, rating, reviews, operatingHours, phoneNumber, address } = hiveItem; 
-
-    const $hiveItem = document.createElement('div');
-    $hiveItem.className = 'hive-item';
-    $hiveItem.textContent = dayEventName;
-    $hiveList.append($hiveItem);
-
     const locationInfo = {
         name: title,
         latLng: {lat, lng},
@@ -1227,6 +1221,12 @@ function addToHive(hiveItem) {
         phoneNumber,
         address,
     };
+
+    const $hiveItem = document.createElement('div');
+    $hiveItem.className = 'hive-item';
+    $hiveItem.textContent = dayEventName;
+    $hiveItem.locationInfo = locationInfo; 
+    $hiveList.append($hiveItem);
 
     // icon.url = orangeMapIcon;
     // icon.url = fatOrangeMapIcon;
@@ -1880,10 +1880,38 @@ $hiveList.addEventListener('click', e => {
     const marker = $hiveList.markers[hiveItemPos];
     map.panTo(marker.position); 
 
+    // const locationInfo = $hiveItem.locationInfo;
+    const { name, rating, reviews, operatingHours, phoneNumber, address } = $hiveItem.locationInfo;
+    const ratingTag = `<meter class="average-rating" min="0" max="5" value="${rating}" title="${rating} out of 5 stars">${rating} out of 5</meter>`;
+
+    // locationInfo = {
+    //     name: title,
+    //     latLng: {lat, lng},
+    //     rating,
+    //     reviews,
+    //     operatingHours,
+    //     phoneNumber,
+    //     address,
+    // };
+
+    const contentString = `
+    <div class="location-popup-content">
+    <div class="location-row location-title">${name}</div>
+      <div class="location-row">${rating ? `Rating: ${rating} ${ratingTag}` : '<i>missing_rating</i>'}</div>
+      <div class="location-row location-reviews">${reviews 
+        ? `<div class="view-reviews"><span class="view-reviews-text">View Reviews</span> <i class="arrow right"></i></div><div class="reviews-list hide">${reviews}</div>`
+        : '<i>missing_reviews</i>'}</div> 
+      </div>
+      <div class="location-row location-operating-hrs">${operatingHours ? operatingHours : '<i>missing_operating_hours</i>'}</div>
+      <div class="location-row">Phone Number: ${phoneNumber ? `<a href="${phoneNumber}">${phoneNumber}</a>` : '<i>missing_contact</i>'}</div>
+      <div class="location-row">Website: ${address ? `<a target="_blank" href="${address}">Visit Site</a>` : '<i>missing_link</i>'}</div>
+      `; 
+
     markerPopup.close();
     // markerPopup.setContent(marker.getTitle());
-    // markerPopup.setContent(contentString);
+    markerPopup.setContent(contentString);
     markerPopup.open(marker.getMap(), marker);
-    
+
 });
 
+ 
