@@ -1659,6 +1659,7 @@ $dayActivities.addEventListener('click', e => {
         const $timeSpan = dayEvent.querySelector('.event-time-of-day');
         const $timeExact = dayEvent.querySelectorAll('.event-exact-time-of-day'); 
         const $duration = dayEvent.querySelector('.location-duration');
+        const $dayText = dayEvent.querySelector('.day-text');
 
         const timeslot = $timeSpan.timeslot;
         const starttime = $timeSpan.starttime;
@@ -1670,6 +1671,7 @@ $dayActivities.addEventListener('click', e => {
         $timeExact[0].value = starttime;
 
         $duration.classList.toggle('hide');
+        $dayText.classList.toggle('width-90-margin-top-10');
     });
 }); 
 
