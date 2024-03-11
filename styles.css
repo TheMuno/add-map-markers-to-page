@@ -891,6 +891,10 @@ body {
     margin-left: 5px;
 }
 
+.single-event .location-duration.hide {
+    display: none;
+}
+
 .width-80 {
     width: 80%; 
 }
