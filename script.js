@@ -1900,7 +1900,6 @@ $toggleHive.addEventListener('click', e => {
     const $hive = $hiveList.closest('.hive');
     $hive.classList.toggle('hide');
     $hiveWrapper.querySelector('.toggle-hive-filters-wrapper').classList.toggle('hide');
-    // $toggleHiveFilters.click(); 
 
     if ($hive.classList.contains('hide')) {
         $hiveList.markers.forEach(marker => marker.setMap(null));  
@@ -1910,7 +1909,6 @@ $toggleHive.addEventListener('click', e => {
             $toggleHiveFilters.click(); 
         }
 
-        // $hiveWrapper.querySelector('.hive-filters').classList.add('hide'); 
     }
     else {
         $hiveList.markers.forEach(marker => marker.setMap(map));   
@@ -1969,6 +1967,9 @@ $hiveFilterCheckboxes.forEach(checkbox => {
         const btnVal = $btn.name; 
         const btnGroup = $btn.closest('.hive-filter-wrapper-fieldset').querySelector('legend').textContent.trim().toLowerCase();
         const $hiveItems = $hiveList.querySelectorAll('.hive-item');
+
+        console.log('btnVal', btnVal) 
+        console.log('btnGroup', btnGroup) 
     
         $hiveItems.forEach(item => {
             item.classList.add('hide');
@@ -1977,8 +1978,14 @@ $hiveFilterCheckboxes.forEach(checkbox => {
         $hiveList.querySelectorAll('.hive-item').forEach(hiveItem => {
             const filterObj = hiveItem.locationInfo.filter;
             if (!filterObj) return; 
+
+            console.log('filterObj', filterObj) 
+
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
                 if (!btnGroup.includes(filterKey)) continue;
+
+                console.log('filterKey', filterKey) 
+                console.log('filterVal', filterVal) 
     
                 if (btnVal.includes(filterVal)) {
                     hiveItem.classList.remove('hide');
