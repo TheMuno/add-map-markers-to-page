@@ -1694,27 +1694,12 @@ $dayActivities.addEventListener('change', e => {
     let min = minsDifference%60; 
 
     if (Math.sign(hrs) === -1 || Math.sign(min) === -1) {
-        $duration.textContent = '';
-        // alertify.alert("End time can't be earlier than start time please!");
-
         const totalMin = ((24*60) - ((startTimeHrs*60) + startTimeMin)) + ((endTimeHrs*60) + endTimeMin);
         hrs = Math.floor(totalMin/60);
         min = totalMin%60; 
-        $duration.textContent = `${hrs !== 0 ? `${hrs} hr(s)` : ''}${min !== 0 ? ` ${min} min(s)` : ''}`; 
-    }
-    else {
-        $duration.textContent = `${hrs !== 0 ? `${hrs} hr(s)` : ''}${min !== 0 ? ` ${min} min(s)` : ''}`; 
     }
 
-    console.log('startTime', startTimeVal)
-    console.log('endTime', endTimeVal)
-    console.log('startTimeHrs', startTimeHrs)
-    console.log('startTimeMin', startTimeMin)
-    console.log('endTimeHrs', endTimeHrs)
-    console.log('endTimeMin', endTimeMin)
-    console.log('hrs', hrs)
-    console.log('min', min)
-    console.log('duration', `${hrs} hr(s) ${min} min`)
+    $duration.textContent = `${hrs !== 0 ? `${hrs} hr(s)` : ''}${min !== 0 ? ` ${min} min` : ''}`; 
 });
 
 
