@@ -1671,28 +1671,35 @@ $dayActivities.addEventListener('click', e => {
 }); 
 
 $dayActivities.addEventListener('change', e => {
-    if (!e.target.closest('.event-exact-time-of-day')) return;  // .event-exact-time-of-day
+    if (!e.target.closest('.event-exact-time-of-day')) return; 
 
-    const $timeBtn = e.target;
-    const $locationTime = $timeBtn.closest('.location-time');
-    const startTime = $locationTime.querySelector('.event-exact-time-of-day.start').value;
-    const endTime = $locationTime.querySelector('.event-exact-time-of-day.end').value;
+    const $locationTime = e.target.closest('.location-time');
+    const $startTime = $locationTime.querySelector('.event-exact-time-of-day.start');
+    const $endTime = $locationTime.querySelector('.event-exact-time-of-day.end');
+
+    const startTimeVal = $startTime.value;
+    const endTimeVal = $endTime.value; 
+
+    if (!startTimeVal || !endTimeVal) return; 
+
     const $duration = $locationTime.querySelector('.location-duration');
 
-    console.log('locationTime', $timeBtn.closest('.location-time'))
-    console.log('startTime', startTime)
-    console.log('endTime', endTime)
-
-    const startTimeHrs = Number(startTime.split(':')[0]);
-    const startTimeMin = Number(startTime.split(':')[1]);
-    const endTimeHrs = Number(endTime.split(':')[0]);
-    const endTimeMin = Number(endTime.split(':')[1]);
+    const startTimeHrs = Number(startTimeVal.split(':')[0]);
+    const startTimeMin = Number(startTimeVal.split(':')[1]);
+    const endTimeHrs = Number(endTimeVal.split(':')[0]);
+    const endTimeMin = Number(endTimeVal.split(':')[1]);
 
     const hrs = endTimeHrs - startTimeHrs; 
     const min = startTimeMin === '00' ? endTimeMin : (60 - startTimeMin) + endTimeMin;
 
     $duration.textContent = `${hrs} hr(s) ${min} min`;
 
+    console.log('startTime', startTimeVal)
+    console.log('endTime', endTimeVal)
+    console.log('startTimeHrs', startTimeHrs)
+    console.log('startTimeMin', startTimeMin)
+    console.log('endTimeHrs', endTimeHrs)
+    console.log('endTimeMin', endTimeMin)
     console.log('hrs', hrs)
     console.log('min', min)
     console.log('duration', `${hrs} hr(s) ${min} min`)
