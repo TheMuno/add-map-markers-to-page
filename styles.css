@@ -882,3 +882,12 @@ body {
     display: inline-block;
 }
 
+.single-event .location-duration {
+    font-style: italic;
+    margin-left: 5px;
+}
+
+.width-80 {
+    width: 80%; 
+}
+

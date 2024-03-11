@@ -1651,7 +1651,7 @@ async function updateFirebaseOnDayTextEdit(userMail, dayDate, $dayText, indexOfE
 
 
 $dayActivities.addEventListener('click', e => {
-    if (!e.target.closest('.view-hourly')) return;  // event-exact-time-of-day
+    if (!e.target.closest('.view-hourly')) return;  // .event-exact-time-of-day
 
     const $hourlyBtn = e.target;
     const $dayEvent = $hourlyBtn.closest('.day-event'); 
@@ -1669,6 +1669,28 @@ $dayActivities.addEventListener('click', e => {
         timeExact[0].value = starttime;
     });
 }); 
+
+$dayActivities.addEventListener('change', e => {
+    if (!e.target.closest('.view-hourly')) return;  // .event-exact-time-of-day
+
+    const $hourlyBtn = e.target;
+    const $dayEvent = $hourlyBtn.closest('.day-event'); 
+
+    const $locationTime = $dayEvent.querySelector('.location-time');
+    const startTime = $locationTime.querySelector('.event-exact-time-of-day.start');
+    const endTime = $locationTime.querySelector('.event-exact-time-of-day.end');
+    const $duration = $locationTime.querySelector('.location-duration');
+
+    const startTimeHrs = Number(startTime.split(':')[0]);
+    const startTimeMin = Number(startTime.split(':')[1]);
+    const endTimeHrs = Number(endTime.split(':')[0]);
+    const endTimeMin = Number(endTime.split(':')[1]);
+
+    const hrs = endTimeHrs - startTimeHrs; 
+    const min = startTimeMin === '00' ? endTimeMin : (60 - startTimeMin) + endTimeMin;
+
+    $duration.textContent = `${hrs} hr(s) ${min} min`;
+});
 
 
 const fp = flatpickr(document.querySelector('input.travel-date'), {
