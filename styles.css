@@ -751,6 +751,7 @@ body {
     border-radius: 5px;
     width: fit-content;
     display: inline-block; */
+    cursor: pointer;
 }
 
 .expand-more-info.down {
