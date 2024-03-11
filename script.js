@@ -1675,9 +1675,13 @@ $dayActivities.addEventListener('change', e => {
 
     const $timeBtn = e.target;
     const $locationTime = $timeBtn.closest('.location-time');
-    const startTime = $locationTime.querySelector('.event-exact-time-of-day.start');
-    const endTime = $locationTime.querySelector('.event-exact-time-of-day.end');
+    const startTime = $locationTime.querySelector('.event-exact-time-of-day.start').value;
+    const endTime = $locationTime.querySelector('.event-exact-time-of-day.end').value;
     const $duration = $locationTime.querySelector('.location-duration');
+
+    console.log('locationTime', $timeBtn.closest('.location-time'))
+    console.log('startTime', startTime)
+    console.log('endTime', endTime)
 
     const startTimeHrs = Number(startTime.split(':')[0]);
     const startTimeMin = Number(startTime.split(':')[1]);
