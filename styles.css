@@ -874,3 +874,11 @@ body {
     display: none;
 }
 
+.block {
+    display: block;
+}
+
+.single-event .location-time {
+    display: inline-block;
+}
+
