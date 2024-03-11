@@ -1904,6 +1904,10 @@ $toggleHive.addEventListener('click', e => {
 
     if ($hive.classList.contains('hide')) {
         $hiveList.markers.forEach(marker => marker.setMap(null));  
+        const $hiveFilters = $hiveWrapper.querySelector('.hive-filters'); 
+        if (!$hiveFilters.classList.contains('hide')) {
+            $toggleHiveFilters.click(); 
+        }
         // $hiveWrapper.querySelector('.hive-filters').classList.add('hide'); 
     }
     else {
