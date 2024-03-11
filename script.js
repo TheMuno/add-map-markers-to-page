@@ -1671,12 +1671,10 @@ $dayActivities.addEventListener('click', e => {
 }); 
 
 $dayActivities.addEventListener('change', e => {
-    if (!e.target.closest('.view-hourly')) return;  // .event-exact-time-of-day
+    if (!e.target.closest('.event-exact-time-of-day')) return;  // .event-exact-time-of-day
 
-    const $hourlyBtn = e.target;
-    const $dayEvent = $hourlyBtn.closest('.day-event'); 
-
-    const $locationTime = $dayEvent.querySelector('.location-time');
+    const $timeBtn = e.target;
+    const $locationTime = $timeBtn.closest('.location-time');
     const startTime = $locationTime.querySelector('.event-exact-time-of-day.start');
     const endTime = $locationTime.querySelector('.event-exact-time-of-day.end');
     const $duration = $locationTime.querySelector('.location-duration');
