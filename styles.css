@@ -753,6 +753,10 @@ body {
     display: inline-block; */
 }
 
+.expand-more-info.down {
+    transform: rotate(90deg);
+}
+
 .margin-right-3px {
     margin-right: 3px;
 }
