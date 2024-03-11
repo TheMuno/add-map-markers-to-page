@@ -771,10 +771,11 @@ body {
 }
 
 .location-more-info {
-    width: 80%;
+    /* width: 80%; */
+    width: 100%; 
     height: 50px;
     margin-top: 2px;
-    margin-left: 20%;
+    /* margin-left: 20%; */
 }
 
 .location-more-info.hide {
