@@ -1667,8 +1667,8 @@ $dayActivities.addEventListener('click', e => {
         $timeSpan.classList.toggle('hide');
         $timeExact.forEach(t => t.classList.toggle('hide'));
 
-        $timeSpan.value = timeslot;
-        $timeExact[0].value = starttime;
+        // $timeSpan.value = timeslot;
+        // $timeExact[0].value = starttime;
 
         $duration.classList.toggle('hide');
         $dayText.classList.toggle('width-90-margin-top-10');
