@@ -1699,7 +1699,7 @@ $dayActivities.addEventListener('change', e => {
 
         const totalMin = ((24*60) - ((startTimeHrs*60) + startTimeMin)) + ((endTimeHrs*60) + endTimeMin);
         hrs = Math.floor(totalMin/60);
-        min = minsDifference%60; 
+        min = totalMin%60; 
         $duration.textContent = `${hrs !== 0 ? `${hrs} hr(s)` : ''}${min !== 0 ? ` ${min} min(s)` : ''}`; 
     }
     else {
