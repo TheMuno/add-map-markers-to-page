@@ -1690,9 +1690,9 @@ $dayActivities.addEventListener('change', e => {
     const endTimeMin = Number(endTimeVal.split(':')[1]);
 
     const hrs = endTimeHrs - startTimeHrs; 
-    const min = startTimeMin === '00' ? endTimeMin : (60 - startTimeMin) + endTimeMin;
+    const min = startTimeMin === 0 ? endTimeMin : (60 - startTimeMin) + endTimeMin;
 
-    $duration.textContent = `${hrs} hr(s) ${min} min`;
+    $duration.textContent = `${hrs} hr(s) ${min ? `${min} min` : ''}`;
 
     console.log('startTime', startTimeVal)
     console.log('endTime', endTimeVal)
