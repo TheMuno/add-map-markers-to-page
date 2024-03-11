@@ -1697,7 +1697,9 @@ $dayActivities.addEventListener('change', e => {
         $duration.textContent = '';
         // alertify.alert("End time can't be earlier than start time please!");
 
-        hrs = (24 - startTimeHrs) + endTimeHrs;
+        const totalMin = ((24*60) - ((startTimeHrs*60) + startTimeMin)) + ((endTimeHrs*60) + endTimeMin);
+        hrs = Math.floor(totalMin/60);
+        min = minsDifference%60; 
         $duration.textContent = `${hrs !== 0 ? `${hrs} hr(s)` : ''}${min !== 0 ? ` ${min} min(s)` : ''}`; 
     }
     else {
