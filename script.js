@@ -1657,16 +1657,16 @@ $dayActivities.addEventListener('click', e => {
     const $dayEvent = $hourlyBtn.closest('.day-event'); 
     $dayEvent.querySelectorAll('.all-activities .single-event').forEach(dayEvent => {
         const timeSpan = dayEvent.querySelector('.event-time-of-day');
-        const timeExact = dayEvent.querySelector('.event-exact-time-of-day'); 
+        const timeExact = dayEvent.querySelectorAll('.event-exact-time-of-day'); 
 
         const timeslot = timeSpan.timeslot;
         const starttime = timeSpan.starttime;
 
         timeSpan.classList.toggle('hide');
-        timeExact.classList.toggle('hide');
+        timeExact.forEach(t => t.classList.toggle('hide'));
 
         timeSpan.value = timeslot;
-        timeExact.value = starttime;
+        timeExact[0].value = starttime;
     });
 }); 
 
