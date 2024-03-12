@@ -1964,15 +1964,15 @@ function openMarkerWithInfo(marker, $hiveItem) {
 
 $hiveFilterCheckboxes.forEach(checkbox => {
     checkbox.addEventListener('click', e => {
-        const $btn = e.currentTarget; //.querySelector('input[type=checkbox]');
-        const btnVal = $btn.name; 
-        const btnGroup = $btn.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
-                            .textContent.trim().toLowerCase()
-                            .replace(/\s+/g,'-');
+        // const $btn = e.currentTarget; //.querySelector('input[type=checkbox]');
+        // const btnVal = $btn.name; 
+        // const btnGroup = $btn.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
+        //                     .textContent.trim().toLowerCase()
+        //                     .replace(/\s+/g,'-');
         const $hiveItems = $hiveList.querySelectorAll('.hive-item');
 
-        console.log('btnVal', btnVal) 
-        console.log('btnGroup', btnGroup) 
+        // console.log('btnVal', btnVal) 
+        // console.log('btnGroup', btnGroup) 
     
         $hiveItems.forEach(item => item.classList.add('hide'));
 
@@ -1982,13 +1982,13 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             const filterObj = hiveItem.locationInfo.filter;
             if (!filterObj) return; 
 
-            console.log('filterObj', filterObj) 
+            // console.log('filterObj', filterObj) 
 
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
                 // if (!btnGroup.includes(filterKey)) continue;
                 if (!filterVal.trim()) continue; 
 
-                console.log('filterKey', filterKey) 
+                // console.log('filterKey', filterKey) 
                 console.log('filterVal', filterVal) 
                 console.log('activeCheckboxes', activeCheckboxes)
     
