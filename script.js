@@ -1964,6 +1964,35 @@ function openMarkerWithInfo(marker, $hiveItem) {
 
 $hiveFilterCheckboxes.forEach(checkbox => {
     checkbox.addEventListener('click', e => {
+        const $hiveItems = $hiveList.querySelectorAll('.hive-item');    
+        $hiveItems.forEach(item => item.classList.add('hide'));
+
+        const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].map(c => c.name.toLowerCase().trim()).join();  
+
+        $hiveList.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
+            const filterObj = hiveItem.locationInfo.filter;
+            if (!filterObj) return; 
+
+            for (const [filterKey, filterVal] of Object.entries(filterObj)) {
+                if (!filterVal.trim()) continue; 
+
+                console.log('filterVal', filterVal) 
+                console.log('activeCheckboxes', activeCheckboxes)
+    
+                const filterValExists = filterVal.split(',').filter(f => activeCheckboxes.includes(f)).length; 
+       
+                if (filterValExists) {
+                    hiveItem.classList.remove('hide');
+                    console.log(hiveItem)
+                }
+            }
+        });
+    });
+});
+
+/*
+$hiveFilterCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('click', e => {
         // const $btn = e.currentTarget; //.querySelector('input[type=checkbox]');
         // const btnVal = $btn.name; 
         // const btnGroup = $btn.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
@@ -1976,7 +2005,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
     
         $hiveItems.forEach(item => item.classList.add('hide'));
 
-        const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].map(c => c.name).join();  
+        const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].map(c => c.name.toLowerCase().trim()).join();  
 
         $hiveList.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
             const filterObj = hiveItem.locationInfo.filter;
@@ -1992,8 +2021,10 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                 console.log('filterVal', filterVal) 
                 console.log('activeCheckboxes', activeCheckboxes)
     
+                const filterValExists = filterVal.split(',').filter(f => activeCheckboxes.includes(f)).length; 
                 // if (filterVal.includes(btnVal)) {
-                if (activeCheckboxes.includes(filterVal)) {
+                // if (activeCheckboxes.includes(filterVal)) {
+                if (filterValExists) {
                     hiveItem.classList.remove('hide');
                     // hiveItem.classList.add('got-it');
                     console.log(hiveItem)
@@ -2002,9 +2033,5 @@ $hiveFilterCheckboxes.forEach(checkbox => {
         });
     });
 });
-
-
-// $hiveFieldsets.querySelectorAll('input[type=checkbox]:checked').forEach(checkbox => {
-
-// });
+*/
 
