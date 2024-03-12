@@ -63,6 +63,7 @@ const $map = document.querySelector('#map'),
     $hiveWrapper = document.querySelector('.toggle-hive-wrapper'), 
     $toggleHive = $hiveWrapper.querySelector('.toggle-hive'),
     $toggleHiveFilters = $hiveWrapper.querySelector('.toggle-hive-filters'),
+    $hiveFieldsets = document.querySelector('.hive-fieldsets'),
     $hiveFilterCheckboxes = $hiveWrapper.querySelectorAll('.hive-filter input'),
     // toggleHiveInitialText = $hiveWrapper.querySelector('label').textContent,
     $hiveList = document.querySelector('.khonsu-data.hive .hive-list');
@@ -1975,22 +1976,22 @@ $hiveFilterCheckboxes.forEach(checkbox => {
     
         $hiveItems.forEach(item => item.classList.add('hide'));
 
+        const activeCheckboxes = $hiveFieldsets.querySelectorAll('input[type=checkbox]:checked').map(c => c.name).join();  
+
         $hiveList.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
             const filterObj = hiveItem.locationInfo.filter;
             if (!filterObj) return; 
 
-            console.log('index:::::::', i)
-            console.log('e.target:::::::', e.target)
-
             console.log('filterObj', filterObj) 
 
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
-                if (!btnGroup.includes(filterKey)) continue;
+                // if (!btnGroup.includes(filterKey)) continue;
 
                 console.log('filterKey', filterKey) 
                 console.log('filterVal', filterVal) 
     
-                if (filterVal.includes(btnVal)) {
+                // if (filterVal.includes(btnVal)) {
+                if (activeCheckboxes.includes(filterVal)) {
                     hiveItem.classList.remove('hide');
                     // hiveItem.classList.add('got-it');
                     console.log(hiveItem)
@@ -1999,4 +2000,9 @@ $hiveFilterCheckboxes.forEach(checkbox => {
         });
     });
 });
+
+
+// $hiveFieldsets.querySelectorAll('input[type=checkbox]:checked').forEach(checkbox => {
+
+// });
 
