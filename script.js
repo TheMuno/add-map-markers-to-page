@@ -1976,7 +1976,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
     
         $hiveItems.forEach(item => item.classList.add('hide'));
 
-        const activeCheckboxes = $hiveFieldsets.querySelectorAll('input[type=checkbox]:checked').map(c => c.name).join();  
+        const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].map(c => c.name).join();  
 
         $hiveList.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
             const filterObj = hiveItem.locationInfo.filter;
