@@ -1965,7 +1965,9 @@ $hiveFilterCheckboxes.forEach(checkbox => {
     checkbox.addEventListener('click', e => {
         const $btn = e.currentTarget.querySelector('input[type=checkbox]');
         const btnVal = $btn.name; 
-        const btnGroup = $btn.closest('.hive-filter-wrapper-fieldset').querySelector('legend').textContent.trim().toLowerCase();
+        const btnGroup = $btn.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
+                            .textContent.trim().toLowerCase()
+                            .replace(/\s+/g,'-');
         const $hiveItems = $hiveList.querySelectorAll('.hive-item');
 
         console.log('btnVal', btnVal) 
@@ -1987,7 +1989,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                 console.log('filterKey', filterKey) 
                 console.log('filterVal', filterVal) 
     
-                if (btnVal.includes(filterVal)) {
+                if (filterVal.includes(btnVal)) {
                     hiveItem.classList.remove('hide');
                     // hiveItem.classList.add('got-it');
                 }
