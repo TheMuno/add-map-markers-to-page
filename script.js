@@ -1986,6 +1986,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
                 // if (!btnGroup.includes(filterKey)) continue;
+                if (!filterVal.trim()) continue; 
 
                 console.log('filterKey', filterKey) 
                 console.log('filterVal', filterVal) 
