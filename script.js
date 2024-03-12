@@ -1988,7 +1988,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             }
         });
 
-        if ($hiveList.querySelectorAll('.hive-item:not(.hide)').length === 0) {
+        if (!activeCheckboxes.trim() && $hiveList.querySelectorAll('.hive-item:not(.hide)').length === 0) {
             $hiveItems.forEach(item => item.classList.remove('hide'));
         }
     });
