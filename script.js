@@ -63,7 +63,7 @@ const $map = document.querySelector('#map'),
     $hiveWrapper = document.querySelector('.toggle-hive-wrapper'), 
     $toggleHive = $hiveWrapper.querySelector('.toggle-hive'),
     $toggleHiveFilters = $hiveWrapper.querySelector('.toggle-hive-filters'),
-    $hiveFilterCheckboxes = $hiveWrapper.querySelectorAll('.hive-filter'),
+    $hiveFilterCheckboxes = $hiveWrapper.querySelectorAll('.hive-filter input'),
     // toggleHiveInitialText = $hiveWrapper.querySelector('label').textContent,
     $hiveList = document.querySelector('.khonsu-data.hive .hive-list');
     
