@@ -1973,15 +1973,14 @@ $hiveFilterCheckboxes.forEach(checkbox => {
         console.log('btnVal', btnVal) 
         console.log('btnGroup', btnGroup) 
     
-        $hiveItems.forEach(item => {
-            item.classList.add('hide');
-        });
+        $hiveItems.forEach(item => item.classList.add('hide'));
 
         $hiveList.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
             const filterObj = hiveItem.locationInfo.filter;
             if (!filterObj) return; 
 
             console.log('index:::::::', i)
+            console.log('e.target:::::::', e.target)
 
             console.log('filterObj', filterObj) 
 
