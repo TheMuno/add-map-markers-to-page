@@ -1963,7 +1963,7 @@ function openMarkerWithInfo(marker, $hiveItem) {
 
 $hiveFilterCheckboxes.forEach(checkbox => {
     checkbox.addEventListener('click', e => {
-        const $btn = e.currentTarget.querySelector('input[type=checkbox]');
+        const $btn = e.currentTarget; //.querySelector('input[type=checkbox]');
         const btnVal = $btn.name; 
         const btnGroup = $btn.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
                             .textContent.trim().toLowerCase()
