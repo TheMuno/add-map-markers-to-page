@@ -1992,6 +1992,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                 if (filterVal.includes(btnVal)) {
                     hiveItem.classList.remove('hide');
                     // hiveItem.classList.add('got-it');
+                    console.log(hiveItem)
                 }
             }
         });
