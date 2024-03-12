@@ -1989,6 +1989,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 
                 console.log('filterKey', filterKey) 
                 console.log('filterVal', filterVal) 
+                console.log('activeCheckboxes', activeCheckboxes)
     
                 // if (filterVal.includes(btnVal)) {
                 if (activeCheckboxes.includes(filterVal)) {
