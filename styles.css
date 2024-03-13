@@ -822,6 +822,7 @@ body {
 
 .agent-notes {
     margin-top: 20px;
+    position: relative;
 }
 
 .agent-notes .toggle-notes {
@@ -832,6 +833,20 @@ body {
     margin-top: 5px;
     width: 100%;
     height: 150px;
+}
+
+.agent-notes .agent-notes-textarea.hide {
+    display: none;
+}
+
+.agent-notes .toggle-notes-img {
+    position: absolute;
+    top: 2px;
+    margin-left: 5px; 
+}
+
+.agent-notes .toggle-notes-img.down {
+    transform: rotate(90deg);
 }
 
 .average-rating {
