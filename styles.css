@@ -826,7 +826,7 @@ body {
 }
 
 .agent-notes .toggle-notes {
-    display: block;
+    cursor: pointer;
 }
 
 .agent-notes .agent-notes-textarea {

@@ -47,7 +47,7 @@ const $map = document.querySelector('#map'),
     // $downloadUserCSV = document.querySelector('.download-user-csv'), 
     // $downloadDBCSV = document.querySelector('.download-all-csv'),
     // $printedPlanBtn = document.querySelector('.printed-plan'),
-    $khonsuNotes = document.querySelector('.section.notes'),
+    // $khonsuNotes = document.querySelector('.section.notes'),
     $qrCodeContainer = document.querySelector('.khonsu-data.map-url-qrcode .map-url-qr'),
     // $hourlyBtn = document.querySelector('.view-hourly'),
     $addReservation = document.querySelector('.add-reservation'),
@@ -495,7 +495,7 @@ async function addDayToFirebase(userMail) {
 }
 
 
-$khonsuNotes.addEventListener('change', async e => {
+// $khonsuNotes.addEventListener('change', async e => {
     // if (!e.target.closest('.knotes')) return;
 
     // const userMail = localStorage.getItem('user-email'); 
@@ -507,7 +507,7 @@ $khonsuNotes.addEventListener('change', async e => {
 
     // const notes = e.target.value; 
     // updateKhonsuDataEdits(userMail, notes, dayNum); 
-});
+// });
 
 async function updateKhonsuDataEdits(userMail, notes, dayNum) {
     const existingMarkers = doc(db, 'Locations', `User-${userMail}`);
@@ -1306,20 +1306,20 @@ function setupMapurlNQRCode(mapUrl) {
     generateQRCode(mapUrl, $qrCodeContainer); 
 }
 
-function setupKhonsuNotes(kNotes, dayNum) {
-    if (dayNum == 1) { 
-        const $notesTextarea = $khonsuNotes.querySelector('textarea.knotes');
-        $notesTextarea.value = kNotes; 
-    }
-    else {
-        const $notesDiv = $khonsuNotes.querySelector('.khonsu-notes').cloneNode(true);
-        const $notesHeader = $notesDiv.querySelector('.knotes-title');
-        const $notesTextarea = $notesDiv.querySelector('textarea.knotes');
-        $notesHeader.textContent = `Khonsu Notes Day ${dayNum}`;
-        $notesTextarea.value = kNotes; 
-        $khonsuNotes.append($notesDiv);
-    }
-}
+// function setupKhonsuNotes(kNotes, dayNum) {
+//     if (dayNum == 1) { 
+//         const $notesTextarea = $khonsuNotes.querySelector('textarea.knotes');
+//         $notesTextarea.value = kNotes; 
+//     }
+//     else {
+//         const $notesDiv = $khonsuNotes.querySelector('.khonsu-notes').cloneNode(true);
+//         const $notesHeader = $notesDiv.querySelector('.knotes-title');
+//         const $notesTextarea = $notesDiv.querySelector('textarea.knotes');
+//         $notesHeader.textContent = `Khonsu Notes Day ${dayNum}`;
+//         $notesTextarea.value = kNotes; 
+//         $khonsuNotes.append($notesDiv);
+//     }
+// }
 
 
 $dayActivities.addEventListener('touchstart', e => {
