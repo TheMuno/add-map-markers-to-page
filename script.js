@@ -520,26 +520,26 @@ async function updateKhonsuDataEdits(userMail, notes, dayNum) {
 }
 
 function setupReservations() {
-    const $sampleReservation = $reservations.querySelector('.sample-reservation');
-    $dayActivities.querySelectorAll('.all-days .day-event').forEach(day => {
-        const $reservationClone = $sampleReservation.cloneNode(true);
-        $reservationClone.classList.remove('hide');
-        $reservationClone.classList.remove('sample-reservation');
+    // const $sampleReservation = $reservations.querySelector('.sample-reservation');
+    // $dayActivities.querySelectorAll('.all-days .day-event').forEach(day => {
+    //     const $reservationClone = $sampleReservation.cloneNode(true);
+    //     $reservationClone.classList.remove('hide');
+    //     $reservationClone.classList.remove('sample-reservation');
 
-        $reservationClone.querySelector('.day-text').textContent = `${day.querySelector('.day-head').textContent} Reservations`;
+    //     $reservationClone.querySelector('.day-text').textContent = `${day.querySelector('.day-head').textContent} Reservations`;
         
-        day.querySelectorAll('.all-activities .single-event').forEach(dayActivity => {
-            const $reserveClone = $reservationClone.querySelector('.reserves .reserve').cloneNode(true); 
-            const $reserveLabel = $reserveClone.querySelector('label'); 
-            const dayActivityName = dayActivity.querySelector('.day-text');
-            $reserveLabel.textContent = dayActivityName.value.split(',')[0]; 
-            $reserveLabel.setAttribute('title', dayActivityName.value);
+    //     day.querySelectorAll('.all-activities .single-event').forEach(dayActivity => {
+    //         const $reserveClone = $reservationClone.querySelector('.reserves .reserve').cloneNode(true); 
+    //         const $reserveLabel = $reserveClone.querySelector('label'); 
+    //         const dayActivityName = dayActivity.querySelector('.day-text');
+    //         $reserveLabel.textContent = dayActivityName.value.split(',')[0]; 
+    //         $reserveLabel.setAttribute('title', dayActivityName.value);
 
-            $reservationClone.append($reserveClone); 
-        });
+    //         $reservationClone.append($reserveClone); 
+    //     });
 
-        $reservations.querySelector('.all-reservations').append($reservationClone);
-    });
+    //     $reservations.querySelector('.all-reservations').append($reservationClone);
+    // });
 
     $reservations.querySelectorAll('[data-pick-date]').forEach(inp => {
         flatpickr(inp, {
