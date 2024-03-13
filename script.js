@@ -433,7 +433,7 @@ function constructActivity(dayEvent, day, marker, eventId, markerObj) {
     $dayActivity.querySelector('.get-directions').classList.remove('hide'); 
     // $dayActivity.querySelector('.day-text').textContent = dayEvent;
     $dayActivity.querySelector('.day-text').value = dayEvent;
-    $dayActivity.querySelector('.location-more-info').value = markerObj.description;
+    $dayActivity.querySelector('.more-info').value = markerObj.description;
 
     // console.log('markerObj.timeslot', markerObj.timeslot)
 
@@ -1538,12 +1538,12 @@ $dayActivities.addEventListener('change', async e => {
 }); 
 
 $dayActivities.addEventListener('change', async e => {
-    if (!e.target.closest('.location-more-info')) return;
+    if (!e.target.closest('.more-info')) return;
 
     const userMail = localStorage.getItem('user-email');
     if (!userMail) return; 
 
-    const $locationMoreInfo = e.target.closest('.location-more-info');
+    const $locationMoreInfo = e.target.closest('.more-info');
     const $dayActivity = $locationMoreInfo.closest('.single-event');
     const $dayEvent = $locationMoreInfo.closest('.day-event');
     const dayDate = $dayEvent.querySelector('.day-head').textContent.trim(); 
@@ -1895,6 +1895,17 @@ $dayActivities.addEventListener('click', e => {
 
     const $locationMoreInfo = $expandBtn.closest('.single-event').querySelector('.location-more-info');
     $locationMoreInfo.classList.toggle('hide');
+});
+
+$dayActivities.addEventListener('click', e => {
+    if (!e.target.closest('.toggle-reservation')) return;
+
+    const $expandBtn = e.target.closest('.toggle-reservation');
+    const $moreInfoWrapper = $expandBtn.closest('.location-more-info'); 
+    const $toggleImg = $moreInfoWrapper.querySelector('.toggle-reservation-img');
+    $toggleImg.classList.toggle('down');
+
+    $moreInfoWrapper.querySelector('.location-reservation').classList.toggle('hide');
 });
 
 $toggleHive.addEventListener('click', e => {

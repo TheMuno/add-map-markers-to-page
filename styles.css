@@ -774,12 +774,39 @@ body {
     /* width: 80%; */
     width: 100%; 
     height: 50px;
-    margin-top: 2px;
+    margin-top: 5px;
     /* margin-left: 20%; */
 }
 
 .location-more-info.hide {
     display: none;
+}
+
+.location-more-info .more-info {
+    width:90%;
+    /* height: 50px; */
+}
+
+.location-more-info .location-reservation {
+    margin: 10px 0 20px;
+}
+
+.location-more-info .location-reservation .reserve-time {
+    height: 30px;
+}
+
+.location-more-info .location-reservation .reserve-info {
+    height: 30px;
+    width: 100%;
+    margin-top: 2px;
+}
+
+.location-more-info .toggle-reservation {
+    margin-top: 5px;
+}
+
+.location-more-info .toggle-reservation-img.down {
+    transform: rotate(90deg);
 }
 
 .average-rating {
