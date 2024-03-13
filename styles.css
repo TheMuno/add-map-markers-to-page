@@ -117,8 +117,8 @@
 .side-bar {
     /* outline: 1px solid red;  */
     width: 30%;   
-    /* height: 850px;  */
-    height: 400px; 
+    height: 850px; 
+    /* height: 400px;  */
     overflow-y: auto; 
     /* overflow-x: hidden;  */
     align-self: flex-start;
@@ -360,8 +360,8 @@ qr-code {
 
 #map {
     width: 68%; 
-    /* height: 850px;  */
-    height: 400px; 
+    height: 850px; 
+    /* height: 400px;  */
     align-self: start; 
 } 
 
