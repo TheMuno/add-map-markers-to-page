@@ -773,7 +773,7 @@ body {
 .location-more-info {
     /* width: 80%; */
     width: 100%; 
-    height: 50px;
+    /* height: 50px; */
     margin-top: 5px;
     /* margin-left: 20%; */
 }
@@ -784,11 +784,15 @@ body {
 
 .location-more-info .more-info {
     width:90%;
-    /* height: 50px; */
+    height: 50px;
 }
 
 .location-more-info .location-reservation {
     margin: 10px 0 20px;
+}
+
+.location-more-info .location-reservation.hide {
+    display: none;
 }
 
 .location-more-info .location-reservation .reserve-time {
