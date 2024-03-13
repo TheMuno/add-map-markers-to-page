@@ -820,6 +820,20 @@ body {
     transform: rotate(90deg);
 }
 
+.agent-notes {
+    margin-top: 20px;
+}
+
+.agent-notes .toggle-notes {
+    display: block;
+}
+
+.agent-notes .agent-notes-textarea {
+    margin-top: 5px;
+    width: 100%;
+    height: 150px;
+}
+
 .average-rating {
     position: relative;
     -webkit-appearance: none;

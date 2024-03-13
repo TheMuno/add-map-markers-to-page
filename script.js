@@ -1908,6 +1908,18 @@ $dayActivities.addEventListener('click', e => {
     $moreInfoWrapper.querySelector('.location-reservation').classList.toggle('hide');
 });
 
+$dayActivities.addEventListener('click', e => {
+    if (!e.target.closest('.toggle-notes')) return;
+
+    const $expandBtn = e.target.closest('.toggle-notes');
+    const $notesWrapper = $expandBtn.closest('.agent-notes'); 
+
+    const $toggleImg = $notesWrapper.querySelector('.toggle-notes-img');
+    $toggleImg.classList.toggle('down');
+
+    $notesWrapper.querySelector('.agent-notes-textarea').classList.toggle('hide');
+});
+
 $toggleHive.addEventListener('click', e => {
     const $hive = $hiveList.closest('.hive');
     $hive.classList.toggle('hide');
