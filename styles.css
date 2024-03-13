@@ -808,6 +808,12 @@ body {
 .location-more-info .toggle-reservation {
     margin-top: 5px;
     cursor: pointer;
+    position: relative;
+}
+
+.location-more-info .toggle-reservation-img {
+    position: absolute;
+    top: 7px; 
 }
 
 .location-more-info .toggle-reservation-img.down {
