@@ -2013,6 +2013,8 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                     if (!arr[1].includes(filterVal)) return;
 
                     hiveItem.classList.remove('hide');
+
+                    console.log(hiveItem)
                     
                     const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
                     const marker = $hiveList.markers[hiveItemPos];
