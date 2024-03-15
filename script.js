@@ -2022,6 +2022,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 
         if (!activeCheckboxes.trim() && $hiveList.querySelectorAll('.hive-item:not(.hide)').length === 0) {
             $hiveItems.forEach(item => item.classList.remove('hide'));
+            $hiveList.markers.forEach(marker => marker.setMap(map)); 
         }
     });
 });
