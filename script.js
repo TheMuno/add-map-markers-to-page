@@ -2008,7 +2008,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
        
                 if (filterValExists) {
                     hiveItem.classList.remove('hide');
-                    // console.log(hiveItem)
+                    console.log(hiveItem)
                 }
             }
         });
