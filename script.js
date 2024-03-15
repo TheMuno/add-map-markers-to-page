@@ -1999,6 +1999,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
                 if (!filterVal.trim()) continue; 
 
+                console.log('filterObj', filterObj)
                 console.log('filterVal', filterVal) 
                 console.log('activeCheckboxes', activeCheckboxes)
     
