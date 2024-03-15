@@ -1989,6 +1989,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
     checkbox.addEventListener('click', e => {
         const $hiveItems = $hiveList.querySelectorAll('.hive-item');    
         $hiveItems.forEach(item => item.classList.add('hide'));
+        $hiveList.markers.forEach(marker => marker.setMap(null)); 
 
         const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].map(c => c.name.toLowerCase().trim()).join();  
 
@@ -2009,6 +2010,11 @@ $hiveFilterCheckboxes.forEach(checkbox => {
        
                 if (filterValExists) {
                     hiveItem.classList.remove('hide');
+                    
+                    const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
+                    const marker = $hiveList.markers[hiveItemPos];
+                    marker.setMap(map); 
+
                     console.log(hiveItem)
                 }
             }
