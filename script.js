@@ -1999,10 +1999,12 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
                 if (!filterVal.trim()) continue; 
 
-                // console.log('filterVal', filterVal) 
-                // console.log('activeCheckboxes', activeCheckboxes)
+                console.log('filterVal', filterVal) 
+                console.log('activeCheckboxes', activeCheckboxes)
     
                 const filterValExists = filterVal.split(',').filter(f => activeCheckboxes.includes(f)).length; 
+
+                console.log('filterValExists', filterValExists)
        
                 if (filterValExists) {
                     hiveItem.classList.remove('hide');
