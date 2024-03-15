@@ -1991,20 +1991,28 @@ $hiveFilterCheckboxes.forEach(checkbox => {
         $hiveItems.forEach(item => item.classList.add('hide'));
         $hiveList.markers.forEach(marker => marker.setMap(null)); 
 
-        const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].map(c => c.name.toLowerCase().trim()).join();  
+        const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].map(c => {
+            const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
+                            .textContent.trim().toLowerCase()
+                            .replace(/\s+/g,'-');
+            const checkboxName = c.name.toLowerCase().trim();
+            return [group, checkboxName]; 
+        }); //.join();  
 
         $hiveList.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
             const filterObj = hiveItem.locationInfo.filter;
             if (!filterObj) return; 
 
+            console.log('filterObj', filterObj)
+
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
                 if (!filterVal.trim()) continue; 
 
-                console.log('filterObj', filterObj)
+                console.log('filterKey', filterKey)
                 console.log('filterVal', filterVal) 
                 console.log('activeCheckboxes', activeCheckboxes)
     
-                const filterValExists = filterVal.split(',').filter(f => activeCheckboxes.includes(f)).length; 
+                const filterValExists = filterVal.split(',').filter(f => activeCheckboxes.includes(f.trim())).length; 
 
                 console.log('filterValExists', filterValExists)
        
