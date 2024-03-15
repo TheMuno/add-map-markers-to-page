@@ -2009,9 +2009,9 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
                 if (!filterVal.trim()) continue; 
 
-                activeCheckboxes.forEach(arr => {
-                    if (!arr[0].includes(filterKey)) return;
-                    if (!arr[1].includes(filterVal)) return;
+                activeCheckboxes.forEach(c => {
+                    if (!filterKey.includes(c[0])) return;
+                    if (!filterVal.includes(c[1])) return;
 
                     hiveItem.classList.remove('hide');
 
