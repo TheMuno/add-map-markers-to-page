@@ -2003,27 +2003,29 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             const filterObj = hiveItem.locationInfo.filter;
             if (!filterObj) return; 
 
-            console.log('filterObj', filterObj)
-            console.log('activeCheckboxes', activeCheckboxes)
+            // console.log('filterObj', filterObj)
+            // console.log('activeCheckboxes', activeCheckboxes)
 
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
                 if (!filterVal.trim()) continue; 
 
                 activeCheckboxes.forEach(c => {
+                    // if (filterVal.includes(filterObj[c[0]]))
+
                     if (!filterKey.includes(c[0])) return;
                     if (!filterVal.includes(c[1])) return;
 
                     hiveItem.classList.remove('hide');
 
-                    console.log(hiveItem)
+                    // console.log(hiveItem)
                     
                     const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
                     const marker = $hiveList.markers[hiveItemPos];
                     marker.setMap(map); 
                 });
 
-                console.log('filterKey', filterKey)
-                console.log('filterVal', filterVal) 
+                // console.log('filterKey', filterKey)
+                // console.log('filterVal', filterVal) 
     
                 // const filterValExists = filterVal.split(',').filter(f => activeCheckboxes.includes(f.trim())).length; 
 
