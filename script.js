@@ -2004,6 +2004,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             if (!filterObj) return; 
 
             console.log('filterObj', filterObj)
+            console.log('activeCheckboxes', activeCheckboxes)
 
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
                 if (!filterVal.trim()) continue; 
@@ -2023,7 +2024,6 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 
                 console.log('filterKey', filterKey)
                 console.log('filterVal', filterVal) 
-                console.log('activeCheckboxes', activeCheckboxes)
     
                 // const filterValExists = filterVal.split(',').filter(f => activeCheckboxes.includes(f.trim())).length; 
 
