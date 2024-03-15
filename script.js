@@ -2008,27 +2008,38 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
                 if (!filterVal.trim()) continue; 
 
-                console.log('filterKey', filterKey)
-                console.log('filterVal', filterVal) 
-                console.log('activeCheckboxes', activeCheckboxes)
-    
-                const filterValExists = filterVal.split(',').filter(f => activeCheckboxes.includes(f.trim())).length; 
+                activeCheckboxes.forEach(arr => {
+                    if (!arr[0].includes(filterKey)) return;
+                    if (!arr[1].includes(filterVal)) return;
 
-                console.log('filterValExists', filterValExists)
-       
-                if (filterValExists) {
                     hiveItem.classList.remove('hide');
                     
                     const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
                     const marker = $hiveList.markers[hiveItemPos];
                     marker.setMap(map); 
+                });
 
-                    console.log(hiveItem)
-                }
+                console.log('filterKey', filterKey)
+                console.log('filterVal', filterVal) 
+                console.log('activeCheckboxes', activeCheckboxes)
+    
+                // const filterValExists = filterVal.split(',').filter(f => activeCheckboxes.includes(f.trim())).length; 
+
+                // console.log('filterValExists', filterValExists)
+       
+                // if (filterValExists) {
+                //     hiveItem.classList.remove('hide');
+                    
+                //     const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
+                //     const marker = $hiveList.markers[hiveItemPos];
+                //     marker.setMap(map); 
+
+                //     console.log(hiveItem)
+                // }
             }
         });
 
-        if (!activeCheckboxes.trim() && $hiveList.querySelectorAll('.hive-item:not(.hide)').length === 0) {
+        if (!activeCheckboxes.length && $hiveList.querySelectorAll('.hive-item:not(.hide)').length === 0) {
             $hiveItems.forEach(item => item.classList.remove('hide'));
             $hiveList.markers.forEach(marker => marker.setMap(map)); 
         }
