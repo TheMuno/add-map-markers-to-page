@@ -306,3 +306,110 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 //     window.location = '/hive.html';
 // });
 
+function createMarker(place, mapIcon=icon) {
+    let { name, formatted_address, geometry, latLng, website:address, 
+        current_opening_hours, opening_hours, formatted_phone_number:phoneNumber, 
+        reviews, rating } = place; 
+    let operatingHrs, reviewsContent, ratingTag; 
+
+    // console.log('rating:::::', rating)
+    // console.log('reviews:::::', reviews)
+    // console.log('address:::::', address)
+    // console.log('phoneNumber:::::', phoneNumber)
+    // console.log('current_opening_hours:::::', current_opening_hours)
+    // console.log('opening_hours:::::', opening_hours)
+
+    if (!phoneNumber) phoneNumber = place.phoneNumber;
+    if (!address) address = place.address || place.website;
+    if (!operatingHrs) operatingHrs = place.operatingHours;
+
+    // console.log(
+    //     'address:', address,
+    //     '\nphoneNumber:', phoneNumber
+    // )
+
+    // console.log('the place', place)  
+
+    // console.log('current_opening_hours', place.current_opening_hours)
+    // console.log('opening_hours', place.opening_hours)
+
+    // const locationName = `${name} ${formatted_address}`; 
+    let hrs;
+    if (opening_hours) hrs = opening_hours.weekday_text;
+    if (current_opening_hours) hrs = current_opening_hours.weekday_text;
+
+    // const hrs = current_opening_hours ? current_opening_hours.weekday_text : opening_hours.weekday_text; 
+
+    // if(!hrs) return; 
+
+    // console.log('geometry', geometry, 'geometry.location', geometry.location) 
+
+    const position = geometry ? geometry.location : latLng; 
+
+    const marker = new google.maps.Marker({
+        map,
+        icon: mapIcon,
+        title : name, 
+        position : position,  
+    });
+
+    
+    if(hrs) {
+        if (isString(hrs)) {
+            operatingHrs = hrs;
+        }
+        else {
+            operatingHrs = hrs.map(hr => {
+                return `<div>${hr}</div>`;
+            }).join('');
+        }
+    }
+
+    if (reviews) {
+        if (isString(reviews)) {
+            reviewsContent = reviews;
+        }
+        else {
+            reviewsContent = reviews.map(review => {
+                const { author_name, author_url, profile_photo_url, rating, relative_time_description, text } = review;
+                return `<div class="review-data">
+                <div class="review-data-row location-review-pic">${profile_photo_url ? `<img src="${profile_photo_url}">` : ''}</div>  
+                <div class="review-data-row location-review-time">${relative_time_description ? relative_time_description : '<i>missing_time_posted</i>'}</div>
+                <div class="review-data-row location-review-title"><a href="${author_url ? author_url : '#'}">${author_name}</a></div>
+                <div class="review-data-row location-review-rating">Rating: ${rating}</div>
+                <div class="review-data-row location-review-text">${text}</div>
+                </div>`;
+            }).join('');  
+        }
+    }
+
+    if (rating) {
+        ratingTag = `<meter class="average-rating" min="0" max="5" value="${rating}" title="${rating} out of 5 stars">${rating} out of 5</meter>`;
+    } 
+
+    const contentString = `
+    <div class="location-popup-content">
+    <div class="location-row location-title">${name}</div>
+      <div class="location-row">${rating ? `Rating: ${rating} ${ratingTag}` : '<i>missing_rating</i>'}</div>
+      <div class="location-row location-reviews">${reviewsContent 
+        ? `<div class="view-reviews"><span class="view-reviews-text">View Reviews</span> <i class="arrow right"></i></div><div class="reviews-list hide">${reviewsContent}</div>`
+        : '<i>missing_reviews</i>'}</div> 
+      </div>
+      <div class="location-row location-operating-hrs">${operatingHrs ? operatingHrs : '<i>missing_operating_hours</i>'}</div>
+      <div class="location-row">Phone Number: ${phoneNumber ? `<a href="${phoneNumber}">${phoneNumber}</a>` : '<i>missing_contact</i>'}</div>
+      <div class="location-row">Website: ${address ? `<a target="_blank" href="${address}">Visit Site</a>` : '<i>missing_link</i>'}</div>
+      `;   
+
+      // <div class="location-row">Phone Number: ${formatted_phone_number ? `<a href="${formatted_phone_number}">${formatted_phone_number}</a>` : '<i>missing_contact</i>'}</div>
+      // <div class="location-row">Website: ${website ? `<a href="${website}">Visit Site</a>` : '<i>missing_link</i>'}</div>
+
+    marker.addListener('click', () => { 
+        markerPopup.close();
+        // markerPopup.setContent(marker.getTitle());
+        markerPopup.setContent(contentString);
+        markerPopup.open(marker.getMap(), marker);
+    });
+
+    // return { marker, reviewsContent, operatingHrs, formatted_phone_number, website }; 
+    return { marker, rating, reviewsContent, operatingHrs, phoneNumber, address }; 
+} 
