@@ -1230,7 +1230,7 @@ function addToHive(hiveItem) {
     $hiveItem.className = 'hive-item';
     $hiveItem.textContent = dayEventName;
     $hiveItem.locationInfo = locationInfo; 
-    $hiveList.append($hiveItem);
+    // $hiveList.append($hiveItem);
 
     // icon.url = orangeMapIcon;
     // icon.url = fatOrangeMapIcon;
