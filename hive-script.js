@@ -35,7 +35,7 @@ const markerPopup = new google.maps.InfoWindow();
     });
 
     // Create the search box and link it to the UI element.
-    const searchBox = new google.maps.places.SearchBox($address);
+    // const searchBox = new google.maps.places.SearchBox($address);
     
     // Bias the SearchBox results towards current map's viewport 
     map.addListener('bounds_changed', () => {
