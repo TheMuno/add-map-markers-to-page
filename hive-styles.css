@@ -3,6 +3,7 @@
     height: 700px; 
     /* height: 400px;  */
     align-self: start; 
+    margin: auto; 
 } 
 
 .khonsu-data.hive {

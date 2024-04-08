@@ -34,7 +34,8 @@ const $map = document.querySelector('#map'),
     $hiveFieldsets = document.querySelector('.hive-fieldsets'),
     $hiveFilterCheckboxes = $hiveWrapper.querySelectorAll('.hive-filter input'),
     toggleHiveInitialText = $hiveWrapper.querySelector('label').textContent,
-    $hiveList = document.querySelector('.khonsu-data.hive .hive-list');
+    $hiveList = document.querySelector('.khonsu-data.hive .hive-list'),
+    $dayActivities = document.querySelector('.day-events');
 
 const mapZoom = 13,
     initialCoords  = { lat: 40.7580, lng: -73.9855 },
