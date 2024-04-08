@@ -58,15 +58,15 @@ const $map = document.querySelector('#map'),
     $noUser = document.querySelector('.no-user'),
     $mapUrl = document.querySelector('.map-url-link input'),
     $mapResultsOverlay = document.querySelector('.map-results-overlay'),
-    $mapResultsContent = $mapResultsOverlay.querySelector('.map-results-content'),
+    $mapResultsContent = $mapResultsOverlay.querySelector('.map-results-content');
     // $addToHiveBtn = document.querySelector('.add-to-hive'),
-    $hiveWrapper = document.querySelector('.toggle-hive-wrapper'), 
-    $toggleHive = $hiveWrapper.querySelector('.toggle-hive'),
-    $toggleHiveFilters = $hiveWrapper.querySelector('.toggle-hive-filters'),
-    $hiveFieldsets = document.querySelector('.hive-fieldsets'),
-    $hiveFilterCheckboxes = $hiveWrapper.querySelectorAll('.hive-filter input'),
+    // $hiveWrapper = document.querySelector('.toggle-hive-wrapper'), 
+    // $toggleHive = $hiveWrapper.querySelector('.toggle-hive'),
+    // $toggleHiveFilters = $hiveWrapper.querySelector('.toggle-hive-filters'),
+    // $hiveFieldsets = document.querySelector('.hive-fieldsets'),
+    // $hiveFilterCheckboxes = $hiveWrapper.querySelectorAll('.hive-filter input'),
     // toggleHiveInitialText = $hiveWrapper.querySelector('label').textContent,
-    $hiveList = document.querySelector('.khonsu-data.hive .hive-list');
+    // $hiveList = document.querySelector('.khonsu-data.hive .hive-list');
     
     $userMail.value = localStorage.getItem('user-email') || 'one@mail.com'; 
     
