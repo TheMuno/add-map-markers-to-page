@@ -89,7 +89,7 @@ async function retrieveHiveFromDB(userMail) {
     const data = await docSnap.data(); 
     const { hive } = data;
 
-    // console.log('days in db:', days)
+    console.log('days in db:', days)
 
     hive.forEach(hiveItem => {
         addToHive(hiveItem); 
