@@ -1,4 +1,4 @@
-$addToHiveBtn = document.querySelector('.add-to-hive'),
+const $addToHiveBtn = document.querySelector('.add-to-hive'),
     $hiveWrapper = document.querySelector('.toggle-hive-wrapper'), 
     $toggleHive = $hiveWrapper.querySelector('.toggle-hive'),
     $toggleHiveFilters = $hiveWrapper.querySelector('.toggle-hive-filters'),
