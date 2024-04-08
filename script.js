@@ -1238,8 +1238,8 @@ function addToHive(hiveItem) {
     const { marker } = createMarker(locationInfo, icon); 
     marker.setMap(null); 
 
-    $hiveList.markers = $hiveList.markers || [];
-    $hiveList.markers.push(marker);
+    // $hiveList.markers = $hiveList.markers || [];
+    // $hiveList.markers.push(marker);
 }
 
 /*
@@ -1920,135 +1920,135 @@ $dayActivities.addEventListener('click', e => {
     $notesWrapper.querySelector('.agent-notes-textarea').classList.toggle('hide');
 });
 
-$toggleHive.addEventListener('click', e => {
-    const $hive = $hiveList.closest('.hive');
-    $hive.classList.toggle('hide');
-    $hiveWrapper.querySelector('.toggle-hive-filters-wrapper').classList.toggle('hide');
+// $toggleHive.addEventListener('click', e => {
+//     const $hive = $hiveList.closest('.hive');
+//     $hive.classList.toggle('hide');
+//     $hiveWrapper.querySelector('.toggle-hive-filters-wrapper').classList.toggle('hide');
 
-    if ($hive.classList.contains('hide')) {
-        $hiveList.markers.forEach(marker => marker.setMap(null));  
+//     if ($hive.classList.contains('hide')) {
+//         $hiveList.markers.forEach(marker => marker.setMap(null));  
 
-        const $hiveFilters = $hiveWrapper.querySelector('.hive-filters'); 
-        if (!$hiveFilters.classList.contains('hide')) {
-            $toggleHiveFilters.click(); 
-        }
+//         const $hiveFilters = $hiveWrapper.querySelector('.hive-filters'); 
+//         if (!$hiveFilters.classList.contains('hide')) {
+//             $toggleHiveFilters.click(); 
+//         }
 
-    }
-    else {
-        $hiveList.markers.forEach(marker => marker.setMap(map));   
-    }  
-});
+//     }
+//     else {
+//         $hiveList.markers.forEach(marker => marker.setMap(map));   
+//     }  
+// });
 
-$toggleHiveFilters.addEventListener('click', e => {
-    $hiveWrapper.querySelector('.hive-filters').classList.toggle('hide');
-});
+// $toggleHiveFilters.addEventListener('click', e => {
+//     $hiveWrapper.querySelector('.hive-filters').classList.toggle('hide');
+// });
 
-$hiveList.addEventListener('click', e => {
-    if (!e.target.closest('.hive-item')) return;
-    const $hiveItem = e.target.closest('.hive-item');
+// $hiveList.addEventListener('click', e => {
+//     if (!e.target.closest('.hive-item')) return;
+//     const $hiveItem = e.target.closest('.hive-item');
     
-    if ($hiveItem.classList.contains('active')) {
-        $hiveItem.classList.remove('active');
-        markerPopup.close();
-    }
-    else {
-        const $allHiveItems = $hiveList.querySelectorAll('.hive-item'); 
-        $allHiveItems.forEach(item => item.classList.remove('active'));
-        $hiveItem.classList.add('active');
-        const hiveItemPos = [...$allHiveItems].indexOf($hiveItem);
-        const marker = $hiveList.markers[hiveItemPos];
-        openMarkerWithInfo(marker, $hiveItem);
-    } 
-});
+//     if ($hiveItem.classList.contains('active')) {
+//         $hiveItem.classList.remove('active');
+//         markerPopup.close();
+//     }
+//     else {
+//         const $allHiveItems = $hiveList.querySelectorAll('.hive-item'); 
+//         $allHiveItems.forEach(item => item.classList.remove('active'));
+//         $hiveItem.classList.add('active');
+//         const hiveItemPos = [...$allHiveItems].indexOf($hiveItem);
+//         const marker = $hiveList.markers[hiveItemPos];
+//         openMarkerWithInfo(marker, $hiveItem);
+//     } 
+// });
 
-function openMarkerWithInfo(marker, $hiveItem) {
-    map.panTo(marker.position); 
+// function openMarkerWithInfo(marker, $hiveItem) {
+//     map.panTo(marker.position); 
 
-    const { name, rating, reviews, operatingHours, phoneNumber, address } = $hiveItem.locationInfo;
-    const ratingTag = `<meter class="average-rating" min="0" max="5" value="${rating}" title="${rating} out of 5 stars">${rating} out of 5</meter>`;
+//     const { name, rating, reviews, operatingHours, phoneNumber, address } = $hiveItem.locationInfo;
+//     const ratingTag = `<meter class="average-rating" min="0" max="5" value="${rating}" title="${rating} out of 5 stars">${rating} out of 5</meter>`;
 
-    const contentString = `
-    <div class="location-popup-content">
-    <div class="location-row location-title">${name}</div>
-        <div class="location-row">${rating ? `Rating: ${rating} ${ratingTag}` : '<i>missing_rating</i>'}</div>
-        <div class="location-row location-reviews">${reviews 
-        ? `<div class="view-reviews"><span class="view-reviews-text">View Reviews</span> <i class="arrow right"></i></div><div class="reviews-list hide">${reviews}</div>`
-        : '<i>missing_reviews</i>'}</div> 
-        </div>
-        <div class="location-row location-operating-hrs">${operatingHours ? operatingHours : '<i>missing_operating_hours</i>'}</div>
-        <div class="location-row">Phone Number: ${phoneNumber ? `<a href="${phoneNumber}">${phoneNumber}</a>` : '<i>missing_contact</i>'}</div>
-        <div class="location-row">Website: ${address ? `<a target="_blank" href="${address}">Visit Site</a>` : '<i>missing_link</i>'}</div>
-        `; 
+//     const contentString = `
+//     <div class="location-popup-content">
+//     <div class="location-row location-title">${name}</div>
+//         <div class="location-row">${rating ? `Rating: ${rating} ${ratingTag}` : '<i>missing_rating</i>'}</div>
+//         <div class="location-row location-reviews">${reviews 
+//         ? `<div class="view-reviews"><span class="view-reviews-text">View Reviews</span> <i class="arrow right"></i></div><div class="reviews-list hide">${reviews}</div>`
+//         : '<i>missing_reviews</i>'}</div> 
+//         </div>
+//         <div class="location-row location-operating-hrs">${operatingHours ? operatingHours : '<i>missing_operating_hours</i>'}</div>
+//         <div class="location-row">Phone Number: ${phoneNumber ? `<a href="${phoneNumber}">${phoneNumber}</a>` : '<i>missing_contact</i>'}</div>
+//         <div class="location-row">Website: ${address ? `<a target="_blank" href="${address}">Visit Site</a>` : '<i>missing_link</i>'}</div>
+//         `; 
 
-    markerPopup.close();
-    markerPopup.setContent(contentString);
-    markerPopup.open(marker.getMap(), marker);
-}
+//     markerPopup.close();
+//     markerPopup.setContent(contentString);
+//     markerPopup.open(marker.getMap(), marker);
+// }
 
-$hiveFilterCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener('click', e => {
-        const $hiveItems = $hiveList.querySelectorAll('.hive-item');    
-        $hiveItems.forEach(item => item.classList.add('hide'));
-        $hiveList.markers.forEach(marker => marker.setMap(null)); 
+// $hiveFilterCheckboxes.forEach(checkbox => {
+//     checkbox.addEventListener('click', e => {
+//         const $hiveItems = $hiveList.querySelectorAll('.hive-item');    
+//         $hiveItems.forEach(item => item.classList.add('hide'));
+//         $hiveList.markers.forEach(marker => marker.setMap(null)); 
 
-        const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].map(c => {
-            const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
-                            .textContent.trim().toLowerCase()
-                            .replace(/\s+/g,'-');
-            const checkboxName = c.name.toLowerCase().trim();
-            return [group, checkboxName]; 
-        }); //.join();  
+//         const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].map(c => {
+//             const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
+//                             .textContent.trim().toLowerCase()
+//                             .replace(/\s+/g,'-');
+//             const checkboxName = c.name.toLowerCase().trim();
+//             return [group, checkboxName]; 
+//         }); //.join();  
 
-        $hiveList.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
-            const filterObj = hiveItem.locationInfo.filter;
-            if (!filterObj) return; 
+//         $hiveList.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
+//             const filterObj = hiveItem.locationInfo.filter;
+//             if (!filterObj) return; 
 
-            // console.log('filterObj', filterObj)
-            // console.log('activeCheckboxes', activeCheckboxes)
+//             // console.log('filterObj', filterObj)
+//             // console.log('activeCheckboxes', activeCheckboxes)
 
-            for (const [filterKey, filterVal] of Object.entries(filterObj)) {
-                if (!filterVal.trim()) continue; 
+//             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
+//                 if (!filterVal.trim()) continue; 
 
-                activeCheckboxes.forEach(c => {
-                    // if (filterVal.includes(filterObj[c[0]]))
+//                 activeCheckboxes.forEach(c => {
+//                     // if (filterVal.includes(filterObj[c[0]]))
 
-                    if (!filterKey.includes(c[0])) return;
-                    if (!filterVal.includes(c[1])) return;
+//                     if (!filterKey.includes(c[0])) return;
+//                     if (!filterVal.includes(c[1])) return;
 
-                    hiveItem.classList.remove('hide');
+//                     hiveItem.classList.remove('hide');
 
-                    // console.log(hiveItem)
+//                     // console.log(hiveItem)
                     
-                    const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
-                    const marker = $hiveList.markers[hiveItemPos];
-                    marker.setMap(map); 
-                });
+//                     const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
+//                     const marker = $hiveList.markers[hiveItemPos];
+//                     marker.setMap(map); 
+//                 });
 
-                // console.log('filterKey', filterKey)
-                // console.log('filterVal', filterVal) 
+//                 // console.log('filterKey', filterKey)
+//                 // console.log('filterVal', filterVal) 
     
-                // const filterValExists = filterVal.split(',').filter(f => activeCheckboxes.includes(f.trim())).length; 
+//                 // const filterValExists = filterVal.split(',').filter(f => activeCheckboxes.includes(f.trim())).length; 
 
-                // console.log('filterValExists', filterValExists)
+//                 // console.log('filterValExists', filterValExists)
        
-                // if (filterValExists) {
-                //     hiveItem.classList.remove('hide');
+//                 // if (filterValExists) {
+//                 //     hiveItem.classList.remove('hide');
                     
-                //     const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
-                //     const marker = $hiveList.markers[hiveItemPos];
-                //     marker.setMap(map); 
+//                 //     const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
+//                 //     const marker = $hiveList.markers[hiveItemPos];
+//                 //     marker.setMap(map); 
 
-                //     console.log(hiveItem)
-                // }
-            }
-        });
+//                 //     console.log(hiveItem)
+//                 // }
+//             }
+//         });
 
-        if (!activeCheckboxes.length && $hiveList.querySelectorAll('.hive-item:not(.hide)').length === 0) {
-            $hiveItems.forEach(item => item.classList.remove('hide'));
-            $hiveList.markers.forEach(marker => marker.setMap(map)); 
-        }
-    });
-});
+//         if (!activeCheckboxes.length && $hiveList.querySelectorAll('.hive-item:not(.hide)').length === 0) {
+//             $hiveItems.forEach(item => item.classList.remove('hide'));
+//             $hiveList.markers.forEach(marker => marker.setMap(map)); 
+//         }
+//     });
+// });
 
 /*
 $hiveFilterCheckboxes.forEach(checkbox => {
