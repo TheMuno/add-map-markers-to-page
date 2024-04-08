@@ -14,6 +14,8 @@ const mapZoom = 13,
     orangeMapIcon = 'Imgs/pin_orange.png',
     cameraMapIcon = 'Imgs/camera-pin.png';
 
+let map; 
+
 // setup map 
 const icon = {
     url: mapIcon, //place.icon,
