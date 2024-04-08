@@ -34,8 +34,8 @@ const $map = document.querySelector('#map'),
     $hiveFieldsets = document.querySelector('.hive-fieldsets'),
     $hiveFilterCheckboxes = $hiveWrapper.querySelectorAll('.hive-filter input'),
     toggleHiveInitialText = $hiveWrapper.querySelector('label').textContent,
-    $hiveList = document.querySelector('.khonsu-data.hive .hive-list'),
-    $dayActivities = document.querySelector('.day-events');
+    $hiveList = document.querySelector('.khonsu-data.hive .hive-list');
+    // $dayActivities = document.querySelector('.day-events');
 
 const mapZoom = 13,
     initialCoords  = { lat: 40.7580, lng: -73.9855 },
@@ -72,9 +72,9 @@ const markerPopup = new google.maps.InfoWindow();
     // });
 }();
 
-retrieveSavedMarkersFromFirebase(localStorage.getItem('user-email')); 
+retrieveHiveFromDB(localStorage.getItem('user-email')); 
 
-async function retrieveSavedMarkersFromFirebase(userMail) {    
+async function retrieveHiveFromDB(userMail) {    
     const userData = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(userData);
 
@@ -87,72 +87,14 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
     } 
 
     const data = await docSnap.data(); 
-    const { days, deletedDays, references, hive } = data;
+    const { hive } = data;
 
     // console.log('days in db:', days)
-
-    setupDays('.all-days', days);
-    setupDays('.removed-days .all-days', deletedDays); 
-
-    $daysSelect.selectedIndex = 0; 
-    if (days.length) resetAddressField(); 
-
-    setupReservations();
-
-    const { mapUrl } = references;
-    setupMapurlNQRCode(mapUrl); 
 
     hive.forEach(hiveItem => {
         addToHive(hiveItem); 
     });
 
-    function setupDays(parentContainerClass, daysArr) {
-        const $parentContainer = $dayActivities.querySelector(parentContainerClass); 
-
-        daysArr.forEach(day => {
-            const { dayDate, events:dayActivities } = day;
-            const dayIdentifier = `[day="${dayDate.trim()}"]`;
-
-            if ($parentContainer.closest('.removed-days')) {
-                addDayActivitiesListContainer(dayDate, parentContainerClass);
-                $parentContainer.closest('.day-events').querySelector('.show-removed').classList.remove('hide');
-            }
-            else {
-                addDayActivitiesListContainer(dayDate);
-                addOptionToDaysSelect(dayDate);
-            }
-
-            dayActivities.forEach(activity => {
-                const $currentDay = $parentContainer.querySelector(dayIdentifier);
-
-                // console.log('$currentDay', $currentDay)
-
-                if (!$currentDay) return;
-
-                const { dayEventName, description, lat, lng, title, timeslot, starttime, endtime, 
-                    rating, reviews, operatingHours, phoneNumber, address } = activity;
-                if (lat && lng) {
-                    const locationInfo = {
-                        name: title,
-                        latLng: {lat, lng},
-                        rating,
-                        reviews,
-                        operatingHours,
-                        phoneNumber,
-                        address,
-                    };
-
-                    const { marker:createdMarker } = createMarker(locationInfo);   
-                    // currentDay.markers.push(createdMarker);  
-
-                    const markerObj = { lat, lng, title, dayEventName, description, timeslot, starttime, endtime }; 
-
-                    const eventId = dayDate.toLowerCase().replace(/,\s+|\s+/g,'-');
-                    postDayActivity(dayEventName, dayIdentifier, createdMarker, eventId, markerObj); 
-                }
-            });
-        });
-    }
 }
 
 function addToHive(hiveItem) {
