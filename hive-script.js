@@ -413,3 +413,8 @@ function createMarker(place, mapIcon=icon) {
     // return { marker, reviewsContent, operatingHrs, formatted_phone_number, website }; 
     return { marker, rating, reviewsContent, operatingHrs, phoneNumber, address }; 
 } 
+
+function isString(x) {
+    return Object.prototype.toString.call(x) === '[object String]';
+}
+
