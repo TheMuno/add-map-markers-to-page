@@ -1,7 +1,7 @@
 const $addToHiveBtn = document.querySelector('.add-to-hive'),
     $hiveWrapper = document.querySelector('.toggle-hive-wrapper'), 
-    $toggleHive = $hiveWrapper.querySelector('.toggle-hive'),
-    $toggleHiveFilters = $hiveWrapper.querySelector('.toggle-hive-filters'),
+    // $toggleHive = $hiveWrapper.querySelector('.toggle-hive'),
+    // $toggleHiveFilters = $hiveWrapper.querySelector('.toggle-hive-filters'),
     $hiveFieldsets = document.querySelector('.hive-fieldsets'),
     $hiveFilterCheckboxes = $hiveWrapper.querySelectorAll('.hive-filter input'),
     toggleHiveInitialText = $hiveWrapper.querySelector('label').textContent,
@@ -118,28 +118,28 @@ const $addToHiveBtn = document.querySelector('.add-to-hive'),
     }
 
 
-$toggleHive.addEventListener('click', e => {
-    const $hive = $hiveList.closest('.hive');
-    $hive.classList.toggle('hide');
-    $hiveWrapper.querySelector('.toggle-hive-filters-wrapper').classList.toggle('hide');
+// $toggleHive.addEventListener('click', e => {
+//     const $hive = $hiveList.closest('.hive');
+//     $hive.classList.toggle('hide');
+//     $hiveWrapper.querySelector('.toggle-hive-filters-wrapper').classList.toggle('hide');
 
-    if ($hive.classList.contains('hide')) {
-        $hiveList.markers.forEach(marker => marker.setMap(null));  
+//     if ($hive.classList.contains('hide')) {
+//         $hiveList.markers.forEach(marker => marker.setMap(null));  
 
-        const $hiveFilters = $hiveWrapper.querySelector('.hive-filters'); 
-        if (!$hiveFilters.classList.contains('hide')) {
-            $toggleHiveFilters.click(); 
-        }
+//         const $hiveFilters = $hiveWrapper.querySelector('.hive-filters'); 
+//         if (!$hiveFilters.classList.contains('hide')) {
+//             $toggleHiveFilters.click(); 
+//         }
 
-    }
-    else {
-        $hiveList.markers.forEach(marker => marker.setMap(map));   
-    }  
-});
+//     }
+//     else {
+//         $hiveList.markers.forEach(marker => marker.setMap(map));   
+//     }  
+// });
 
-$toggleHiveFilters.addEventListener('click', e => {
-    $hiveWrapper.querySelector('.hive-filters').classList.toggle('hide');
-});
+// $toggleHiveFilters.addEventListener('click', e => {
+//     $hiveWrapper.querySelector('.hive-filters').classList.toggle('hide');
+// });
 
 $hiveList.addEventListener('click', e => {
     if (!e.target.closest('.hive-item')) return;
@@ -293,7 +293,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 });
 */
 
-document.querySelector('.view-hive-btn').addEventListener('click', e => {
-    window.location = '/hive.html';
-});
+// document.querySelector('.view-hive-btn').addEventListener('click', e => {
+//     window.location = '/hive.html';
+// });
 
