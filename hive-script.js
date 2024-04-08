@@ -1,3 +1,31 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+import { getFirestore, doc, setDoc, getDoc, 
+    getDocs, updateDoc, deleteField, collection,
+    arrayUnion, arrayRemove, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyBQPqbtlfHPLpB-JYbyxDZiugu4NqwpSeM",
+    authDomain: "askkhonsu-map.firebaseapp.com",
+    projectId: "askkhonsu-map",
+    storageBucket: "askkhonsu-map.appspot.com",
+    messagingSenderId: "266031876218",
+    appId: "1:266031876218:web:ec93411f1c13d9731e93c3",
+    measurementId: "G-Z7F4NJ4PHW"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(app); 
+
+if (!localStorage.getItem('user-email'))
+localStorage.setItem('user-email', 'one@mail.com');  
+
+
+
+
 const $map = document.querySelector('#map'),
     $addToHiveBtn = document.querySelector('.add-to-hive'),
     $hiveWrapper = document.querySelector('.toggle-hive-wrapper'), 
@@ -42,6 +70,8 @@ const markerPopup = new google.maps.InfoWindow();
     //     searchBox.setBounds(map.getBounds()); 
     // });
 }();
+
+retrieveSavedMarkersFromFirebase(localStorage.getItem('user-email')); 
 
 async function retrieveSavedMarkersFromFirebase(userMail) {    
     const userData = doc(db, 'travelData', `user-${userMail}`);
