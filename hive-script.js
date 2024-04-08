@@ -38,9 +38,9 @@ const markerPopup = new google.maps.InfoWindow();
     // const searchBox = new google.maps.places.SearchBox($address);
     
     // Bias the SearchBox results towards current map's viewport 
-    map.addListener('bounds_changed', () => {
-        searchBox.setBounds(map.getBounds()); 
-    });
+    // map.addListener('bounds_changed', () => {
+    //     searchBox.setBounds(map.getBounds()); 
+    // });
 }();
 
 async function retrieveSavedMarkersFromFirebase(userMail) {    
