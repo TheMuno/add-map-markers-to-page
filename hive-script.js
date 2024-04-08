@@ -1,4 +1,5 @@
-const $addToHiveBtn = document.querySelector('.add-to-hive'),
+const $map = document.querySelector('#map'),
+    $addToHiveBtn = document.querySelector('.add-to-hive'),
     $hiveWrapper = document.querySelector('.toggle-hive-wrapper'), 
     // $toggleHive = $hiveWrapper.querySelector('.toggle-hive'),
     // $toggleHiveFilters = $hiveWrapper.querySelector('.toggle-hive-filters'),
@@ -7,115 +8,148 @@ const $addToHiveBtn = document.querySelector('.add-to-hive'),
     toggleHiveInitialText = $hiveWrapper.querySelector('label').textContent,
     $hiveList = document.querySelector('.khonsu-data.hive .hive-list');
 
-    async function retrieveSavedMarkersFromFirebase(userMail) {    
-        const userData = doc(db, 'travelData', `user-${userMail}`);
-        const docSnap = await getDoc(userData);
+const mapZoom = 13,
+    initialCoords  = { lat: 40.7580, lng: -73.9855 },
+    mapIcon = 'https://uploads-ssl.webflow.com/61268cc8812ac5956bad13e4/64ba87cd2730a9c6cf7c0d5a_pin%20(3).png', 
+    orangeMapIcon = 'Imgs/pin_orange.png',
+    cameraMapIcon = 'Imgs/camera-pin.png';
+
+// setup map 
+const icon = {
+    url: mapIcon, //place.icon,
+    size: new google.maps.Size(71, 71),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(17, 34),
+    scaledSize: new google.maps.Size(25, 25),
+};
+
+const markerPopup = new google.maps.InfoWindow();  
+
+!function initMap() {
     
-        if (!docSnap.exists()) {
-            // docSnap.data() will be undefined in this case
-            console.log('No user with such email!');
-            $noUser.textContent = 'No user with such email, sorry!';
-            setTimeout(()=> $noUser.textContent = '', 5000);
-            return; 
-        } 
+    map = new google.maps.Map($map, { 
+        zoom: mapZoom,
+        center: initialCoords,
+    });
+
+    // Create the search box and link it to the UI element.
+    const searchBox = new google.maps.places.SearchBox($address);
     
-        const data = await docSnap.data(); 
-        const { days, deletedDays, references, hive } = data;
-    
-        // console.log('days in db:', days)
-    
-        setupDays('.all-days', days);
-        setupDays('.removed-days .all-days', deletedDays); 
-    
-        $daysSelect.selectedIndex = 0; 
-        if (days.length) resetAddressField(); 
-    
-        setupReservations();
-    
-        const { mapUrl } = references;
-        setupMapurlNQRCode(mapUrl); 
-    
-        hive.forEach(hiveItem => {
-            addToHive(hiveItem); 
-        });
-    
-        function setupDays(parentContainerClass, daysArr) {
-            const $parentContainer = $dayActivities.querySelector(parentContainerClass); 
-    
-            daysArr.forEach(day => {
-                const { dayDate, events:dayActivities } = day;
-                const dayIdentifier = `[day="${dayDate.trim()}"]`;
-    
-                if ($parentContainer.closest('.removed-days')) {
-                    addDayActivitiesListContainer(dayDate, parentContainerClass);
-                    $parentContainer.closest('.day-events').querySelector('.show-removed').classList.remove('hide');
+    // Bias the SearchBox results towards current map's viewport 
+    map.addListener('bounds_changed', () => {
+        searchBox.setBounds(map.getBounds()); 
+    });
+}();
+
+async function retrieveSavedMarkersFromFirebase(userMail) {    
+    const userData = doc(db, 'travelData', `user-${userMail}`);
+    const docSnap = await getDoc(userData);
+
+    if (!docSnap.exists()) {
+        // docSnap.data() will be undefined in this case
+        console.log('No user with such email!');
+        $noUser.textContent = 'No user with such email, sorry!';
+        setTimeout(()=> $noUser.textContent = '', 5000);
+        return; 
+    } 
+
+    const data = await docSnap.data(); 
+    const { days, deletedDays, references, hive } = data;
+
+    // console.log('days in db:', days)
+
+    setupDays('.all-days', days);
+    setupDays('.removed-days .all-days', deletedDays); 
+
+    $daysSelect.selectedIndex = 0; 
+    if (days.length) resetAddressField(); 
+
+    setupReservations();
+
+    const { mapUrl } = references;
+    setupMapurlNQRCode(mapUrl); 
+
+    hive.forEach(hiveItem => {
+        addToHive(hiveItem); 
+    });
+
+    function setupDays(parentContainerClass, daysArr) {
+        const $parentContainer = $dayActivities.querySelector(parentContainerClass); 
+
+        daysArr.forEach(day => {
+            const { dayDate, events:dayActivities } = day;
+            const dayIdentifier = `[day="${dayDate.trim()}"]`;
+
+            if ($parentContainer.closest('.removed-days')) {
+                addDayActivitiesListContainer(dayDate, parentContainerClass);
+                $parentContainer.closest('.day-events').querySelector('.show-removed').classList.remove('hide');
+            }
+            else {
+                addDayActivitiesListContainer(dayDate);
+                addOptionToDaysSelect(dayDate);
+            }
+
+            dayActivities.forEach(activity => {
+                const $currentDay = $parentContainer.querySelector(dayIdentifier);
+
+                // console.log('$currentDay', $currentDay)
+
+                if (!$currentDay) return;
+
+                const { dayEventName, description, lat, lng, title, timeslot, starttime, endtime, 
+                    rating, reviews, operatingHours, phoneNumber, address } = activity;
+                if (lat && lng) {
+                    const locationInfo = {
+                        name: title,
+                        latLng: {lat, lng},
+                        rating,
+                        reviews,
+                        operatingHours,
+                        phoneNumber,
+                        address,
+                    };
+
+                    const { marker:createdMarker } = createMarker(locationInfo);   
+                    // currentDay.markers.push(createdMarker);  
+
+                    const markerObj = { lat, lng, title, dayEventName, description, timeslot, starttime, endtime }; 
+
+                    const eventId = dayDate.toLowerCase().replace(/,\s+|\s+/g,'-');
+                    postDayActivity(dayEventName, dayIdentifier, createdMarker, eventId, markerObj); 
                 }
-                else {
-                    addDayActivitiesListContainer(dayDate);
-                    addOptionToDaysSelect(dayDate);
-                }
-    
-                dayActivities.forEach(activity => {
-                    const $currentDay = $parentContainer.querySelector(dayIdentifier);
-    
-                    // console.log('$currentDay', $currentDay)
-    
-                    if (!$currentDay) return;
-    
-                    const { dayEventName, description, lat, lng, title, timeslot, starttime, endtime, 
-                        rating, reviews, operatingHours, phoneNumber, address } = activity;
-                    if (lat && lng) {
-                        const locationInfo = {
-                            name: title,
-                            latLng: {lat, lng},
-                            rating,
-                            reviews,
-                            operatingHours,
-                            phoneNumber,
-                            address,
-                        };
-    
-                        const { marker:createdMarker } = createMarker(locationInfo);   
-                        // currentDay.markers.push(createdMarker);  
-    
-                        const markerObj = { lat, lng, title, dayEventName, description, timeslot, starttime, endtime }; 
-    
-                        const eventId = dayDate.toLowerCase().replace(/,\s+|\s+/g,'-');
-                        postDayActivity(dayEventName, dayIdentifier, createdMarker, eventId, markerObj); 
-                    }
-                });
             });
-        }
+        });
     }
-    
-    function addToHive(hiveItem) {
-        const { dayEventName, title, lat, lng, rating, reviews, operatingHours, phoneNumber, address, filter } = hiveItem; 
-        const locationInfo = {
-            name: title,
-            latLng: {lat, lng},
-            rating,
-            reviews,
-            operatingHours,
-            phoneNumber,
-            address,
-            filter,
-        };
-    
-        const $hiveItem = document.createElement('div');
-        $hiveItem.className = 'hive-item';
-        $hiveItem.textContent = dayEventName;
-        $hiveItem.locationInfo = locationInfo; 
-        $hiveList.append($hiveItem);
-    
-        // icon.url = orangeMapIcon;
-        // icon.url = fatOrangeMapIcon;
-        icon.url = cameraMapIcon;
-        const { marker } = createMarker(locationInfo, icon); 
-        marker.setMap(null); 
-    
-        $hiveList.markers = $hiveList.markers || [];
-        $hiveList.markers.push(marker);
-    }
+}
+
+function addToHive(hiveItem) {
+    const { dayEventName, title, lat, lng, rating, reviews, operatingHours, phoneNumber, address, filter } = hiveItem; 
+    const locationInfo = {
+        name: title,
+        latLng: {lat, lng},
+        rating,
+        reviews,
+        operatingHours,
+        phoneNumber,
+        address,
+        filter,
+    };
+
+    const $hiveItem = document.createElement('div');
+    $hiveItem.className = 'hive-item';
+    $hiveItem.textContent = dayEventName;
+    $hiveItem.locationInfo = locationInfo; 
+    $hiveList.append($hiveItem);
+
+    // icon.url = orangeMapIcon;
+    // icon.url = fatOrangeMapIcon;
+    icon.url = cameraMapIcon;
+    const { marker } = createMarker(locationInfo, icon); 
+    marker.setMap(null); 
+
+    $hiveList.markers = $hiveList.markers || [];
+    $hiveList.markers.push(marker);
+}
 
 
 // $toggleHive.addEventListener('click', e => {
