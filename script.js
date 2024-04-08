@@ -2095,3 +2095,6 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 });
 */
 
+document.querySelector('.view-hive-btn').addEventListener('click', e => {
+    window.location = '/hive.html';
+});

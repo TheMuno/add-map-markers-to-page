@@ -1,0 +1,70 @@
+.khonsu-data.hive {
+    width: 60%;
+    /* height: 500px; */
+    /* margin-top: 50px; */
+    margin: auto;
+}
+
+.khonsu-data.hive.hide {
+    display: none;
+}
+
+.hive-list {
+    overflow: auto; 
+}
+
+.hive-list .hive-item {
+    padding: 10px;
+}
+
+.hive-list .hive-item:nth-child(odd) {
+    background-color: rgba(0,0,0,0.1); 
+}
+
+.hive-list .hive-item:hover { 
+    background-color: gray;
+    color: white; 
+}
+
+.hive-list .hive-item.active { 
+    background-color: #a9a0a0;
+    color: white; 
+    font-style: italic;
+}
+
+.hive-list .hive-item.hide {
+    display: none;
+}
+
+.toggle-hive-wrapper {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.inline {
+    /* display: inline; */
+}
+
+.hive-fieldsets {
+    display: flex;
+    font-size: 0.8em; 
+} 
+
+.hive-fieldsets .hive-filter-wrapper-fieldset {
+    height: fit-content;
+    display: flex;
+} 
+
+.toggle-hive-filters-wrapper.hide {
+    display: none;
+}
+
+.hive-filters {
+    margin-top: 50px;
+}   
