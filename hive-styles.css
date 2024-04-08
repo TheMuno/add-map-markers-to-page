@@ -1,3 +1,10 @@
+#map {
+    width: 68%; 
+    height: 700px; 
+    /* height: 400px;  */
+    align-self: start; 
+} 
+
 .khonsu-data.hive {
     width: 60%;
     /* height: 500px; */
