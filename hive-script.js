@@ -120,7 +120,7 @@ function addToHive(hiveItem) {
     // icon.url = fatOrangeMapIcon;
     icon.url = cameraMapIcon;
     const { marker } = createMarker(locationInfo, icon); 
-    marker.setMap(null); 
+    // marker.setMap(null); 
 
     $hiveList.markers = $hiveList.markers || [];
     $hiveList.markers.push(marker);
