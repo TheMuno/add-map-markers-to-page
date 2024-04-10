@@ -8,10 +8,24 @@
     <link rel="stylesheet" href="hive-styles.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4&libraries=places&v=weekly&language=en" ></script>  
     <script defer type="module" src="hive-script.js"></script>
+    <style>
+        .data-select {
+            margin-top: 50px;
+            padding: 5px;
+            width: 200px;
+        }
+    </style>
 </head>
 <body>
     <div class="section">
         <div id="map"></div>   
+    </div>
+    <div class="section">
+        <select class="data-select">
+            <option value="*">Choose Data...</option>
+            <option value="retail">Retail</option>
+            <option value="attractions">Attractions</option>
+        </select>  
     </div>
     <div class="section center-content flex-column">
         <div class="toggle-hive-wrapper">

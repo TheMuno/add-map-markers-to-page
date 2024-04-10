@@ -222,13 +222,13 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             return [group, checkboxName]; 
         }); //.join(); 
         
-        console.log('activeCheckboxes', activeCheckboxes)
+        // console.log('activeCheckboxes', activeCheckboxes)
 
         $hiveList.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
             const filterObj = hiveItem.locationInfo.filter;
             if (!filterObj) return; 
 
-            console.log('filterObj', filterObj)
+            // console.log('filterObj', filterObj)
             // console.log('activeCheckboxes', activeCheckboxes)
 
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
@@ -237,8 +237,8 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                 activeCheckboxes.forEach(c => {
                     // if (filterVal.includes(filterObj[c[0]]))
 
-                    console.log('filterKey', filterKey)
-                    console.log('filterVal', filterVal)
+                    // console.log('filterKey', filterKey)
+                    // console.log('filterVal', filterVal)
 
                     if (!filterKey.toLowerCase().includes(c[0].toLowerCase())) return;
                     if (!filterVal.toLowerCase().includes(c[1].toLowerCase())) return;
