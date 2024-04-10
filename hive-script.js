@@ -220,7 +220,9 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                             .replace(/\s+/g,'-');
             const checkboxName = c.name.toLowerCase().trim();
             return [group, checkboxName]; 
-        }); //.join();  
+        }); //.join(); 
+        
+        console.log('activeCheckboxes', activeCheckboxes)
 
         $hiveList.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
             const filterObj = hiveItem.locationInfo.filter;
