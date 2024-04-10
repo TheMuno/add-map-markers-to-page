@@ -192,6 +192,22 @@ function openMarkerWithInfo(marker, $hiveItem) {
     markerPopup.open(marker.getMap(), marker);
 }
 
+$map.addEventListener('click', e => { 
+    if (!e.target.closest('.view-reviews')) return;
+    const $locationReviews = e.target.closest('.location-reviews'); 
+    const $arrow = e.target.closest('.view-reviews').querySelector('.arrow'); 
+    if ($arrow.classList.contains('right')) {
+        $arrow.classList.remove('right');
+        $arrow.classList.add('down');
+        $locationReviews.querySelector('.reviews-list').classList.remove('hide');
+    }
+    else {
+        $arrow.classList.remove('down');
+        $arrow.classList.add('right');
+        $locationReviews.querySelector('.reviews-list').classList.add('hide');
+    }
+});
+
 $hiveFilterCheckboxes.forEach(checkbox => {
     checkbox.addEventListener('click', e => {
         const $hiveItems = $hiveList.querySelectorAll('.hive-item');    
