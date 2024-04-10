@@ -240,8 +240,8 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                     console.log('filterKey', filterKey)
                     console.log('filterVal', filterVal)
 
-                    if (!filterKey.includes(c[0])) return;
-                    if (!filterVal.includes(c[1])) return;
+                    if (!filterKey.toLowerCase().includes(c[0].toLowerCase())) return;
+                    if (!filterVal.toLowerCase().includes(c[1].toLowerCase())) return;
 
                     hiveItem.classList.remove('hide');
 
