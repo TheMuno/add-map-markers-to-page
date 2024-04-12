@@ -235,6 +235,10 @@ $hiveFilterCheckboxes.forEach(checkbox => {
         const $hiveList = e.currentTarget.closest('.section').querySelector('.khonsu-data');
         const $hiveItems = $hiveList.querySelectorAll('.hive-item');    
         $hiveItems.forEach(item => item.classList.add('hide'));
+
+        console.log('$hiveList', $hiveList)
+        console.log('$hiveList.markers', markers)
+
         $hiveList.markers.forEach(marker => marker.setMap(null)); 
 
         const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].map(c => {
