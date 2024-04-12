@@ -172,6 +172,24 @@ $hiveList.addEventListener('click', e => {
     } 
 });
 
+$hiveListAttractions.addEventListener('click', e => {
+    if (!e.target.closest('.hive-item')) return;
+    const $hiveItem = e.target.closest('.hive-item');
+    
+    if ($hiveItem.classList.contains('active')) {
+        $hiveItem.classList.remove('active');
+        markerPopup.close();
+    }
+    else {
+        const $allHiveItems = $hiveListAttractions.querySelectorAll('.hive-item'); 
+        $allHiveItems.forEach(item => item.classList.remove('active'));
+        $hiveItem.classList.add('active');
+        const hiveItemPos = [...$allHiveItems].indexOf($hiveItem);
+        const marker = $hiveListAttractions.markers[hiveItemPos];
+        openMarkerWithInfo(marker, $hiveItem);
+    } 
+});
+
 function openMarkerWithInfo(marker, $hiveItem) {
     map.panTo(marker.position); 
 
@@ -214,6 +232,7 @@ $map.addEventListener('click', e => {
 
 $hiveFilterCheckboxes.forEach(checkbox => {
     checkbox.addEventListener('click', e => {
+        const $hiveList = e.currentTarget.closest('.section').querySelector('.khonsu-data');
         const $hiveItems = $hiveList.querySelectorAll('.hive-item');    
         $hiveItems.forEach(item => item.classList.add('hide'));
         $hiveList.markers.forEach(marker => marker.setMap(null)); 
