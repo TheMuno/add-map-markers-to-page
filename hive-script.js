@@ -36,7 +36,7 @@ const $map = document.querySelector('#map'),
     toggleHiveInitialText = $hiveWrapper.querySelector('label').textContent,
     $hiveList = document.querySelector('.khonsu-data.hive .hive-list'),
     // $dayActivities = document.querySelector('.day-events');
-    $dataTypeSelect = document.querySelector('..data-type-select'),
+    $dataTypeSelect = document.querySelector('.data-type-select'),
     $dataTypeSections = document.querySelectorAll('[data-type]'),
     $retailSection = document.querySelector('[data-type="retail"]'),
     $attractionsSection = document.querySelector('[data-type="attractions"]');
