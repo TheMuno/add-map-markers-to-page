@@ -46,7 +46,8 @@ const mapZoom = 13,
     initialCoords  = { lat: 40.7580, lng: -73.9855 },
     mapIcon = 'https://uploads-ssl.webflow.com/61268cc8812ac5956bad13e4/64ba87cd2730a9c6cf7c0d5a_pin%20(3).png', 
     orangeMapIcon = 'Imgs/pin_orange.png',
-    cameraMapIcon = 'Imgs/camera-pin.png';
+    cameraMapIcon = 'Imgs/camera-pin.png',
+    bagMapIcon = 'Imgs/bag.png';
 
 let map; 
 
@@ -122,7 +123,12 @@ function addToHive(hiveItem, hiveList) {
 
     // icon.url = orangeMapIcon;
     // icon.url = fatOrangeMapIcon;
-    icon.url = cameraMapIcon;
+    icon.url = bagMapIcon;
+
+    if (hiveList == $hiveListAttractions) {
+        icon.url = cameraMapIcon;
+    }
+    
     const { marker } = createMarker(locationInfo, icon); 
     // marker.setMap(null); 
 
