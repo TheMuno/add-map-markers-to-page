@@ -35,6 +35,7 @@ const $map = document.querySelector('#map'),
     $hiveFilterCheckboxes = $hiveWrapper.querySelectorAll('.hive-filter input'),
     toggleHiveInitialText = $hiveWrapper.querySelector('label').textContent,
     $hiveList = document.querySelector('.khonsu-data.hive .hive-list'),
+    $hiveListAttractions = document.querySelector('.hive-list.attractions'),
     // $dayActivities = document.querySelector('.day-events');
     $dataTypeSelect = document.querySelector('.data-type-select'),
     $dataTypeSections = document.querySelectorAll('[data-type]'),
@@ -91,17 +92,16 @@ async function retrieveHiveFromDB(userMail) {
     } 
 
     const data = await docSnap.data(); 
-    const { hive } = data;
+    const { hive, hive_att } = data;
 
     console.log('The Hive:', hive)
 
-    hive.forEach(hiveItem => {
-        addToHive(hiveItem); 
-    });
+    hive.forEach(hiveItem => addToHive(hiveItem, $hiveList));
+    hive_att.forEach(hiveItem => addToHive(hiveItem, $hiveListAttractions));
 
 }
 
-function addToHive(hiveItem) {
+function addToHive(hiveItem, hiveList) {
     const { dayEventName, title, lat, lng, rating, reviews, operatingHours, phoneNumber, address, filter } = hiveItem; 
     const locationInfo = {
         name: title,
@@ -118,7 +118,7 @@ function addToHive(hiveItem) {
     $hiveItem.className = 'hive-item';
     $hiveItem.textContent = dayEventName;
     $hiveItem.locationInfo = locationInfo; 
-    $hiveList.append($hiveItem);
+    hiveList.append($hiveItem);
 
     // icon.url = orangeMapIcon;
     // icon.url = fatOrangeMapIcon;
@@ -126,8 +126,8 @@ function addToHive(hiveItem) {
     const { marker } = createMarker(locationInfo, icon); 
     // marker.setMap(null); 
 
-    $hiveList.markers = $hiveList.markers || [];
-    $hiveList.markers.push(marker);
+    hiveList.markers = hiveList.markers || [];
+    hiveList.markers.push(marker);
 }
 
 
