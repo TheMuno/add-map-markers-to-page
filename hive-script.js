@@ -236,6 +236,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
         const $hiveItems = $hiveList.querySelectorAll('.hive-item');    
         $hiveItems.forEach(item => item.classList.add('hide'));
 
+        console.log('e.currentTarget', e.currentTarget)
         console.log('$hiveList', $hiveList)
         console.log('$hiveList.markers', markers)
 
