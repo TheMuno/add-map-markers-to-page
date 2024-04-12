@@ -318,14 +318,14 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="checkbox"]').forEach(checkbox => {
     checkbox.addEventListener('click', e => {
         // const $hiveList = e.currentTarget.closest('.section').querySelector('.khonsu-data');
-        const $hiveItems = $hiveList.querySelectorAll('.hive-item');    
+        const $hiveItems = $hiveListAttractions.querySelectorAll('.hive-item');    
         $hiveItems.forEach(item => item.classList.add('hide'));
 
         // console.log('e.currentTarget', e.currentTarget)
         // console.log('$hiveList', $hiveList)
         // console.log('$hiveList.markers', markers)
 
-        $hiveList.markers.forEach(marker => marker.setMap(null)); 
+        $hiveListAttractions.markers.forEach(marker => marker.setMap(null)); 
 
         const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].map(c => {
             const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
@@ -337,7 +337,7 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
         
         // console.log('activeCheckboxes', activeCheckboxes)
 
-        $hiveList.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
+        $hiveListAttractions.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
             const filterObj = hiveItem.locationInfo.filter;
             if (!filterObj) return; 
 
@@ -361,32 +361,15 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
                     // console.log(hiveItem)
                     
                     const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
-                    const marker = $hiveList.markers[hiveItemPos];
+                    const marker = $hiveListAttractions.markers[hiveItemPos];
                     marker.setMap(map); 
                 });
-
-                // console.log('filterKey', filterKey)
-                // console.log('filterVal', filterVal) 
-    
-                // const filterValExists = filterVal.split(',').filter(f => activeCheckboxes.includes(f.trim())).length; 
-
-                // console.log('filterValExists', filterValExists)
-       
-                // if (filterValExists) {
-                //     hiveItem.classList.remove('hide');
-                    
-                //     const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
-                //     const marker = $hiveList.markers[hiveItemPos];
-                //     marker.setMap(map); 
-
-                //     console.log(hiveItem)
-                // }
             }
         });
 
-        if (!activeCheckboxes.length && $hiveList.querySelectorAll('.hive-item:not(.hide)').length === 0) {
+        if (!activeCheckboxes.length && $hiveListAttractions.querySelectorAll('.hive-item:not(.hide)').length === 0) {
             $hiveItems.forEach(item => item.classList.remove('hide'));
-            $hiveList.markers.forEach(marker => marker.setMap(map)); 
+            $hiveListAttractions.markers.forEach(marker => marker.setMap(map)); 
         }
     });
 });
