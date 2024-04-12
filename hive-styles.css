@@ -7,7 +7,7 @@
     margin: auto; 
 } 
 
-.khonsu-data.hive {
+.khonsu-data.hive, .hive-attr {
     width: 60%;
     /* height: 500px; */
     /* margin-top: 50px; */
