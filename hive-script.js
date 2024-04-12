@@ -327,7 +327,7 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
 
         $hiveListAttractions.markers.forEach(marker => marker.setMap(null)); 
 
-        const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].map(c => {
+        const activeCheckboxes = [...document.querySelector('[data-type="attractions"] .hive-filters').querySelectorAll('input[type=checkbox]:checked')].map(c => {
             const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
                             .textContent.trim().toLowerCase()
                             .replace(/\s+/g,'-');
