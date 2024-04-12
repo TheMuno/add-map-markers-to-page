@@ -34,8 +34,12 @@ const $map = document.querySelector('#map'),
     $hiveFieldsets = document.querySelector('.hive-fieldsets'),
     $hiveFilterCheckboxes = $hiveWrapper.querySelectorAll('.hive-filter input'),
     toggleHiveInitialText = $hiveWrapper.querySelector('label').textContent,
-    $hiveList = document.querySelector('.khonsu-data.hive .hive-list');
+    $hiveList = document.querySelector('.khonsu-data.hive .hive-list'),
     // $dayActivities = document.querySelector('.day-events');
+    $dataTypeSelect = document.querySelector('..data-type-select'),
+    $dataTypeSections = document.querySelectorAll('[data-type]'),
+    $retailSection = document.querySelector('[data-type="retail"]'),
+    $attractionsSection = document.querySelector('[data-type="attractions"]');
 
 const mapZoom = 13,
     initialCoords  = { lat: 40.7580, lng: -73.9855 },
@@ -438,4 +442,15 @@ function createMarker(place, mapIcon=icon) {
 function isString(x) {
     return Object.prototype.toString.call(x) === '[object String]';
 }
+
+$dataTypeSelect.addEventListener('change', e => {
+    const val = e.currentTarget.value.toLowerCase().trim();
+    $dataTypeSections.forEach(section => section.classList.add('hide'));
+    if (val.includes('retail')) {
+        $retailSection.classList.remove('hide');
+    }
+    else if (val.includes('attractions')) {
+        $attractionsSection.classList.remove('hide');
+    }
+});
 

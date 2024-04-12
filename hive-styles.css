@@ -160,3 +160,13 @@
     -webkit-text-fill-color: transparent;
 }
 
+.data-type-select {
+    margin-top: 50px;
+    padding: 5px;
+    width: 200px;
+}
+
+.section.hide {
+    display: none;
+}
+
