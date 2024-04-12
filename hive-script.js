@@ -232,13 +232,13 @@ $map.addEventListener('click', e => {
 
 $hiveFilterCheckboxes.forEach(checkbox => {
     checkbox.addEventListener('click', e => {
-        const $hiveList = e.currentTarget.closest('.section').querySelector('.khonsu-data');
+        // const $hiveList = e.currentTarget.closest('.section').querySelector('.khonsu-data');
         const $hiveItems = $hiveList.querySelectorAll('.hive-item');    
         $hiveItems.forEach(item => item.classList.add('hide'));
 
-        console.log('e.currentTarget', e.currentTarget)
-        console.log('$hiveList', $hiveList)
-        console.log('$hiveList.markers', markers)
+        // console.log('e.currentTarget', e.currentTarget)
+        // console.log('$hiveList', $hiveList)
+        // console.log('$hiveList.markers', markers)
 
         $hiveList.markers.forEach(marker => marker.setMap(null)); 
 
@@ -472,9 +472,13 @@ $dataTypeSelect.addEventListener('change', e => {
     $dataTypeSections.forEach(section => section.classList.add('hide'));
     if (val.includes('retail')) {
         $retailSection.classList.remove('hide');
+        $hiveListAttractions.markers.forEach(marker => marker.setMap(null)); 
+        $hiveList.markers.forEach(marker => marker.setMap(map)); 
     }
     else if (val.includes('attractions')) {
         $attractionsSection.classList.remove('hide');
+        $hiveList.markers.forEach(marker => marker.setMap(null)); 
+        $hiveListAttractions.markers.forEach(marker => marker.setMap(map)); 
     }
 });
 
