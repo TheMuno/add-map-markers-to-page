@@ -47,7 +47,7 @@ const mapZoom = 13,
     mapIcon = 'https://uploads-ssl.webflow.com/61268cc8812ac5956bad13e4/64ba87cd2730a9c6cf7c0d5a_pin%20(3).png', 
     orangeMapIcon = 'Imgs/pin_orange.png',
     cameraMapIcon = 'Imgs/camera-pin.png',
-    bagMapIcon = 'Imgs/bag.png';
+    bagMapIcon = 'Imgs/bag2.png';
 
 let map; 
 
@@ -98,7 +98,10 @@ async function retrieveHiveFromDB(userMail) {
     console.log('The Hive:', hive)
 
     hive.forEach(hiveItem => addToHive(hiveItem, $hiveList));
-    hive_att.forEach(hiveItem => addToHive(hiveItem, $hiveListAttractions));
+    hive_att.forEach(hiveItem => {
+        addToHive(hiveItem, $hiveListAttractions);
+        $hiveListAttractions.markers.forEach(marker => marker.setMap(null)); 
+    });
 
 }
 
