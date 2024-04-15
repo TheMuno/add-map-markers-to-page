@@ -49,7 +49,7 @@ const mapZoom = 13,
     cameraMapIcon = 'Imgs/camera-pin.png',
     bagMapIcon = 'Imgs/bag.0';
 
-let map; 
+let map; // console.log('Y')
 
 // setup map 
 const icon = {
