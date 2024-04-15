@@ -53,7 +53,8 @@ let map;
 
 // setup map 
 const icon = {
-    url: mapIcon, //place.icon,
+    // url: mapIcon, //place.icon,
+    url: place.icon,
     size: new google.maps.Size(71, 71),
     origin: new google.maps.Point(0, 0),
     anchor: new google.maps.Point(17, 34),
