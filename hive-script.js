@@ -342,7 +342,7 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
             if (!filterObj) return; 
 
             // console.log('filterObj', filterObj)
-            console.log('activeCheckboxes', activeCheckboxes)
+            // console.log('activeCheckboxes', activeCheckboxes)
 
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
                 if (!filterVal.trim()) continue; 
@@ -350,8 +350,8 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
                 activeCheckboxes.forEach(c => {
                     // if (filterVal.includes(filterObj[c[0]]))
 
-                    console.log('filterKey', filterKey)
-                    console.log('filterVal', filterVal)
+                    // console.log('filterKey', filterKey)
+                    // console.log('filterVal', filterVal)
 
                     if (!filterKey.trim().toLowerCase().replace(/\s+/g,'-').includes(c[0].toLowerCase())) return;
                     if (!filterVal.trim().toLowerCase().replace(/\s+/g,'-').includes(c[1].toLowerCase())) return;
