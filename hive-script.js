@@ -255,7 +255,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
                             .textContent.trim().toLowerCase()
                             .replace(/\s+/g,'-');
-            const checkboxName = c.name.toLowerCase().trim();
+            const checkboxName = c.name.toLowerCase().trim().replace('-2','');
             return [group, checkboxName]; 
         }); //.join(); 
         
@@ -353,8 +353,8 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
                     console.log('filterKey', filterKey)
                     console.log('filterVal', filterVal)
 
-                    if (!filterKey.toLowerCase().includes(c[0].toLowerCase())) return;
-                    if (!filterVal.toLowerCase().includes(c[1].toLowerCase())) return;
+                    if (!filterKey.trim().toLowerCase().replace(/\s+/g,'-').includes(c[0].toLowerCase())) return;
+                    if (!filterVal.trim().toLowerCase().replace(/\s+/g,'-').includes(c[1].toLowerCase())) return;
 
                     hiveItem.classList.remove('hide');
 
