@@ -277,8 +277,8 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                     // console.log('filterKey', filterKey)
                     // console.log('filterVal', filterVal)
 
-                    if (!filterKey.toLowerCase().includes(c[0].toLowerCase())) return;
-                    if (!filterVal.toLowerCase().includes(c[1].toLowerCase())) return;
+                    if (!filterKey.trim().toLowerCase().replace(/\s+/g,'-').includes(c[0].toLowerCase())) return;
+                    if (!filterVal.trim().toLowerCase().replace(/\s+/g,'-').includes(c[1].toLowerCase())) return;
 
                     hiveItem.classList.remove('hide');
 
@@ -546,7 +546,7 @@ $dataTypeSelect.addEventListener('change', e => {
     else if (val.includes('attractions')) {
         $attractionsSection.classList.remove('hide');
         $hiveList.markers?.forEach(marker => marker.setMap(null)); 
-        $hiveListAttractions?.markers.forEach(marker => marker.setMap(map)); 
+        $hiveListAttractions.markers?.forEach(marker => marker.setMap(map)); 
     }
 });
 
