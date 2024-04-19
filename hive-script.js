@@ -331,7 +331,7 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
             const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
                             .textContent.trim().toLowerCase()
                             .replace(/\s+/g,'-');
-            const checkboxName = c.name.toLowerCase().trim();
+            const checkboxName = c.name.toLowerCase().trim().replace('-2','');
             return [group, checkboxName]; 
         }); //.join(); 
         
