@@ -545,8 +545,8 @@ $dataTypeSelect.addEventListener('change', e => {
     }
     else if (val.includes('attractions')) {
         $attractionsSection.classList.remove('hide');
-        $hiveList.markers.forEach(marker => marker.setMap(null)); 
-        $hiveListAttractions.markers.forEach(marker => marker.setMap(map)); 
+        $hiveList.markers?.forEach(marker => marker.setMap(null)); 
+        $hiveListAttractions?.markers.forEach(marker => marker.setMap(map)); 
     }
 });
 
