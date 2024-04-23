@@ -249,7 +249,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
         // console.log('$hiveList', $hiveList)
         // console.log('$hiveList.markers', markers)
 
-        $hiveList?.markers.forEach(marker => marker.setMap(null)); 
+        $hiveList.markers?.forEach(marker => marker.setMap(null)); 
 
         // const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].map(c => {
         //     const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
@@ -284,6 +284,8 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                 if (!filterVal.trim()) continue; 
 
                 console.log('activeCheckboxes[filterKey]', activeCheckboxes[filterKey])
+
+                if (!activeCheckboxes[filterKey]) return; 
 
                 const matches = [...activeCheckboxes[filterKey]].every(val => filterVal.toLowerCase().includes(val));
                 if (matches) {
