@@ -283,6 +283,15 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
                 if (!filterVal.trim()) continue; 
 
+                const matches = [...activeCheckboxes[filterKey]].every(val => filterVal.toLowerCase().includes(val));
+                if (matches) {
+                    hiveItem.classList.remove('hide');
+
+                    const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
+                    const marker = $hiveList.markers[hiveItemPos];
+                    marker.setMap(map); 
+                }
+
                 /*activeCheckboxes.forEach(c => {
                     // if (filterVal.includes(filterObj[c[0]]))
 
