@@ -249,7 +249,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
         // console.log('$hiveList', $hiveList)
         // console.log('$hiveList.markers', markers)
 
-        $hiveList.markers.forEach(marker => marker.setMap(null)); 
+        $hiveList?.markers.forEach(marker => marker.setMap(null)); 
 
         // const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].map(c => {
         //     const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
@@ -263,8 +263,11 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
                             .textContent.trim().toLowerCase()
                             .replace(/\s+/g,'-');
-            const checkboxName = c.name.toLowerCase().trim().replace('-2','');
-            o[group] =checkboxName;
+            let checkboxName = c.name.toLowerCase().trim().replace('-2','');
+            if (o[group].trim()) {
+                checkboxName = `${o[group]},${checkboxName}`;
+            } 
+            o[group] = checkboxName; 
             return o; 
         }, {});
         
@@ -280,7 +283,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
                 if (!filterVal.trim()) continue; 
 
-                activeCheckboxes.forEach(c => {
+                /*activeCheckboxes.forEach(c => {
                     // if (filterVal.includes(filterObj[c[0]]))
 
                     // console.log('filterKey', filterKey)
@@ -296,7 +299,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                     const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
                     const marker = $hiveList.markers[hiveItemPos];
                     marker.setMap(map); 
-                });
+                });*/
 
                 // console.log('filterKey', filterKey)
                 // console.log('filterVal', filterVal) 
