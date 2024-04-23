@@ -251,13 +251,22 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 
         $hiveList.markers.forEach(marker => marker.setMap(null)); 
 
-        const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].map(c => {
+        // const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].map(c => {
+        //     const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
+        //                     .textContent.trim().toLowerCase()
+        //                     .replace(/\s+/g,'-');
+        //     const checkboxName = c.name.toLowerCase().trim().replace('-2','');
+        //     return [group, checkboxName]; 
+        // }); //.join(); 
+
+        const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].reduce((o, c) => {
             const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
                             .textContent.trim().toLowerCase()
                             .replace(/\s+/g,'-');
             const checkboxName = c.name.toLowerCase().trim().replace('-2','');
-            return [group, checkboxName]; 
-        }); //.join(); 
+            o[group] =checkboxName;
+            return o; 
+        }, {});
         
         console.log('activeCheckboxes', activeCheckboxes)
 
