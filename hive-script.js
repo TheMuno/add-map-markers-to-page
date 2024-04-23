@@ -288,6 +288,10 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                 if (!activeCheckboxes[filterKey]) return; 
 
                 const matches = [...activeCheckboxes[filterKey]].every(val => filterVal.toLowerCase().includes(val));
+
+                console.log('filterKey', filterKey)
+                console.log('filterVal', filterVal)
+
                 if (matches) {
                     hiveItem.classList.remove('hide');
 
