@@ -264,7 +264,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                             .textContent.trim().toLowerCase()
                             .replace(/\s+/g,'-');
             let checkboxName = c.name.toLowerCase().trim().replace('-2','');
-            if (o[group].trim()) {
+            if (o[group]) {
                 checkboxName = `${o[group]},${checkboxName}`;
             } 
             o[group] = checkboxName; 
