@@ -259,7 +259,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             return [group, checkboxName]; 
         }); //.join(); 
         
-        // console.log('activeCheckboxes', activeCheckboxes)
+        console.log('activeCheckboxes', activeCheckboxes)
 
         $hiveList.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
             const filterObj = hiveItem.locationInfo.filter;
