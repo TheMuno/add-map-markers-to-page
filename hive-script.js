@@ -291,6 +291,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 
                 console.log('filterKey', filterKey)
                 console.log('filterVal', filterVal)
+                console.log('matches', matches)
 
                 if (matches) {
                     hiveItem.classList.remove('hide');
