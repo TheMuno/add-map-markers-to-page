@@ -285,6 +285,8 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 
                 console.log('activeCheckboxes[filterKey]', activeCheckboxes[filterKey])
 
+                console.log('filterKey:::::', filterKey)
+
                 if (!activeCheckboxes[filterKey]) return; 
 
                 const matches = [...activeCheckboxes[filterKey]].every(val => filterVal.toLowerCase().includes(val));
