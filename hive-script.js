@@ -280,6 +280,8 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             // console.log('filterObj', filterObj)
             // console.log('activeCheckboxes', activeCheckboxes)
 
+            console.log('Before loop hiveItem::::::', hiveItem) 
+
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
                 if (!filterVal.trim()) continue; 
 
