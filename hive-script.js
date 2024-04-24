@@ -349,7 +349,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             }
 
             console.log('matchesArr', matchesArr)
-            if (matchesArr.length) {
+            if (matchesArr.every(m => !!m)) {
                 hiveItem.classList.remove('hide');
 
                 const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
