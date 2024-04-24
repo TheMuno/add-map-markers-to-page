@@ -282,6 +282,8 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 
             console.log('Before loop hiveItem::::::', hiveItem) 
 
+            const matchesArr = [];
+
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
                 if (!filterVal.trim()) continue; 
 
@@ -296,18 +298,19 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                 if (!activeCheckboxes[filterKey]) continue; 
 
                 const matches = [...activeCheckboxes[filterKey]].every(val => filterVal.toLowerCase().includes(val));
+                matchesArr.push(matches);
 
                 console.log('filterKey', filterKey)
                 console.log('filterVal', filterVal)
                 console.log('matches', matches)
 
-                if (matches) {
+                /*if (matches) {
                     hiveItem.classList.remove('hide');
 
                     const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
                     const marker = $hiveList.markers[hiveItemPos];
                     marker.setMap(map); 
-                }
+                }*/
 
                 /*activeCheckboxes.forEach(c => {
                     // if (filterVal.includes(filterObj[c[0]]))
@@ -343,6 +346,15 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 
                 //     console.log(hiveItem)
                 // }
+            }
+
+            console.log('matchesArr', matchesArr)
+            if (matchesArr.length) {
+                hiveItem.classList.remove('hide');
+
+                const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
+                const marker = $hiveList.markers[hiveItemPos];
+                marker.setMap(map); 
             }
         });
 
