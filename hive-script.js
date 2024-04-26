@@ -352,6 +352,9 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             if (matchesArr.every(m => !!m)) {
                 hiveItem.classList.remove('hide');
 
+                const filterObj = hiveItem.locationInfo.filter;
+                console.log('filterObj:', filterObj)
+
                 const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
                 const marker = $hiveList.markers[hiveItemPos];
                 marker.setMap(map); 
