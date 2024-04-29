@@ -107,7 +107,7 @@ async function retrieveHiveFromDB(userMail) {
     $hiveList.closest('.hive').querySelector('.item-no').textContent = `${RetailLocationsNum} locations`;
 
     const AttractionsLocationsNum = hive_att.length;
-    $hiveListAttractions.closest('.hive').querySelector('.item-no').textContent = `${AttractionsLocationsNum} locations`;
+    $hiveListAttractions.closest('.hive-attr').querySelector('.item-no').textContent = `${AttractionsLocationsNum} locations`;
 }
 
 function addToHive(hiveItem, hiveList) {
