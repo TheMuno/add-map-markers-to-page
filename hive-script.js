@@ -103,6 +103,8 @@ async function retrieveHiveFromDB(userMail) {
         $hiveListAttractions.markers.forEach(marker => marker.setMap(null)); 
     });
 
+    const locationsNum = $hiveList.querySelector('.hive-item:not(.hide)').length;
+    $hiveList.querySelector('.item-no').textContent = `${locationsNum} locations`;
 }
 
 function addToHive(hiveItem, hiveList) {
@@ -372,6 +374,9 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             $hiveItems.forEach(item => item.classList.remove('hide'));
             $hiveList.markers.forEach(marker => marker.setMap(map)); 
         }
+
+        const locationsNum = $hiveList.querySelector('.hive-item:not(.hide)').length;
+        $hiveList.querySelector('.item-no').textContent = `${locationsNum} locations`;
     });
 });
 
