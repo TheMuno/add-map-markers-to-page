@@ -277,7 +277,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             const filterObj = hiveItem.locationInfo.filter;
             if (!filterObj) return; 
 
-            // console.log('filterObj', filterObj)
+            console.log('filterObj', filterObj)
             // console.log('activeCheckboxes', activeCheckboxes)
 
             // console.log('Before loop hiveItem::::::', hiveItem) 
