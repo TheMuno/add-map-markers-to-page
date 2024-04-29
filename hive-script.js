@@ -103,7 +103,7 @@ async function retrieveHiveFromDB(userMail) {
         $hiveListAttractions.markers.forEach(marker => marker.setMap(null)); 
     });
 
-    const locationsNum = $hiveList.querySelector('.hive-item:not(.hide)').length;
+    const locationsNum = hive.length;
     $hiveList.closest('.hive').querySelector('.item-no').textContent = `${locationsNum} locations`;
 }
 
