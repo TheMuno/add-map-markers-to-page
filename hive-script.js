@@ -375,7 +375,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             $hiveList.markers.forEach(marker => marker.setMap(map)); 
         }
 
-        const locationsNum = $hiveList.querySelector('.hive-item:not(.hide)').length;
+        const locationsNum = $hiveList.querySelectorAll('.hive-item:not(.hide)').length;
         $hiveList.closest('.hive').querySelector('.item-no').textContent = `${locationsNum} locations`;
     });
 });
