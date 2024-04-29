@@ -104,7 +104,7 @@ async function retrieveHiveFromDB(userMail) {
     });
 
     const locationsNum = $hiveList.querySelector('.hive-item:not(.hide)').length;
-    $hiveList.querySelector('.item-no').textContent = `${locationsNum} locations`;
+    $hiveList.closest('.hive').querySelector('.item-no').textContent = `${locationsNum} locations`;
 }
 
 function addToHive(hiveItem, hiveList) {
@@ -376,7 +376,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
         }
 
         const locationsNum = $hiveList.querySelector('.hive-item:not(.hide)').length;
-        $hiveList.querySelector('.item-no').textContent = `${locationsNum} locations`;
+        $hiveList.closest('.hive').querySelector('.item-no').textContent = `${locationsNum} locations`;
     });
 });
 
