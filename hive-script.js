@@ -436,6 +436,9 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
             $hiveItems.forEach(item => item.classList.remove('hide'));
             $hiveListAttractions.markers.forEach(marker => marker.setMap(map)); 
         }
+
+        const locationsNum = $hiveListAttractions.querySelectorAll('.hive-item:not(.hide)').length;
+        $hiveListAttractions.closest('.hive').querySelector('.item-no').textContent = `${locationsNum} locations`;
     });
 });
 
