@@ -441,7 +441,7 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
         }
 
         const locationsNum = $hiveListAttractions.querySelectorAll('.hive-item:not(.hide)').length;
-        $hiveListAttractions.closest('.hive').querySelector('.item-no').textContent = `${locationsNum} locations`;
+        $hiveListAttractions.closest('.hive-attr').querySelector('.item-no').textContent = `${locationsNum} locations`;
     });
 });
 
