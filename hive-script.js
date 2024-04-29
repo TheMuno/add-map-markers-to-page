@@ -103,8 +103,11 @@ async function retrieveHiveFromDB(userMail) {
         $hiveListAttractions.markers.forEach(marker => marker.setMap(null)); 
     });
 
-    const locationsNum = hive.length;
-    $hiveList.closest('.hive').querySelector('.item-no').textContent = `${locationsNum} locations`;
+    const RetailLocationsNum = hive.length;
+    $hiveList.closest('.hive').querySelector('.item-no').textContent = `${RetailLocationsNum} locations`;
+
+    const AttractionsLocationsNum = hive_att.length;
+    $hiveListAttractions.closest('.hive').querySelector('.item-no').textContent = `${AttractionsLocationsNum} locations`;
 }
 
 function addToHive(hiveItem, hiveList) {
