@@ -41,7 +41,8 @@ const $map = document.querySelector('#map'),
     $dataTypeSelect = document.querySelector('.data-type-select'),
     $dataTypeSections = document.querySelectorAll('[data-type]'),
     $retailSection = document.querySelector('[data-type="retail"]'),
-    $attractionsSection = document.querySelector('[data-type="attractions"]');
+    $attractionsSection = document.querySelector('[data-type="attractions"]'),
+    $restaurantsSection = document.querySelector('[data-type="restaurants"]');
 
 const mapZoom = 13,
     initialCoords  = { lat: 40.7580, lng: -73.9855 },
@@ -557,7 +558,7 @@ $dataTypeSelect.addEventListener('change', e => {
         $hiveListRestaurants.markers.forEach(marker => marker.setMap(null)); 
     }
     else if (val.includes('restaurants')) {
-        $attractionsSection.classList.remove('hide');
+        $restaurantsSection.classList.remove('hide');
         $hiveList.markers?.forEach(marker => marker.setMap(null)); 
         $hiveListAttractions.markers?.forEach(marker => marker.setMap(null)); 
         $hiveListRestaurants.markers.forEach(marker => marker.setMap(map)); 
