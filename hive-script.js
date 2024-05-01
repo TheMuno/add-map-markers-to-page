@@ -99,14 +99,14 @@ async function retrieveHiveFromDB(userMail) {
 
     console.log('The Hive:', hive)
 
-    hive.forEach(hiveItem => addToHive(hiveItem, $hiveList));
+    hive?.forEach(hiveItem => addToHive(hiveItem, $hiveList));
 
-    hive_att.forEach(hiveItem => {
+    hive_att?.forEach(hiveItem => {
         addToHive(hiveItem, $hiveListAttractions);
         $hiveListAttractions.markers.forEach(marker => marker.setMap(null)); 
     });
 
-    hive_rest.forEach(hiveItem => {
+    hive_rest?.forEach(hiveItem => {
         addToHive(hiveItem, $hiveListRestaurants);
         $hiveListRestaurants.markers.forEach(marker => marker.setMap(null)); 
     });
