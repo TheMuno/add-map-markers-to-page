@@ -289,7 +289,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
                             .textContent.trim().toLowerCase()
                             .replace(/\s+/g,'-');
-            let checkboxName = c.name.toLowerCase().trim().replace('-2','');
+            let checkboxName = c.name.toLowerCase().trim().replace('-2','').replace('-3','');
             if (o[group]) {
                 checkboxName = `${o[group]},${checkboxName}`;
             } 
@@ -350,7 +350,7 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
             const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
                             .textContent.trim().toLowerCase()
                             .replace(/\s+/g,'-');
-            const checkboxName = c.name.toLowerCase().trim().replace('-2','');
+            const checkboxName = c.name.toLowerCase().trim().replace('-2','').replace('-3','');
             return [group, checkboxName]; 
         }); //.join(); 
         
@@ -396,7 +396,7 @@ document.querySelectorAll('[data-type="restaurants"] .hive-filters input[type="c
             const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
                             .textContent.trim().toLowerCase()
                             .replace(/\s+/g,'-');
-            const checkboxName = c.name.toLowerCase().trim().replace('-2','');
+            const checkboxName = c.name.toLowerCase().trim().replace('-2','').replace('-3','');
             return [group, checkboxName]; 
         }); //.join(); 
         
