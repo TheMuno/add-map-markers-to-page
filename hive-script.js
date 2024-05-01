@@ -547,20 +547,20 @@ $dataTypeSelect.addEventListener('change', e => {
     $dataTypeSections.forEach(section => section.classList.add('hide'));
     if (val.includes('retail')) {
         $retailSection.classList.remove('hide');
-        $hiveListAttractions.markers.forEach(marker => marker.setMap(null)); 
-        $hiveListRestaurants.markers.forEach(marker => marker.setMap(null)); 
-        $hiveList.markers.forEach(marker => marker.setMap(map)); 
+        $hiveListAttractions.markers?.forEach(marker => marker.setMap(null)); 
+        $hiveListRestaurants.markers?.forEach(marker => marker.setMap(null)); 
+        $hiveList.markers?.forEach(marker => marker.setMap(map)); 
     }
     else if (val.includes('attractions')) {
         $attractionsSection.classList.remove('hide');
         $hiveList.markers?.forEach(marker => marker.setMap(null)); 
         $hiveListAttractions.markers?.forEach(marker => marker.setMap(map)); 
-        $hiveListRestaurants.markers.forEach(marker => marker.setMap(null)); 
+        $hiveListRestaurants.markers?.forEach(marker => marker.setMap(null)); 
     }
     else if (val.includes('restaurants')) {
         $restaurantsSection.classList.remove('hide');
         $hiveList.markers?.forEach(marker => marker.setMap(null)); 
         $hiveListAttractions.markers?.forEach(marker => marker.setMap(null)); 
-        $hiveListRestaurants.markers.forEach(marker => marker.setMap(map)); 
+        $hiveListRestaurants.markers?.forEach(marker => marker.setMap(map)); 
     }
 });
