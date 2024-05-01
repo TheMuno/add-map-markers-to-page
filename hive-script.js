@@ -392,7 +392,7 @@ document.querySelectorAll('[data-type="restaurants"] .hive-filters input[type="c
 
         $hiveListRestaurants.markers.forEach(marker => marker.setMap(null)); 
 
-        const activeCheckboxes = [...document.querySelector('[data-type="attractions"] .hive-filters').querySelectorAll('input[type=checkbox]:checked')].map(c => {
+        const activeCheckboxes = [...document.querySelector('[data-type="restaurants"] .hive-filters').querySelectorAll('input[type=checkbox]:checked')].map(c => {
             const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
                             .textContent.trim().toLowerCase()
                             .replace(/\s+/g,'-');
