@@ -426,7 +426,7 @@ document.querySelectorAll('[data-type="restaurants"] .hive-filters input[type="c
         }
 
         const locationsNum = $hiveListRestaurants.querySelectorAll('.hive-item:not(.hide)').length;
-        $hiveListRestaurants.closest('.hive-attr').querySelector('.item-no').textContent = `${locationsNum} locations`;
+        $hiveListRestaurants.closest('.hive-rest').querySelector('.item-no').textContent = `${locationsNum} locations`;
     });
 });
 
