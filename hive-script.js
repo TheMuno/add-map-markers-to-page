@@ -36,6 +36,7 @@ const $map = document.querySelector('#map'),
     toggleHiveInitialText = $hiveWrapper.querySelector('label').textContent,
     $hiveList = document.querySelector('.khonsu-data.hive .hive-list'),
     $hiveListAttractions = document.querySelector('.hive-list.attractions'),
+    $hiveListRestaurants = document.querySelector('.hive-list.restaurants'),
     // $dayActivities = document.querySelector('.day-events');
     $dataTypeSelect = document.querySelector('.data-type-select'),
     $dataTypeSections = document.querySelectorAll('[data-type]'),
@@ -47,7 +48,8 @@ const mapZoom = 13,
     mapIcon = 'https://uploads-ssl.webflow.com/61268cc8812ac5956bad13e4/64ba87cd2730a9c6cf7c0d5a_pin%20(3).png', 
     orangeMapIcon = 'Imgs/pin_orange.png',
     cameraMapIcon = 'Imgs/camera-pin.png',
-    bagMapIcon = 'Imgs/bag.0';
+    bagMapIcon = 'Imgs/bag.png',
+    restaurantMapIcon = 'Imgs/restaurant.png';
 
 let map; // console.log('Y')
 
@@ -93,21 +95,30 @@ async function retrieveHiveFromDB(userMail) {
     } 
 
     const data = await docSnap.data(); 
-    const { hive, hive_att } = data;
+    const { hive, hive_att, hive_rest } = data;
 
     console.log('The Hive:', hive)
 
     hive.forEach(hiveItem => addToHive(hiveItem, $hiveList));
+
     hive_att.forEach(hiveItem => {
         addToHive(hiveItem, $hiveListAttractions);
         $hiveListAttractions.markers.forEach(marker => marker.setMap(null)); 
     });
 
-    const RetailLocationsNum = hive.length;
-    $hiveList.closest('.hive').querySelector('.item-no').textContent = `${RetailLocationsNum} locations`;
+    hive_rest.forEach(hiveItem => {
+        addToHive(hiveItem, $hiveListRestaurants);
+        $hiveListRestaurants.markers.forEach(marker => marker.setMap(null)); 
+    });
 
-    const AttractionsLocationsNum = hive_att.length;
-    $hiveListAttractions.closest('.hive-attr').querySelector('.item-no').textContent = `${AttractionsLocationsNum} locations`;
+    const retailLocationsNum = hive.length;
+    $hiveList.closest('.hive').querySelector('.item-no').textContent = `${retailLocationsNum} locations`;
+
+    const attractionsLocationsNum = hive_att.length;
+    $hiveListAttractions.closest('.hive-attr').querySelector('.item-no').textContent = `${attractionsLocationsNum} locations`;
+
+    const restaurantsLocationsNum = hive_rest.length;
+    $hiveListRestaurants.closest('.hive-rest').querySelector('.item-no').textContent = `${restaurantsLocationsNum} locations`;
 }
 
 function addToHive(hiveItem, hiveList) {
@@ -135,8 +146,11 @@ function addToHive(hiveItem, hiveList) {
 
     if (hiveList == $hiveListAttractions) {
         icon.url = cameraMapIcon;
+    } 
+    else if (hiveList == $hiveListRestaurants) {
+        icon.url = restaurantMapIcon;
     }
-    
+
     const { marker } = createMarker(locationInfo, icon); 
     // marker.setMap(null); 
 
@@ -204,6 +218,24 @@ $hiveListAttractions.addEventListener('click', e => {
     } 
 });
 
+$hiveListRestaurants.addEventListener('click', e => {
+    if (!e.target.closest('.hive-item')) return;
+    const $hiveItem = e.target.closest('.hive-item');
+    
+    if ($hiveItem.classList.contains('active')) {
+        $hiveItem.classList.remove('active');
+        markerPopup.close();
+    }
+    else {
+        const $allHiveItems = $hiveListRestaurants.querySelectorAll('.hive-item'); 
+        $allHiveItems.forEach(item => item.classList.remove('active'));
+        $hiveItem.classList.add('active');
+        const hiveItemPos = [...$allHiveItems].indexOf($hiveItem);
+        const marker = $hiveListRestaurants.markers[hiveItemPos];
+        openMarkerWithInfo(marker, $hiveItem);
+    } 
+});
+
 function openMarkerWithInfo(marker, $hiveItem) {
     map.panTo(marker.position); 
 
@@ -250,19 +282,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
         const $hiveItems = $hiveList.querySelectorAll('.hive-item');    
         $hiveItems.forEach(item => item.classList.add('hide'));
 
-        // console.log('e.currentTarget', e.currentTarget)
-        // console.log('$hiveList', $hiveList)
-        // console.log('$hiveList.markers', markers)
-
         $hiveList.markers?.forEach(marker => marker.setMap(null)); 
-
-        // const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].map(c => {
-        //     const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
-        //                     .textContent.trim().toLowerCase()
-        //                     .replace(/\s+/g,'-');
-        //     const checkboxName = c.name.toLowerCase().trim().replace('-2','');
-        //     return [group, checkboxName]; 
-        // }); //.join(); 
 
         const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].reduce((o, c) => {
             const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
@@ -282,85 +302,19 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             const filterObj = hiveItem.locationInfo.filter;
             if (!filterObj) return; 
 
-            // console.log('filterObj', filterObj)
-            // console.log('activeCheckboxes', activeCheckboxes)
-
-            // console.log('Before loop hiveItem::::::', hiveItem) 
-
             const matchesArr = [];
 
             for (let [filterKey, filterVal] of Object.entries(filterObj)) {
                 if (!filterVal.trim()) continue; 
 
-                // console.log('activeCheckboxes[filterKey]', activeCheckboxes[filterKey])
-
-                // console.log('hiveItem::::::', hiveItem) 
-                // console.log('filterObj:::::', filterObj)  
-                // console.log('filterObj["for"]', filterObj["for"])
-                // console.log('filterKey:::::', filterKey)
-                // console.log('====================================')
-
                 if (!activeCheckboxes[filterKey]) continue; 
-
-                // console.log('filterKey', filterKey)
-                // console.log('filterVal', filterVal) // val
 
                 filterVal = filterVal.toLowerCase().trim().replace(/\s+/g,'-');  
                 const matches = [...activeCheckboxes[filterKey]].every(val => filterVal.includes(val));
 
-                // console.log('matches', matches)
-
                 matchesArr.push(matches);
-
-                // console.log('filterKey', filterKey)
-                // console.log('filterVal', filterVal)
-                // console.log('matches', matches)
-
-                /*if (matches) {
-                    hiveItem.classList.remove('hide');
-
-                    const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
-                    const marker = $hiveList.markers[hiveItemPos];
-                    marker.setMap(map); 
-                }*/
-
-                /*activeCheckboxes.forEach(c => {
-                    // if (filterVal.includes(filterObj[c[0]]))
-
-                    // console.log('filterKey', filterKey)
-                    // console.log('filterVal', filterVal)
-
-                    if (!filterKey.trim().toLowerCase().replace(/\s+/g,'-').includes(c[0].toLowerCase())) return;
-                    if (!filterVal.trim().toLowerCase().replace(/\s+/g,'-').includes(c[1].toLowerCase())) return;
-
-                    hiveItem.classList.remove('hide');
-
-                    // console.log(hiveItem)
-                    
-                    const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
-                    const marker = $hiveList.markers[hiveItemPos];
-                    marker.setMap(map); 
-                });*/
-
-                // console.log('filterKey', filterKey)
-                // console.log('filterVal', filterVal) 
-    
-                // const filterValExists = filterVal.split(',').filter(f => activeCheckboxes.includes(f.trim())).length; 
-
-                // console.log('filterValExists', filterValExists)
-       
-                // if (filterValExists) {
-                //     hiveItem.classList.remove('hide');
-                    
-                //     const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
-                //     const marker = $hiveList.markers[hiveItemPos];
-                //     marker.setMap(map); 
-
-                //     console.log(hiveItem)
-                // }
             }
 
-            // console.log('matchesArr', matchesArr)
             if (matchesArr.length && matchesArr.every(Boolean)) {
                 hiveItem.classList.remove('hide');
 
@@ -389,10 +343,6 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
         const $hiveItems = $hiveListAttractions.querySelectorAll('.hive-item');    
         $hiveItems.forEach(item => item.classList.add('hide'));
 
-        // console.log('e.currentTarget', e.currentTarget)
-        // console.log('$hiveList', $hiveList)
-        // console.log('$hiveList.markers', markers)
-
         $hiveListAttractions.markers.forEach(marker => marker.setMap(null)); 
 
         const activeCheckboxes = [...document.querySelector('[data-type="attractions"] .hive-filters').querySelectorAll('input[type=checkbox]:checked')].map(c => {
@@ -403,30 +353,18 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
             return [group, checkboxName]; 
         }); //.join(); 
         
-        // console.log('activeCheckboxes', activeCheckboxes)
-
         $hiveListAttractions.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
             const filterObj = hiveItem.locationInfo.filter;
             if (!filterObj) return; 
-
-            // console.log('filterObj', filterObj)
-            // console.log('activeCheckboxes', activeCheckboxes)
 
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
                 if (!filterVal.trim()) continue; 
 
                 activeCheckboxes.forEach(c => {
-                    // if (filterVal.includes(filterObj[c[0]]))
-
-                    // console.log('filterKey', filterKey)
-                    // console.log('filterVal', filterVal)
-
                     if (!filterKey.trim().toLowerCase().replace(/\s+/g,'-').includes(c[0].toLowerCase())) return;
                     if (!filterVal.trim().toLowerCase().replace(/\s+/g,'-').includes(c[1].toLowerCase())) return;
 
                     hiveItem.classList.remove('hide');
-
-                    // console.log(hiveItem)
                     
                     const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
                     const marker = $hiveListAttractions.markers[hiveItemPos];
@@ -445,54 +383,51 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
     });
 });
 
-/*
-$hiveFilterCheckboxes.forEach(checkbox => {
+document.querySelectorAll('[data-type="restaurants"] .hive-filters input[type="checkbox"]').forEach(checkbox => {
     checkbox.addEventListener('click', e => {
-        // const $btn = e.currentTarget; //.querySelector('input[type=checkbox]');
-        // const btnVal = $btn.name; 
-        // const btnGroup = $btn.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
-        //                     .textContent.trim().toLowerCase()
-        //                     .replace(/\s+/g,'-');
-        const $hiveItems = $hiveList.querySelectorAll('.hive-item');
-
-        // console.log('btnVal', btnVal) 
-        // console.log('btnGroup', btnGroup) 
-    
+        // const $hiveList = e.currentTarget.closest('.section').querySelector('.khonsu-data');
+        const $hiveItems = $hiveListRestaurants.querySelectorAll('.hive-item');    
         $hiveItems.forEach(item => item.classList.add('hide'));
 
-        const activeCheckboxes = [...$hiveFieldsets.querySelectorAll('input[type=checkbox]:checked')].map(c => c.name.toLowerCase().trim()).join();  
+        $hiveListRestaurants.markers.forEach(marker => marker.setMap(null)); 
 
-        $hiveList.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
+        const activeCheckboxes = [...document.querySelector('[data-type="attractions"] .hive-filters').querySelectorAll('input[type=checkbox]:checked')].map(c => {
+            const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
+                            .textContent.trim().toLowerCase()
+                            .replace(/\s+/g,'-');
+            const checkboxName = c.name.toLowerCase().trim().replace('-2','');
+            return [group, checkboxName]; 
+        }); //.join(); 
+        
+        $hiveListRestaurants.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
             const filterObj = hiveItem.locationInfo.filter;
             if (!filterObj) return; 
 
-            // console.log('filterObj', filterObj) 
-
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
-                // if (!btnGroup.includes(filterKey)) continue;
                 if (!filterVal.trim()) continue; 
 
-                // console.log('filterKey', filterKey) 
-                console.log('filterVal', filterVal) 
-                console.log('activeCheckboxes', activeCheckboxes)
-    
-                const filterValExists = filterVal.split(',').filter(f => activeCheckboxes.includes(f)).length; 
-                // if (filterVal.includes(btnVal)) {
-                // if (activeCheckboxes.includes(filterVal)) {
-                if (filterValExists) {
+                activeCheckboxes.forEach(c => {
+                    if (!filterKey.trim().toLowerCase().replace(/\s+/g,'-').includes(c[0].toLowerCase())) return;
+                    if (!filterVal.trim().toLowerCase().replace(/\s+/g,'-').includes(c[1].toLowerCase())) return;
+
                     hiveItem.classList.remove('hide');
-                    // hiveItem.classList.add('got-it');
-                    console.log(hiveItem)
-                }
+                    
+                    const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
+                    const marker = $hiveListRestaurants.markers[hiveItemPos];
+                    marker.setMap(map); 
+                });
             }
         });
+
+        if (!activeCheckboxes.length && $hiveListRestaurants.querySelectorAll('.hive-item:not(.hide)').length === 0) {
+            $hiveItems.forEach(item => item.classList.remove('hide'));
+            $hiveListRestaurants.markers.forEach(marker => marker.setMap(map)); 
+        }
+
+        const locationsNum = $hiveListRestaurants.querySelectorAll('.hive-item:not(.hide)').length;
+        $hiveListRestaurants.closest('.hive-attr').querySelector('.item-no').textContent = `${locationsNum} locations`;
     });
 });
-*/
-
-// document.querySelector('.view-hive-btn').addEventListener('click', e => {
-//     window.location = '/hive.html';
-// });
 
 function createMarker(place, mapIcon=icon) {
     let { name, formatted_address, geometry, latLng, website:address, 
@@ -612,12 +547,19 @@ $dataTypeSelect.addEventListener('change', e => {
     if (val.includes('retail')) {
         $retailSection.classList.remove('hide');
         $hiveListAttractions.markers.forEach(marker => marker.setMap(null)); 
+        $hiveListRestaurants.markers.forEach(marker => marker.setMap(null)); 
         $hiveList.markers.forEach(marker => marker.setMap(map)); 
     }
     else if (val.includes('attractions')) {
         $attractionsSection.classList.remove('hide');
         $hiveList.markers?.forEach(marker => marker.setMap(null)); 
         $hiveListAttractions.markers?.forEach(marker => marker.setMap(map)); 
+        $hiveListRestaurants.markers.forEach(marker => marker.setMap(null)); 
+    }
+    else if (val.includes('restaurants')) {
+        $attractionsSection.classList.remove('hide');
+        $hiveList.markers?.forEach(marker => marker.setMap(null)); 
+        $hiveListAttractions.markers?.forEach(marker => marker.setMap(null)); 
+        $hiveListRestaurants.markers.forEach(marker => marker.setMap(map)); 
     }
 });
-
