@@ -218,7 +218,7 @@ function populateFilterInputs(hiveItem) {
         filter.querySelector('.add-filter-input').value = filterObj[labelTxt];
     });
 
-    if (filterObj.name) $userSearch.value = filterObj.name; 
+    if (hiveItem.locationInfo.name) $userSearch.value = hiveItem.locationInfo.name; 
 }
 
 $hiveList.addEventListener('click', e => {
