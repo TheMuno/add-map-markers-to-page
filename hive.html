@@ -13,20 +13,139 @@
             margin-left: 10px;
             font-size: 10px;
         } 
+
+        .select-section {
+            margin-top: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .data-type-select {
+            padding: 5px;
+            width: 500px;
+            height: 40px;
+        }
+
+        .side-bar-map-section {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .search-place {
+            height: 35px;
+            width: 500px;
+        }
+
+        .add-filters-wrap {
+            width: fit-content;
+            margin-left: 10px;
+        }
+
+        .add-filters {
+            margin-top: 20px;
+        }
+
+        .add-filter {
+            margin: 5px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .add-filter label {
+            width: 100px;
+        }
+
+        .add-filter-input {
+            height: 25px;
+            width: 300px;
+        }
+
+        .add-filter-btn-wrap {
+            margin-top: 20px;
+        }
+
+        .add-filter-sample {
+            margin-left: 10px;
+            margin-bottom: 20px;
+        }
+
+        input.sample-filter-name {
+            width: 90px;
+            height: 25px;
+        }
+
+        input.add-filter-input {
+            width: 300px;
+            height: 25px;
+        }
+
+        input.add-filter-btn {
+            width: 200px;
+            height: 30px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <div class="section">
-        <div id="map"></div>   
-    </div>
-    <div class="section">
+    <div class="section select-section">
+        <label>Select section:</label>
         <select class="data-type-select">
             <!-- <option value="*">Choose Data...</option> -->
             <option value="retail">Retail</option>
             <option value="attractions">Attractions</option>
             <option value="restaurants">Restaurants</option>
+            <option value="add-new-data">+ Add New</option>
         </select>  
     </div>
+
+    <div class="section side-bar-map-section">
+        <div class="side-bar">
+            <input type="text" class="search-place" name="" id="" placeholder="Enter Address"> 
+    
+            <div class="add-filters">
+                <div>Filters</div>
+                <div class="add-filters-wrap">
+                    <div class="add-filter">
+                        <label>Neighborhood:</label>
+                        <input type="text" class="add-filter-input">
+                    </div>
+                    <div class="add-filter">
+                        <label>Type:</label>
+                        <input type="text" class="add-filter-input">
+                    </div>
+                    <div class="add-filter">
+                        <label>For:</label>
+                        <input type="text" class="add-filter-input">
+                    </div>
+                    <div class="add-filter">
+                        <label>Sub-Category:</label>
+                        <input type="text" class="add-filter-input">
+                    </div>
+                </div>
+    
+                <div class="add-filter-btn-wrap">
+                    <div class="add-filter-sample">
+                        <input type="text" class="sample-filter-name" placeholder="Filter Name">
+                        <input type="text" class="sample-filter-value add-filter-input" placeholder="Filter Value">
+                    </div>
+                    <input type="button" value="Add Filter" class="add-filter-btn">
+                </div>  
+            </div>
+        </div>
+
+        <div id="map"></div>   
+    </div>
+
+    <!-- <div class="section">
+        <select class="data-type-select">
+            <! -- <option value="*">Choose Data...</option> -- >
+            <option value="retail">Retail</option>
+            <option value="attractions">Attractions</option>
+            <option value="restaurants">Restaurants</option>
+        </select>  
+    </div> -->
+
     <div class="section center-content flex-column" data-type="retail">
         <div class="toggle-hive-wrapper">
             <!-- <div>
