@@ -89,6 +89,19 @@
             height: 30px;
             cursor: pointer;
         }
+
+        .save-entry-btn {
+            width: 80%;
+            margin-top: 20px;
+            height: 40px;
+            cursor: pointer;
+        }
+
+        .remove-filter {
+            width: 10px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -113,18 +126,22 @@
                     <div class="add-filter">
                         <label>Neighborhood:</label>
                         <input type="text" class="add-filter-input">
+                        <img src="Imgs/x.png" class="remove-filter">
                     </div>
                     <div class="add-filter">
                         <label>Type:</label>
                         <input type="text" class="add-filter-input">
+                        <img src="Imgs/x.png" class="remove-filter">
                     </div>
                     <div class="add-filter">
                         <label>For:</label>
                         <input type="text" class="add-filter-input">
+                        <img src="Imgs/x.png" class="remove-filter">
                     </div>
                     <div class="add-filter">
                         <label>Sub-Category:</label>
                         <input type="text" class="add-filter-input">
+                        <img src="Imgs/x.png" class="remove-filter">
                     </div>
                 </div>
     
@@ -136,6 +153,8 @@
                     <input type="button" value="Add Filter Category" class="add-filter-btn">
                 </div>  
             </div>
+
+            <input type="button" value="Submit!" class="save-entry-btn" style="">
         </div>
 
         <div id="map"></div>   
