@@ -42,7 +42,9 @@ const $map = document.querySelector('#map'),
     $dataTypeSections = document.querySelectorAll('[data-type]'),
     $retailSection = document.querySelector('[data-type="retail"]'),
     $attractionsSection = document.querySelector('[data-type="attractions"]'),
-    $restaurantsSection = document.querySelector('[data-type="restaurants"]');
+    $restaurantsSection = document.querySelector('[data-type="restaurants"]'),
+    $addFilters = document.querySelector('.add-filters'),
+    $addFilterBtn = document.querySelector('.add-filter-btn');
 
 const mapZoom = 13,
     initialCoords  = { lat: 40.7580, lng: -73.9855 },
@@ -183,6 +185,27 @@ function addToHive(hiveItem, hiveList) {
 //     $hiveWrapper.querySelector('.hive-filters').classList.toggle('hide');
 // });
 
+$addFilters.addEventListener('click', e => {
+    if (!e.target.closest('.remove-filter')) return;
+    e.target.closest('.add-filter').remove();
+});
+
+$addFilterBtn.addEventListener('click', e => {
+    const $clone = e.target.closest('.add-filter-btn-wrap').querySelector('.add-filter-sample').cloneNode(true);
+    $clone.classList.remove('hide');
+    $addFilters.querySelector('.add-filters-wrap').append($clone);
+});
+
+function populateFilterInputs(hiveItem) {
+    const filterObj = hiveItem.locationInfo.filter; 
+    [...$addFilters.querySelectorAll('.add-filters-wrap .add-filter')].forEach(filter => {
+        const $label = filter.querySelector('label');
+        const labelTxt = $label.textContent.trim().toLowerCase().replace(/\s+/g,'-');
+        if (!filterObj[labelTxt]) return; 
+        filter.querySelector('.add-filter-input').value = $label.textContent;
+    });
+}
+
 $hiveList.addEventListener('click', e => {
     if (!e.target.closest('.hive-item')) return;
     const $hiveItem = e.target.closest('.hive-item');
@@ -198,6 +221,7 @@ $hiveList.addEventListener('click', e => {
         const hiveItemPos = [...$allHiveItems].indexOf($hiveItem);
         const marker = $hiveList.markers[hiveItemPos];
         openMarkerWithInfo(marker, $hiveItem);
+        populateFilterInputs($hiveItem); 
     } 
 });
 
