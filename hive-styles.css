@@ -170,7 +170,7 @@ input {
 }
 
 .data-type-select {
-    margin-top: 50px;
+    /* margin-top: 50px; */
     padding: 5px;
     width: 200px;
 }
