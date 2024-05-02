@@ -198,7 +198,8 @@ $addFilterBtn.addEventListener('click', e => {
 
 function populateFilterInputs(hiveItem) {
     const filterObj = hiveItem.locationInfo.filter; 
-    [...$addFilters.querySelectorAll('.add-filters-wrap .add-filter')].forEach(filter => {
+    console.log('filterObj', filterObj)
+    $addFilters.querySelectorAll('.add-filters-wrap .add-filter').forEach(filter => {
         const $label = filter.querySelector('label');
         const labelTxt = $label.textContent.trim().toLowerCase().replace(/\s+/g,'-');
         if (!filterObj[labelTxt]) return; 
