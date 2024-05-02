@@ -27,6 +27,7 @@ localStorage.setItem('user-email', 'one@mail.com');
 
 
 const $map = document.querySelector('#map'),
+    $userSearch = document.querySelector('.user-search'),
     $addToHiveBtn = document.querySelector('.add-to-hive'),
     $hiveWrapper = document.querySelector('.toggle-hive-wrapper'), 
     // $toggleHive = $hiveWrapper.querySelector('.toggle-hive'),
@@ -216,6 +217,8 @@ function populateFilterInputs(hiveItem) {
         if (!filterObj[labelTxt]) return; 
         filter.querySelector('.add-filter-input').value = filterObj[labelTxt];
     });
+
+    if (filterObj.name) $userSearch.value = filterObj.name; 
 }
 
 $hiveList.addEventListener('click', e => {
