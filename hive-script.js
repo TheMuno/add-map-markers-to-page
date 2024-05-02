@@ -202,7 +202,7 @@ function populateFilterInputs(hiveItem) {
     $addFilters.querySelectorAll('.add-filters-wrap .add-filter').forEach(filter => {
         console.log('filter', filter)
         const $label = filter.querySelector('label');
-        const labelTxt = $label.textContent.trim().toLowerCase().replace(/\s+/g,'-');
+        const labelTxt = $label.textContent.trim().toLowerCase().replace(/[^a-z0-9]\s+/g,'-');
         console.log('labelTxt', labelTxt)
         console.log('filterObj[labelTxt]', filterObj[labelTxt])
         if (!filterObj[labelTxt]) return; 
