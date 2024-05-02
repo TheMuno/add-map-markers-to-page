@@ -187,7 +187,15 @@ function addToHive(hiveItem, hiveList) {
 
 $addFilters.addEventListener('click', e => {
     if (!e.target.closest('.remove-filter')) return;
-    e.target.closest('.add-filter').remove();
+    alertify.confirm('Remove Filter?\nPlease confim',
+        () => {
+            // alertify.success('Ok');
+            e.target.closest('.add-filter').remove();
+        },
+        () => {
+            // alertify.error('Marker removal terribly failed!');
+            console.log('Not removed');
+    });
 });
 
 $addFilterBtn.addEventListener('click', e => {
