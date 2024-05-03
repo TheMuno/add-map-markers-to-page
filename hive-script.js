@@ -129,6 +129,7 @@ function addToHive(hiveItem, hiveList) {
     const { dayEventName, title, lat, lng, rating, reviews, operatingHours, phoneNumber, address, filter } = hiveItem; 
     const locationInfo = {
         name: title,
+        dayEventName,
         latLng: {lat, lng},
         rating,
         reviews,
@@ -218,7 +219,7 @@ function populateFilterInputs(hiveItem) {
         filter.querySelector('.add-filter-input').value = filterObj[labelTxt];
     });
 
-    if (hiveItem.locationInfo.name) $userSearch.value = hiveItem.locationInfo.name; 
+    if (hiveItem.locationInfo.dayEventName) $userSearch.value = hiveItem.locationInfo.dayEventName; 
 }
 
 $hiveList.addEventListener('click', e => {
