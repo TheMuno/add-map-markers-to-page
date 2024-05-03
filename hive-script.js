@@ -441,7 +441,7 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
     });
 });
 
-/*document.querySelectorAll('[data-type="restaurants"] .hive-filters input[type="checkbox"]').forEach(checkbox => {
+document.querySelectorAll('[data-type="restaurants"] .hive-filters input[type="checkbox"]').forEach(checkbox => {
     checkbox.addEventListener('click', e => {
         // const $hiveList = e.currentTarget.closest('.section').querySelector('.khonsu-data');
         const $hiveItems = $hiveListRestaurants.querySelectorAll('.hive-item');    
@@ -485,7 +485,7 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
         const locationsNum = $hiveListRestaurants.querySelectorAll('.hive-item:not(.hide)').length;
         $hiveListRestaurants.closest('.hive-rest').querySelector('.item-no').textContent = `${locationsNum} locations`;
     });
-});*/
+});
 
 function createMarker(place, mapIcon=icon) {
     let { name, formatted_address, geometry, latLng, website:address, 
