@@ -223,8 +223,7 @@ function populateFilterInputs(hiveItem) {
         });
 
         if (el) {
-            console.log('el', el)
-            el.querySelector('.add-filter-input').value = val;
+            el[0].querySelector('.add-filter-input').value = val;
         }
         else {
             const $addFiltersContainer = $addFilters.querySelector('.add-filters-wrap');
