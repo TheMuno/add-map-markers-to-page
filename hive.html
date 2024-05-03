@@ -54,6 +54,10 @@
             align-items: center;
         }
 
+        .add-filter.hide {
+            display: none;
+        }
+
         .add-filter label {
             width: 100px;
         }
@@ -125,6 +129,11 @@
             <div class="add-filters">
                 <div>Filters</div>
                 <div class="add-filters-wrap">
+                    <div class="add-filter hide">
+                        <label>Sample:</label>
+                        <input type="text" class="add-filter-input">
+                        <img src="Imgs/x.png" class="remove-filter">
+                    </div>
                     <div class="add-filter">
                         <label>Neighborhood:</label>
                         <input type="text" class="add-filter-input">

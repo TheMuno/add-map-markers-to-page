@@ -216,6 +216,14 @@ function populateFilterInputs(hiveItem) {
             if (key === labelTxt) {
                 el.querySelector('.add-filter-input').value = val;
             }
+            else {
+                const $addFiltersContainer = $addFilters.querySelector('.add-filters-wrap');
+                const $clone = $addFiltersContainer.querySelector('.add-filter.hide').cloneNode(true);
+                $clone.classList.remove('hide');
+                $clone.querySelector('label').textContent = key.charAt(0).toUpperCase() + key.substring(1);
+                $clone.querySelector('.add-filter-input').textContent = val;
+                $addFiltersContainer.append($clone);
+            }
         });
     }
 
