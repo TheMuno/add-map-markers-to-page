@@ -221,7 +221,7 @@ function populateFilterInputs(hiveItem) {
                 const $clone = $addFiltersContainer.querySelector('.add-filter.hide').cloneNode(true);
                 $clone.classList.remove('hide');
                 $clone.querySelector('label').textContent = key.charAt(0).toUpperCase() + key.substring(1);
-                $clone.querySelector('.add-filter-input').textContent = val;
+                $clone.querySelector('.add-filter-input').value = val;
                 $addFiltersContainer.append($clone);
             }
         });
