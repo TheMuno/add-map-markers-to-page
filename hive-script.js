@@ -208,8 +208,20 @@ $addFilterBtn.addEventListener('click', e => {
 
 function populateFilterInputs(hiveItem) {
     const filterObj = hiveItem.locationInfo.filter; 
+    const filterEls = [...$addFilters.querySelectorAll('.add-filters-wrap .add-filter')];
+
+    for (const [key, val] of Object.entries(filterObj)) {
+        const match = filterEls.filter(el => {
+            const labelTxt = el.querySelector('label').textContent.trim().toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-\_]/g,''); 
+            return key === labelTxt;
+        });
+        if (match) {
+            el.querySelector('.add-filter-input').value = val;
+        }
+    }
+
     // console.log('filterObj', filterObj)
-    $addFilters.querySelectorAll('.add-filters-wrap .add-filter').forEach(filter => {
+    /*$addFilters.querySelectorAll('.add-filters-wrap .add-filter').forEach(filter => {
         // console.log('filter', filter)
         const $label = filter.querySelector('label');
         const labelTxt = $label.textContent.trim().toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-\_]/g,''); 
@@ -218,6 +230,7 @@ function populateFilterInputs(hiveItem) {
         if (!filterObj[labelTxt]) return; 
         filter.querySelector('.add-filter-input').value = filterObj[labelTxt];
     });
+    */
 
     if (hiveItem.locationInfo.dayEventName) $userSearch.value = hiveItem.locationInfo.dayEventName; 
 }
