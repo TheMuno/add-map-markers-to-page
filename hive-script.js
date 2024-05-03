@@ -211,13 +211,12 @@ function populateFilterInputs(hiveItem) {
     const filterEls = [...$addFilters.querySelectorAll('.add-filters-wrap .add-filter')];
 
     for (const [key, val] of Object.entries(filterObj)) {
-        const match = filterEls.filter(el => {
+        filterEls.forEach(el => {
             const labelTxt = el.querySelector('label').textContent.trim().toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-\_]/g,''); 
-            return key === labelTxt;
+            if (key === labelTxt) {
+                el.querySelector('.add-filter-input').value = val;
+            }
         });
-        if (match) {
-            el.querySelector('.add-filter-input').value = val;
-        }
     }
 
     // console.log('filterObj', filterObj)
