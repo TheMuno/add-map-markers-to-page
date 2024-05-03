@@ -223,6 +223,7 @@ function populateFilterInputs(hiveItem) {
         });
 
         if (el) {
+            console.log('el', el)
             el.querySelector('.add-filter-input').value = val;
         }
         else {
