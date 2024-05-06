@@ -93,7 +93,7 @@ const markerPopup = new google.maps.InfoWindow();
                 return;
             }            
 
-            const type = $dataTypeSelect.currentTarget.value.toLowerCase().trim();
+            const type = $dataTypeSelect.value.toLowerCase().trim();
             if (type.includes('retail')) {
                 icon.url = bagMapIcon;
             }
