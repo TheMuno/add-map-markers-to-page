@@ -93,7 +93,18 @@ const markerPopup = new google.maps.InfoWindow();
                 return;
             }            
 
-            const { marker } = createMarker(place); 
+            const type = $dataTypeSelect.currentTarget.value.toLowerCase().trim();
+            if (type.includes('retail')) {
+                icon.url = bagMapIcon;
+            }
+            else if (type.includes('attractions')) {
+                icon.url = cameraMapIcon;
+            }
+            else if (type.includes('restaurants')) {
+                icon.url = restaurantMapIcon;
+            }
+
+            const { marker } = createMarker(place, icon); 
             map.panTo(marker.position);   
 
         });
@@ -624,21 +635,33 @@ function isString(x) {
 
 $dataTypeSelect.addEventListener('change', e => {
     const val = e.currentTarget.value.toLowerCase().trim();
-    $dataTypeSections.forEach(section => section.classList.add('hide'));
+    $dataTypeSections.forEach(sec => {
+        sec.classList.add('hide');
+        sec.classList.remove('active');
+    });
     if (val.includes('retail')) {
-        $retailSections.forEach(sec => sec.classList.remove('hide')); 
+        $retailSections.forEach(sec => {
+            sec.classList.remove('hide');
+            sec.classList.add('active');
+        }); 
         $hiveListAttractions.markers?.forEach(marker => marker.setMap(null)); 
         $hiveListRestaurants.markers?.forEach(marker => marker.setMap(null)); 
         $hiveList.markers?.forEach(marker => marker.setMap(map)); 
     }
     else if (val.includes('attractions')) {
-        $attractionsSections.forEach(sec => sec.classList.remove('hide')); 
+        $attractionsSections.forEach(sec => {
+            sec.classList.remove('hide');
+            sec.classList.add('active');
+        }); 
         $hiveList.markers?.forEach(marker => marker.setMap(null)); 
         $hiveListAttractions.markers?.forEach(marker => marker.setMap(map)); 
         $hiveListRestaurants.markers?.forEach(marker => marker.setMap(null)); 
     }
     else if (val.includes('restaurants')) {
-        $restaurantsSections.forEach(sec => sec.classList.remove('hide')); 
+        $restaurantsSections.forEach(sec => {
+            sec.classList.remove('hide');
+            sec.classList.add('active');
+        }); 
         $hiveList.markers?.forEach(marker => marker.setMap(null)); 
         $hiveListAttractions.markers?.forEach(marker => marker.setMap(null)); 
         $hiveListRestaurants.markers?.forEach(marker => marker.setMap(map)); 
