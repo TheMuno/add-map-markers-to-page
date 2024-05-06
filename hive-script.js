@@ -41,9 +41,9 @@ const $map = document.querySelector('#map'),
     // $dayActivities = document.querySelector('.day-events');
     $dataTypeSelect = document.querySelector('.data-type-select'),
     $dataTypeSections = document.querySelectorAll('[data-type]'),
-    $retailSection = document.querySelector('[data-type="retail"]'),
-    $attractionsSection = document.querySelector('[data-type="attractions"]'),
-    $restaurantsSection = document.querySelector('[data-type="restaurants"]'),
+    $retailSections = document.querySelectorAll('[data-type="retail"]'),
+    $attractionsSections = document.querySelectorAll('[data-type="attractions"]'),
+    $restaurantsSections = document.querySelectorAll('[data-type="restaurants"]'),
     $addFilters = document.querySelector('.add-filters');
     // $addFilterBtn = document.querySelector('.add-filter-btn');
 
@@ -608,21 +608,22 @@ $dataTypeSelect.addEventListener('change', e => {
     const val = e.currentTarget.value.toLowerCase().trim();
     $dataTypeSections.forEach(section => section.classList.add('hide'));
     if (val.includes('retail')) {
-        $retailSection.classList.remove('hide');
+        $retailSections.forEach(sec => sec.classList.remove('hide')); 
         $hiveListAttractions.markers?.forEach(marker => marker.setMap(null)); 
         $hiveListRestaurants.markers?.forEach(marker => marker.setMap(null)); 
         $hiveList.markers?.forEach(marker => marker.setMap(map)); 
     }
     else if (val.includes('attractions')) {
-        $attractionsSection.classList.remove('hide');
+        $attractionsSections.forEach(sec => sec.classList.remove('hide')); 
         $hiveList.markers?.forEach(marker => marker.setMap(null)); 
         $hiveListAttractions.markers?.forEach(marker => marker.setMap(map)); 
         $hiveListRestaurants.markers?.forEach(marker => marker.setMap(null)); 
     }
     else if (val.includes('restaurants')) {
-        $restaurantsSection.classList.remove('hide');
+        $restaurantsSections.forEach(sec => sec.classList.remove('hide')); 
         $hiveList.markers?.forEach(marker => marker.setMap(null)); 
         $hiveListAttractions.markers?.forEach(marker => marker.setMap(null)); 
         $hiveListRestaurants.markers?.forEach(marker => marker.setMap(map)); 
     }
 });
+
