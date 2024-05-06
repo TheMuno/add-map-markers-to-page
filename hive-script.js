@@ -44,8 +44,8 @@ const $map = document.querySelector('#map'),
     $retailSection = document.querySelector('[data-type="retail"]'),
     $attractionsSection = document.querySelector('[data-type="attractions"]'),
     $restaurantsSection = document.querySelector('[data-type="restaurants"]'),
-    $addFilters = document.querySelector('.add-filters'),
-    $addFilterBtn = document.querySelector('.add-filter-btn');
+    $addFilters = document.querySelector('.add-filters');
+    // $addFilterBtn = document.querySelector('.add-filter-btn');
 
 const mapZoom = 13,
     initialCoords  = { lat: 40.7580, lng: -73.9855 },
@@ -200,11 +200,11 @@ $addFilters.addEventListener('click', e => {
     });
 });
 
-$addFilterBtn.addEventListener('click', e => {
-    const $clone = e.target.closest('.add-filter-btn-wrap').querySelector('.add-filter-sample').cloneNode(true);
-    $clone.classList.remove('hide');
-    $addFilters.querySelector('.add-filters-wrap').append($clone);
-});
+// $addFilterBtn.addEventListener('click', e => {
+//     const $clone = e.target.closest('.add-filter-btn-wrap').querySelector('.add-filter-sample').cloneNode(true);
+//     $clone.classList.remove('hide');
+//     $addFilters.querySelector('.add-filters-wrap').append($clone);
+// });
 
 function populateFilterInputs(hiveItem) {
     const filterObj = hiveItem.locationInfo.filter; 
