@@ -312,7 +312,7 @@
                     </div>
                 </div>
 
-                <div class="add-filters-wrap" data-type="attractions">
+                <div class="add-filters-wrap hide" data-type="attractions">
                     <div class="add-filter">
                         <label>Neighborhood:</label>
                         <!-- <input type="text" class="add-filter-input"> -->
@@ -434,6 +434,163 @@
                                 <div class="hive-filter">
                                     <input type="checkbox" name="observation-deck" id="observation-deck" class="observation-deck">
                                     <label for="observation-deck">Observation Deck</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="add-filters-wrap hide" data-type="restaurants">
+                    <div class="add-filter">
+                        <label>Neighborhood:</label>
+                        <!-- <input type="text" class="add-filter-input"> -->
+                        <!-- <img src="Imgs/x.png" class="remove-filter"> --> 
+                        <select class="add-filter-input">
+                            <option value="*">Select Neighborhood</option>
+                            <option value="upper-west-side">Upper West Side</option>
+                            <option value="upper-east-side">Upper East Side</option>
+                            <option value="midtown">Midtown</option>
+                            <option value="times-square">Times Square</option>
+                            <option value="lower-east-side">Lower East Side</option>
+                            <option value="financial-district">Financial District</option>
+                            <option value="hells-kitchen">Hell's Kitchen</option>
+                            <option value="greenwich-village">Greenwich Village</option>
+                            <option value="tribeca">Tribeca</option>
+                            <option value="williamsburg">Williamsburg</option>
+                        </select>
+                    </div>
+                    <div class="add-filter">
+                        <fieldset class="section-filedset">
+                            <legend>Type</legend>
+                            <div class="fieldset-section">
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="diner" id="diner" class="diner">
+                                    <label for="diner">Diner</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="steakhouse" id="steakhouse" class="steakhouse">
+                                    <label for="steakhouse">Steakhouse</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="american" id="american" class="american">
+                                    <label for="american">American</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="new-american" id="new-american" class="new-american">
+                                    <label for="new-american">New American</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="indian" id="indian" class="indian">
+                                    <label for="indian">Indian</label>
+                                </div>
+                            </div>
+                            <div class="fieldset-section">
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="middle-eastern" id="middle-eastern" class="middle-eastern">
+                                    <label for="middle-eastern">Middle Eastern</label>
+                                </div>
+    
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="mexican" id="mexican" class="mexican">
+                                    <label for="mexican">Mexican</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="pizza" id="pizza" class="pizza">
+                                    <label for="pizza">Pizza</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="tea-room" id="tea-room" class="tea-room">
+                                    <label for="tea-room">Tea Room</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="italian" id="italian" class="italian">
+                                    <label for="italian">Italian</label>
+                                </div>
+                            </div>
+                            <div class="fieldset-section">
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="jewish-deli" id="jewish-deli" class="jewish-deli">
+                                    <label for="jewish-deli">Jewish Deli</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="sushi" id="sushi" class="sushi">
+                                    <label for="sushi">Sushi</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="middle-eastern" id="middle-eastern" class="middle-eastern">
+                                    <label for="middle-eastern">Middle Eastern</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="bagels" id="bagels" class="bagels">
+                                    <label for="bagels">Bagels</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="add-filter">
+                        <fieldset class="section-filedset">
+                            <legend>For</legend>
+                            <div class="fieldset-section">
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="kids-3" id="kids-3" class="kids-3">
+                                    <label for="kids-3">Kids</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="big-groups" id="big-groups" class="big-groups">
+                                    <label for="big-groups">Big Groups</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="solo-3" id="solo-3" class="solo-3">
+                                    <label for="solo-3">Solo</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="couples-3" id="couples-3" class="couples-3">
+                                    <label for="couples-3">Couples</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="add-filter">
+                        <fieldset class="section-filedset">
+                            <legend>Sub-Category</legend>
+                            <div class="fieldset-section">
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="historic" id="historic" class="historic">
+                                    <label for="historic">Historic</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="pre-theater" id="pre-theater" class="pre-theater">
+                                    <label for="pre-theater">Pre-Theater</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="rooftop-3" id="rooftop-3" class="rooftop-3">
+                                    <label for="rooftop-3">Rooftop</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="fine-dining" id="fine-dining" class="fine-dining">
+                                    <label for="fine-dining">Fine Dining</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="vegetarian" id="vegetarian" class="vegetarian">
+                                    <label for="vegetarian">Vegetarian</label>
+                                </div>
+                            </div>
+                            <div class="fieldset-section">
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="street-food" id="street-food" class="street-food">
+                                    <label for="street-food">Street Food</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="halal" id="halal" class="halal">
+                                    <label for="halal">Halal</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="boat" id="boat" class="boat">
+                                    <label for="boat">Boat</label>
+                                </div>
+                                <div class="hive-filter">
+                                    <input type="checkbox" name="gluten-free" id="gluten-free" class="gluten-free">
+                                    <label for="gluten-free">Gluten-Free</label>
                                 </div>
                             </div>
                         </fieldset>
