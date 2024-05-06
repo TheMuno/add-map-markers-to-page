@@ -75,13 +75,31 @@ const markerPopup = new google.maps.InfoWindow();
         center: initialCoords,
     });
 
-    // Create the search box and link it to the UI element.
-    // const searchBox = new google.maps.places.SearchBox($address);
+    const searchBox = new google.maps.places.SearchBox($userSearch);
     
     // Bias the SearchBox results towards current map's viewport 
-    // map.addListener('bounds_changed', () => {
-    //     searchBox.setBounds(map.getBounds()); 
-    // });
+    map.addListener('bounds_changed', () => {
+        searchBox.setBounds(map.getBounds()); 
+    });
+
+    searchBox.addListener('places_changed', (e) => { 
+        const places = searchBox.getPlaces();
+    
+        if (places.length == 0) return;
+
+        places.forEach((place) => {
+            if (!place.geometry || !place.geometry.location) {
+                alert('Sorry, try again\nNo cordinates found'); 
+                return;
+            }            
+
+            const { marker } = createMarker(place); 
+            map.panTo(marker.position);   
+
+        });
+
+        $userSearch.value = '';  
+    });
 }();
 
 retrieveHiveFromDB(localStorage.getItem('user-email')); 
