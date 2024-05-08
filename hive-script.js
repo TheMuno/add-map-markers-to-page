@@ -398,7 +398,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 
                 console.log('activeCheckboxes[filterKey]', activeCheckboxes[filterKey])
 
-                console.log('filterVal:::::', filterVal)
+                // console.log('filterVal:::::', filterVal)
 
                 filterVal = filterVal.toLowerCase().trim().replace(/\s+/g,'-');  
                 const matches = [...activeCheckboxes[filterKey]].every(val => filterVal.includes(val));
@@ -411,6 +411,8 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 
             if (matchesArr.length && matchesArr.every(Boolean)) {
                 hiveItem.classList.remove('hide');
+
+                console.log('hiveItem', hiveItem)
 
                 // const filterObj = hiveItem.locationInfo.filter;
                 // console.log('filterObj:', filterObj)
