@@ -423,10 +423,10 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             }
         });
 
-        if (!activeCheckboxes.length && $hiveList.querySelectorAll('.hive-item:not(.hide)').length === 0) {
-            console.log('HIT::::::::::::::::::::::::::::::::::::::::::::')
-            console.log('activeCheckboxes', activeCheckboxes)
-            console.log('activeCheckboxes.length', activeCheckboxes.length)
+        if (!Object.keys(activeCheckboxes).length && $hiveList.querySelectorAll('.hive-item:not(.hide)').length === 0) {
+            // console.log('HIT::::::::::::::::::::::::::::::::::::::::::::')
+            // console.log('activeCheckboxes', activeCheckboxes)
+            // console.log('activeCheckboxes.length', activeCheckboxes.length)
             $hiveItems.forEach(item => item.classList.remove('hide'));
             $hiveList.markers.forEach(marker => marker.setMap(map)); 
         }
