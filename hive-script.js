@@ -408,7 +408,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                 // });
 
                 // if (!activeCheckboxes[filterKey].trim()) return; 
-
+                console.log('activeCheckboxes[filterKey].split(',')', activeCheckboxes[filterKey].split(','))
                 const matches = activeCheckboxes[filterKey].split(',').every(val => {
                     // console.log('VAL', val)
                     // console.log('val.trim()', val.trim())
