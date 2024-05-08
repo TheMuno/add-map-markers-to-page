@@ -401,10 +401,13 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                 // console.log('filterVal:::::', filterVal)
 
                 filterVal = filterVal.toLowerCase().trim().replace(/\s+/g,'-');  
-                const matches = [...activeCheckboxes[filterKey]].every(val => filterVal.includes(val));
+                const matches = [...activeCheckboxes[filterKey]].every(val => {
+                    console.log('VAL', val)
+                    return filterVal.includes(val)
+                });
 
-                console.log('filterVal', filterVal)
-                console.log('matches', matches)
+                // console.log('filterVal', filterVal)
+                // console.log('matches', matches)
 
                 matchesArr.push(matches);
             }
