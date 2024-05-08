@@ -394,7 +394,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             for (let [filterKey, filterVal] of Object.entries(filterObj)) {
                 if (!filterVal.trim()) continue; 
 
-                if (!activeCheckboxes[filterKey]) continue; 
+                if (!activeCheckboxes[filterKey].trim()) continue; 
 
                 console.log('activeCheckboxes[filterKey]', activeCheckboxes[filterKey])
 
@@ -406,11 +406,13 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                 //     return filterVal.includes(val)
                 // });
 
+                // if (!activeCheckboxes[filterKey].trim()) return; 
+
                 const matches = activeCheckboxes[filterKey].split(',').every(val => {
-                    console.log('VAL', val)
-                    console.log('val.trim()', val.trim())
-                    console.log('filterVal', filterVal)
-                    return val.trim() && filterVal.includes(val)
+                    // console.log('VAL', val)
+                    // console.log('val.trim()', val.trim())
+                    // console.log('filterVal', filterVal)
+                    return filterVal.includes(val)
                 });
 
                 // console.log('filterVal', filterVal)
