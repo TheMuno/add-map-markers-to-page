@@ -424,6 +424,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
         });
 
         if (!activeCheckboxes.length && $hiveList.querySelectorAll('.hive-item:not(.hide)').length === 0) {
+            console.log('HIT::::::::::::::::::::::::::::::::::::::::::::')
             $hiveItems.forEach(item => item.classList.remove('hide'));
             $hiveList.markers.forEach(marker => marker.setMap(map)); 
         }
