@@ -778,17 +778,19 @@ async function saveMarkerToFirebase(userMail, type) {
 
     console.log('$saveEntryBtn.hiveObj', $saveEntryBtn.hiveObj)
 
-    const hiveObj = {
+    const {
         dayEventName,
         lat,
         lng,
         title,
         rating,
-        reviews: reviewsContent,
-        operatingHours: operatingHrs,
+        reviewsContent: reviews,
+        operatingHrs: operatingHours,
         phoneNumber,
         address,
     } = $saveEntryBtn.hiveObj;
+
+    const hiveObj = { dayEventName, lat, lng, title, rating, reviews, operatingHours, phoneNumber, address };
 
     const dataObj = {}; 
     // dayObj.days = days; 
