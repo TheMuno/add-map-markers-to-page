@@ -107,14 +107,31 @@ const markerPopup = new google.maps.InfoWindow();
 
             // const { marker, contentString } = createMarker(place, icon); 
             const { marker, rating, reviewsContent, operatingHrs, phoneNumber, address, contentString } = createMarker(place, icon); 
+
             map.panTo(marker.position);  
             markerPopup.close();
             markerPopup.setContent(contentString);
             markerPopup.open(marker.getMap(), marker); 
-            $saveEntryBtn.hiveObj = { rating, reviewsContent, operatingHrs, phoneNumber, address };
+            
+            const dayEventName = $userSearch.value;
+            const title = dayEventName.split(',')[0];
+            const lat = place.geometry.location.lat();
+            const lng = place.geometry.location.lng();
+
+            $saveEntryBtn.hiveObj = { 
+                dayEventName, 
+                title,
+                lat,
+                lng,
+                rating, 
+                reviewsContent, 
+                operatingHrs, 
+                phoneNumber, 
+                address 
+            };
         });
 
-        console.log('User search value:', $userSearch.value)
+        // console.log('User search value:', $userSearch.value)
         $userSearch.value = '';  
     });
 }();
@@ -736,20 +753,51 @@ $saveEntryBtn.addEventListener('click', e => {
     filter.neighborhood = neighborhood;
 
     const type = $dataTypeSelect.value.toLowerCase().trim();
-    if (type.includes('retail')) {
-        hive
-    }
-    else if (type.includes('attractions')) {
-        hive_attr
-    }
-    else if (type.includes('restaurants')) {
-        hive_rest
-    }
 
     console.log('filter:', filter)
+
+    const userMail = localStorage['user-email'];
+    saveMarkerToFirebase(userMail, type); 
 });
 
-async function saveMarkerToFirebase(userMail, section, dayDate, markerObj) {  
+async function saveMarkerToFirebase(userMail, type) { 
+    const userData = doc(db, 'travelData', `user-${userMail}`);
+    // const docSnap = await getDoc(userData);
+    // const data = await docSnap.data(); 
+    let hive;
+
+    if (type.includes('retail')) {
+        hive = 'hive';
+    }
+    else if (type.includes('attractions')) {
+        hive = 'hive_attr';
+    }
+    else if (type.includes('restaurants')) {
+        hive = 'hive_rest';
+    }
+
+    const hiveObj = {
+        dayEventName,
+        lat,
+        lng,
+        title,
+        rating,
+        reviews: reviewsContent,
+        operatingHours: operatingHrs,
+        phoneNumber,
+        address,
+    } = $saveEntryBtn.hiveObj;
+
+    const dataObj = {}; 
+    // dayObj.days = days; 
+    // if ($addToHiveBtn.checked) dayObj.hive = arrayUnion(dayEventName); 
+    dataObj[hive] = arrayUnion(hiveObj); 
+    dataObj.modifiedAt = serverTimestamp(); 
+
+    await updateDoc(userData, dataObj);
+}
+
+async function saveMarkerToFirebase2(userMail, section, dayDate, markerObj) {  
     const userData = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(userData);
     const data = await docSnap.data(); 
@@ -788,8 +836,9 @@ async function saveMarkerToFirebase(userMail, section, dayDate, markerObj) {
     */
     // const dayEvents = specificDay.events;
 
-    const { dayEventName='', lat=0, lng=0, title='', timeslot='', starttime='', 
+    /*const { dayEventName='', lat=0, lng=0, title='', timeslot='', starttime='', 
     rating=0, reviewsContent='', operatingHrs='', phoneNumber='', address='' } = markerObj; 
+    */
     /*const eventObj = {
         dayEventName,
         lat,
@@ -823,7 +872,21 @@ async function saveMarkerToFirebase(userMail, section, dayDate, markerObj) {
         operatingHours: operatingHrs,
         phoneNumber,
         address,
-    }
+    } = $saveEntryBtn.hiveObj;
+
+    /*
+    const hiveObj = { 
+        dayEventName, 
+        title,
+        lat,
+        lng,
+        rating, 
+        reviewsContent, 
+        operatingHrs, 
+        phoneNumber, 
+        address 
+    } = $saveEntryBtn.hiveObj;
+    */
 
     // dayEvents.push(eventObj);
 
