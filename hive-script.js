@@ -819,8 +819,39 @@ $saveEntryBtn.addEventListener('click', e => {
 
     console.log('filter:', filter)
 
+    let hive, hiveList;
+
+    if (type.includes('retail')) {
+        hive = 'hive';
+        hiveList = $hiveList;
+    }
+    else if (type.includes('attractions')) {
+        hive = 'hive_attr';
+        hiveList = $hiveListAttractions;
+    }
+    else if (type.includes('restaurants')) {
+        hive = 'hive_rest';
+        hiveList = $hiveListRestaurants;
+    }
+
     const userMail = localStorage['user-email'];
-    saveMarkerToFirebase(userMail, type, filter); 
+    saveMarkerToFirebase(userMail, hive, filter); 
+
+    const {
+        dayEventName,
+        lat,
+        lng,
+        title,
+        rating,
+        reviewsContent: reviews,
+        operatingHrs: operatingHours,
+        phoneNumber,
+        address,
+    } = $saveEntryBtn.hiveObj;
+
+    const hiveItemData = { dayEventName, title, lat, lng, rating, reviews, operatingHours, phoneNumber, address, filter }; 
+
+    addToHive(hiveItemData, hiveList); 
 
     $btn.value = 'Submitted!!';
     setTimeout(()=> {
@@ -839,19 +870,8 @@ function refreshAddToDBFields() {
     markerPopup.close();
 }
 
-async function saveMarkerToFirebase(userMail, type, filter) { 
+async function saveMarkerToFirebase(userMail, hive, filter) { 
     const userData = doc(db, 'travelData', `user-${userMail}`);
-    let hive;
-
-    if (type.includes('retail')) {
-        hive = 'hive';
-    }
-    else if (type.includes('attractions')) {
-        hive = 'hive_attr';
-    }
-    else if (type.includes('restaurants')) {
-        hive = 'hive_rest';
-    }
 
     const {
         dayEventName,
@@ -873,4 +893,6 @@ async function saveMarkerToFirebase(userMail, type, filter) {
 
     await updateDoc(userData, dataObj);
 }
+
+
 
