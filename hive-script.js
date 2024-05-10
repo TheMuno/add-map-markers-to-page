@@ -277,7 +277,8 @@ function populateFilterInputs(hiveItem) {
         else {
             val.split(',').forEach(v => {
                 v = v.trim().toLowerCase().replace(/\s+/g,'-'); 
-                $filtersWrap.querySelector(`.add-filter input[type=checkbox][name="${v}-filter"]`)?.checked = true; 
+                const $checkbox = $filtersWrap.querySelector(`.add-filter input[type=checkbox][name="${v}-filter"]`); 
+                if ($checkbox) $checkbox.checked = true; 
             });
         }
 
