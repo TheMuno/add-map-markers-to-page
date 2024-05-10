@@ -275,7 +275,7 @@ function populateFilterInputs(hiveItem) {
                 const legendTxt = $legend.textContent.trim().toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-\_]/g,''); 
                 if (key === legendTxt) {
                     val.split(',').forEach(v => {
-                        filter.querySelector(`input[type=checkbox][name=${v}-filter]`).checked = true; 
+                        filter.querySelector(`input[type=checkbox][name="${v}-filter"]`).checked = true; 
                     });
                 }
             }
