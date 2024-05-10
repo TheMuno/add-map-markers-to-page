@@ -836,6 +836,7 @@ function refreshAddToDBFields() {
     $filtersWrap.querySelectorAll('input[type=checkbox]:checked').forEach(checkbox => {
         checkbox.checked = false;
     });
+    markerPopup.close();
 }
 
 async function saveMarkerToFirebase(userMail, type, filter) { 
