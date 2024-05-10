@@ -105,12 +105,13 @@ const markerPopup = new google.maps.InfoWindow();
                 icon.url = restaurantMapIcon;
             }
 
-            const { marker, contentString } = createMarker(place, icon); 
+            // const { marker, contentString } = createMarker(place, icon); 
+            const { marker, rating, reviewsContent, operatingHrs, phoneNumber, address, contentString } = createMarker(place, icon); 
             map.panTo(marker.position);  
             markerPopup.close();
             markerPopup.setContent(contentString);
             markerPopup.open(marker.getMap(), marker); 
-
+            $saveEntryBtn.hiveObj = { rating, reviewsContent, operatingHrs, phoneNumber, address };
         });
 
         $userSearch.value = '';  
@@ -553,6 +554,20 @@ function createMarker(place, mapIcon=icon) {
         reviews, rating } = place; 
     let operatingHrs, reviewsContent, ratingTag; 
 
+    console.log('place', place)
+
+    const hiveObj = {
+        dayEventName,
+        lat,
+        lng,
+        title,
+        rating,
+        reviews: reviewsContent,
+        operatingHours: operatingHrs,
+        phoneNumber,
+        address,
+    }
+
     // console.log('rating:::::', rating)
     // console.log('reviews:::::', reviews)
     // console.log('address:::::', address)
@@ -695,8 +710,7 @@ $dataTypeSelect.addEventListener('change', e => {
 });
 
 $saveEntryBtn.addEventListener('click', e => {
-    const $btn = e.currentTarget;
-    const $sideBar = $btn.closest('.side-bar');
+    const $sideBar = e.currentTarget.closest('.side-bar');
     const $userSearch = $sideBar.querySelector('.user-search');
 
     const $filtersWrap = $sideBar.querySelector('.add-filters-wrap:not(.hide)');
@@ -720,5 +734,115 @@ $saveEntryBtn.addEventListener('click', e => {
 
     filter.neighborhood = neighborhood;
 
+    const type = $dataTypeSelect.value.toLowerCase().trim();
+    if (type.includes('retail')) {
+        hive
+    }
+    else if (type.includes('attractions')) {
+        hive_attr
+    }
+    else if (type.includes('restaurants')) {
+        hive_rest
+    }
+
     console.log('filter:', filter)
 });
+
+async function saveMarkerToFirebase(userMail, section, dayDate, markerObj) {  
+    const userData = doc(db, 'travelData', `user-${userMail}`);
+    const docSnap = await getDoc(userData);
+    const data = await docSnap.data(); 
+    // const { days, hive } = data;
+    let theHive;
+
+    if (section.includes('retail')) {
+        theHive = data.hive;
+    }
+    else if (section.includes('attractions')) {
+        theHive = data.hive_attr;
+    }
+    else if (section.includes('restaurants')) {
+        theHive = data.hive_rest;
+    }
+
+
+    /*let specificDay, dayArrIndex;
+    days.forEach((day, i) => {
+        if (day.dayDate.includes(dayDate)) {
+            specificDay = day; 
+            dayArrIndex = i; 
+        }
+    });
+
+    if (!dayArrIndex) dayArrIndex = $daysSelect.options[$daysSelect.options.length - 2].index; 
+
+    if (!specificDay) {
+        specificDay = {
+            dayDate,
+            summary: '',
+            events: [], 
+        };
+        days.splice(dayArrIndex, 0, specificDay);
+    }
+    */
+    // const dayEvents = specificDay.events;
+
+    const { dayEventName='', lat=0, lng=0, title='', timeslot='', starttime='', 
+    rating=0, reviewsContent='', operatingHrs='', phoneNumber='', address='' } = markerObj; 
+    /*const eventObj = {
+        dayEventName,
+        lat,
+        lng,
+        title,
+        description: '',
+        imageURL: '',
+        KhonsuRecommends: true,
+        timeslot,
+        starttime,
+        endtime: '',
+        notes: '',
+        reservation: '',
+        rating,
+        reviews: reviewsContent,
+        operatingHours: operatingHrs,
+        phoneNumber,
+        address,
+    };*/
+
+    // console.log('eventObj', eventObj)
+    // rating, reviewsContent, operatingHrs, phoneNumber, address
+
+    const hiveObj = {
+        dayEventName,
+        lat,
+        lng,
+        title,
+        rating,
+        reviews: reviewsContent,
+        operatingHours: operatingHrs,
+        phoneNumber,
+        address,
+    }
+
+    // dayEvents.push(eventObj);
+
+    const dayObj = {}; 
+    // dayObj.days = days; 
+    // if ($addToHiveBtn.checked) dayObj.hive = arrayUnion(dayEventName); 
+    // dayObj.hive_rest = arrayUnion(hiveObj); 
+    dayObj.modifiedAt = serverTimestamp(); 
+
+    // console.log('Saved to:', dayNum, 'days', days)  
+
+    // if ($addToHiveBtn.checked) {
+    //     arrayUnion(); 
+    //     await updateDoc(userData, {
+    //         hive: arrayUnion(dayEventName)
+    //     });
+    // }
+
+    await updateDoc(userData, dayObj);
+}
+
+
+
