@@ -556,7 +556,7 @@ function createMarker(place, mapIcon=icon) {
 
     console.log('place', place)
 
-    const hiveObj = {
+    /*const hiveObj = {
         dayEventName,
         lat,
         lng,
@@ -566,7 +566,7 @@ function createMarker(place, mapIcon=icon) {
         operatingHours: operatingHrs,
         phoneNumber,
         address,
-    }
+    }*/
 
     // console.log('rating:::::', rating)
     // console.log('reviews:::::', reviews)
