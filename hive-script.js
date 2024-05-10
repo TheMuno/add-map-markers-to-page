@@ -264,8 +264,33 @@ function populateFilterInputs(hiveItem) {
 
     for (const [key, val] of Object.entries(filterObj)) {
 
+        $addFilters.querySelectorAll('.add-filters-wrap .add-filter').forEach(filter => {
+            const $label = filter.querySelector('label'); 
+            if ($label && $label.textContent.toLowerCase().includes('neighborhood')) {
+                filter.querySelector('select').value = val; 
+            }
+
+            const $legend = filter.querySelector('legend');
+            if ($legend) {
+                const legendTxt = $legend.textContent.trim().toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-\_]/g,''); 
+                if (key === legendTxt) {
+                    val.split(',').forEach(v => {
+                        filter.querySelector(`input[type=checkbox][name=${v}-filter]`).checked = true; 
+                    });
+                }
+            }
+        });
+
+        /*
         const el = filterEls.filter(el => {
-            const labelTxt = el.querySelector('label').textContent.trim().toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-\_]/g,''); 
+            let labelTxt;
+            if (el.querySelector('label')) {
+                labelTxt = el.querySelector('label').textContent.trim().toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-\_]/g,''); 
+            }
+            else {
+                labelTxt = el.querySelector('legend').textContent.trim().toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-\_]/g,''); 
+            }
+
             return key === labelTxt ? el : false;
             // if (key === labelTxt) {
             //     return el; 
@@ -277,6 +302,16 @@ function populateFilterInputs(hiveItem) {
 
         if (el) {
             el[0].querySelector('.add-filter-input').value = val;
+
+            const $label = el[0].querySelector('label'); 
+            if ($label && $label.textContent.toLowerCase().includes('neighborhood')) {
+                el[0].querySelector('select').value = val; 
+            }
+
+            const $legend = el[0].querySelector('legend'); 
+            if ($legend) {
+                if ($legend.textContent.toLowerCase().includes('type'))
+            }
         }
         else {
             const $addFiltersContainer = $addFilters.querySelector('.add-filters-wrap');
@@ -286,6 +321,7 @@ function populateFilterInputs(hiveItem) {
             $clone.querySelector('.add-filter-input').value = val;
             $addFiltersContainer.append($clone);
         }
+        */
     }
 
     if (hiveItem.locationInfo.dayEventName) $userSearch.value = hiveItem.locationInfo.dayEventName; 
@@ -728,6 +764,8 @@ $dataTypeSelect.addEventListener('change', e => {
 });
 
 $saveEntryBtn.addEventListener('click', e => {
+    const $btn = e.currentTarget;
+    const btnTxt = $btn.textContent;
     const $sideBar = e.currentTarget.closest('.side-bar');
     const $userSearch = $sideBar.querySelector('.user-search');
 
@@ -758,12 +796,13 @@ $saveEntryBtn.addEventListener('click', e => {
 
     const userMail = localStorage['user-email'];
     saveMarkerToFirebase(userMail, type, filter); 
+
+    $btn.value = 'Submitted!!';
+    setTimeout(()=>$btn.value=btnTxt,2000);
 });
 
 async function saveMarkerToFirebase(userMail, type, filter) { 
     const userData = doc(db, 'travelData', `user-${userMail}`);
-    // const docSnap = await getDoc(userData);
-    // const data = await docSnap.data(); 
     let hive;
 
     if (type.includes('retail')) {
@@ -775,8 +814,6 @@ async function saveMarkerToFirebase(userMail, type, filter) {
     else if (type.includes('restaurants')) {
         hive = 'hive_rest';
     }
-
-    console.log('$saveEntryBtn.hiveObj', $saveEntryBtn.hiveObj)
 
     const {
         dayEventName,
@@ -793,124 +830,9 @@ async function saveMarkerToFirebase(userMail, type, filter) {
     const hiveObj = { dayEventName, lat, lng, title, rating, reviews, operatingHours, phoneNumber, address, filter };
 
     const dataObj = {}; 
-    // dayObj.days = days; 
-    // if ($addToHiveBtn.checked) dayObj.hive = arrayUnion(dayEventName); 
     dataObj[hive] = arrayUnion(hiveObj); 
     dataObj.modifiedAt = serverTimestamp(); 
 
     await updateDoc(userData, dataObj);
 }
-
-async function saveMarkerToFirebase2(userMail, section, dayDate, markerObj) {  
-    const userData = doc(db, 'travelData', `user-${userMail}`);
-    const docSnap = await getDoc(userData);
-    const data = await docSnap.data(); 
-    // const { days, hive } = data;
-    let theHive;
-
-    if (section.includes('retail')) {
-        theHive = data.hive;
-    }
-    else if (section.includes('attractions')) {
-        theHive = data.hive_attr;
-    }
-    else if (section.includes('restaurants')) {
-        theHive = data.hive_rest;
-    }
-
-
-    /*let specificDay, dayArrIndex;
-    days.forEach((day, i) => {
-        if (day.dayDate.includes(dayDate)) {
-            specificDay = day; 
-            dayArrIndex = i; 
-        }
-    });
-
-    if (!dayArrIndex) dayArrIndex = $daysSelect.options[$daysSelect.options.length - 2].index; 
-
-    if (!specificDay) {
-        specificDay = {
-            dayDate,
-            summary: '',
-            events: [], 
-        };
-        days.splice(dayArrIndex, 0, specificDay);
-    }
-    */
-    // const dayEvents = specificDay.events;
-
-    /*const { dayEventName='', lat=0, lng=0, title='', timeslot='', starttime='', 
-    rating=0, reviewsContent='', operatingHrs='', phoneNumber='', address='' } = markerObj; 
-    */
-    /*const eventObj = {
-        dayEventName,
-        lat,
-        lng,
-        title,
-        description: '',
-        imageURL: '',
-        KhonsuRecommends: true,
-        timeslot,
-        starttime,
-        endtime: '',
-        notes: '',
-        reservation: '',
-        rating,
-        reviews: reviewsContent,
-        operatingHours: operatingHrs,
-        phoneNumber,
-        address,
-    };*/
-
-    // console.log('eventObj', eventObj)
-    // rating, reviewsContent, operatingHrs, phoneNumber, address
-
-    const hiveObj = {
-        dayEventName,
-        lat,
-        lng,
-        title,
-        rating,
-        reviews: reviewsContent,
-        operatingHours: operatingHrs,
-        phoneNumber,
-        address,
-    } = $saveEntryBtn.hiveObj;
-
-    /*
-    const hiveObj = { 
-        dayEventName, 
-        title,
-        lat,
-        lng,
-        rating, 
-        reviewsContent, 
-        operatingHrs, 
-        phoneNumber, 
-        address 
-    } = $saveEntryBtn.hiveObj;
-    */
-
-    // dayEvents.push(eventObj);
-
-    const dayObj = {}; 
-    // dayObj.days = days; 
-    // if ($addToHiveBtn.checked) dayObj.hive = arrayUnion(dayEventName); 
-    // dayObj.hive_rest = arrayUnion(hiveObj); 
-    dayObj.modifiedAt = serverTimestamp(); 
-
-    // console.log('Saved to:', dayNum, 'days', days)  
-
-    // if ($addToHiveBtn.checked) {
-    //     arrayUnion(); 
-    //     await updateDoc(userData, {
-    //         hive: arrayUnion(dayEventName)
-    //     });
-    // }
-
-    await updateDoc(userData, dayObj);
-}
-
-
 
