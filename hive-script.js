@@ -132,7 +132,7 @@ const markerPopup = new google.maps.InfoWindow();
         });
 
         // console.log('User search value:', $userSearch.value)
-        $userSearch.value = '';  
+        // $userSearch.value = '';  
     });
 }();
 
@@ -787,9 +787,10 @@ $dataTypeSelect.addEventListener('change', e => {
     }
 });
 
+const saveEntryBtnTxt = $saveEntryBtn.textContent;
 $saveEntryBtn.addEventListener('click', e => {
     const $btn = e.currentTarget;
-    const btnTxt = $btn.textContent;
+    // const btnTxt = $btn.textContent;
     const $sideBar = e.currentTarget.closest('.side-bar');
     const $userSearch = $sideBar.querySelector('.user-search');
 
@@ -822,8 +823,19 @@ $saveEntryBtn.addEventListener('click', e => {
     saveMarkerToFirebase(userMail, type, filter); 
 
     $btn.value = 'Submitted!!';
-    setTimeout(()=>$btn.value=btnTxt,2000);
+    setTimeout(()=> {
+        $btn.value = saveEntryBtnTxt;
+        refreshAddToDBFields(); 
+    }, 2000);
 });
+
+function refreshAddToDBFields() {
+    $userSearch.value = '';  
+    $filtersWrap.querySelector('.add-filter [data-filter=neighborhood]').selectedIndex = 0;
+    $filtersWrap.querySelectorAll('input[type=checkbox]:checked').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+}
 
 async function saveMarkerToFirebase(userMail, type, filter) { 
     const userData = doc(db, 'travelData', `user-${userMail}`);
