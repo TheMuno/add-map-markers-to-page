@@ -787,10 +787,10 @@ $dataTypeSelect.addEventListener('change', e => {
     }
 });
 
-const saveEntryBtnTxt = $saveEntryBtn.textContent;
+// const saveEntryBtnTxt = $saveEntryBtn.value;
 $saveEntryBtn.addEventListener('click', e => {
     const $btn = e.currentTarget;
-    // const btnTxt = $btn.textContent;
+    const btnTxt = $btn.value;
     const $sideBar = e.currentTarget.closest('.side-bar');
     const $userSearch = $sideBar.querySelector('.user-search');
 
@@ -824,7 +824,7 @@ $saveEntryBtn.addEventListener('click', e => {
 
     $btn.value = 'Submitted!!';
     setTimeout(()=> {
-        $btn.value = saveEntryBtnTxt;
+        $btn.value = btnTxt;
         refreshAddToDBFields(); 
     }, 2000);
 });
