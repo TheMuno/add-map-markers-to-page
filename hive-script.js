@@ -45,7 +45,8 @@ const $map = document.querySelector('#map'),
     $attractionsSections = document.querySelectorAll('[data-type="attractions"]'),
     $restaurantsSections = document.querySelectorAll('[data-type="restaurants"]'),
     $addFilters = document.querySelector('.add-filters'),
-    $saveEntryBtn = document.querySelector('.save-entry-btn');
+    $saveEntryBtn = document.querySelector('.save-entry-btn'),
+    $refreshBtn = document.querySelector('.refresh-btn');
     // $addFilterBtn = document.querySelector('.add-filter-btn');
 
 const mapZoom = 13,
@@ -894,5 +895,6 @@ async function saveMarkerToFirebase(userMail, hive, filter) {
     await updateDoc(userData, dataObj);
 }
 
-
-
+$refreshBtn.addEventListener('click', e => {
+    refreshAddToDBFields(); 
+}); 
