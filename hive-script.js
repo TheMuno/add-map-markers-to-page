@@ -263,10 +263,16 @@ function populateFilterInputs(hiveItem) {
     const filterEls = [...$addFilters.querySelectorAll('.add-filters-wrap .add-filter')];
     const $filtersWrap = $addFilters.querySelector('.add-filters-wrap'); 
 
+    const $neighborhoodSelect = $filtersWrap.querySelector('.add-filter [data-filter=neighborhood]'); 
+    $neighborhoodSelect.selectedIndex = 0;
+    $filtersWrap.querySelectorAll('input[type=checkbox]:checked').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+
     for (const [key, val] of Object.entries(filterObj)) {
 
         if (key.includes('neighborhood')) {
-            $filtersWrap.querySelector('.add-filter [data-filter=neighborhood]').value = val.trim().toLowerCase().replace(/\s+/g,'-');
+            $neighborhoodSelect.value = val.trim().toLowerCase().replace(/\s+/g,'-');
         }
         else {
             val.split(',').forEach(v => {
