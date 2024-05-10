@@ -831,6 +831,7 @@ $saveEntryBtn.addEventListener('click', e => {
 
 function refreshAddToDBFields() {
     $userSearch.value = '';  
+    const $filtersWrap = $addFilters.querySelector('.add-filters-wrap'); 
     $filtersWrap.querySelector('.add-filter [data-filter=neighborhood]').selectedIndex = 0;
     $filtersWrap.querySelectorAll('input[type=checkbox]:checked').forEach(checkbox => {
         checkbox.checked = false;
