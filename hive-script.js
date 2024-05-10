@@ -266,10 +266,11 @@ function populateFilterInputs(hiveItem) {
     for (const [key, val] of Object.entries(filterObj)) {
 
         if (key.includes('neighborhood')) {
-            $filtersWrap.querySelector('.add-filter [data-filter=neighborhood]').value = val;
+            $filtersWrap.querySelector('.add-filter [data-filter=neighborhood]').value = val.trim().toLowerCase().replace(/\s+/g,'-');
         }
         else {
             val.split(',').forEach(v => {
+                v = v.trim().toLowerCase().replace(/\s+/g,'-'); 
                 $filtersWrap.querySelector(`.add-filter input[type=checkbox][name="${v}-filter"]`).checked = true; 
             });
         }
