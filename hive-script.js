@@ -704,7 +704,7 @@ $saveEntryBtn.addEventListener('click', e => {
     let neighborhood = '';
     const filter = {};
 
-    $filtersWrap.querySelectorAll('.add-filter').forEach(filterSec => {
+    $filtersWrap.querySelectorAll('.add-filter:not(.hide)').forEach(filterSec => {
         if (filterSec.querySelector('select')) {
             neighborhood = filterSec.querySelector('select').value; 
         }
