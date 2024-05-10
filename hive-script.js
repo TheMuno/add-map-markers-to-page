@@ -709,6 +709,7 @@ $saveEntryBtn.addEventListener('click', e => {
             neighborhood = filterSec.querySelector('select').value; 
         }
         else {
+            console.log('filterSec', filterSec)
             const groupName = filterSec.querySelector('legend').textContent;
             const group = [...filterSec.querySelectorAll('input[type=checkbox]:checked')].map(checkbox => {
                 return checkbox.name.replace('-filter', ''); 
