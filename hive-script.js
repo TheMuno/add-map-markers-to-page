@@ -572,7 +572,7 @@ function createMarker(place, mapIcon=icon) {
         reviews, rating } = place; 
     let operatingHrs, reviewsContent, ratingTag; 
 
-    console.log('place', place)
+    // console.log('place', place)
 
     /*const hiveObj = {
         dayEventName,
