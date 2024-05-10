@@ -114,6 +114,7 @@ const markerPopup = new google.maps.InfoWindow();
             $saveEntryBtn.hiveObj = { rating, reviewsContent, operatingHrs, phoneNumber, address };
         });
 
+        console.log('User search value:', $userSearch.value)
         $userSearch.value = '';  
     });
 }();
