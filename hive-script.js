@@ -44,7 +44,8 @@ const $map = document.querySelector('#map'),
     $retailSections = document.querySelectorAll('[data-type="retail"]'),
     $attractionsSections = document.querySelectorAll('[data-type="attractions"]'),
     $restaurantsSections = document.querySelectorAll('[data-type="restaurants"]'),
-    $addFilters = document.querySelector('.add-filters');
+    $addFilters = document.querySelector('.add-filters'),
+    $saveEntryBtn = document.querySelector('.save-entry-btn');
     // $addFilterBtn = document.querySelector('.add-filter-btn');
 
 const mapZoom = 13,
@@ -105,7 +106,8 @@ const markerPopup = new google.maps.InfoWindow();
             }
 
             const { marker } = createMarker(place, icon); 
-            map.panTo(marker.position);   
+            map.panTo(marker.position);  
+            markerPopup.open(marker.getMap(), marker); 
 
         });
 
@@ -396,7 +398,6 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 
                 if (!activeCheckboxes[filterKey]) continue; 
                 if (!activeCheckboxes[filterKey].trim()) continue; 
-                if (!filterVal.trim()) continue; 
 
                 console.log('activeCheckboxes[filterKey]', activeCheckboxes[filterKey])
 
@@ -691,3 +692,7 @@ $dataTypeSelect.addEventListener('change', e => {
     }
 });
 
+$saveEntryBtn.addEventListener('click', e => {
+    const $btn = e.currentTarget;
+
+});
