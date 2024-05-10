@@ -710,7 +710,7 @@ $saveEntryBtn.addEventListener('click', e => {
         }
         else {
             console.log('filterSec', filterSec)
-            const groupName = filterSec.querySelector('legend').textContent;
+            const groupName = filterSec.querySelector('legend').textContent.trim().toLowerCase().replace(/\s+/g,'-');
             const group = [...filterSec.querySelectorAll('input[type=checkbox]:checked')].map(checkbox => {
                 return checkbox.name.replace('-filter', ''); 
             }).join();
