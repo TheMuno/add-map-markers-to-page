@@ -105,8 +105,10 @@ const markerPopup = new google.maps.InfoWindow();
                 icon.url = restaurantMapIcon;
             }
 
-            const { marker } = createMarker(place, icon); 
+            const { marker, contentString } = createMarker(place, icon); 
             map.panTo(marker.position);  
+            markerPopup.close();
+            markerPopup.setContent(contentString);
             markerPopup.open(marker.getMap(), marker); 
 
         });
@@ -650,7 +652,7 @@ function createMarker(place, mapIcon=icon) {
     });
 
     // return { marker, reviewsContent, operatingHrs, formatted_phone_number, website }; 
-    return { marker, rating, reviewsContent, operatingHrs, phoneNumber, address }; 
+    return { marker, rating, reviewsContent, operatingHrs, phoneNumber, address, contentString }; 
 } 
 
 function isString(x) {
