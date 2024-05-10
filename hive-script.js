@@ -757,10 +757,10 @@ $saveEntryBtn.addEventListener('click', e => {
     console.log('filter:', filter)
 
     const userMail = localStorage['user-email'];
-    saveMarkerToFirebase(userMail, type); 
+    saveMarkerToFirebase(userMail, type, filter); 
 });
 
-async function saveMarkerToFirebase(userMail, type) { 
+async function saveMarkerToFirebase(userMail, type, filter) { 
     const userData = doc(db, 'travelData', `user-${userMail}`);
     // const docSnap = await getDoc(userData);
     // const data = await docSnap.data(); 
@@ -788,6 +788,7 @@ async function saveMarkerToFirebase(userMail, type) {
         operatingHrs: operatingHours,
         phoneNumber,
         address,
+        filter,
     } = $saveEntryBtn.hiveObj;
 
     const hiveObj = { dayEventName, lat, lng, title, rating, reviews, operatingHours, phoneNumber, address };
