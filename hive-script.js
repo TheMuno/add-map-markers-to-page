@@ -696,5 +696,28 @@ $dataTypeSelect.addEventListener('change', e => {
 
 $saveEntryBtn.addEventListener('click', e => {
     const $btn = e.currentTarget;
+    const $sideBar = $btn.closest('.side-bar');
+    const $userSearch = $sideBar.querySelector('.user-search');
 
+    const $filtersWrap = $sideBar.querySelector('.add-filters-wrap:not(.hide)');
+
+    let neighborhood = '';
+    const filter = {};
+
+    $filtersWrap.querySelectorAll('.add-filter').forEach(filterSec => {
+        if (filterSec.querySelector('select')) {
+            neighborhood = filterSec.querySelector('select').value; 
+        }
+        else {
+            const groupName = filterSec.querySelector('legend').textContent;
+            const group = [...filterSec.querySelectorAll('input[type=checkbox]:checked')].map(checkbox => {
+                return checkbox.name.replace('-filter', ''); 
+            }).join();
+            filter[groupName] = group;
+        }
+    });
+
+    filter.neighborhood = neighborhood;
+
+    console.log('filter:', filter)
 });
