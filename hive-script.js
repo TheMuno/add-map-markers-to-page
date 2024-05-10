@@ -261,12 +261,24 @@ $addFilters.addEventListener('click', e => {
 function populateFilterInputs(hiveItem) {
     const filterObj = hiveItem.locationInfo.filter; 
     const filterEls = [...$addFilters.querySelectorAll('.add-filters-wrap .add-filter')];
+    const $filtersWrap = $addFilters.querySelector('.add-filters-wrap'); 
 
     for (const [key, val] of Object.entries(filterObj)) {
 
+        if (key.includes('neighborhood')) {
+            $filtersWrap.querySelector('.add-filter [data-filter=neighborhood]').value = val;
+        }
+        else {
+            val.split(',').forEach(v => {
+                $filtersWrap.querySelector(`.add-filter input[type=checkbox][name="${v}-filter"]`).checked = true; 
+            });
+        }
+
+        /*
         $addFilters.querySelectorAll('.add-filters-wrap .add-filter').forEach(filter => {
             const $label = filter.querySelector('label'); 
             if ($label && $label.textContent.toLowerCase().includes('neighborhood')) {
+                console.log('neighborhood', neighborhood)
                 filter.querySelector('select').value = val; 
             }
 
@@ -283,6 +295,7 @@ function populateFilterInputs(hiveItem) {
                 }
             }
         });
+        */
 
         /*
         const el = filterEls.filter(el => {
