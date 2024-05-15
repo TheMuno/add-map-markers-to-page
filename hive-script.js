@@ -476,6 +476,9 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             const matchesArr = [];
 
             for (let [filterKey, filterVal] of Object.entries(filterObj)) {
+
+                console.log('PRIOR::: activeCheckboxes[filterKey]', activeCheckboxes[filterKey])
+
                 if (!filterVal.trim()) continue; 
 
                 if (!activeCheckboxes[filterKey]) continue; 
@@ -502,7 +505,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                     // console.log('val.trim()', val.trim())
                     // console.log('filterVal', filterVal)
                     // return filterVal.includes(val)
-                    console.log('::::::::::', filterVal.split(',').filter(v => v.trim() == val))
+                    // console.log('::::::::::', filterVal.split(',').filter(v => v.trim() == val))
                     return filterVal.split(',').filter(v => v.trim() == val).join();
                 });
 
