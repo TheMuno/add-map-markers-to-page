@@ -476,11 +476,6 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             const matchesArr = [];
 
             for (let [filterKey, filterVal] of Object.entries(filterObj)) {
-
-                console.log('PRIOR::: activeCheckboxes[filterKey]', activeCheckboxes[filterKey]) 
-                console.log('filterKey', filterKey)
-                console.log('filterVal', filterVal)
-
                 if (!filterVal.trim()) continue; 
 
                 if (!activeCheckboxes[filterKey]) continue; 
@@ -488,33 +483,22 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 
                 console.log('activeCheckboxes[filterKey]', activeCheckboxes[filterKey])
 
-                // console.log('filterVal:::::', filterVal)
-
                 filterVal = filterVal.toLowerCase().trim().replace(/\s+/g,'-');  
-                // const matches = [...activeCheckboxes[filterKey]].every(val => {
-                //     console.log('VAL', val)
-                //     return filterVal.includes(val)
-                // });
 
-                // if (!activeCheckboxes[filterKey].trim()) return;
+                if (filterKey !== 'neighborhood') {
+                    const matches = activeCheckboxes[filterKey].split(',').every(val => {
+                        return filterVal.split(',').filter(v => v.trim() == val).join();
+                    });
 
-                // console.log('filterKey', filterKey) 
-                // console.log('filterVal', filterVal)
-                // console.log('activeCheckboxes[filterKey].split(',')', activeCheckboxes[filterKey].split(','))
+                    matchesArr.push(matches);
+                }
+                else {
+                    const matches = activeCheckboxes[filterKey].split(',').filter(val => {
+                        return val.includes(filterVal);
+                    }).join();
 
-                const matches = activeCheckboxes[filterKey].split(',').every(val => {
-                    // console.log('VAL', val)
-                    // console.log('val.trim()', val.trim())
-                    // console.log('filterVal', filterVal)
-                    // return filterVal.includes(val)
-                    // console.log('::::::::::', filterVal.split(',').filter(v => v.trim() == val))
-                    return filterVal.split(',').filter(v => v.trim() == val).join();
-                });
-
-                // console.log('filterVal', filterVal)
-                // console.log('matches', matches)
-
-                matchesArr.push(matches);
+                    matchesArr.push(matches);
+                }
             }
 
             console.log('matchesArr', matchesArr)
