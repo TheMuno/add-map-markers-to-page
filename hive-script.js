@@ -503,14 +503,16 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                     // console.log('filterVal', filterVal)
                     // return filterVal.includes(val)
                     console.log('::::::::::', filterVal.split(',').filter(v => v.trim() == val))
-                    return filterVal.split(',').filter(v => v.trim() == val);
+                    return filterVal.split(',').filter(v => v.trim() == val).join();
                 });
 
                 // console.log('filterVal', filterVal)
-                console.log('matches', matches)
+                // console.log('matches', matches)
 
                 matchesArr.push(matches);
             }
+
+            console.log('matchesArr', matchesArr)
 
             if (matchesArr.length && matchesArr.every(Boolean)) {
                 hiveItem.classList.remove('hide');
