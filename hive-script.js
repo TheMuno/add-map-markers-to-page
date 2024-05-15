@@ -509,7 +509,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                 // console.log('filterVal', filterVal)
                 // console.log('matches', matches)
 
-                matchesArr.push(matches.join());
+                matchesArr.push(matches);
             }
 
             if (matchesArr.length && matchesArr.every(Boolean)) {
