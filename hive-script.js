@@ -522,7 +522,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
             if (matchesArr.length && matchesArr.every(Boolean)) {
                 hiveItem.classList.remove('hide');
 
-                // console.log('hiveItem', hiveItem)
+                console.log('hiveItem', hiveItem)
 
                 // const filterObj = hiveItem.locationInfo.filter;
                 // console.log('filterObj:', filterObj)
