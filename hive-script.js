@@ -537,11 +537,11 @@ $hiveFilterCheckboxes.forEach(checkbox => {
         // const locationsNum = $hiveList.querySelectorAll('.hive-item:not(.hide)').length;
         // $hiveList.closest('.hive').querySelector('.item-no').textContent = `${locationsNum} locations`;
 
-        updateNumberOfLocations($hiveList, '.hive', locationsNum); 
+        updateNumberOfLocations($hiveList, '.hive'); 
     });
 });
 
-function updateNumberOfLocations(hiveList, hiveWrapper, locationsNum) {
+function updateNumberOfLocations(hiveList, hiveWrapper) {
     const locationsNum = hiveList.querySelectorAll('.hive-item:not(.hide)').length;
     hiveList.closest(hiveWrapper).querySelector('.item-no').textContent = `${locationsNum} locations`;
 }
