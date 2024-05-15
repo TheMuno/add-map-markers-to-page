@@ -477,7 +477,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 
             for (let [filterKey, filterVal] of Object.entries(filterObj)) {
 
-                console.log('PRIOR::: activeCheckboxes[filterKey]', activeCheckboxes[filterKey])
+                console.log('PRIOR::: activeCheckboxes[filterKey]', activeCheckboxes[filterKey]) // more 
 
                 if (!filterVal.trim()) continue; 
 
