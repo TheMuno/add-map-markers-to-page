@@ -485,17 +485,17 @@ $hiveFilterCheckboxes.forEach(checkbox => {
 
                 filterVal = filterVal.toLowerCase().trim().replace(/\s+/g,'-');  
 
-                if (filterKey !== 'neighborhood') {
-                    const matches = activeCheckboxes[filterKey].split(',').every(val => {
-                        return filterVal.split(',').filter(v => v.trim() == val).join();
-                    });
+                if (filterKey === 'neighborhood') {
+                    const matches = activeCheckboxes[filterKey].split(',').filter(val => {
+                        return val.includes(filterVal);
+                    }).join();
 
                     matchesArr.push(matches);
                 }
                 else {
-                    const matches = activeCheckboxes[filterKey].split(',').filter(val => {
-                        return val.includes(filterVal);
-                    }).join();
+                    const matches = activeCheckboxes[filterKey].split(',').every(val => {
+                        return filterVal.split(',').filter(v => v.trim() == val).join();
+                    });
 
                     matchesArr.push(matches);
                 }
@@ -557,7 +557,7 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
         }); //.join(); 
         
         $hiveListAttractions.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
-            const filterObj = hiveItem.locationInfo.filter;
+            /*const filterObj = hiveItem.locationInfo.filter;
             if (!filterObj) return; 
 
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
@@ -573,10 +573,59 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
                     const marker = $hiveListAttractions.markers[hiveItemPos];
                     marker.setMap(map); 
                 });
+            }*/
+
+            const filterObj = hiveItem.locationInfo.filter;
+            if (!filterObj) return; 
+
+            const matchesArr = [];
+
+            for (let [filterKey, filterVal] of Object.entries(filterObj)) {
+                if (!filterVal.trim()) continue; 
+
+                if (!activeCheckboxes[filterKey]) continue; 
+                if (!activeCheckboxes[filterKey].trim()) continue; 
+
+                console.log('activeCheckboxes[filterKey]', activeCheckboxes[filterKey])
+
+                filterVal = filterVal.toLowerCase().trim().replace(/\s+/g,'-');  
+
+                if (filterKey === 'neighborhood') {
+                    const matches = activeCheckboxes[filterKey].split(',').filter(val => {
+                        return val.includes(filterVal);
+                    }).join();
+
+                    matchesArr.push(matches);
+                }
+                else {
+                    const matches = activeCheckboxes[filterKey].split(',').every(val => {
+                        return filterVal.split(',').filter(v => v.trim() == val).join();
+                    });
+
+                    matchesArr.push(matches);
+                }
+            }
+
+            console.log('matchesArr', matchesArr)
+
+            if (matchesArr.length 
+                && matchesArr.length === Object.keys(activeCheckboxes).length 
+                && matchesArr.every(Boolean)) {
+                hiveItem.classList.remove('hide');
+
+                console.log('hiveItem', hiveItem)
+
+                // const filterObj = hiveItem.locationInfo.filter;
+                // console.log('filterObj:', filterObj)
+
+                const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
+                const marker = $hiveListAttractions.markers[hiveItemPos];
+                marker.setMap(map); 
             }
         });
 
-        if (!activeCheckboxes.length && $hiveListAttractions.querySelectorAll('.hive-item:not(.hide)').length === 0) {
+
+        if (!Object.keys(activeCheckboxes).length && $hiveListAttractions.querySelectorAll('.hive-item:not(.hide)').length === 0) {
             $hiveItems.forEach(item => item.classList.remove('hide'));
             $hiveListAttractions.markers.forEach(marker => marker.setMap(map)); 
         }
@@ -603,7 +652,7 @@ document.querySelectorAll('[data-type="restaurants"] .hive-filters input[type="c
         }); //.join(); 
         
         $hiveListRestaurants.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
-            const filterObj = hiveItem.locationInfo.filter;
+            /*const filterObj = hiveItem.locationInfo.filter;
             if (!filterObj) return; 
 
             for (const [filterKey, filterVal] of Object.entries(filterObj)) {
@@ -619,10 +668,58 @@ document.querySelectorAll('[data-type="restaurants"] .hive-filters input[type="c
                     const marker = $hiveListRestaurants.markers[hiveItemPos];
                     marker.setMap(map); 
                 });
+            }*/
+
+            const filterObj = hiveItem.locationInfo.filter;
+            if (!filterObj) return; 
+
+            const matchesArr = [];
+
+            for (let [filterKey, filterVal] of Object.entries(filterObj)) {
+                if (!filterVal.trim()) continue; 
+
+                if (!activeCheckboxes[filterKey]) continue; 
+                if (!activeCheckboxes[filterKey].trim()) continue; 
+
+                console.log('activeCheckboxes[filterKey]', activeCheckboxes[filterKey])
+
+                filterVal = filterVal.toLowerCase().trim().replace(/\s+/g,'-');  
+
+                if (filterKey === 'neighborhood') {
+                    const matches = activeCheckboxes[filterKey].split(',').filter(val => {
+                        return val.includes(filterVal);
+                    }).join();
+
+                    matchesArr.push(matches);
+                }
+                else {
+                    const matches = activeCheckboxes[filterKey].split(',').every(val => {
+                        return filterVal.split(',').filter(v => v.trim() == val).join();
+                    });
+
+                    matchesArr.push(matches);
+                }
+            }
+
+            console.log('matchesArr', matchesArr)
+
+            if (matchesArr.length 
+                && matchesArr.length === Object.keys(activeCheckboxes).length 
+                && matchesArr.every(Boolean)) {
+                hiveItem.classList.remove('hide');
+
+                console.log('hiveItem', hiveItem)
+
+                // const filterObj = hiveItem.locationInfo.filter;
+                // console.log('filterObj:', filterObj)
+
+                const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
+                const marker = $hiveListRestaurants.markers[hiveItemPos];
+                marker.setMap(map); 
             }
         });
 
-        if (!activeCheckboxes.length && $hiveListRestaurants.querySelectorAll('.hive-item:not(.hide)').length === 0) {
+        if (!Object.keys(activeCheckboxes).length && $hiveListRestaurants.querySelectorAll('.hive-item:not(.hide)').length === 0) {
             $hiveItems.forEach(item => item.classList.remove('hide'));
             $hiveListRestaurants.markers.forEach(marker => marker.setMap(map)); 
         }
