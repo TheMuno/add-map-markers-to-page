@@ -546,7 +546,7 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
         const $hiveItems = $hiveListAttractions.querySelectorAll('.hive-item');    
         $hiveItems.forEach(item => item.classList.add('hide'));
 
-        $hiveListAttractions.markers.forEach(marker => marker.setMap(null)); 
+        $hiveListAttractions.markers?.forEach(marker => marker.setMap(null)); 
 
         const activeCheckboxes = [...document.querySelector('[data-type="attractions"] .hive-filters').querySelectorAll('input[type=checkbox]:checked')].reduce((o, c) => {
             const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
@@ -654,7 +654,7 @@ document.querySelectorAll('[data-type="restaurants"] .hive-filters input[type="c
         const $hiveItems = $hiveListRestaurants.querySelectorAll('.hive-item');    
         $hiveItems.forEach(item => item.classList.add('hide'));
 
-        $hiveListRestaurants.markers.forEach(marker => marker.setMap(null)); 
+        $hiveListRestaurants.markers?.forEach(marker => marker.setMap(null)); 
 
         const activeCheckboxes = [...document.querySelector('[data-type="restaurants"] .hive-filters').querySelectorAll('input[type=checkbox]:checked')].reduce((o, c) => {
             const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
@@ -667,35 +667,8 @@ document.querySelectorAll('[data-type="restaurants"] .hive-filters input[type="c
             o[group] = checkboxName; 
             return o; 
         }, {});
-
-        /*const activeCheckboxes = [...document.querySelector('[data-type="restaurants"] .hive-filters').querySelectorAll('input[type=checkbox]:checked')].map(c => {
-            const group = c.closest('.hive-filter-wrapper-fieldset').querySelector('legend')
-                            .textContent.trim().toLowerCase()
-                            .replace(/\s+/g,'-');
-            const checkboxName = c.name.toLowerCase().trim().replace('-2','').replace('-3','');
-            return [group, checkboxName]; 
-        }); //.join();
-        */ 
         
         $hiveListRestaurants.querySelectorAll('.hive-item').forEach((hiveItem, i) => {
-            /*const filterObj = hiveItem.locationInfo.filter;
-            if (!filterObj) return; 
-
-            for (const [filterKey, filterVal] of Object.entries(filterObj)) {
-                if (!filterVal.trim()) continue; 
-
-                activeCheckboxes.forEach(c => {
-                    if (!filterKey.trim().toLowerCase().replace(/\s+/g,'-').includes(c[0].toLowerCase())) return;
-                    if (!filterVal.trim().toLowerCase().replace(/\s+/g,'-').includes(c[1].toLowerCase())) return;
-
-                    hiveItem.classList.remove('hide');
-                    
-                    const hiveItemPos = [...$hiveItems].indexOf(hiveItem);
-                    const marker = $hiveListRestaurants.markers[hiveItemPos];
-                    marker.setMap(map); 
-                });
-            }*/
-
             const filterObj = hiveItem.locationInfo.filter;
             if (!filterObj) return; 
 
@@ -720,7 +693,9 @@ document.querySelectorAll('[data-type="restaurants"] .hive-filters input[type="c
                 }
                 else {
                     const matches = activeCheckboxes[filterKey].split(',').every(val => {
-                        return filterVal.split(',').filter(v => v.trim() == val).join();
+                        const v = filterVal.split(',').filter(v => v.trim() == val).join();
+                        console.log('v', v)
+                        return v;
                     });
 
                     matchesArr.push(matches);
