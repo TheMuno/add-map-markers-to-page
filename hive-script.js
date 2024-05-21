@@ -481,7 +481,7 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                 if (!activeCheckboxes[filterKey]) continue; 
                 if (!activeCheckboxes[filterKey].trim()) continue; 
 
-                console.log('activeCheckboxes[filterKey]', activeCheckboxes[filterKey])
+                // console.log('activeCheckboxes[filterKey]', activeCheckboxes[filterKey]) 
 
                 filterVal = filterVal.split(',').map(v => v.trim().toLowerCase().replace(/\s+/g,'-')).join();
 
@@ -503,14 +503,14 @@ $hiveFilterCheckboxes.forEach(checkbox => {
                 }
             }
 
-            console.log('matchesArr', matchesArr)
+            // console.log('matchesArr', matchesArr) 
 
             if (matchesArr.length 
                 && matchesArr.length === Object.keys(activeCheckboxes).length 
                 && matchesArr.every(Boolean)) {
                 hiveItem.classList.remove('hide');
 
-                console.log('hiveItem', hiveItem)
+                // console.log('hiveItem', hiveItem) 
 
                 // const filterObj = hiveItem.locationInfo.filter;
                 // console.log('filterObj:', filterObj)
@@ -601,7 +601,7 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
                 if (!activeCheckboxes[filterKey]) continue; 
                 if (!activeCheckboxes[filterKey].trim()) continue; 
 
-                console.log('activeCheckboxes[filterKey]', activeCheckboxes[filterKey])
+                // console.log('activeCheckboxes[filterKey]', activeCheckboxes[filterKey]) 
 
                 filterVal = filterVal.split(',').map(v => v.trim().toLowerCase().replace(/\s+/g,'-')).join();
 
@@ -623,7 +623,7 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
                 }
             }
 
-            console.log('matchesArr', matchesArr)
+            // console.log('matchesArr', matchesArr) 
 
             if (matchesArr.length 
                 && matchesArr.length === Object.keys(activeCheckboxes).length 
@@ -684,7 +684,7 @@ document.querySelectorAll('[data-type="restaurants"] .hive-filters input[type="c
                 if (!activeCheckboxes[filterKey]) continue; 
                 if (!activeCheckboxes[filterKey].trim()) continue; 
 
-                console.log('activeCheckboxes[filterKey]', activeCheckboxes[filterKey])
+                // console.log('activeCheckboxes[filterKey]', activeCheckboxes[filterKey]) 
 
                 filterVal = filterVal.split(',').map(v => v.trim().toLowerCase().replace(/\s+/g,'-')).join();
 
@@ -709,14 +709,14 @@ document.querySelectorAll('[data-type="restaurants"] .hive-filters input[type="c
                 }
             }
 
-            console.log('matchesArr', matchesArr)
+            // console.log('matchesArr', matchesArr) 
 
             if (matchesArr.length 
                 && matchesArr.length === Object.keys(activeCheckboxes).length 
                 && matchesArr.every(Boolean)) {
                 hiveItem.classList.remove('hide');
 
-                console.log('hiveItem', hiveItem)
+                // console.log('hiveItem', hiveItem) 
 
                 // const filterObj = hiveItem.locationInfo.filter;
                 // console.log('filterObj:', filterObj)
