@@ -889,7 +889,7 @@ $dataTypeSelect.addEventListener('change', e => {
     }
 });
 
-function saveHiveEdits(hiveIndex) {
+async function saveHiveEdits(hiveIndex) {
     const userMail = localStorage['user-email'];
     const userData = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(userData);
@@ -956,12 +956,12 @@ function getFilterData() {
 }
 
 // const saveEntryBtnTxt = $saveEntryBtn.value;
-$saveEntryBtn.addEventListener('click', e => {
+$saveEntryBtn.addEventListener('click', async e => {
     const $btn = e.currentTarget;
 
     if ($btn.edit) {
         const hiveItemPos = e.currentTarget.hiveItemPos; 
-        saveHiveEdits(hiveItemPos);
+        await saveHiveEdits(hiveItemPos);
 
         $btn.value = saveEntryBtnTxt;
         $btn.edit = false; 
