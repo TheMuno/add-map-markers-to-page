@@ -901,11 +901,15 @@ async function saveHiveEdits(hiveIndex) {
 
     const filter = getFilterData($filtersWrap);
 
+    console.log('filter:::::', filter) 
+
     const { dayEventName, title, lat, lng, rating, reviewsContent, operatingHrs, phoneNumber, address } = $saveEntryBtn.hiveObj; 
 
     const hiveObj = { dayEventName, title, lat, lng, rating, reviewsContent, operatingHrs, phoneNumber, address, filter };
 
     const dayObj = {}; 
+
+    console.log('hiveObj:::::', hiveObj)  
 
     if (type.includes('retail')) {
         hive.splice(hiveIndex, 0, hiveObj);
@@ -928,6 +932,8 @@ async function saveHiveEdits(hiveIndex) {
 
     
     dayObj.modifiedAt = serverTimestamp(); 
+
+    console.log('dayObj:::::', dayObj)  
 
     await updateDoc(userData, dayObj);
 }
@@ -962,7 +968,7 @@ $saveEntryBtn.addEventListener('click', async e => {
     if ($btn.edit) {
         const hiveItemPos = e.currentTarget.hiveItemPos; 
         $btn.value = 'Saving...';
-        
+
         await saveHiveEdits(hiveItemPos);
 
         $btn.value = saveEntryBtnTxt;
