@@ -393,6 +393,7 @@ function activateHiveListItem(hiveItem, hiveList) {
         populateFilterInputs(hiveItem); 
 
         hiveList.hiveItemPos = hiveItemPos;
+        $saveEntryBtn.hiveItemPos = hiveItemPos; 
         $saveEntryBtn.value = 'Save Edits!';
         $saveEntryBtn.edit = true; 
     }
@@ -972,7 +973,7 @@ $saveEntryBtn.addEventListener('click', async e => {
     const $btn = e.currentTarget;
 
     if ($btn.edit) {
-        const hiveItemPos = e.currentTarget.hiveItemPos; 
+        const hiveItemPos = $btn.hiveItemPos; 
         $btn.value = 'Saving...';
 
         await saveHiveEdits(hiveItemPos);
