@@ -910,9 +910,11 @@ async function saveHiveEdits(hiveIndex) {
 
     const dayObj = {}; 
 
+    dayObj.hive2 = []; 
+
     console.log('hiveObj:::::', hiveObj)  
 
-    if (type.includes('retail')) {
+    /*if (type.includes('retail')) {
 
         console.log('hiveIndex:::::', hiveIndex)   
         console.log('hive:::::::', hive)
@@ -936,7 +938,7 @@ async function saveHiveEdits(hiveIndex) {
 
         dayObj.hive_rest = hive_rest; 
     }
-
+    */
     
     dayObj.modifiedAt = serverTimestamp(); 
 
