@@ -277,7 +277,7 @@ function populateFilterInputs(hiveItem) {
     };
 
     const filterEls = [...$addFilters.querySelectorAll('.add-filters-wrap .add-filter')];
-    const $filtersWrap = $addFilters.querySelector('.add-filters-wrap'); 
+    const $filtersWrap = $addFilters.querySelector('.add-filters-wrap:not(.hide)'); 
 
     const $neighborhoodSelect = $filtersWrap.querySelector('.add-filter [data-filter=neighborhood]'); 
     $neighborhoodSelect.selectedIndex = 0;
