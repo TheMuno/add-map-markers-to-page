@@ -46,6 +46,7 @@ const $map = document.querySelector('#map'),
     $restaurantsSections = document.querySelectorAll('[data-type="restaurants"]'),
     $addFilters = document.querySelector('.add-filters'),
     $saveEntryBtn = document.querySelector('.save-entry-btn'),
+    saveEntryBtnTxt = $saveEntryBtn.value,
     $refreshBtn = document.querySelector('.refresh-btn');
     // $addFilterBtn = document.querySelector('.add-filter-btn');
 
@@ -260,7 +261,21 @@ $addFilters.addEventListener('click', e => {
 // });
 
 function populateFilterInputs(hiveItem) {
-    const filterObj = hiveItem.locationInfo.filter; 
+    const { filter, dayEventName, name, latLng, rating, reviewsContent, operatingHrs, phoneNumber, address  } = hiveItem.locationInfo;
+    const filterObj = filter; 
+
+    $saveEntryBtn.hiveObj = { 
+        dayEventName, 
+        title: name,
+        lat: latLng.lat,
+        lng: latLng.lng,
+        rating, 
+        reviewsContent, 
+        operatingHrs, 
+        phoneNumber, 
+        address 
+    };
+
     const filterEls = [...$addFilters.querySelectorAll('.add-filters-wrap .add-filter')];
     const $filtersWrap = $addFilters.querySelector('.add-filters-wrap'); 
 
@@ -282,81 +297,18 @@ function populateFilterInputs(hiveItem) {
                 if ($checkbox) $checkbox.checked = true; 
             });
         }
-
-        /*
-        $addFilters.querySelectorAll('.add-filters-wrap .add-filter').forEach(filter => {
-            const $label = filter.querySelector('label'); 
-            if ($label && $label.textContent.toLowerCase().includes('neighborhood')) {
-                console.log('neighborhood', neighborhood)
-                filter.querySelector('select').value = val; 
-            }
-
-            const $legend = filter.querySelector('legend');
-            if ($legend) {
-                const legendTxt = $legend.textContent.trim().toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-\_]/g,''); 
-                if (key === legendTxt) {
-                    console.log('val', val)
-                    val.split(',').forEach(v => {
-                        console.log('v', v)
-                        console.log('v el:', filter.querySelector(`input[type=checkbox][name="${v}-filter"]`))
-                        filter.querySelector(`input[type=checkbox][name="${v}-filter"]`).checked = true; 
-                    });
-                }
-            }
-        });
-        */
-
-        /*
-        const el = filterEls.filter(el => {
-            let labelTxt;
-            if (el.querySelector('label')) {
-                labelTxt = el.querySelector('label').textContent.trim().toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-\_]/g,''); 
-            }
-            else {
-                labelTxt = el.querySelector('legend').textContent.trim().toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-\_]/g,''); 
-            }
-
-            return key === labelTxt ? el : false;
-            // if (key === labelTxt) {
-            //     return el; 
-            // }
-            // else {
-            //     return false;
-            // }
-        });
-
-        if (el) {
-            el[0].querySelector('.add-filter-input').value = val;
-
-            const $label = el[0].querySelector('label'); 
-            if ($label && $label.textContent.toLowerCase().includes('neighborhood')) {
-                el[0].querySelector('select').value = val; 
-            }
-
-            const $legend = el[0].querySelector('legend'); 
-            if ($legend) {
-                if ($legend.textContent.toLowerCase().includes('type'))
-            }
-        }
-        else {
-            const $addFiltersContainer = $addFilters.querySelector('.add-filters-wrap');
-            const $clone = $addFiltersContainer.querySelector('.add-filter.hide').cloneNode(true);
-            $clone.classList.remove('hide');
-            $clone.querySelector('label').textContent = key.charAt(0).toUpperCase() + key.substring(1);
-            $clone.querySelector('.add-filter-input').value = val;
-            $addFiltersContainer.append($clone);
-        }
-        */
     }
 
-    if (hiveItem.locationInfo.dayEventName) $userSearch.value = hiveItem.locationInfo.dayEventName; 
+    if (dayEventName) $userSearch.value = dayEventName; 
 }
 
 $hiveList.addEventListener('click', e => {
     if (!e.target.closest('.hive-item')) return;
     const $hiveItem = e.target.closest('.hive-item');
+
+    activateHiveListItem($hiveItem, $hiveList); 
     
-    if ($hiveItem.classList.contains('active')) {
+    /*if ($hiveItem.classList.contains('active')) {
         $hiveItem.classList.remove('active');
         // markerPopup.close();
         refreshAddToDBFields(); 
@@ -366,17 +318,23 @@ $hiveList.addEventListener('click', e => {
         $allHiveItems.forEach(item => item.classList.remove('active'));
         $hiveItem.classList.add('active');
         const hiveItemPos = [...$allHiveItems].indexOf($hiveItem);
+    
         const marker = $hiveList.markers[hiveItemPos];
         openMarkerWithInfo(marker, $hiveItem);
         populateFilterInputs($hiveItem); 
-    } 
+
+        $hiveList.hiveItemPos = hiveItemPos;
+        $saveEntryBtn.value = 'Save Edits!';
+    } */
 });
 
 $hiveListAttractions.addEventListener('click', e => {
     if (!e.target.closest('.hive-item')) return;
     const $hiveItem = e.target.closest('.hive-item');
+
+    activateHiveListItem($hiveItem, $hiveListAttractions); 
     
-    if ($hiveItem.classList.contains('active')) {
+    /*if ($hiveItem.classList.contains('active')) {
         $hiveItem.classList.remove('active');
         markerPopup.close();
     }
@@ -385,16 +343,22 @@ $hiveListAttractions.addEventListener('click', e => {
         $allHiveItems.forEach(item => item.classList.remove('active'));
         $hiveItem.classList.add('active');
         const hiveItemPos = [...$allHiveItems].indexOf($hiveItem);
+        
         const marker = $hiveListAttractions.markers[hiveItemPos];
         openMarkerWithInfo(marker, $hiveItem);
-    } 
+
+        $hiveListAttractions.hiveItemPos = hiveItemPos;
+        $saveEntryBtn.value = 'Save Edits!';
+    } */
 });
 
 $hiveListRestaurants.addEventListener('click', e => {
     if (!e.target.closest('.hive-item')) return;
     const $hiveItem = e.target.closest('.hive-item');
+
+    activateHiveListItem($hiveItem, $hiveListRestaurants); 
     
-    if ($hiveItem.classList.contains('active')) {
+    /*if ($hiveItem.classList.contains('active')) {
         $hiveItem.classList.remove('active');
         markerPopup.close();
     }
@@ -403,10 +367,36 @@ $hiveListRestaurants.addEventListener('click', e => {
         $allHiveItems.forEach(item => item.classList.remove('active'));
         $hiveItem.classList.add('active');
         const hiveItemPos = [...$allHiveItems].indexOf($hiveItem);
+        
         const marker = $hiveListRestaurants.markers[hiveItemPos];
         openMarkerWithInfo(marker, $hiveItem);
-    } 
+
+        $hiveListRestaurants.hiveItemPos = hiveItemPos;
+        $saveEntryBtn.value = 'Save Edits!';
+    } */
 });
+
+function activateHiveListItem(hiveItem, hiveList) {
+    if (hiveItem.classList.contains('active')) {
+        hiveItem.classList.remove('active');
+        // markerPopup.close();
+        refreshAddToDBFields(); 
+    }
+    else {
+        const $allHiveItems = hiveList.querySelectorAll('.hive-item'); 
+        $allHiveItems.forEach(item => item.classList.remove('active'));
+        hiveItem.classList.add('active');
+        const hiveItemPos = [...$allHiveItems].indexOf(hiveItem);
+    
+        const marker = hiveList.markers[hiveItemPos];
+        openMarkerWithInfo(marker, hiveItem);
+        populateFilterInputs(hiveItem); 
+
+        hiveList.hiveItemPos = hiveItemPos;
+        $saveEntryBtn.value = 'Save Edits!';
+        $saveEntryBtn.edit = true; 
+    }
+}
 
 function openMarkerWithInfo(marker, $hiveItem) {
     map.panTo(marker.position); 
@@ -899,10 +889,87 @@ $dataTypeSelect.addEventListener('change', e => {
     }
 });
 
+function saveHiveEdits(hiveIndex) {
+    const userMail = localStorage['user-email'];
+    const userData = doc(db, 'travelData', `user-${userMail}`);
+    const docSnap = await getDoc(userData);
+    const data = await docSnap.data(); 
+    const { hive, hive_att, hive_rest } = data;
+
+    const $filtersWrap = $addFilters.querySelector('.add-filters-wrap:not(.hide)');
+    const type = $filtersWrap.dataset.type.trim().toLowerCase(); 
+
+    const filter = getFilterData();
+
+    const { dayEventName, title, lat, lng, rating, reviewsContent, operatingHrs, phoneNumber, address } = $saveEntryBtn.hiveObj; 
+
+    const hiveObj = { dayEventName, title, lat, lng, rating, reviewsContent, operatingHrs, phoneNumber, address, filter };
+
+    const dayObj = {}; 
+
+    if (type.includes('retail')) {
+        hive.splice(hiveIndex, 0, hiveObj);
+        hive.splice(hiveIndex+1, 1); 
+
+        dayObj.hive = hive; 
+    }
+    else if (type.includes('attractions')) {
+        hive_att.splice(hiveIndex, 0, hiveObj);
+        hive_att.splice(hiveIndex+1, 1); 
+
+        dayObj.hive_att = hive_att; 
+    }
+    else if (type.includes('restaurants')) {
+        hive_rest.splice(hiveIndex, 0, hiveObj);
+        hive_rest.splice(hiveIndex+1, 1); 
+
+        dayObj.hive_rest = hive_rest; 
+    }
+
+    
+    dayObj.modifiedAt = serverTimestamp(); 
+
+    await updateDoc(userData, dayObj);
+}
+
+function getFilterData() {
+    let neighborhood = '';
+    const filter = {};
+
+    $filtersWrap.querySelectorAll('.add-filter:not(.hide)').forEach(filterSec => {
+        if (filterSec.querySelector('select')) {
+            neighborhood = filterSec.querySelector('select').value; 
+        }
+        else {
+            // console.log('filterSec', filterSec)
+            const groupName = filterSec.querySelector('legend').textContent.trim().toLowerCase().replace(/\s+/g,'-');
+            const group = [...filterSec.querySelectorAll('input[type=checkbox]:checked')].map(checkbox => {
+                return checkbox.name.replace('-filter', ''); 
+            }).join();
+            filter[groupName] = group;
+        }
+    });
+
+    filter.neighborhood = neighborhood;
+
+    return filter; 
+}
+
 // const saveEntryBtnTxt = $saveEntryBtn.value;
 $saveEntryBtn.addEventListener('click', e => {
     const $btn = e.currentTarget;
-    const btnTxt = $btn.value;
+
+    if ($btn.edit) {
+        const hiveItemPos = e.currentTarget.hiveItemPos; 
+        saveHiveEdits(hiveItemPos);
+
+        $btn.value = saveEntryBtnTxt;
+        $btn.edit = false; 
+        return; 
+    }
+
+    
+    // const btnTxt = $btn.value;
     const $sideBar = e.currentTarget.closest('.side-bar');
     const $userSearch = $sideBar.querySelector('.user-search');
 
@@ -967,7 +1034,7 @@ $saveEntryBtn.addEventListener('click', e => {
 
     $btn.value = 'Submitted!!';
     setTimeout(()=> {
-        $btn.value = btnTxt;
+        $btn.value = saveEntryBtnTxt;
         refreshAddToDBFields(); 
     }, 2000);
 });
