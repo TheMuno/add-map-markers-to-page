@@ -279,6 +279,8 @@ function populateFilterInputs(hiveItem) {
     const filterEls = [...$addFilters.querySelectorAll('.add-filters-wrap .add-filter')];
     const $filtersWrap = $addFilters.querySelector('.add-filters-wrap:not(.hide)'); 
 
+    console.log('$filtersWrap', $filtersWrap)
+
     const $neighborhoodSelect = $filtersWrap.querySelector('.add-filter [data-filter=neighborhood]'); 
     $neighborhoodSelect.selectedIndex = 0;
     $filtersWrap.querySelectorAll('input[type=checkbox]:checked').forEach(checkbox => {
