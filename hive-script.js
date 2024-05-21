@@ -899,7 +899,7 @@ async function saveHiveEdits(hiveIndex) {
     const $filtersWrap = $addFilters.querySelector('.add-filters-wrap:not(.hide)');
     const type = $filtersWrap.dataset.type.trim().toLowerCase(); 
 
-    const filter = getFilterData();
+    const filter = getFilterData($filtersWrap);
 
     const { dayEventName, title, lat, lng, rating, reviewsContent, operatingHrs, phoneNumber, address } = $saveEntryBtn.hiveObj; 
 
@@ -932,7 +932,7 @@ async function saveHiveEdits(hiveIndex) {
     await updateDoc(userData, dayObj);
 }
 
-function getFilterData() {
+function getFilterData($filtersWrap) {
     let neighborhood = '';
     const filter = {};
 
