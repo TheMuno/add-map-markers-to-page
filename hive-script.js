@@ -910,7 +910,7 @@ async function saveHiveEdits(hiveIndex) {
 
     const dayObj = {}; 
 
-    dayObj.hive2 = hive; 
+    dayObj.hive2 = [{a:2,b:4},{c:7,d:7}]; 
 
     console.log('hiveObj:::::', hiveObj)  
 
