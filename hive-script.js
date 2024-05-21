@@ -694,7 +694,8 @@ document.querySelectorAll('[data-type="restaurants"] .hive-filters input[type="c
                 else {
                     const matches = activeCheckboxes[filterKey].split(',').every(val => {
                         const v = filterVal.split(',').filter(v => v.trim() == val).join();
-                        console.log('v', v)
+                        console.log('filterVal', filterVal)
+                        console.log('v::::::::', v)
                         return v;
                     });
 
