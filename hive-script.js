@@ -961,6 +961,8 @@ $saveEntryBtn.addEventListener('click', async e => {
 
     if ($btn.edit) {
         const hiveItemPos = e.currentTarget.hiveItemPos; 
+        $btn.value = 'Saving...';
+        
         await saveHiveEdits(hiveItemPos);
 
         $btn.value = saveEntryBtnTxt;
