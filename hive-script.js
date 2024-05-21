@@ -912,8 +912,14 @@ async function saveHiveEdits(hiveIndex) {
     console.log('hiveObj:::::', hiveObj)  
 
     if (type.includes('retail')) {
+
+        console.log('hiveIndex:::::', hiveIndex)   
+        console.log('hive:::::::', hive)
+
         hive.splice(hiveIndex, 0, hiveObj);
         hive.splice(hiveIndex+1, 1); 
+
+        console.log('hive after::::::', hive)
 
         dayObj.hive = hive; 
     }
