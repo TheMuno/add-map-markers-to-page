@@ -682,7 +682,9 @@ document.querySelectorAll('[data-type="restaurants"] .hive-filters input[type="c
 
                 console.log('activeCheckboxes[filterKey]', activeCheckboxes[filterKey])
 
-                filterVal = filterVal.toLowerCase().trim() //.replace(/\s+/g,'-');  
+                filterVal = filterVal.split(',').map(v => v.trim().toLowerCase().replace(/\s+/g,'-')).join();
+
+                // filterVal = filterVal.toLowerCase().trim().replace(/\s+/g,'-');  
 
                 if (filterKey === 'neighborhood') {
                     const matches = activeCheckboxes[filterKey].split(',').filter(val => {
