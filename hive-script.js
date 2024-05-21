@@ -358,7 +358,8 @@ $hiveList.addEventListener('click', e => {
     
     if ($hiveItem.classList.contains('active')) {
         $hiveItem.classList.remove('active');
-        markerPopup.close();
+        // markerPopup.close();
+        refreshAddToDBFields(); 
     }
     else {
         const $allHiveItems = $hiveList.querySelectorAll('.hive-item'); 
