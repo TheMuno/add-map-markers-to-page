@@ -394,8 +394,8 @@ function activateHiveListItem(hiveItem, hiveList) {
 
         hiveList.hiveItemPos = hiveItemPos;
         $saveEntryBtn.hiveItemPos = hiveItemPos; 
-        $saveEntryBtn.value = 'Save Edits!';
-        $saveEntryBtn.edit = true; 
+        // $saveEntryBtn.value = 'Save Edits!';
+        // $saveEntryBtn.edit = true; 
     }
 }
 
@@ -974,16 +974,16 @@ function getFilterData($filtersWrap) {
 $saveEntryBtn.addEventListener('click', async e => {
     const $btn = e.currentTarget;
 
-    if ($btn.edit) {
-        const hiveItemPos = $btn.hiveItemPos; 
-        $btn.value = 'Saving...';
+    // if ($btn.edit) {
+    //     const hiveItemPos = $btn.hiveItemPos; 
+    //     $btn.value = 'Saving...';
 
-        await saveHiveEdits(hiveItemPos);
+    //     await saveHiveEdits(hiveItemPos);
 
-        $btn.value = saveEntryBtnTxt;
-        $btn.edit = false; 
-        return; 
-    }
+    //     $btn.value = saveEntryBtnTxt;
+    //     $btn.edit = false; 
+    //     return; 
+    // }
 
     
     // const btnTxt = $btn.value;
