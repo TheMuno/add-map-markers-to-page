@@ -1033,7 +1033,7 @@ $saveEntryBtn.addEventListener('click', async e => {
     }
 
     const userMail = localStorage['user-email'];
-    saveMarkerToFirebase(userMail, hive, filter); 
+    await saveMarkerToFirebase(userMail, hive, filter); 
 
     const {
         dayEventName,
