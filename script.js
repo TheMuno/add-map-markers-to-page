@@ -1117,7 +1117,7 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
     const dayObj = {}; 
     dayObj.days = days; 
     // if ($addToHiveBtn.checked) dayObj.hive = arrayUnion(dayEventName); 
-    // dayObj.hive_rest = arrayUnion(hiveObj); 
+    dayObj.hive_rest = arrayUnion(hiveObj); 
     dayObj.modifiedAt = serverTimestamp(); 
 
     // console.log('Saved to:', dayNum, 'days', days)  
@@ -1216,6 +1216,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
 function addToHive(hiveItem) {
     const { dayEventName, title, lat, lng, rating, reviews, operatingHours, phoneNumber, address, filter } = hiveItem; 
     const locationInfo = {
+        dayEventName,
         name: title,
         latLng: {lat, lng},
         rating,
