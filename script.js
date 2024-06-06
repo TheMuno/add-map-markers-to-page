@@ -1035,10 +1035,17 @@ function pushDayToRemovedDaysSection(removedDay, dayNum) {
 // async function saveMarkerToFirebase(userMail, dayNum, dayDate, markerObj) { 
 async function saveMarkerToFirebase(userMail, dayDate, markerObj) {  
 // async function saveMarkerToFirebase(userMail, dayNum, dayDate, markerObj) {  
-    const userData = doc(db, 'travelData', `user-${userMail}`);
+
+    // const userData = doc(db, 'travelData', `user-${userMail}`); ###
+
+    const userData = doc(db, 'hiveData', `hive-retail`);
+
     const docSnap = await getDoc(userData);
     const data = await docSnap.data(); 
-    const { days, hive } = data;
+
+    // const { days, hive } = data; ###
+
+    const { hive } = data;
 
     let specificDay, dayArrIndex;
     days.forEach((day, i) => {
@@ -1115,9 +1122,13 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
     dayEvents.push(eventObj);
 
     const dayObj = {}; 
-    dayObj.days = days; 
+    // dayObj.days = days;  ###
+
     // if ($addToHiveBtn.checked) dayObj.hive = arrayUnion(dayEventName); 
-    dayObj.hive_rest = arrayUnion(hiveObj); 
+    // dayObj.hive_rest = arrayUnion(hiveObj); 
+
+    dayObj.hiveObj = hiveObj;
+
     dayObj.modifiedAt = serverTimestamp(); 
 
     // console.log('Saved to:', dayNum, 'days', days)  
