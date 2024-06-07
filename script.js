@@ -1048,18 +1048,19 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
     const { hive } = data;
 
     let specificDay, dayArrIndex;
-    days.forEach((day, i) => {
+    /*days.forEach((day, i) => {                ###
         if (day.dayDate.includes(dayDate)) {
             specificDay = day; 
             dayArrIndex = i; 
         }
     });
+    */
 
     // const dayArrIndex = days[specificDay];
 
-    console.log('days', days)
-    console.log('specificDay', specificDay)
-    console.log('dayArrIndex', dayArrIndex)
+    // console.log('days', days) ###
+    // console.log('specificDay', specificDay) ###
+    // console.log('dayArrIndex', dayArrIndex) ###
 
     // let dayArrIndex = $daysSelect.selectedIndex;
     // if ($daysSelect.selectedIndex === 0) {
@@ -1070,7 +1071,7 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
     // let specificDay = days[dayArrIndex];
     // let specificDay = days[dayArrIndex];
 
-    if (!dayArrIndex) dayArrIndex = $daysSelect.options[$daysSelect.options.length - 2].index; 
+    /*if (!dayArrIndex) dayArrIndex = $daysSelect.options[$daysSelect.options.length - 2].index;  ###
 
     if (!specificDay) {
         specificDay = {
@@ -1080,8 +1081,9 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
         };
         days.splice(dayArrIndex, 0, specificDay);
     }
+    */
 
-    const dayEvents = specificDay.events;
+    // const dayEvents = specificDay.events; ###
 
     const { dayEventName='', lat=0, lng=0, title='', timeslot='', starttime='', 
     rating=0, reviewsContent='', operatingHrs='', phoneNumber='', address='' } = markerObj; 
