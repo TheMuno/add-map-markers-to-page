@@ -170,7 +170,7 @@ async function retrieveHiveFromDB(hiveCategory) {
 
     document.querySelectorAll(`[data-hive-type]`).forEach((hive, i) => {
         if (i === 0) return;
-        hive.markers.forEach(marker => marker.setMap(null)); 
+        hive.querySelector('.hive-list').markers?.forEach(marker => marker.setMap(null)); 
     });
 }
 
