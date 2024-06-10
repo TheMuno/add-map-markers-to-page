@@ -138,7 +138,26 @@ const markerPopup = new google.maps.InfoWindow();
     });
 }();
 
-retrieveHiveFromDB(localStorage.getItem('user-email')); 
+retrieveHiveFromDB(localStorage.getItem('user-email'));
+
+retrieveHiveFromDB2('hive-retail');
+
+async function retrieveHiveFromDB2(hiveCategory) { 
+    const userData = doc(db, 'hiveData', hiveCategory);
+    const docSnap = await getDoc(userData);
+
+    if (!docSnap.exists()) {
+        // docSnap.data() will be undefined in this case
+        console.log('No user with such email!');
+        $noUser.textContent = 'No user with such email, sorry!';
+        setTimeout(()=> $noUser.textContent = '', 5000);
+        return; 
+    } 
+
+    const data = await docSnap.data();
+
+    console.log(hiveCategory, data)
+}
 
 async function retrieveHiveFromDB(userMail) {    
     const userData = doc(db, 'travelData', `user-${userMail}`);
@@ -1090,6 +1109,58 @@ async function saveMarkerToFirebase(userMail, hive, filter) {
     dataObj.modifiedAt = serverTimestamp(); 
 
     await updateDoc(userData, dataObj);
+}
+
+// async function saveMarkerToFirebase(userMail, dayDate, markerObj) {    
+async function saveMarkerToFirebase2(hiveCategory, markerObj) {    
+    const userData = doc(db, 'hiveData', hiveCategory);
+
+    const docSnap = await getDoc(userData);
+    const data = await docSnap.data();
+
+    const { hive } = data;
+
+    const { dayEventName='', lat=0, lng=0, title='', timeslot='', starttime='', 
+    rating=0, reviewsContent='', operatingHrs='', phoneNumber='', address='' } = markerObj; 
+    const eventObj = {
+        dayEventName,
+        lat,
+        lng,
+        title,
+        description: '',
+        imageURL: '',
+        KhonsuRecommends: true,
+        timeslot,
+        starttime,
+        endtime: '',
+        notes: '',
+        reservation: '',
+        rating,
+        reviews: reviewsContent,
+        operatingHours: operatingHrs,
+        phoneNumber,
+        address,
+    };
+
+    const hiveObj = {
+        dayEventName,
+        lat,
+        lng,
+        title,
+        rating,
+        reviews: reviewsContent,
+        operatingHours: operatingHrs,
+        phoneNumber,
+        address,
+    }
+
+    const dayObj = {}; 
+
+    dayObj.hive = arrayUnion(hiveObj);  // hiveObj;
+
+    dayObj.modifiedAt = serverTimestamp(); 
+    
+    await updateDoc(userData, dayObj);
 }
 
 $refreshBtn.addEventListener('click', e => {
