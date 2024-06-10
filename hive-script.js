@@ -154,7 +154,8 @@ async function retrieveHiveFromDB2(hiveCategory) {
         return; 
     } 
 
-    const hive = await docSnap.data();
+    const data = await docSnap.data();
+    const { hive } = data; 
 
     console.log(hiveCategory, hive)
 
