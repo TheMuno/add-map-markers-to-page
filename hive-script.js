@@ -141,6 +141,8 @@ const markerPopup = new google.maps.InfoWindow();
 // retrieveHiveFromDB(localStorage.getItem('user-email'));
 
 retrieveHiveFromDB2('retail');
+retrieveHiveFromDB2('attractions');
+retrieveHiveFromDB2('restaurants');
 
 async function retrieveHiveFromDB2(hiveCategory) { 
     const userData = doc(db, 'hiveData', `hive-${hiveCategory}`);
@@ -290,6 +292,8 @@ $addFilters.addEventListener('click', e => {
 function populateFilterInputs(hiveItem) {
     const { filter, dayEventName, name, latLng, rating, reviewsContent, operatingHrs, phoneNumber, address  } = hiveItem.locationInfo;
     const filterObj = filter; 
+
+    if (!filterObj) return; 
 
     $saveEntryBtn.hiveObj = { 
         dayEventName, 
