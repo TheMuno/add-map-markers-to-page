@@ -138,12 +138,12 @@ const markerPopup = new google.maps.InfoWindow();
     });
 }();
 
-retrieveHiveFromDB(localStorage.getItem('user-email'));
+// retrieveHiveFromDB(localStorage.getItem('user-email'));
 
-retrieveHiveFromDB2('hive-retail');
+retrieveHiveFromDB2('retail');
 
 async function retrieveHiveFromDB2(hiveCategory) { 
-    const userData = doc(db, 'hiveData', hiveCategory);
+    const userData = doc(db, 'hiveData', `hive-${hiveCategory}`);
     const docSnap = await getDoc(userData);
 
     if (!docSnap.exists()) {
@@ -154,9 +154,16 @@ async function retrieveHiveFromDB2(hiveCategory) {
         return; 
     } 
 
-    const data = await docSnap.data();
+    const hive = await docSnap.data();
 
-    console.log(hiveCategory, data)
+    // console.log(hiveCategory, data)
+
+    const $hiveList = document.querySelector(`data-hive-type=[${hiveCategory}]`);
+
+    hive?.forEach(hiveItem => addToHive(hiveItem, $hiveList));
+
+    const locationsNum = hive?.length;
+    $hiveList.closest('.khonsu-data').querySelector('.item-no').textContent = `${locationsNum} locations`;
 }
 
 async function retrieveHiveFromDB(userMail) {    
