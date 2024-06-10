@@ -156,7 +156,7 @@ async function retrieveHiveFromDB2(hiveCategory) {
 
     const hive = await docSnap.data();
 
-    // console.log(hiveCategory, data)
+    console.log(hiveCategory, hive)
 
     const $hiveList = document.querySelector(`[data-hive-type=${hiveCategory}]`);
 
