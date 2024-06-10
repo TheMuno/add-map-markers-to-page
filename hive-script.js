@@ -158,7 +158,7 @@ async function retrieveHiveFromDB2(hiveCategory) {
 
     // console.log(hiveCategory, data)
 
-    const $hiveList = document.querySelector(`data-hive-type=[${hiveCategory}]`);
+    const $hiveList = document.querySelector(`[data-hive-type=${hiveCategory}]`);
 
     hive?.forEach(hiveItem => addToHive(hiveItem, $hiveList));
 
