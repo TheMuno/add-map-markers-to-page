@@ -1129,7 +1129,7 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
     // if ($addToHiveBtn.checked) dayObj.hive = arrayUnion(dayEventName); 
     // dayObj.hive_rest = arrayUnion(hiveObj); 
 
-    dayObj.hiveObj = hiveObj;
+    dayObj.hive = arrayUnion(hiveObj);  // hiveObj;
 
     dayObj.modifiedAt = serverTimestamp(); 
 
