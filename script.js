@@ -1038,7 +1038,7 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
 
     // const userData = doc(db, 'travelData', `user-${userMail}`); ###
 
-    const userData = doc(db, 'hiveData', `hive-attractions`);
+    const userData = doc(db, 'hiveData', `hive-restaurants`);
 
     const docSnap = await getDoc(userData);
     const data = await docSnap.data(); 
