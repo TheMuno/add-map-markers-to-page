@@ -174,6 +174,7 @@ async function retrieveHiveFromDB(hiveCategory) {
     });
 }
 
+/*
 async function retrieveHiveFromDB(userMail) {    
     const userData = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(userData);
@@ -212,6 +213,7 @@ async function retrieveHiveFromDB(userMail) {
     const restaurantsLocationsNum = hive_rest?.length;
     $hiveListRestaurants.closest('.hive-rest').querySelector('.item-no').textContent = `${restaurantsLocationsNum} locations`;
 }
+*/
 
 function addToHive(hiveItem, hiveList) {
     const { dayEventName, title, lat, lng, rating, reviews, operatingHours, phoneNumber, address, filter } = hiveItem; 
