@@ -140,11 +140,11 @@ const markerPopup = new google.maps.InfoWindow();
 
 // retrieveHiveFromDB(localStorage.getItem('user-email'));
 
-retrieveHiveFromDB2('retail');
-retrieveHiveFromDB2('attractions');
-retrieveHiveFromDB2('restaurants');
+retrieveHiveFromDB('retail');
+retrieveHiveFromDB('attractions');
+retrieveHiveFromDB('restaurants');
 
-async function retrieveHiveFromDB2(hiveCategory) { 
+async function retrieveHiveFromDB(hiveCategory) { 
     const userData = doc(db, 'hiveData', `hive-${hiveCategory}`);
     const docSnap = await getDoc(userData);
 
@@ -167,6 +167,11 @@ async function retrieveHiveFromDB2(hiveCategory) {
 
     const locationsNum = hive?.length;
     $hiveList.closest('.khonsu-data').querySelector('.item-no').textContent = `${locationsNum} locations`;
+
+    document.querySelectorAll(`[data-hive-type]`).forEach((hive, i) => {
+        if (i === 0) return;
+        hive.markers.forEach(marker => marker.setMap(null)); 
+    });
 }
 
 async function retrieveHiveFromDB(userMail) {    
