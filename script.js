@@ -1031,36 +1031,85 @@ function pushDayToRemovedDaysSection(removedDay, dayNum) {
     if (userSnap.exists() || !userMail) return;
     await setDoc(userRef, { createdAt: serverTimestamp() }); 
 }(localStorage.getItem('user-email')); 
+
+/******
+* save marker to firebase hive-data
+*
+async function saveMarkerToFirebase(userMail, dayDate, markerObj) {    
+    const userData = doc(db, 'hiveData', `hive-restaurants`);
+
+    const docSnap = await getDoc(userData);
+    const data = await docSnap.data();
+
+    const { hive } = data;
+
+    const { dayEventName='', lat=0, lng=0, title='', timeslot='', starttime='', 
+    rating=0, reviewsContent='', operatingHrs='', phoneNumber='', address='' } = markerObj; 
+    const eventObj = {
+        dayEventName,
+        lat,
+        lng,
+        title,
+        description: '',
+        imageURL: '',
+        KhonsuRecommends: true,
+        timeslot,
+        starttime,
+        endtime: '',
+        notes: '',
+        reservation: '',
+        rating,
+        reviews: reviewsContent,
+        operatingHours: operatingHrs,
+        phoneNumber,
+        address,
+    };
+
+    const hiveObj = {
+        dayEventName,
+        lat,
+        lng,
+        title,
+        rating,
+        reviews: reviewsContent,
+        operatingHours: operatingHrs,
+        phoneNumber,
+        address,
+    }
+
+    const dayObj = {}; 
+
+    dayObj.hive = arrayUnion(hiveObj);  // hiveObj;
+
+    dayObj.modifiedAt = serverTimestamp(); 
+    
+    await updateDoc(userData, dayObj);
+}
+*/
  
 // async function saveMarkerToFirebase(userMail, dayNum, dayDate, markerObj) { 
 async function saveMarkerToFirebase(userMail, dayDate, markerObj) {  
 // async function saveMarkerToFirebase(userMail, dayNum, dayDate, markerObj) {  
 
-    // const userData = doc(db, 'travelData', `user-${userMail}`); ###
-
-    const userData = doc(db, 'hiveData', `hive-restaurants`);
-
+    const userData = doc(db, 'travelData', `user-${userMail}`); 
     const docSnap = await getDoc(userData);
     const data = await docSnap.data(); 
 
-    // const { days, hive } = data; ###
-
-    const { hive } = data;
+    const { days, hive } = data; 
 
     let specificDay, dayArrIndex;
-    /*days.forEach((day, i) => {                ###
+    days.forEach((day, i) => {                
         if (day.dayDate.includes(dayDate)) {
             specificDay = day; 
             dayArrIndex = i; 
         }
     });
-    */
 
     // const dayArrIndex = days[specificDay];
 
-    // console.log('days', days) ###
-    // console.log('specificDay', specificDay) ###
-    // console.log('dayArrIndex', dayArrIndex) ###
+    console.log('days', days) 
+    console.log('specificDay', specificDay) 
+    console.log('dayArrIndex', dayArrIndex) 
 
     // let dayArrIndex = $daysSelect.selectedIndex;
     // if ($daysSelect.selectedIndex === 0) {
@@ -1071,7 +1120,7 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
     // let specificDay = days[dayArrIndex];
     // let specificDay = days[dayArrIndex];
 
-    /*if (!dayArrIndex) dayArrIndex = $daysSelect.options[$daysSelect.options.length - 2].index;  ###
+    if (!dayArrIndex) dayArrIndex = $daysSelect.options[$daysSelect.options.length - 2].index;  
 
     if (!specificDay) {
         specificDay = {
@@ -1081,9 +1130,8 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
         };
         days.splice(dayArrIndex, 0, specificDay);
     }
-    */
 
-    // const dayEvents = specificDay.events; ###
+    const dayEvents = specificDay.events; 
 
     const { dayEventName='', lat=0, lng=0, title='', timeslot='', starttime='', 
     rating=0, reviewsContent='', operatingHrs='', phoneNumber='', address='' } = markerObj; 
@@ -1121,15 +1169,15 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
         address,
     }
 
-    // dayEvents.push(eventObj); ###
+    dayEvents.push(eventObj); 
 
     const dayObj = {}; 
-    // dayObj.days = days;  ###
+    dayObj.days = days;  
 
     // if ($addToHiveBtn.checked) dayObj.hive = arrayUnion(dayEventName); 
     // dayObj.hive_rest = arrayUnion(hiveObj); 
 
-    dayObj.hive = arrayUnion(hiveObj);  // hiveObj;
+    // dayObj.hive = arrayUnion(hiveObj);  // hiveObj;
 
     dayObj.modifiedAt = serverTimestamp(); 
 
