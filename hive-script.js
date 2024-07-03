@@ -143,6 +143,7 @@ const markerPopup = new google.maps.InfoWindow();
 retrieveHiveFromDB('retail');
 retrieveHiveFromDB('attractions');
 retrieveHiveFromDB('restaurants');
+retrieveHiveFromDB('entertainment'); 
 
 async function retrieveHiveFromDB(hiveCategory) { 
     const userData = doc(db, 'hiveData', `hive-${hiveCategory}`);
