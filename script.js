@@ -1034,9 +1034,9 @@ function pushDayToRemovedDaysSection(removedDay, dayNum) {
 
 /******
 * save marker to firebase hive-data
-*
+*/
 async function saveMarkerToFirebase(userMail, dayDate, markerObj) {    
-    const userData = doc(db, 'hiveData', `hive-restaurants`);
+    const userData = doc(db, 'hiveData', `hive-entertainment`);
 
     const docSnap = await getDoc(userData);
     const data = await docSnap.data();
@@ -1085,10 +1085,10 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
     
     await updateDoc(userData, dayObj);
 }
-*/
+
  
 // async function saveMarkerToFirebase(userMail, dayNum, dayDate, markerObj) { 
-async function saveMarkerToFirebase(userMail, dayDate, markerObj) {  
+async function saveMarkerToFirebase2(userMail, dayDate, markerObj) {  
 // async function saveMarkerToFirebase(userMail, dayNum, dayDate, markerObj) {  
 
     const userData = doc(db, 'travelData', `user-${userMail}`); 
