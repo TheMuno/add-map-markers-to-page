@@ -252,7 +252,7 @@ function addToHive(hiveItem, hiveList) {
 		src: 'Imgs/x.png',
 	});
 	
-	$hiveItem.append($hiveItemText, $hiveImg);
+	$hiveItem.append($hiveImg, $hiveItemText);
 	hiveList.append($hiveItem);
 	
     // const $hiveItem = document.createElement('div');
