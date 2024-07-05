@@ -240,6 +240,12 @@ function addToHive(hiveItem, hiveList) {
     $hiveItem.className = 'hive-item';
     $hiveItem.textContent = dayEventName;
     $hiveItem.locationInfo = locationInfo; 
+	
+	const $hiveImg = document.createElement('img');
+	$hiveImg.src = 'Imgs/x.png'; 
+	$hiveImg.className = 'remove-hive-item';
+	$hiveItem.append($hiveImg);
+	
     hiveList.append($hiveItem);
 
     // icon.url = orangeMapIcon;
