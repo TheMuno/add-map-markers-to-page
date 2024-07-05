@@ -1202,7 +1202,7 @@ $refreshBtn.addEventListener('click', e => {
     refreshAddToDBFields(); 
 }); 
 
-document.querySelector('.view-type-select').addEventListener(e => {
+document.querySelector('.view-type-select').addEventListener('click', e => {
 	const $select = e.currentEventTarget;
 	const $section = $select.closest('section');
 	const $sideBar = $section.querySelector('.side-bar');
