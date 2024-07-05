@@ -1216,7 +1216,7 @@ document.querySelector('.view-type-select').addEventListener('click', e => {
 	}
 });
 
-async function saveMarkerToFirebase2(userMail, dayDate, markerObj) {    
+async function saveMarkerToFirebase3(userMail, dayDate, markerObj) {    
     const userData = doc(db, 'hiveData', `hive-entertainment`);
 
     const docSnap = await getDoc(userData);
