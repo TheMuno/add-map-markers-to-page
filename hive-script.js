@@ -235,18 +235,37 @@ function addToHive(hiveItem, hiveList) {
         address,
         filter,
     };
+		
+	const $hiveItem = createEl('div', {
+		className: 'hive-item',
+		// textContent: dayEventName,
+		locationInfo,
+	});
+	
+	const $hiveItemText = createEl('div', {
+		className: 'hive-item-text',
+		textContent: dayEventName,
+	});
 
-    const $hiveItem = document.createElement('div');
-    $hiveItem.className = 'hive-item';
-    $hiveItem.textContent = dayEventName;
-    $hiveItem.locationInfo = locationInfo; 
+	const $hiveImg = createEl('img', {
+		className: 'remove-hive-item',
+		src: 'Imgs/x.png',
+	});
 	
-	const $hiveImg = document.createElement('img');
-	$hiveImg.src = 'Imgs/x.png'; 
-	$hiveImg.className = 'remove-hive-item';
-	$hiveItem.append($hiveImg);
+	$hiveItem.append($hiveItemText, $hiveImg);
+	hiveList.append($hiveItem);
 	
-    hiveList.append($hiveItem);
+    // const $hiveItem = document.createElement('div');
+    // $hiveItem.className = 'hive-item';
+    // $hiveItem.textContent = dayEventName;
+    // $hiveItem.locationInfo = locationInfo; 
+	
+	// const $hiveImg = document.createElement('img');
+	// $hiveImg.src = 'Imgs/x.png'; 
+	// $hiveImg.className = 'remove-hive-item';
+	// $hiveItem.append($hiveImg);
+	
+    // hiveList.append($hiveItem);
 
     // icon.url = orangeMapIcon;
     // icon.url = fatOrangeMapIcon;
@@ -269,6 +288,13 @@ function addToHive(hiveItem, hiveList) {
     hiveList.markers.push(marker);
 }
 
+function createEl(el, attrs={}) {
+	const $el = document.createElement(el);
+	for (const [name, val] of Object.entries(attrs)) {
+		$el[name] = val;
+	}
+	return $el; 
+}
 
 // $toggleHive.addEventListener('click', e => {
 //     const $hive = $hiveList.closest('.hive');
