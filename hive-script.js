@@ -109,6 +109,9 @@ const markerPopup = new google.maps.InfoWindow();
             else if (type.includes('restaurants')) {
                 icon.url = restaurantMapIcon;
             }
+			else if (type.includes('entertainment')) {
+                icon.url = entertainmentMapIcon;
+            }
 
             // const { marker, contentString } = createMarker(place, icon); 
             const { marker, rating, reviewsContent, operatingHrs, phoneNumber, address, contentString } = createMarker(place, icon); 
@@ -421,6 +424,13 @@ $hiveListRestaurants.addEventListener('click', e => {
         $hiveListRestaurants.hiveItemPos = hiveItemPos;
         $saveEntryBtn.value = 'Save Edits!';
     } */
+});
+
+$hiveListEntertainment.addEventListener('click', e => {
+    if (!e.target.closest('.hive-item')) return;
+    const $hiveItem = e.target.closest('.hive-item');
+
+    activateHiveListItem($hiveItem, $hiveListEntertainment); 
 });
 
 function activateHiveListItem(hiveItem, hiveList) {
