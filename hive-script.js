@@ -1201,3 +1201,19 @@ async function saveMarkerToFirebase2(hiveCategory, markerObj) {
 $refreshBtn.addEventListener('click', e => {
     refreshAddToDBFields(); 
 }); 
+
+document.querySelector('.view-type-select').addEventListener(e => {
+	const $select = e.currentEventTarget;
+	const $section = $select.closest('section');
+	const $sideBar = $section.querySelector('.side-bar');
+	const $viewData = $section.querySelector('.view-data-section');
+	
+	if ($select.value === 'add-data') {
+		$sideBar.classList.remove('hide');
+		$viewData.classList.add('hide');
+	}
+	else {
+		$sideBar.classList.add('hide');
+		$viewData.classList.remove('hide');
+	}
+});

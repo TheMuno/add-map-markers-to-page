@@ -163,6 +163,10 @@
 		.view-data-section.hide {
 			display: none;
 		}
+		
+		.view-data-section {
+			width: 45%; 
+		}
     </style>
 </head>
 <body>
@@ -179,6 +183,13 @@
     </div>
 
     <div class="section side-bar-map-section">
+		<div>
+			<label>Select view:</label>
+			<select class="view-type-select">
+				<option value="view-data">View Data</option>
+				<option value="add-data">Add Data</option>
+			</select> 
+		</div>
 		<div class="view-data-section">
 		<div class="section center-content flex-column" data-type="retail">
         <div class="toggle-hive-wrapper">
