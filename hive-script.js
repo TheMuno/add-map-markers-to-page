@@ -58,7 +58,8 @@ const mapZoom = 13,
     orangeMapIcon = 'Imgs/pin_orange.png',
     cameraMapIcon = 'Imgs/camera.png',
     bagMapIcon = 'Imgs/bag.png',
-    restaurantMapIcon = 'Imgs/restaurant.png';
+    restaurantMapIcon = 'Imgs/restaurant.png',
+	entertainmentMapIcon = 'Imgs/cocktail.png'; 
 
 let map; // console.log('Y')
 
@@ -171,7 +172,7 @@ async function retrieveHiveFromDB(hiveCategory) {
     const locationsNum = hive?.length;
     $hiveList.closest('.khonsu-data').querySelector('.item-no').textContent = `${locationsNum} locations`;
 
-    document.querySelectorAll(`[data-hive-type]`).forEach((hive, i) => {
+    document.querySelectorAll('[data-hive-type]').forEach((hive, i) => {
         if (i === 0) return;
         hive.querySelector('.hive-list').markers?.forEach(marker => marker.setMap(null)); 
     });
@@ -248,6 +249,9 @@ function addToHive(hiveItem, hiveList) {
     else if (hiveList == $hiveListRestaurants) {
         icon.url = restaurantMapIcon;
     }
+	else if (hiveList == $hiveListEntertainment) {
+		icon.url = entertainmentMapIcon;
+	}
 
     const { marker } = createMarker(locationInfo, icon); 
     // marker.setMap(null); 
@@ -1122,6 +1126,30 @@ function refreshAddToDBFields() {
     markerPopup.close();
 }
 
+$refreshBtn.addEventListener('click', e => {
+    refreshAddToDBFields(); 
+}); 
+
+document.querySelector('.view-type-select').addEventListener('click', e => {
+	const $sideBar = document.querySelector('.side-bar');
+	const $viewData = document.querySelector('.view-data-section');
+	
+	if (e.currentTarget.value === 'add-data') {
+		$sideBar.classList.remove('hide');
+		$viewData.classList.add('hide');
+	}
+	else {
+		$sideBar.classList.add('hide');
+		$viewData.classList.remove('hide');
+	}
+});
+
+document.querySelectorAll('.toggle-hive-filters-div').forEach(div => {
+	div.addEventListener('click', e => {
+		e.currentTarget.closest('.section').querySelector('.toggle-hive-wrapper').classList.toggle('hide');
+	});
+});
+
 async function saveMarkerToFirebase(userMail, hive, filter) { 
     const userData = doc(db, 'travelData', `user-${userMail}`);
 
@@ -1146,9 +1174,8 @@ async function saveMarkerToFirebase(userMail, hive, filter) {
     await updateDoc(userData, dataObj);
 }
 
-// async function saveMarkerToFirebase(userMail, dayDate, markerObj) {    
-async function saveMarkerToFirebase2(hiveCategory, markerObj) {    
-    const userData = doc(db, 'hiveData', hiveCategory);
+async function saveMarkerToFirebase3(userMail, dayDate, markerObj) {    
+    const userData = doc(db, 'hiveData', `hive-entertainment`);
 
     const docSnap = await getDoc(userData);
     const data = await docSnap.data();
@@ -1198,34 +1225,9 @@ async function saveMarkerToFirebase2(hiveCategory, markerObj) {
     await updateDoc(userData, dayObj);
 }
 
-$refreshBtn.addEventListener('click', e => {
-    refreshAddToDBFields(); 
-}); 
-
-document.querySelector('.view-type-select').addEventListener('click', e => {
-	const $sideBar = document.querySelector('.side-bar');
-	const $viewData = document.querySelector('.view-data-section');
-	
-	if (e.currentTarget.value === 'add-data') {
-		$sideBar.classList.remove('hide');
-		$viewData.classList.add('hide');
-	}
-	else {
-		$sideBar.classList.add('hide');
-		$viewData.classList.remove('hide');
-	}
-});
-
-document.querySelectorAll('.toggle-hive-filters-div').forEach(div => {
-	div.addEventListener('click', e => {
-		e.currentTarget.closest('.section').querySelector('.toggle-hive-wrapper').classList.toggle('hide');
-	});
-	//const $btn = div.querySelector('.toggle-hive-filters');
-	//$btn
-});
-
-async function saveMarkerToFirebase3(userMail, dayDate, markerObj) {    
-    const userData = doc(db, 'hiveData', `hive-entertainment`);
+// async function saveMarkerToFirebase(userMail, dayDate, markerObj) {    
+async function saveMarkerToFirebase2(hiveCategory, markerObj) {    
+    const userData = doc(db, 'hiveData', hiveCategory);
 
     const docSnap = await getDoc(userData);
     const data = await docSnap.data();
