@@ -1203,10 +1203,8 @@ $refreshBtn.addEventListener('click', e => {
 }); 
 
 document.querySelector('.view-type-select').addEventListener('click', e => {
-	const $select = e.currentTarget; 
-	const $section = $select.closest('.section');
-	const $sideBar = $section.querySelector('.side-bar');
-	const $viewData = $section.querySelector('.view-data-section');
+	const $sideBar = document.querySelector('.side-bar');
+	const $viewData = document.querySelector('.view-data-section');
 	
 	if ($select.value === 'add-data') {
 		$sideBar.classList.remove('hide');
