@@ -1164,7 +1164,7 @@ document.querySelector('.view-type-select').addEventListener('click', e => {
 	}
 });
 
-document.querySelectorAll('.toggle-hive-filters-div').forEach(div => {
+document.querySelectorAll('.toggle-hive-filters-div input[type=checkbox]').forEach(div => {
 	div.addEventListener('click', e => {
 		e.currentTarget.closest('.section').querySelector('.toggle-hive-wrapper').classList.toggle('hide');
 	});
