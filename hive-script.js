@@ -1206,7 +1206,7 @@ document.querySelector('.view-type-select').addEventListener('click', e => {
 	const $sideBar = document.querySelector('.side-bar');
 	const $viewData = document.querySelector('.view-data-section');
 	
-	if ($select.value === 'add-data') {
+	if (e.currentTarget.value === 'add-data') {
 		$sideBar.classList.remove('hide');
 		$viewData.classList.add('hide');
 	}
