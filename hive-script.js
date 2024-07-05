@@ -908,6 +908,9 @@ $dataTypeSelect.addEventListener('change', e => {
         sec.classList.add('hide');
         sec.classList.remove('active');
     });
+	
+	console.log('VAL', val)
+	
     if (val.includes('retail')) {
         $retailSections.forEach(sec => {
             sec.classList.remove('hide');
