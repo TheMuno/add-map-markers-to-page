@@ -38,7 +38,7 @@ const $map = document.querySelector('#map'),
     $hiveList = document.querySelector('.hive-list.retail'), 
     $hiveListAttractions = document.querySelector('.hive-list.attractions'),
     $hiveListRestaurants = document.querySelector('.hive-list.restaurants'),
-	$hiveListEntertainment = document.querySelectorAll('.hive-list.entertainment'),
+	$hiveListEntertainment = document.querySelector('.hive-list.entertainment'),
     // $dayActivities = document.querySelector('.day-events');
     $dataTypeSelect = document.querySelector('.data-type-select'),
     $dataTypeSections = document.querySelectorAll('[data-type]'),
@@ -908,9 +908,7 @@ $dataTypeSelect.addEventListener('change', e => {
         sec.classList.add('hide');
         sec.classList.remove('active');
     });
-	
-	console.log('VAL', val)
-	
+		
     if (val.includes('retail')) {
         $retailSections.forEach(sec => {
             sec.classList.remove('hide');
@@ -950,8 +948,6 @@ $dataTypeSelect.addEventListener('change', e => {
         $hiveListAttractions.markers?.forEach(marker => marker.setMap(null)); 
         $hiveListRestaurants.markers?.forEach(marker => marker.setMap(null)); 
 		$hiveListEntertainment.markers?.forEach(marker => marker.setMap(map)); 
-		
-		console.log('$hiveListEntertainment.markers', $hiveListEntertainment.markers)
     }
 });
 
