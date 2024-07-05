@@ -1215,3 +1215,54 @@ document.querySelector('.view-type-select').addEventListener('click', e => {
 		$viewData.classList.remove('hide');
 	}
 });
+
+async function saveMarkerToFirebase2(userMail, dayDate, markerObj) {    
+    const userData = doc(db, 'hiveData', `hive-entertainment`);
+
+    const docSnap = await getDoc(userData);
+    const data = await docSnap.data();
+
+    const { hive } = data;
+
+    const { dayEventName='', lat=0, lng=0, title='', timeslot='', starttime='', 
+    rating=0, reviewsContent='', operatingHrs='', phoneNumber='', address='' } = markerObj; 
+    const eventObj = {
+        dayEventName,
+        lat,
+        lng,
+        title,
+        description: '',
+        imageURL: '',
+        KhonsuRecommends: true,
+        timeslot,
+        starttime,
+        endtime: '',
+        notes: '',
+        reservation: '',
+        rating,
+        reviews: reviewsContent,
+        operatingHours: operatingHrs,
+        phoneNumber,
+        address,
+    };
+
+    const hiveObj = {
+        dayEventName,
+        lat,
+        lng,
+        title,
+        rating,
+        reviews: reviewsContent,
+        operatingHours: operatingHrs,
+        phoneNumber,
+        address,
+    }
+
+    const dayObj = {}; 
+
+    dayObj.hive = arrayUnion(hiveObj);  // hiveObj;
+
+    dayObj.modifiedAt = serverTimestamp(); 
+    
+    await updateDoc(userData, dayObj);
+}
