@@ -1216,6 +1216,14 @@ document.querySelector('.view-type-select').addEventListener('click', e => {
 	}
 });
 
+document.querySelectorAll('.toggle-hive-filters-div').forEach(div => {
+	div.addEventListener('click', e => {
+		e.currentTarget.closest('.section').querySelector('.toggle-hive-wrapper').classList.toggle('hide');
+	});
+	//const $btn = div.querySelector('.toggle-hive-filters');
+	//$btn
+});
+
 async function saveMarkerToFirebase3(userMail, dayDate, markerObj) {    
     const userData = doc(db, 'hiveData', `hive-entertainment`);
 

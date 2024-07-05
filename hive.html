@@ -185,6 +185,10 @@
 		.text-align-left {
 			text-align: left;
 		}
+		
+		.toggle-hive-wrapper.hide {
+			display: none;
+		}
     </style>
 </head>
 <body>
@@ -212,243 +216,247 @@
 		
 	<div class="view-data-section">
 		<div class="section center-content flex-column" data-type="retail">
-        <div class="toggle-hive-wrapper">
-            <!-- <div>
-                <input type="checkbox" name="toggle-hive" id="toggle-hive" class="toggle-hive">
-                <label for="toggle-hive">Show Hive</label>
-            </div>
-            <div class="toggle-hive-filters-wrapper hide ">
-                <input type="checkbox" name="toggle-hive-filters" id="toggle-hive-filters" class="toggle-hive-filters">
-                <label for="toggle-hive-filters">Show Filters</label> 
-            </div> -->
-            <div class="hive-filters "> <!-- hidden -->
-                <div class="day-text">Filter by:</div>
-                <div class="hive-fieldsets">
-                    <fieldset class="hive-filter-wrapper-fieldset">
-                        <legend>Neighborhood</legend>
-                        <div class="fieldset-section">
-                            <div class="hive-filter">
-                                <input type="checkbox" name="east-village" id="east-village" class="east-village">
-                                <label for="east-village">East Village</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="west-village" id="west-village" class="west-village">
-                                <label for="west-village">West Village</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="long-island-city" id="long-island-city" class="long-island-city">
-                                <label for="long-island-city">Long Island City</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="union-square" id="union-square" class="union-square">
-                                <label for="union-square">Union Square</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="nolita" id="nolita" class="nolita">
-                                <label for="nolita">Nolita</label>
-                            </div>
-                        </div>
-                        <div class="fieldset-section">
-                            <div class="hive-filter">
-                                <input type="checkbox" name="soho" id="soho" class="soho">
-                                <label for="soho">Soho</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="murray-hill" id="murray-hill" class="murray-hill">
-                                <label for="murray-hill">Murray Hill</label>
-                            </div>
-                            
-                            <div class="hive-filter">
-                                <input type="checkbox" name="upper-east-side" id="upper-east-side" class="upper-east-side">
-                                <label for="upper-east-side">Upper East Side</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="park-slope" id="park-slope" class="park-slope">
-                                <label for="park-slope">Park Slope</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="bushwick" id="bushwick" class="bushwick">
-                                <label for="bushwick">Bushwick</label>
-                            </div>
-                        </div>
-                        <div class="fieldset-section">
-                            <div class="hive-filter">
-                                <input type="checkbox" name="hell-s-kitchen" id="hell-s-kitchen" class="hell-s-kitchen">
-                                <label for="hell-s-kitchen">Hell's Kitchen</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="fifth-ave" id="fifth-ave" class="fifth-ave">
-                                <label for="fifth-ave">Fifth Ave</label>
-                            </div>
+			<div class="toggle-hive-filters-div">
+				<input type="checkbox" name="toggle-hive-filters" id="toggle-hive-filters" class="toggle-hive-filters">
+				<label for="toggle-hive-filters">Show Hive</label>
+			</div>
+			<div class="toggle-hive-wrapper hide"> 
+				<!-- <div>
+					<input type="checkbox" name="toggle-hive" id="toggle-hive" class="toggle-hive">
+					<label for="toggle-hive">Show Hive</label>
+				</div>
+				<div class="toggle-hive-filters-wrapper hide ">
+					<input type="checkbox" name="toggle-hive-filters" id="toggle-hive-filters" class="toggle-hive-filters">
+					<label for="toggle-hive-filters">Show Filters</label> 
+				</div> -->
+				<div class="hive-filters "> <!-- hidden -->
+					<div class="day-text">Filter by:</div>
+					<div class="hive-fieldsets">
+						<fieldset class="hive-filter-wrapper-fieldset">
+							<legend>Neighborhood</legend>
+							<div class="fieldset-section">
+								<div class="hive-filter">
+									<input type="checkbox" name="east-village" id="east-village" class="east-village">
+									<label for="east-village">East Village</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="west-village" id="west-village" class="west-village">
+									<label for="west-village">West Village</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="long-island-city" id="long-island-city" class="long-island-city">
+									<label for="long-island-city">Long Island City</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="union-square" id="union-square" class="union-square">
+									<label for="union-square">Union Square</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="nolita" id="nolita" class="nolita">
+									<label for="nolita">Nolita</label>
+								</div>
+							</div>
+							<div class="fieldset-section">
+								<div class="hive-filter">
+									<input type="checkbox" name="soho" id="soho" class="soho">
+									<label for="soho">Soho</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="murray-hill" id="murray-hill" class="murray-hill">
+									<label for="murray-hill">Murray Hill</label>
+								</div>
+								
+								<div class="hive-filter">
+									<input type="checkbox" name="upper-east-side" id="upper-east-side" class="upper-east-side">
+									<label for="upper-east-side">Upper East Side</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="park-slope" id="park-slope" class="park-slope">
+									<label for="park-slope">Park Slope</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="bushwick" id="bushwick" class="bushwick">
+									<label for="bushwick">Bushwick</label>
+								</div>
+							</div>
+							<div class="fieldset-section">
+								<div class="hive-filter">
+									<input type="checkbox" name="hell-s-kitchen" id="hell-s-kitchen" class="hell-s-kitchen">
+									<label for="hell-s-kitchen">Hell's Kitchen</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="fifth-ave" id="fifth-ave" class="fifth-ave">
+									<label for="fifth-ave">Fifth Ave</label>
+								</div>
 
-                            <div class="hive-filter">
-                                <input type="checkbox" name="times-square" id="times-square" class="times-square">
-                                <label for="times-square">Times Square</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="herald-square" id="herald-square" class="herald-square">
-                                <label for="herald-square">Herald Square</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="midtown-east" id="midtown-east" class="midtown-east">
-                                <label for="midtown-east">Midtown East</label>
-                            </div>
-                        </div>
-                        <div class="fieldset-section">
-                            <div class="hive-filter">
-                                <input type="checkbox" name="financial-district" id="financial-district" class="financial-district">
-                                <label for="financial-district">Financial District</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="chelsea" id="chelsea" class="chelsea">
-                                <label for="chelsea">Chelsea</label>
-                            </div>
+								<div class="hive-filter">
+									<input type="checkbox" name="times-square" id="times-square" class="times-square">
+									<label for="times-square">Times Square</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="herald-square" id="herald-square" class="herald-square">
+									<label for="herald-square">Herald Square</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="midtown-east" id="midtown-east" class="midtown-east">
+									<label for="midtown-east">Midtown East</label>
+								</div>
+							</div>
+							<div class="fieldset-section">
+								<div class="hive-filter">
+									<input type="checkbox" name="financial-district" id="financial-district" class="financial-district">
+									<label for="financial-district">Financial District</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="chelsea" id="chelsea" class="chelsea">
+									<label for="chelsea">Chelsea</label>
+								</div>
 
-                            <div class="hive-filter">
-                                <input type="checkbox" name="flatiron" id="flatiron" class="flatiron">
-                                <label for="flatiron">Flatiron</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="chinatown" id="chinatown" class="chinatown">
-                                <label for="chinatown">Chinatown</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="williamsburg" id="williamsburg" class="williamsburg">
-                                <label for="williamsburg">Williamsburg</label>
-                            </div>
-                        </div>
-                        <div class="fieldset-section">
-                            <div class="hive-filter">
-                                <input type="checkbox" name="lower-east-side" id="lower-east-side" class="lower-east-side">
-                                <label for="lower-east-side">Lower East Side</label>
-                            </div>                     
-                        </div>
-                    </fieldset>
-                    <fieldset class="hive-filter-wrapper-fieldset">
-                        <legend>Type</legend>
-                        <div class="fieldset-section">
-                            <div class="hive-filter">
-                                <input type="checkbox" name="thrift-store" id="thrift-store" class="thrift-store">
-                                <label for="thrift-store">Thrift Store</label>
-                            </div>
+								<div class="hive-filter">
+									<input type="checkbox" name="flatiron" id="flatiron" class="flatiron">
+									<label for="flatiron">Flatiron</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="chinatown" id="chinatown" class="chinatown">
+									<label for="chinatown">Chinatown</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="williamsburg" id="williamsburg" class="williamsburg">
+									<label for="williamsburg">Williamsburg</label>
+								</div>
+							</div>
+							<div class="fieldset-section">
+								<div class="hive-filter">
+									<input type="checkbox" name="lower-east-side" id="lower-east-side" class="lower-east-side">
+									<label for="lower-east-side">Lower East Side</label>
+								</div>                     
+							</div>
+						</fieldset>
+						<fieldset class="hive-filter-wrapper-fieldset">
+							<legend>Type</legend>
+							<div class="fieldset-section">
+								<div class="hive-filter">
+									<input type="checkbox" name="thrift-store" id="thrift-store" class="thrift-store">
+									<label for="thrift-store">Thrift Store</label>
+								</div>
 
-                            <div class="hive-filter">
-                                <input type="checkbox" name="clothing-store" id="clothing-store" class="clothing-store">
-                                <label for="clothing-store">Clothing Store</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="sneaker-store" id="sneaker-store" class="sneaker-store">
-                                <label for="sneaker-store">Sneaker Store</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="multi-store-retail" id="multi-store-retail" class="multi-store-retail">
-                                <label for="multi-store-retail">Multi-Store Retail</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="jewelry-store" id="jewelry-store" class="jewelry-store">
-                                <label for="jewelry-store">Jewelry Store</label>
-                            </div>
-                        </div>
-                        <div class="fieldset-section">
-                            <div class="hive-filter">
-                                <input type="checkbox" name="toy-store" id="toy-store" class="toy-store">
-                                <label for="toy-store">Toy Store</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="department-store" id="department-store" class="department-store">
-                                <label for="department-store">Department Store</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="makeup-store" id="makeup-store" class="makeup-store">
-                                <label for="makeup-store">Makeup Store</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="gift-shop" id="gift-shop" class="gift-shop">
-                                <label for="gift-shop">Gift Shop</label>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset class="hive-filter-wrapper-fieldset">
-                        <legend>For</legend>
-                        <div class="fieldset-section">
-                            <div class="hive-filter">
-                                <input type="checkbox" name="men" id="men" class="men">
-                                <label for="men">Men</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="women" id="women" class="women">
-                                <label for="women">Women</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="adults" id="adults" class="adults">
-                                <label for="adults">Adults</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="teens" id="teens" class="teens">
-                                <label for="teens">Teens</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="kids" id="kids" class="kids">
-                                <label for="kids">Kids</label>
-                            </div>
-                        </div>
-                        <div class="fieldset-section">
-                            <div class="hive-filter">
-                                <input type="checkbox" name="boys" id="boys" class="boys">
-                                <label for="boys">Boys</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="girls" id="girls" class="girls">
-                                <label for="girls">Girls</label>
-                            </div>
-                        </div>
-                    </fieldset>
+								<div class="hive-filter">
+									<input type="checkbox" name="clothing-store" id="clothing-store" class="clothing-store">
+									<label for="clothing-store">Clothing Store</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="sneaker-store" id="sneaker-store" class="sneaker-store">
+									<label for="sneaker-store">Sneaker Store</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="multi-store-retail" id="multi-store-retail" class="multi-store-retail">
+									<label for="multi-store-retail">Multi-Store Retail</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="jewelry-store" id="jewelry-store" class="jewelry-store">
+									<label for="jewelry-store">Jewelry Store</label>
+								</div>
+							</div>
+							<div class="fieldset-section">
+								<div class="hive-filter">
+									<input type="checkbox" name="toy-store" id="toy-store" class="toy-store">
+									<label for="toy-store">Toy Store</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="department-store" id="department-store" class="department-store">
+									<label for="department-store">Department Store</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="makeup-store" id="makeup-store" class="makeup-store">
+									<label for="makeup-store">Makeup Store</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="gift-shop" id="gift-shop" class="gift-shop">
+									<label for="gift-shop">Gift Shop</label>
+								</div>
+							</div>
+						</fieldset>
+						<fieldset class="hive-filter-wrapper-fieldset">
+							<legend>For</legend>
+							<div class="fieldset-section">
+								<div class="hive-filter">
+									<input type="checkbox" name="men" id="men" class="men">
+									<label for="men">Men</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="women" id="women" class="women">
+									<label for="women">Women</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="adults" id="adults" class="adults">
+									<label for="adults">Adults</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="teens" id="teens" class="teens">
+									<label for="teens">Teens</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="kids" id="kids" class="kids">
+									<label for="kids">Kids</label>
+								</div>
+							</div>
+							<div class="fieldset-section">
+								<div class="hive-filter">
+									<input type="checkbox" name="boys" id="boys" class="boys">
+									<label for="boys">Boys</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="girls" id="girls" class="girls">
+									<label for="girls">Girls</label>
+								</div>
+							</div>
+						</fieldset>
 
-                    <fieldset class="hive-filter-wrapper-fieldset">
-                        <legend>Sub-Category</legend>
-                        <div class="fieldset-section">
-                            <div class="hive-filter">
-                                <input type="checkbox" name="clothing" id="clothing" class="clothing">
-                                <label for="clothing">Clothing</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="streetwear" id="streetwear" class="streetwear">
-                                <label for="streetwear">Streetwear</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="sneakers" id="sneakers" class="sneakers">
-                                <label for="sneakers">Sneakers</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="luxury" id="luxury" class="luxury">
-                                <label for="luxury">Luxury</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="athletic" id="athletic" class="athletic">
-                                <label for="athletic">Athletic</label>
-                            </div>
-                        </div>
-                        <div class="fieldset-section">
-                            
-                            <div class="hive-filter">
-                                <input type="checkbox" name="accessories" id="accessories" class="accessories">
-                                <label for="accessories">Accessories</label>
-                            </div>
-                            <div class="hive-filter">
-                                <input type="checkbox" name="souviners" id="souviners" class="souviners">
-                                <label for="souviners">Souviners</label>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-            </div> 
-        </div>
-        <div class="khonsu-data hive" data-hive-type="retail">
-            <!-- <input type="text" class="search-place" name="" id="">  --> 
-            <div class="day-text center-label margin-bottom-2px">Retail<span class="item-no"></span></div>      
-            <div class="hive-list retail" title="Click on hive item to view on map"></div>  
-        </div> 
-    </div>
+						<fieldset class="hive-filter-wrapper-fieldset">
+							<legend>Sub-Category</legend>
+							<div class="fieldset-section">
+								<div class="hive-filter">
+									<input type="checkbox" name="clothing" id="clothing" class="clothing">
+									<label for="clothing">Clothing</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="streetwear" id="streetwear" class="streetwear">
+									<label for="streetwear">Streetwear</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="sneakers" id="sneakers" class="sneakers">
+									<label for="sneakers">Sneakers</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="luxury" id="luxury" class="luxury">
+									<label for="luxury">Luxury</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="athletic" id="athletic" class="athletic">
+									<label for="athletic">Athletic</label>
+								</div>
+							</div>
+							<div class="fieldset-section">
+								
+								<div class="hive-filter">
+									<input type="checkbox" name="accessories" id="accessories" class="accessories">
+									<label for="accessories">Accessories</label>
+								</div>
+								<div class="hive-filter">
+									<input type="checkbox" name="souviners" id="souviners" class="souviners">
+									<label for="souviners">Souviners</label>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</div> 
+			</div>
+			<div class="khonsu-data hive" data-hive-type="retail">
+				<!-- <input type="text" class="search-place" name="" id="">  --> 
+				<div class="day-text center-label margin-bottom-2px">Retail<span class="item-no"></span></div>      
+				<div class="hive-list retail" title="Click on hive item to view on map"></div>  
+			</div> 
+		</div>
 
 		<div class="section center-content flex-column hide" data-type="attractions">
         <div class="toggle-hive-wrapper">
