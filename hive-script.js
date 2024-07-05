@@ -1089,20 +1089,29 @@ $saveEntryBtn.addEventListener('click', async e => {
     let hive, hiveList;
 
     if (type.includes('retail')) {
-        hive = 'hive';
+        // hive = 'hive';
         hiveList = $hiveList;
+		await saveMarkerToFirebase3('retail'); 
     }
     else if (type.includes('attractions')) {
-        hive = 'hive_attr';
+        // hive = 'hive_attr';
         hiveList = $hiveListAttractions;
+		await saveMarkerToFirebase3('attractions'); 
     }
     else if (type.includes('restaurants')) {
-        hive = 'hive_rest';
+        // hive = 'hive_rest';
         hiveList = $hiveListRestaurants;
+		await saveMarkerToFirebase3('restaurants'); 
+    }
+	else if (type.includes('entertainment')) {
+        // hive = 'hive_ent';
+        hiveList = $hiveListEntertainment;
+		await saveMarkerToFirebase3('entertainment'); 
     }
 
-    const userMail = localStorage['user-email'];
-    await saveMarkerToFirebase(userMail, hive, filter); 
+    // const userMail = localStorage['user-email'];
+    // await saveMarkerToFirebase(userMail, hive, filter); 
+	// await saveMarkerToFirebase('entertainment'); 
 
     const {
         dayEventName,
@@ -1185,44 +1194,34 @@ async function saveMarkerToFirebase(userMail, hive, filter) {
     await updateDoc(userData, dataObj);
 }
 
-async function saveMarkerToFirebase3(userMail, dayDate, markerObj) {    
-    const userData = doc(db, 'hiveData', `hive-entertainment`);
+async function saveMarkerToFirebase3(hiveCategory) {    
+    const userData = doc(db, 'hiveData', `hive-${hiveCategory}`);
 
-    const docSnap = await getDoc(userData);
-    const data = await docSnap.data();
+    // const docSnap = await getDoc(userData);
+    // const data = await docSnap.data();
 
-    const { hive } = data;
-
-    const { dayEventName='', lat=0, lng=0, title='', timeslot='', starttime='', 
-    rating=0, reviewsContent='', operatingHrs='', phoneNumber='', address='' } = markerObj; 
-    const eventObj = {
+    //const { hive } = data;
+	
+	const {
         dayEventName,
         lat,
         lng,
         title,
-        description: '',
-        imageURL: '',
-        KhonsuRecommends: true,
-        timeslot,
-        starttime,
-        endtime: '',
-        notes: '',
-        reservation: '',
         rating,
-        reviews: reviewsContent,
-        operatingHours: operatingHrs,
+        reviewsContent: reviews,
+        operatingHrs: operatingHours,
         phoneNumber,
         address,
-    };
-
+    } = $saveEntryBtn.hiveObj;
+    
     const hiveObj = {
         dayEventName,
         lat,
         lng,
         title,
         rating,
-        reviews: reviewsContent,
-        operatingHours: operatingHrs,
+        reviews,
+        operatingHours,
         phoneNumber,
         address,
     }
