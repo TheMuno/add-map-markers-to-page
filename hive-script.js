@@ -947,6 +947,8 @@ $dataTypeSelect.addEventListener('change', e => {
         $hiveListAttractions.markers?.forEach(marker => marker.setMap(null)); 
         $hiveListRestaurants.markers?.forEach(marker => marker.setMap(null)); 
 		$hiveListEntertainment.markers?.forEach(marker => marker.setMap(map)); 
+		
+		console.log('$hiveListEntertainment.markers', $hiveListEntertainment.markers)
     }
 });
 
