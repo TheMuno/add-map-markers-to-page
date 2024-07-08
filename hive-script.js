@@ -1295,6 +1295,8 @@ async function removeMarkerFromFirebase(hiveItem, hiveCategory) {
 		filter,
     }
 	
+	console.log('hiveObj', hiveObj)
+	
 	const saveObj = {}; 
 
     saveObj.hive = arrayRemove(hiveObj);  // hiveObj;
