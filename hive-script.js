@@ -294,7 +294,7 @@ function addToHive(hiveItem, hiveList) {
 	});
 	
 	$hiveRemoveImg.addEventListener('click', e => {
-		const hiveCategory = `hive-${$dataTypeSelect.value}`;
+		const hiveCategory = $dataTypeSelect.value;
 		removeMarkerFromFirebase($hiveItem, hiveCategory);
 		console.log('Removed?!');
 	});
