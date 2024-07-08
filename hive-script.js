@@ -142,7 +142,7 @@ const markerPopup = new google.maps.InfoWindow();
         // console.log('User search value:', $userSearch.value)
         // $userSearch.value = '';  
     });
-}();
+}//();
 
 // retrieveHiveFromDB(localStorage.getItem('user-email'));
 
