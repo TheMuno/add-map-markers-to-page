@@ -184,7 +184,7 @@ async function retrieveHiveFromDB(hiveCategory) {
 		list.querySelectorAll('.remove-hive-item').forEach(item => item.classList.add('hide'));
 	});
 	
-	hive?.forEach(hiveItem => addToHive(hiveItem, $hiveList); 
+	hive?.forEach(hiveItem => addToHive(hiveItem, $hiveList)); 
 
     /*hive?.forEach(hiveItem => { 
 		const $hiveItem = addToHive(hiveItem, $hiveList);
