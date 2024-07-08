@@ -144,6 +144,8 @@ const markerPopup = new google.maps.InfoWindow();
     });
 }//();
 
+document.querySelector('#map').style.border = '1px solid black'; 
+
 // retrieveHiveFromDB(localStorage.getItem('user-email'));
 
 retrieveHiveFromDB('retail');
@@ -247,12 +249,17 @@ function addToHive(hiveItem, hiveList) {
 		textContent: dayEventName,
 	});
 
-	const $hiveImg = createEl('img', {
+	const $hiveRemoveImg = createEl('img', {
 		className: 'remove-hive-item',
 		src: 'Imgs/x.png',
 	});
 	
-	$hiveItem.append($hiveImg, $hiveItemText);
+	const $hiveCopyImg = createEl('img', {
+		className: 'copy-hive-item',
+		src: 'Imgs/copy.png',
+	});
+	
+	$hiveItem.append($hiveCopyImg, $hiveRemoveImg, $hiveItemText);
 	hiveList.append($hiveItem);
 	
     // const $hiveItem = document.createElement('div');
