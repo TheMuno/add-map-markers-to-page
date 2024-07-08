@@ -286,6 +286,15 @@ function addToHive(hiveItem, hiveList) {
 		src: 'Imgs/copy.png',
 	});
 	
+	$hiveRemoveImg.addEventListener('click', e => {
+		console.log('Removed?!');
+	});
+	
+	$hiveCopyImg.addEventListener('click', e => {
+		const text = e.currentTarget.closest('.hive-item').querySelector('.hive-item-text').textContent;
+		copyContent(text);
+	});
+	
 	$hiveItem.append($hiveCopyImg, $hiveRemoveImg, $hiveItemText);
 	hiveList.append($hiveItem);
 	
@@ -330,6 +339,16 @@ function createEl(el, attrs={}) {
 		$el[name] = val;
 	}
 	return $el; 
+}
+
+async function copyContent(text) {
+	try {
+		await navigator.clipboard.writeText(text);
+		console.log('Content copied to clipboard');
+    } 
+	catch (err) {
+		console.error('Failed to copy: ', err);
+    }
 }
 
 // $toggleHive.addEventListener('click', e => {
