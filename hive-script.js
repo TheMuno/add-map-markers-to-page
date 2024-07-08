@@ -294,6 +294,8 @@ function addToHive(hiveItem, hiveList) {
 	});
 	
 	$hiveRemoveImg.addEventListener('click', e => {
+		const hiveCategory = `hive-${$dataTypeSelect.value}`;
+		removeMarkerFromFirebase($hiveItem, hiveCategory);
 		console.log('Removed?!');
 	});
 	
@@ -1264,10 +1266,34 @@ document.querySelectorAll('.toggle-hive-filters-div input[type=checkbox]').forEa
 	});
 });
 
-async function removeMarkerFromFirebase(hiveCategory) {
+async function removeMarkerFromFirebase(hiveItem, hiveCategory) {
 	const hiveData = doc(db, 'hiveData', `hive-${hiveCategory}`);
 	
-	
+	const {
+        dayEventName,
+        latLng: { lat },
+        latLng: { lng },
+        name: title,
+        rating,
+        reviews,
+        operatingHours,
+        phoneNumber,
+        address,
+		filter,
+    } = hiveItem.locationInfo
+    
+    const hiveObj = {
+        dayEventName,
+        lat,
+        lng,
+        title,
+        rating,
+        reviews,
+        operatingHours,
+        phoneNumber,
+        address,
+		filter,
+    }
 	
 	const saveObj = {}; 
 
