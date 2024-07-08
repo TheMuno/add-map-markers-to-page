@@ -294,10 +294,18 @@ function addToHive(hiveItem, hiveList) {
 	});
 	
 	$hiveRemoveImg.addEventListener('click', e => {
-		const hiveCategory = $dataTypeSelect.value;
-		removeMarkerFromFirebase($hiveItem, hiveCategory);
-		$hiveItem.remove(); 
-		console.log('Removed?!');
+		alertify.confirm('Remove Filter?\nPlease confim',
+			() => {
+				// alertify.success('Ok');
+				const hiveCategory = $dataTypeSelect.value;
+				removeMarkerFromFirebase($hiveItem, hiveCategory);
+				$hiveItem.remove(); 
+				console.log('Removed?!');
+			},
+			() => {
+				// alertify.error('Marker removal terribly failed!');
+				console.log('Not removed');
+		});
 	});
 	
 	$hiveCopyImg.addEventListener('click', e => {
@@ -1296,6 +1304,8 @@ async function removeMarkerFromFirebase(hiveItem, hiveCategory) {
 		filter,
     }
 	// Buffalo Exchange, 504 Driggs Avenue, Brooklyn, NY, USA
+	// Monk Vintage, 500 Driggs Avenue, Brooklyn, NY, USA
+	// Lockwood Williamsburg, 485 Driggs Avenue, Brooklyn, NY, USA
 	// console.log('hiveItem', hiveItem)
 	// console.log('hiveObj', hiveObj)
 	
