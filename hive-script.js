@@ -174,14 +174,26 @@ async function retrieveHiveFromDB(hiveCategory) {
 	
 	$hiveList.addEventListener('mouseenter', (e) => {
 		const list = e.currentTarget; 
-		list.querySelectorAll('.copy-hive-item').forEach(item => item.classList.remove('hide'));
-		list.querySelectorAll('.remove-hive-item').forEach(item => item.classList.remove('hide'));
+		list.querySelectorAll('.copy-hive-item').forEach(item => {
+			item.classList.remove('opacity3');
+			item.classList.remove('hide');
+		});
+		list.querySelectorAll('.remove-hive-item').forEach(item => {
+			item.classList.remove('opacity3');
+			item.classList.remove('hide');
+		});
 	});
 	
 	$hiveList.addEventListener('mouseleave', (e) => {
 		const list = e.currentTarget; 
-		list.querySelectorAll('.copy-hive-item').forEach(item => item.classList.add('hide'));
-		list.querySelectorAll('.remove-hive-item').forEach(item => item.classList.add('hide'));
+		list.querySelectorAll('.copy-hive-item').forEach(item => {
+			item.classList.add('opacity3');
+			item.classList.add('hide');
+		});
+		list.querySelectorAll('.remove-hive-item').forEach(item => {
+			item.classList.add('opacity3');
+			item.classList.add('hide');
+		});
 	});
 	
 	hive?.forEach(hiveItem => addToHive(hiveItem, $hiveList)); 
@@ -277,12 +289,12 @@ function addToHive(hiveItem, hiveList) {
 	});
 
 	const $hiveRemoveImg = createEl('img', {
-		className: 'remove-hive-item hide',
+		className: 'hive-item-img remove-hive-item opacity3 hide',
 		src: 'Imgs/x.png',
 	});
 	
 	const $hiveCopyImg = createEl('img', {
-		className: 'copy-hive-item hide',
+		className: 'hive-item-img copy-hive-item opacity3 hide',
 		src: 'Imgs/copy.png',
 	});
 	
@@ -1178,22 +1190,22 @@ $saveEntryBtn.addEventListener('click', async e => {
     if (type.includes('retail')) {
         // hive = 'hive';
         hiveList = $hiveList;
-		await saveMarkerToFirebase3('retail'); 
+		await saveMarkerToFirebase('retail'); 
     }
     else if (type.includes('attractions')) {
         // hive = 'hive_attr';
         hiveList = $hiveListAttractions;
-		await saveMarkerToFirebase3('attractions'); 
+		await saveMarkerToFirebase('attractions'); 
     }
     else if (type.includes('restaurants')) {
         // hive = 'hive_rest';
         hiveList = $hiveListRestaurants;
-		await saveMarkerToFirebase3('restaurants'); 
+		await saveMarkerToFirebase('restaurants'); 
     }
 	else if (type.includes('entertainment')) {
         // hive = 'hive_ent';
         hiveList = $hiveListEntertainment;
-		await saveMarkerToFirebase3('entertainment'); 
+		await saveMarkerToFirebase('entertainment'); 
     }
 
     // const userMail = localStorage['user-email'];
@@ -1257,34 +1269,24 @@ document.querySelectorAll('.toggle-hive-filters-div input[type=checkbox]').forEa
 	});
 });
 
-async function saveMarkerToFirebase(userMail, hive, filter) { 
-    const userData = doc(db, 'travelData', `user-${userMail}`);
+async function removeMarkerFromFirebase(hiveCategory) {
+	const hiveData = doc(db, 'hiveData', `hive-${hiveCategory}`);
+	
+	
+	
+	const saveObj = {}; 
 
-    const {
-        dayEventName,
-        lat,
-        lng,
-        title,
-        rating,
-        reviewsContent: reviews,
-        operatingHrs: operatingHours,
-        phoneNumber,
-        address,
-    } = $saveEntryBtn.hiveObj;
+    saveObj.hive = arrayRemove(hiveObj);  // hiveObj;
 
-    const hiveObj = { dayEventName, lat, lng, title, rating, reviews, operatingHours, phoneNumber, address, filter };
+    saveObj.modifiedAt = serverTimestamp(); 
+    
+    await updateDoc(hiveData, saveObj);
+} 
 
-    const dataObj = {}; 
-    dataObj[hive] = arrayUnion(hiveObj); 
-    dataObj.modifiedAt = serverTimestamp(); 
+async function saveMarkerToFirebase(hiveCategory) {    
+    const hiveData = doc(db, 'hiveData', `hive-${hiveCategory}`);
 
-    await updateDoc(userData, dataObj);
-}
-
-async function saveMarkerToFirebase3(hiveCategory) {    
-    const userData = doc(db, 'hiveData', `hive-${hiveCategory}`);
-
-    // const docSnap = await getDoc(userData);
+    // const docSnap = await getDoc(hiveData);
     // const data = await docSnap.data();
 
     //const { hive } = data;
@@ -1313,65 +1315,11 @@ async function saveMarkerToFirebase3(hiveCategory) {
         address,
     }
 
-    const dayObj = {}; 
+    const saveObj = {}; 
 
-    dayObj.hive = arrayUnion(hiveObj);  // hiveObj;
+    saveObj.hive = arrayUnion(hiveObj);  // hiveObj;
 
-    dayObj.modifiedAt = serverTimestamp(); 
+    saveObj.modifiedAt = serverTimestamp(); 
     
-    await updateDoc(userData, dayObj);
+    await updateDoc(hiveData, saveObj);
 }
-
-// async function saveMarkerToFirebase(userMail, dayDate, markerObj) {    
-async function saveMarkerToFirebase2(hiveCategory, markerObj) {    
-    const userData = doc(db, 'hiveData', hiveCategory);
-
-    const docSnap = await getDoc(userData);
-    const data = await docSnap.data();
-
-    const { hive } = data;
-
-    const { dayEventName='', lat=0, lng=0, title='', timeslot='', starttime='', 
-    rating=0, reviewsContent='', operatingHrs='', phoneNumber='', address='' } = markerObj; 
-    const eventObj = {
-        dayEventName,
-        lat,
-        lng,
-        title,
-        description: '',
-        imageURL: '',
-        KhonsuRecommends: true,
-        timeslot,
-        starttime,
-        endtime: '',
-        notes: '',
-        reservation: '',
-        rating,
-        reviews: reviewsContent,
-        operatingHours: operatingHrs,
-        phoneNumber,
-        address,
-    };
-
-    const hiveObj = {
-        dayEventName,
-        lat,
-        lng,
-        title,
-        rating,
-        reviews: reviewsContent,
-        operatingHours: operatingHrs,
-        phoneNumber,
-        address,
-    }
-
-    const dayObj = {}; 
-
-    dayObj.hive = arrayUnion(hiveObj);  // hiveObj;
-
-    dayObj.modifiedAt = serverTimestamp(); 
-    
-    await updateDoc(userData, dayObj);
-}
-
-
