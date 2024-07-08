@@ -171,8 +171,20 @@ async function retrieveHiveFromDB(hiveCategory) {
     console.log(hiveCategory, hive)
 
     const $hiveList = document.querySelector(`[data-hive-type=${hiveCategory}] .hive-list`);
+	
+	$hiveList.addEventListener('mouseenter', (e) => {
+		const list = e.currentTarget; 
+		list.querySelectorAll('.copy-hive-item').forEach(item => item.classList.remove('hide'));
+		list.querySelector('.remove-hive-item').forEach(item => item.classList.remove('hide'));
+	});
+	
+	$hiveList.addEventListener('mouseleave', (e) => {
+		const list = e.currentTarget; 
+		list.querySelectorAll('.copy-hive-item').forEach(item => item.classList.add('hide'));
+		list.querySelector('.remove-hive-item').forEach(item => item.classList.add('hide'));
+	});
 
-    hive?.forEach(hiveItem => { 
+    /*hive?.forEach(hiveItem => { 
 		const $hiveItem = addToHive(hiveItem, $hiveList);
 		$hiveItem.addEventListener('mouseenter', (e) => {
 			const item = e.currentTarget; 
@@ -185,7 +197,7 @@ async function retrieveHiveFromDB(hiveCategory) {
 			item.querySelector('.copy-hive-item').classList.add('hide');
 			item.querySelector('.remove-hive-item').classList.add('hide');
 		});
-	});
+	});*/
 
     const locationsNum = hive?.length;
     $hiveList.closest('.khonsu-data').querySelector('.item-no').textContent = `${locationsNum} locations`;
