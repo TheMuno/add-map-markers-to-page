@@ -172,7 +172,7 @@ async function retrieveHiveFromDB(hiveCategory) {
 
     const $hiveList = document.querySelector(`[data-hive-type=${hiveCategory}] .hive-list`);
 	
-	$hiveList.addEventListener('mouseenter', (e) => {
+	/*$hiveList.addEventListener('mouseenter', (e) => {
 		const list = e.currentTarget; 
 		list.querySelectorAll('.copy-hive-item').forEach(item => {
 			//item.classList.remove('opacity3');
@@ -189,6 +189,7 @@ async function retrieveHiveFromDB(hiveCategory) {
 		list.querySelectorAll('.copy-hive-item').forEach(item => item.classList.add('opacity3'));
 		list.querySelectorAll('.remove-hive-item').forEach(item => item.classList.add('opacity3'));
 	});
+	*/
 	
 	//hive?.forEach(hiveItem => addToHive(hiveItem, $hiveList)); 
 
@@ -283,12 +284,12 @@ function addToHive(hiveItem, hiveList) {
 	});
 
 	const $hiveRemoveImg = createEl('img', {
-		className: 'hive-item-img remove-hive-item opacity3 hide',
+		className: 'hive-item-img remove-hive-item opacity3',
 		src: 'Imgs/x.png',
 	});
 	
 	const $hiveCopyImg = createEl('img', {
-		className: 'hive-item-img copy-hive-item opacity3 hide',
+		className: 'hive-item-img copy-hive-item opacity3',
 		src: 'Imgs/copy.png',
 	});
 	
