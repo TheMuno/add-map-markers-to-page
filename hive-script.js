@@ -175,13 +175,13 @@ async function retrieveHiveFromDB(hiveCategory) {
 	$hiveList.addEventListener('mouseenter', (e) => {
 		const list = e.currentTarget; 
 		list.querySelectorAll('.copy-hive-item').forEach(item => item.classList.remove('hide'));
-		list.querySelector('.remove-hive-item').forEach(item => item.classList.remove('hide'));
+		list.querySelectorAll('.remove-hive-item').forEach(item => item.classList.remove('hide'));
 	});
 	
 	$hiveList.addEventListener('mouseleave', (e) => {
 		const list = e.currentTarget; 
 		list.querySelectorAll('.copy-hive-item').forEach(item => item.classList.add('hide'));
-		list.querySelector('.remove-hive-item').forEach(item => item.classList.add('hide'));
+		list.querySelectorAll('.remove-hive-item').forEach(item => item.classList.add('hide'));
 	});
 
     /*hive?.forEach(hiveItem => { 
