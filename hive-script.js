@@ -186,32 +186,26 @@ async function retrieveHiveFromDB(hiveCategory) {
 	
 	$hiveList.addEventListener('mouseleave', (e) => {
 		const list = e.currentTarget; 
-		list.querySelectorAll('.copy-hive-item').forEach(item => {
-			item.classList.add('opacity3');
-			item.classList.add('hide');
-		});
-		list.querySelectorAll('.remove-hive-item').forEach(item => {
-			item.classList.add('opacity3');
-			item.classList.add('hide');
-		});
+		list.querySelectorAll('.copy-hive-item').forEach(item => item.classList.add('opacity3'));
+		list.querySelectorAll('.remove-hive-item').forEach(item => item.classList.add('opacity3'));
 	});
 	
-	hive?.forEach(hiveItem => addToHive(hiveItem, $hiveList)); 
+	//hive?.forEach(hiveItem => addToHive(hiveItem, $hiveList)); 
 
-    /*hive?.forEach(hiveItem => { 
+    hive?.forEach(hiveItem => { 
 		const $hiveItem = addToHive(hiveItem, $hiveList);
 		$hiveItem.addEventListener('mouseenter', (e) => {
 			const item = e.currentTarget; 
-			item.querySelector('.copy-hive-item').classList.remove('hide');
-			item.querySelector('.remove-hive-item').classList.remove('hide');
+			item.querySelector('.copy-hive-item').classList.remove('opacity3');
+			item.querySelector('.remove-hive-item').classList.remove('opacity3');
 		});
 		
 		$hiveItem.addEventListener('mouseleave', (e) => {
 			const item = e.currentTarget; 
-			item.querySelector('.copy-hive-item').classList.add('hide');
-			item.querySelector('.remove-hive-item').classList.add('hide');
+			item.querySelector('.copy-hive-item').classList.add('opacity3');
+			item.querySelector('.remove-hive-item').classList.add('opacity3');
 		});
-	});*/
+	});
 
     const locationsNum = hive?.length;
     $hiveList.closest('.khonsu-data').querySelector('.item-no').textContent = `${locationsNum} locations`;
