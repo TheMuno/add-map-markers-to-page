@@ -172,7 +172,20 @@ async function retrieveHiveFromDB(hiveCategory) {
 
     const $hiveList = document.querySelector(`[data-hive-type=${hiveCategory}] .hive-list`);
 
-    hive?.forEach(hiveItem => addToHive(hiveItem, $hiveList));
+    hive?.forEach(hiveItem => { 
+		const $hiveItem = addToHive(hiveItem, $hiveList);
+		$hiveItem.addEventListener('mouseenter', (e) => {
+			const item = e.currentTarget; 
+			item.querySelector('.copy-hive-item').classList.remove('hide');
+			item.querySelector('.remove-hive-item').classList.remove('hide');
+		});
+		
+		$hiveItem.addEventListener('mouseleave', (e) => {
+			const item = e.currentTarget; 
+			item.querySelector('.copy-hive-item').classList.add('hide');
+			item.querySelector('.remove-hive-item').classList.add('hide');
+		});
+	});
 
     const locationsNum = hive?.length;
     $hiveList.closest('.khonsu-data').querySelector('.item-no').textContent = `${locationsNum} locations`;
@@ -250,12 +263,12 @@ function addToHive(hiveItem, hiveList) {
 	});
 
 	const $hiveRemoveImg = createEl('img', {
-		className: 'remove-hive-item',
+		className: 'remove-hive-item hide',
 		src: 'Imgs/x.png',
 	});
 	
 	const $hiveCopyImg = createEl('img', {
-		className: 'copy-hive-item',
+		className: 'copy-hive-item hide',
 		src: 'Imgs/copy.png',
 	});
 	
@@ -293,6 +306,8 @@ function addToHive(hiveItem, hiveList) {
 
     hiveList.markers = hiveList.markers || [];
     hiveList.markers.push(marker);
+	
+	return $hiveItem; 
 }
 
 function createEl(el, attrs={}) {
@@ -1325,3 +1340,5 @@ async function saveMarkerToFirebase2(hiveCategory, markerObj) {
     
     await updateDoc(userData, dayObj);
 }
+
+
