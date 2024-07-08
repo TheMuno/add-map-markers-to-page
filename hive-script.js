@@ -142,9 +142,9 @@ const markerPopup = new google.maps.InfoWindow();
         // console.log('User search value:', $userSearch.value)
         // $userSearch.value = '';  
     });
-}//();
+}();
 
-document.querySelector('#map').style.border = '1px solid black'; 
+//document.querySelector('#map').style.border = '1px solid black'; 
 
 // retrieveHiveFromDB(localStorage.getItem('user-email'));
 
@@ -296,6 +296,7 @@ function addToHive(hiveItem, hiveList) {
 	$hiveRemoveImg.addEventListener('click', e => {
 		const hiveCategory = $dataTypeSelect.value;
 		removeMarkerFromFirebase($hiveItem, hiveCategory);
+		$hiveItem.remove(); 
 		console.log('Removed?!');
 	});
 	
@@ -1294,9 +1295,9 @@ async function removeMarkerFromFirebase(hiveItem, hiveCategory) {
         address,
 		filter,
     }
-	
-	console.log('hiveItem', hiveItem)
-	console.log('hiveObj', hiveObj)
+	// Buffalo Exchange, 504 Driggs Avenue, Brooklyn, NY, USA
+	// console.log('hiveItem', hiveItem)
+	// console.log('hiveObj', hiveObj)
 	
 	const saveObj = {}; 
 
