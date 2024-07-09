@@ -238,6 +238,35 @@
 			display: block;
 			border:none;
 		}
+		
+		.quick-links-section {	
+		    display: flex;
+		    justify-content: space-around;
+		    flex-wrap: wrap;
+		    width: 80%;
+		    margin: auto;
+		}
+		
+		.links-type {
+		    background-color: #f1f1f1;
+		    padding: 2rem 1.5rem 1rem;
+		    border-radius: 5px;
+		    flex: 1 0 calc(25% - 10px);
+		    margin: 20px; 
+		}
+		
+		.links-header {
+		    font-size: 1.5rem;
+		    padding-bottom: 18px; 
+		}
+		
+		.link-item {
+		    padding: 10px 0; 
+		}
+		
+		.link-item a {
+		    text-decoration: none;  
+		}
     </style>
 </head>
 <body>
@@ -1983,7 +2012,7 @@
         <div id="map"></div>   
     </div>
 
-    <div class="section">
+    <div class="section quick-links-section">
 		<div>
 			<a href="https://rss.app/feeds/qsu2CEJXRdWXOkRh.xml">
 			<img src="Imgs/rss.png" alt="Timeout NewYork">Timeout NewYork</a>
