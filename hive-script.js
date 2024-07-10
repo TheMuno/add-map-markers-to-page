@@ -199,14 +199,16 @@ async function retrieveHiveFromDB(hiveCategory) {
 			const item = e.currentTarget; 
 			item.querySelector('.copy-hive-item').classList.remove('opacity1');
 			item.querySelector('.remove-hive-item').classList.remove('opacity1');
+			item.querySelector('.edit-hive-item').classList.remove('hide');
 		});
 		
 		$hiveItem.addEventListener('mouseleave', (e) => {
 			const item = e.currentTarget; 
 			item.querySelector('.copy-hive-item').classList.add('opacity1');
 			item.querySelector('.remove-hive-item').classList.add('opacity1');
+			item.querySelector('.edit-hive-item').classList.add('hide');
 		});
-	});
+    });
 
     const locationsNum = hive?.length;
     $hiveList.closest('.khonsu-data').querySelector('.item-no').textContent = `${locationsNum} locations`;
@@ -293,6 +295,12 @@ function addToHive(hiveItem, hiveList) {
 		src: 'Imgs/copy.png',
 	});
 	
+	const $hiveItemEdit = createEl('input', {
+		type: 'button',
+		className: 'edit-hive-item hide',
+		value: 'Edit',
+	});
+	
 	$hiveRemoveImg.addEventListener('click', e => {
 		alertify.confirm('Remove Location?\nPlease confim',
 			() => {
@@ -313,7 +321,7 @@ function addToHive(hiveItem, hiveList) {
 		copyContent(text);
 	});
 	
-	$hiveItem.append($hiveCopyImg, $hiveRemoveImg, $hiveItemText);
+	$hiveItem.append($hiveCopyImg, $hiveRemoveImg, $hiveItemText, $hiveItemEdit); 
 	hiveList.append($hiveItem);
 	
     // const $hiveItem = document.createElement('div');
