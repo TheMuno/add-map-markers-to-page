@@ -175,19 +175,19 @@ async function retrieveHiveFromDB(hiveCategory) {
 	/*$hiveList.addEventListener('mouseenter', (e) => {
 		const list = e.currentTarget; 
 		list.querySelectorAll('.copy-hive-item').forEach(item => {
-			//item.classList.remove('opacity3');
+			//item.classList.remove('opacity1');
 			item.classList.remove('hide');
 		});
 		list.querySelectorAll('.remove-hive-item').forEach(item => {
-			//item.classList.remove('opacity3');
+			//item.classList.remove('opacity1');
 			item.classList.remove('hide');
 		});
 	});
 	
 	$hiveList.addEventListener('mouseleave', (e) => {
 		const list = e.currentTarget; 
-		list.querySelectorAll('.copy-hive-item').forEach(item => item.classList.add('opacity3'));
-		list.querySelectorAll('.remove-hive-item').forEach(item => item.classList.add('opacity3'));
+		list.querySelectorAll('.copy-hive-item').forEach(item => item.classList.add('opacity1'));
+		list.querySelectorAll('.remove-hive-item').forEach(item => item.classList.add('opacity1'));
 	});
 	*/
 	
@@ -197,14 +197,14 @@ async function retrieveHiveFromDB(hiveCategory) {
 		const $hiveItem = addToHive(hiveItem, $hiveList);
 		$hiveItem.addEventListener('mouseenter', (e) => {
 			const item = e.currentTarget; 
-			item.querySelector('.copy-hive-item').classList.remove('opacity3');
-			item.querySelector('.remove-hive-item').classList.remove('opacity3');
+			item.querySelector('.copy-hive-item').classList.remove('opacity1');
+			item.querySelector('.remove-hive-item').classList.remove('opacity1');
 		});
 		
 		$hiveItem.addEventListener('mouseleave', (e) => {
 			const item = e.currentTarget; 
-			item.querySelector('.copy-hive-item').classList.add('opacity3');
-			item.querySelector('.remove-hive-item').classList.add('opacity3');
+			item.querySelector('.copy-hive-item').classList.add('opacity1');
+			item.querySelector('.remove-hive-item').classList.add('opacity1');
 		});
 	});
 
@@ -284,12 +284,12 @@ function addToHive(hiveItem, hiveList) {
 	});
 
 	const $hiveRemoveImg = createEl('img', {
-		className: 'hive-item-img remove-hive-item opacity3',
+		className: 'hive-item-img remove-hive-item opacity1',
 		src: 'Imgs/x.png',
 	});
 	
 	const $hiveCopyImg = createEl('img', {
-		className: 'hive-item-img copy-hive-item opacity3',
+		className: 'hive-item-img copy-hive-item opacity1',
 		src: 'Imgs/copy.png',
 	});
 	
