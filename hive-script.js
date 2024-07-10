@@ -321,6 +321,10 @@ function addToHive(hiveItem, hiveList) {
 		copyContent(text);
 	});
 	
+	$hiveItemEdit.addEventListener('click', e => {
+		console.log('Yes')
+	}, false); 
+	
 	$hiveItem.append($hiveCopyImg, $hiveRemoveImg, $hiveItemText, $hiveItemEdit); 
 	hiveList.append($hiveItem);
 	
