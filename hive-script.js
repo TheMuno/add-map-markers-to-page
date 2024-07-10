@@ -322,7 +322,8 @@ function addToHive(hiveItem, hiveList) {
 	});
 	
 	$hiveItemEdit.addEventListener('click', e => {
-		console.log('Yes')
+		// if (!e.currentTarget.classList.contains('edit-hive-item'))
+		console.log('Yes', e.currentTarget)
 	}, false); 
 	
 	$hiveItem.append($hiveCopyImg, $hiveRemoveImg, $hiveItemText, $hiveItemEdit); 
