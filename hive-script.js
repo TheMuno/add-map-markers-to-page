@@ -49,7 +49,8 @@ const $map = document.querySelector('#map'),
     $addFilters = document.querySelector('.add-filters'),
     $saveEntryBtn = document.querySelector('.save-entry-btn'),
     saveEntryBtnTxt = $saveEntryBtn.value,
-    $refreshBtn = document.querySelector('.refresh-btn');
+    $refreshBtn = document.querySelector('.refresh-btn'),
+    $addOrViewSelect = document.querySelector('.view-type-select');
     // $addFilterBtn = document.querySelector('.add-filter-btn');
 
 const mapZoom = 13,
@@ -323,7 +324,8 @@ function addToHive(hiveItem, hiveList) {
 	
 	$hiveItemEdit.addEventListener('click', e => {
 		// if (!e.currentTarget.classList.contains('edit-hive-item'))
-		console.log('Yes', e.currentTarget)
+		$addOrViewSelect.value = 'add-data';
+		$addOrViewSelect.dispatchEvent(new Event('click'));
 	}, false); 
 	
 	$hiveItem.append($hiveCopyImg, $hiveRemoveImg, $hiveItemText, $hiveItemEdit); 
@@ -1268,7 +1270,7 @@ $refreshBtn.addEventListener('click', e => {
     refreshAddToDBFields(); 
 }); 
 
-document.querySelector('.view-type-select').addEventListener('click', e => {
+$addOrViewSelect.addEventListener('click', e => {
 	const $sideBar = document.querySelector('.side-bar');
 	const $viewData = document.querySelector('.view-data-section');
 	
