@@ -294,7 +294,7 @@ function addToHive(hiveItem, hiveList) {
 	});
 	
 	$hiveRemoveImg.addEventListener('click', e => {
-		alertify.confirm('Remove Filter?\nPlease confim',
+		alertify.confirm('Remove Location?\nPlease confim',
 			() => {
 				// alertify.success('Ok');
 				const hiveCategory = $dataTypeSelect.value;
