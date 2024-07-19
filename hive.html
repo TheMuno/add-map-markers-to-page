@@ -39,9 +39,9 @@
         }
 
         .add-filters-wrap {
-            width: fit-content;
+            width: 80%;
             margin-left: 10px;
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
         .add-filters {
@@ -316,6 +316,11 @@
 		
 		.width-30 {
 		    width: 30%;
+		}
+		
+		.margin-left-top-10 {
+		    margin-left: 10px;
+		    margin-top: 10px;
 		}
     </style>
 </head>
@@ -1210,41 +1215,42 @@
     
             <div class="add-filters">
                 <div>Add Filters:</div>
+		<div class="add-filter margin-left-top-10">
+                        <label>Neighborhood:</label>
+                        <!-- <input type="text" class="add-filter-input"> -->
+                        <!-- <img src="Imgs/x.png" class="remove-filter"> -->
+			<select class="add-filter-input" data-filter="neighborhood">
+			    <option value="*">Select Neighborhood...</option>
+			    <option value="east-village">East Village</option>
+			    <option value="west-village">West Village</option>
+			    <option value="long-island-city">Long Island City</option>
+			    <option value="union-square">Union Square</option>
+			    <option value="nolita">Nolita</option>
+			    <option value="soho">Soho</option>
+			    <option value="murray-hill">Murray Hill</option>
+			    <option value="upper-east-side">Upper East Side</option>
+			    <option value="park-slope">Park Slope</option>
+			    <option value="bushwick">Bushwick</option>
+			    <option value="hells-kitchen">Hell's Kitchen</option>
+			    <option value="fifth-ave">Fifth Ave</option>
+			    <option value="times-square">Times Square</option>
+			    <option value="herald-square">Herald Square</option>
+			    <option value="midtown-east">Midtown East</option>
+			    <option value="financial-district">Financial District</option>
+			    <option value="chelsea">Chelsea</option>
+			    <option value="flatiron">Flatiron</option>
+			    <option value="chinatown">Chinatown</option>
+			    <option value="williamsburg">Williamsburg</option>
+			    <option value="lower-east-side">Lower East Side</option>
+			</select>
+                </div>
                 <div class="add-filters-wrap" data-type="retail">
                     <div class="add-filter hide">
                         <label>Sample:</label>
                         <input type="text" class="add-filter-input">
                         <img src="Imgs/x.png" class="remove-filter">
                     </div>
-                    <div class="add-filter">
-                        <label>Neighborhood:</label>
-                        <!-- <input type="text" class="add-filter-input"> -->
-                        <!-- <img src="Imgs/x.png" class="remove-filter"> -->
-                        <select class="add-filter-input" data-filter="neighborhood">
-                            <option value="*">Select Neighborhood...</option>
-                            <option value="east-village">East Village</option>
-                            <option value="west-village">West Village</option>
-                            <option value="long-island-city">Long Island City</option>
-                            <option value="union-square">Union Square</option>
-                            <option value="nolita">Nolita</option>
-                            <option value="soho">Soho</option>
-                            <option value="murray-hill">Murray Hill</option>
-                            <option value="upper-east-side">Upper East Side</option>
-                            <option value="park-slope">Park Slope</option>
-                            <option value="bushwick">Bushwick</option>
-                            <option value="hells-kitchen">Hell's Kitchen</option>
-                            <option value="fifth-ave">Fifth Ave</option>
-                            <option value="times-square">Times Square</option>
-                            <option value="herald-square">Herald Square</option>
-                            <option value="midtown-east">Midtown East</option>
-                            <option value="financial-district">Financial District</option>
-                            <option value="chelsea">Chelsea</option>
-                            <option value="flatiron">Flatiron</option>
-                            <option value="chinatown">Chinatown</option>
-                            <option value="williamsburg">Williamsburg</option>
-                            <option value="lower-east-side">Lower East Side</option>
-                        </select>
-                    </div>
+                    
                     <div class="add-filter">
                         <!-- <label>Type:</label> -->
                         <!-- <input type="text" class="add-filter-input">
