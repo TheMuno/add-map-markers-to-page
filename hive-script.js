@@ -50,7 +50,8 @@ const $map = document.querySelector('#map'),
     $saveEntryBtn = document.querySelector('.save-entry-btn'),
     saveEntryBtnTxt = $saveEntryBtn.value,
     $refreshBtn = document.querySelector('.refresh-btn'),
-    $addOrViewSelect = document.querySelector('.view-type-select');
+    $addOrViewSelect = document.querySelector('.view-type-select'),
+    $neighborhoodFilter = document.querySelector('[data-filter="neighborhood"]');
     // $addFilterBtn = document.querySelector('.add-filter-btn');
 
 const mapZoom = 13,
@@ -1081,6 +1082,8 @@ $dataTypeSelect.addEventListener('change', e => {
     }
 });
 
+
+
 async function saveHiveEdits(hiveIndex) {
     const userMail = localStorage['user-email'];
     const userData = doc(db, 'travelData', `user-${userMail}`);
@@ -1138,6 +1141,22 @@ async function saveHiveEdits(hiveIndex) {
     await updateDoc(userData, dayObj);
 }
 
+function getFilterData($filtersWrap) {    
+    const filter = [...$filtersWrap.querySelectorAll('.add-filter:not(.hide)')].reduce((filtersObj, filterSec) => {
+        const groupName = filterSec.querySelector('legend').textContent.trim().toLowerCase().replace(/\s+/g,'-');
+        const group = [...filterSec.querySelectorAll('input[type=checkbox]:checked')].map(checkbox => {
+            return checkbox.name.replace('-filter', ''); 
+        }).join();
+        filtersObj[groupName] = group;
+        return filtersObj;
+    }, {});
+
+    filter.neighborhood = $neighborhoodFilter.value;
+
+    return filter; 
+}
+
+/*
 function getFilterData($filtersWrap) {
     let neighborhood = '';
     const filter = {};
@@ -1160,6 +1179,7 @@ function getFilterData($filtersWrap) {
 
     return filter; 
 }
+*/
 
 // const saveEntryBtnTxt = $saveEntryBtn.value;
 $saveEntryBtn.addEventListener('click', async e => {
@@ -1285,15 +1305,15 @@ $addOrViewSelect.addEventListener('click', e => {
 });
 
 document.querySelectorAll('.toggle-hive-filters-div input[type=checkbox]').forEach(div => {
-	div.addEventListener('click', e => {
-		e.currentTarget.closest('.section').querySelector('.toggle-hive-wrapper').classList.toggle('hide');
-	});
+    div.addEventListener('click', e => {
+          e.currentTarget.closest('.section').querySelector('.toggle-hive-wrapper').classList.toggle('hide');
+    });
 });
 
-async function removeMarkerFromFirebase(hiveItem, hiveCategory) {
-	const hiveData = doc(db, 'hiveData', `hive-${hiveCategory}`);
-	
-	const {
+async function saveHiveEdits2(hiveCategory) {
+    const hiveData = doc(db, 'hiveData', `hive-${hiveCategory}`);
+    
+    const {
         dayEventName,
         latLng: { lat },
         latLng: { lng },
@@ -1303,8 +1323,34 @@ async function removeMarkerFromFirebase(hiveItem, hiveCategory) {
         operatingHours,
         phoneNumber,
         address,
-		filter,
-    } = hiveItem.locationInfo
+	// filter,
+    } = hiveItem.locationInfo;
+    
+    const $filtersWrap = $addFilters.querySelector('.add-filters-wrap:not(.hide)');
+    const filter = getFilterData($filtersWrap);
+    
+    await updateDoc(hiveData, {
+        "age": 13,
+        "favorites.color": "Red",
+	
+    });
+}
+
+async function removeMarkerFromFirebase(hiveItem, hiveCategory) {
+    const hiveData = doc(db, 'hiveData', `hive-${hiveCategory}`);
+    
+    const {
+        dayEventName,
+        latLng: { lat },
+        latLng: { lng },
+        name: title,
+        rating,
+        reviews,
+        operatingHours,
+        phoneNumber,
+        address,
+	filter,
+    } = hiveItem.locationInfo;
     
     const hiveObj = {
         dayEventName,
@@ -1316,7 +1362,7 @@ async function removeMarkerFromFirebase(hiveItem, hiveCategory) {
         operatingHours,
         phoneNumber,
         address,
-		filter,
+	filter,
     }
 	// Buffalo Exchange, 504 Driggs Avenue, Brooklyn, NY, USA
 	// Monk Vintage, 500 Driggs Avenue, Brooklyn, NY, USA
@@ -1324,8 +1370,8 @@ async function removeMarkerFromFirebase(hiveItem, hiveCategory) {
 	// console.log('hiveItem', hiveItem)
 	// console.log('hiveObj', hiveObj)
 	
-	const saveObj = {}; 
-
+    const saveObj = {}; 
+    
     saveObj.hive = arrayRemove(hiveObj);  // hiveObj;
 
     saveObj.modifiedAt = serverTimestamp(); 
@@ -1373,3 +1419,11 @@ async function saveMarkerToFirebase(hiveCategory) {
     
     await updateDoc(hiveData, saveObj);
 }
+
+// set events-calendar to list
+const clickListBtn = setTimeout(()=>{
+    if (!document.querySelector('.sk-ww-google-calendar')) return; 
+    document.querySelector('.sk_google_cal_control_bar .sk_google_cal_tabs_container button').click();
+    clearTimeout(clickListBtn);
+}, 500); 
+
