@@ -1421,9 +1421,9 @@ async function saveMarkerToFirebase(hiveCategory) {
 }
 
 // set events-calendar to list
-const clickListBtn = setTimeout(()=>{
+const clickListBtn = setInterval(()=>{
     if (!document.querySelector('.sk-ww-google-calendar')) return; 
     document.querySelector('.sk_google_cal_control_bar .sk_google_cal_tabs_container button').click();
-    clearTimeout(clickListBtn);
+    clearInterval(clickListBtn);
 }, 500); 
 
