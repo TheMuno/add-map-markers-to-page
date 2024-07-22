@@ -1424,7 +1424,6 @@ async function saveMarkerToFirebase(hiveCategory) {
 const clickListBtn = setInterval(()=>{
     const $listBtn = document.querySelector('.sk_google_cal_control_bar .sk_google_cal_tabs_container button');
     if (!$listBtn) return; 
-    console.log('===========================') 
     $listBtn.click();
     clearInterval(clickListBtn);
 }, 500); 
