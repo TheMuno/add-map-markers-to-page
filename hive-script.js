@@ -1422,9 +1422,13 @@ async function saveMarkerToFirebase(hiveCategory) {
 
 // set events-calendar to list
 const clickListBtn = setInterval(()=>{
-    const $listBtn = document.querySelector('.sk_google_cal_control_bar .sk_google_cal_tabs_container button');
-    if (!$listBtn) return; 
-    $listBtn.click();
+    const $listBtns = document.querySelectorAll('.events-calendar .sk_google_cal_tabs_container button');
+    if (!$listBtns.length) return; 
+    $listBtns.forEach(btn => {
+        if (!btn.textContent.trim().toLowerCase().includes('month')) return; 
+        btn.click();
+    });
     clearInterval(clickListBtn);
 }, 500); 
+
 
