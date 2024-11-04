@@ -1200,6 +1200,8 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
 
     const { prompts } = data; 
 
+    console.log('prompts', prompts)
+
     const $userPrompts = document.querySelector('.user-prompts');
     $userPrompts.value = prompts;
 }(localStorage['user-email']);
@@ -1244,7 +1246,7 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
     function setupDays(parentContainerClass, daysArr) {
         const $parentContainer = $dayActivities.querySelector(parentContainerClass); 
 
-        daysArr.forEach(day => {
+        daysArr?.forEach(day => {
             const { dayDate, events:dayActivities } = day;
             const dayIdentifier = `[day="${dayDate.trim()}"]`;
 
