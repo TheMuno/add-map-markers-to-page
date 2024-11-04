@@ -1194,6 +1194,9 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
 }
 
 !async function retrievePromptsFromFirebase(userMail) {
+    const $userPrompts = document.querySelector('.user-prompts');
+    $userPrompts.classList.add('loader');
+
     const userRef = doc(db, 'travelData', `user-${userMail}`); 
     const docSnap = await getDoc(userRef);
     const data = await docSnap.data(); 
@@ -1202,8 +1205,7 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
 
     console.log('prompts', prompts)
 
-    const $userPrompts = document.querySelector('.user-prompts');
-
+    $userPrompts.classList.remove('loader');
     prompts?.forEach(prompt => {
         const $promptClone = $userPrompts.querySelector('.user-prompt.hidden').cloneNode(true);
         $promptClone.classList.remove('hidden');
