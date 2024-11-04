@@ -1193,7 +1193,23 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
     await updateDoc(userData, dayObj);
 }
 
-async function retrieveSavedMarkersFromFirebase(userMail) {    
+!async function retrievePromptsFromFirebase(userMail) {
+    const userRef = doc(db, 'travelData', `user-${userMail}`); 
+    const docSnap = await getDoc(userRef);
+    const data = await docSnap.data(); 
+
+    const { prompts } = data; 
+
+    const $userPrompts = document.querySelector('.user-prompts');
+    $userPrompts.value = prompts;
+}(localStorage['user-email']);
+
+async function retrieveSavedMarkersFromFirebase(userMail) {   
+    
+    // const userRef = doc(db, 'travelData', `user-${userMail}`, dbSubCollection, 'doc1'); 
+    // const docSnap = await getDoc(userRef);
+
+    
     const userData = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(userData);
 
