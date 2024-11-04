@@ -25,6 +25,19 @@
             font-size: 1.1em;
             cursor: pointer;
         }
+
+        .user-prompts {
+            height: 200px;
+            overflow: auto;
+        }
+
+        .user-prompt {
+            margin: 10px 0;
+        }
+
+        .user-prompt.hidden {
+            display: none;
+        }
     </style>   
 </head>
 <body> 
@@ -57,7 +70,10 @@
                 <!-- <input type="button" value="Submit" class="save-trip-notes"> -->
                 <div class="trip-data">
                     <label class="title" for="user-prompts">User Prompts</label>
-                    <textarea name="user-prompts" class="user-prompts" cols="30" rows="10"></textarea> 
+                    <!-- <textarea name="user-prompts" class="user-prompts" cols="30" rows="10"></textarea>  -->
+                    <div class="user-prompts">
+                        <div class="user-prompt hidden"></div>
+                    </div>
                 </div> 
             </div>
         </div> 
