@@ -1210,11 +1210,16 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
     $userPromptDefault.classList.add('hidden');
     $userPromptDefault.classList.remove('loader');
     prompts?.forEach(prompt => {
-        const $promptClone = $userPrompts.querySelector('.user-prompt.hidden').cloneNode(true);
+        const $promptClone = $userPromptDefault.cloneNode(true);
         $promptClone.classList.remove('hidden');
         $promptClone.textContent = prompt;
         $userPrompts.append($promptClone);
     });
+
+    if (!prompts) {
+        $userPromptDefault.textContent = `No saved prompts for user: ${userMail}`;
+        $userPromptDefault.classList.remove('hidden');
+    }
 
     // const $userPrompts = document.querySelector('.user-prompts');
     // $userPrompts.value = prompts;
