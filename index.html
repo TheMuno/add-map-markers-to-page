@@ -2,424 +2,339 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prompt Gemini</title>
+    <title>Document</title> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <link rel="stylesheet" href="styles.css">  
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4&libraries=places&v=weekly&language=en" ></script>   
     <style>
-        .gp-user-email {
-            width: 300px;
-            height: 25px;
-        }
-
-        .gp-sec {
-            margin-top: 100px;
-        }
-
-        .gp-head {
-            text-align: center;
-            width: 40%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .gp-form {
-            width: 50%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .gp-date {
-            background-color: white !important;
-            border: 1px solid gray;
-        }
-
-        .gp-input {
-            width: 80%;
-            height: 35px; 
-            margin-top: 5px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .gp-question-sec {
-            margin: 15px 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .gp-sec-header {
-            font-weight: bold;
-            font-size: 0.9em;
-            margin-bottom: 5px;
-        }
-
-        .gp-grouper-sec {
-            display: flex;
-        }
-
-        .gp-grouper-div {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .gp-checkbox-wrap {
-            justify-content: space-around;
-            width: 80%;
-            margin-top: 5px;
-            display: flex;
-        }
-
-        .gp-checkbox-div-wrap {
-            justify-content: space-around;
-            margin-top: 5px;
-            display: flex;
-        }
-
-        .gp-checkbox {
-            display: block;
-        }
-
-        .gp-output {
-            width: 50%;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 20px;
-        }
-
-        .gp-edit-prompt {
-            width: 100%;
-            height: 100px;
-            margin-top: 5px;
-        }
-
-        .gp-edit-prompt.hide {
+        .hive-filters.hide {
             display: none;
         }
 
-        .gp-output-prompt-btn {
-            width: 150px;
-            height: 30px;
-            margin: 5px 0;
-        }
-
-        .gp-output-prompt-btn.hide {
+        .hive-filters.hidden,
+        .toggle-hive-filters-wrapper.hidden {
             display: none;
         }
 
-        .gp-prompt {
-            font-weight: bold;
+        .view-hive-btn {
+            /* padding: 5px 70px;  */
+            padding: 15px 100px;
+            font-size: 1.1em;
+            cursor: pointer;
         }
 
-        .gp-result .day {
-            font-weight: bold;
-            font-size: 1.3em;
-            margin: 10px 0;
-            border-bottom: 1px dotted black;
-            width: fit-content;
-        }
-
-        .gp-header {
-            margin: 5px 0;
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
-
-        .gp-title {
-            font-style: italic;
-            font-weight: bold;
-        }
-        
-        .gp-map {
-            width: 80%;
-            height: 500px; 
-            margin: 50px auto;
-        }
-
-        .gp-map-icon {
-            width: 24px; 
-        }
-
-        .gp-try-out-wrap {
-            width: 50%;
-            margin: 50px auto;
-        }
-
-        .gp-try-out {
-            width: 100%;
-            /* height: 100px; */
-        }
-
-        .gp-try-out-input {
-            width: 100%;
-            height: 100px;
-        }
-
-        .gp-top-sec {
+        .user-prompts {
+            height: 200px;
+            overflow: auto;
             display: flex;
-            justify-content: space-around;
+            /* justify-content: center; */
+            align-items: center;
+            flex-direction: column; 
+            /* text-align: center; */
+            border: 1px solid;
+            border-right: 0;
+            border-bottom: 0;
+            border-left: 0;
         }
 
-        .gp-try-out-btn {
-            width: 150px;
-            height: 25px;
+        .user-prompt {
+            /* margin: 10px 0; */
+            padding: 20px 0;
+            border: 1px dotted;
+            border-top: 0;
+            border-left: 0;
+            border-right: 0;
         }
 
-        .gp-try-out-result {
-            margin-top: 10px;
+        .user-prompt.hidden {
+            display: none;
         }
 
-        .gp-hotel-wrap {
-            width: 81.5%;
-            margin-top: 5px;
-            font-size: 0.85rem;
+        /* loader */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid gray;
+            width: 40px;
+            height: 40px;
+            -webkit-animation: spin 1s linear infinite; /* Safari */
+            animation: spin 1s linear infinite;
         }
 
-        /*#place-autocomplete-card {
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-            margin: 10px;
-            padding: 5px;
-            font-family: Roboto, sans-serif;
-            font-size: large;
-            font-weight: bold;
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
         }
 
-        gmp-place-autocomplete {
-            width: 300px;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-
-        #infowindow-content .title {
-            font-weight: bold;
-        }
-
-        #map #infowindow-content {
-            display: inline;
-        }*/
-    </style>
+    </style>   
 </head>
-<body>
-    <section class="gp-top-sec">
-        <input type="email" class="gp-user-email" placeholder="Enter user email"> 
-        <input type="button" class="gp-try-out-scroll-to-btn" value="Try Out Custom Prompts">
-    </section> 
-    <section class="gp-sec">
-        <h3 class="gp-head">Prompt Gemini</h3>
-        <div class="gp-form w-form">
-            <form id="email-form" name="email-form" method="get" >
-                <input class="gp-input gp-date w-input form-control input" placeholder="Travel Dates" required="" tabindex="0" type="text" readonly="readonly">
-                
-                <!-- <input class="gp-input w-input" maxlength="256" name="gp-hotel" placeholder="Hotel" type="text" id="gp-hotel" required=""> -->
+<body> 
+    <div class="top-section"> 
+        <div class="section reset-justify">
+            <label for="user-email">Email:</label> 
+            <input type="text" placeholder="user@mail.com" class="user-email">
+            <div class="no-user"></div>
+            <!-- <label for="download-csv">Download CSV</label> -->
+            <!-- <input type="button" value="Download Current User CSV" class="get-resource-btn download-user-csv"> 
+            <input type="button" value="Download All Users CSV" class="get-resource-btn download-all-csv">   
+            <input type="button" value="Get Printed Plan" class="get-resource-btn printed-plan">  
             
-                <div class="gp-hotel-wrap"></div>
-                <!-- <div class="place-autocomplete-card" id="place-autocomplete-card">
-                    <p>Search for a place here:</p>
-                </div> -->
+            <button class="get-resource-btn" disabled onclick="authenticate().then(loadClient)">Authorize & Load</button>   -->
+        </div>
+        <div class="section travel-dates"> 
+            <div class="user-travel-info">
+                <input type="text" class="travel-date arrival" placeholder="Travel Dates">
+                <input type="text" class="user-hotel" placeholder="User Hotel">
+                <!-- <input type="text" class="travel-date departure" placeholder="Departure Date"> -->
+            </div>
+            <!-- <div class="user-hotel-div">
+                <input type="text" class="user-hotel" placeholder="User Hotel">
+            </div> -->
+            <div class="user-trip-data">
+                <div class="trip-data">
+                    <label class="title" for="trip-notes">Trip Notes</label>
+                    <textarea name="trip-notes" class="trip-notes" cols="30" rows="10"></textarea>
+                </div>
+                <!-- <input type="button" value="Submit" class="save-trip-notes"> -->
+                <div class="trip-data">
+                    <label class="title" for="user-prompts">User Prompts</label>
+                    <!-- <textarea name="user-prompts" class="user-prompts" cols="30" rows="10"></textarea>  -->
+                    <div class="user-prompts">
+                        <div class="user-prompt hidden"></div>
+                    </div>
+                </div> 
+            </div>
+        </div> 
+    </div>
+    <div class="section header">
+        <div class="header--left">
+            <!-- <input type="button" value="+ Day" class="add-day"> -->
+            <label for="days-select" class="days-select-label">Select Day:</label>
+            <select name="days" id="days-select">
+                <option value="*">All</option> 
+                <!-- <option value="day-1">Day 1</option>  -->
+                <option class="add-day-option" value="add-day">+ Add Day</option>
+            </select>
+        </div>
+        <input type="text" class="user-input" placeholder="Enter Address">
+        <!-- <div>
+            <input type="checkbox" name="add-to-hive" id="add-to-hive" class="add-to-hive">
+            <label for="add-to-hive">Add to hive</label>
+        </div> -->
+    </div>
+    <!-- <div class="section"> 
+        <input type="button" value="View Hourly" class="get-resource-btn view-hourly">   
+    </div> -->
+    <div class="section"> 
+        <div class="side-bar">
+            <div class="day-events">
+                <div class="day-event day-0-event hide" data-clone="day-event"> 
+                    <div class="day-head">
+                        <span class="header-text">Day 1</span>  
+                        <img class="remove-day" src="Imgs/x-24.png" alt="">
+                    </div>
+                    <div class="day-top-buttons">
+                        <input class="sort-events" type="button" value="Sort">
+                        <div>
+                            <select name="day-time-sections" id="day-time-sections" class="day-time-sections hide">
+                                <option value="morning">Morning</option>
+                                <option value="afternoon">Afternoon</option>
+                                <option value="evening">Evening</option>
+                            </select>
+                            <input class="view-hourly" type="button" value="View Hourly">
+                        </div>
+                    </div>
 
-                <div class="gp-question-sec gp-first-timer-wrap" gp-wrap="gp-first-timer-wrap">
-                    <div class="gp-sec-header">Is this your first time going?</div>
-                    <label class="w-radio gp-radio">
-                        <input type="radio" id="first-time-yes" name="first-time" class="w-checkbox-input" value="yes">
-                        <span class="w-form-label" for="first-time-yes">Yes</span>
-                    </label>
-                    <label class="w-radio gp-radio">
-                        <input type="radio" id="first-time-no" name="first-time" class="w-checkbox-input" value="no">
-                        <span class="w-form-label" for="first-time-no">No</span>
-                    </label>
-                </div> 
-                <div class="gp-question-sec gp-travel-with-wrap" gp-wrap="gp-travel-with-wrap">
-                    <div class="gp-sec-header">Who are you traveling with?</div>
-                    <div class="gp-grouper-sec">
-                        <div class="gp-grouper-div">
-                            <label class="w-radio gp-radio">
-                                <input type="radio" id="myself-radio" name="travel-with-radio" class="w-checkbox-input" value="myself">
-                                <span class="w-form-label" for="myself-radio">Myself</span>
-                            </label>
-                            <label class="w-radio gp-radio">
-                                <input type="radio" id="friends-radio" name="travel-with-radio" class="w-checkbox-input" value="my friends">
-                                <span class="w-form-label" for="friends-radio">My Friends</span>
-                            </label>
-                            <label class="w-radio gp-radio">
-                                <input type="radio" id="adult-family-radio" name="travel-with-radio" class="w-checkbox-input" value="my adult family">
-                                <span class="w-form-label" for="adult-family-radio">My Adult Family</span>
-                            </label>
+                    <div class="single-event hide" id="event-1" draggable="true" data-clone="single-event">
+                        <select name="event-time-of-day" id="event-time-of-day" class="event-time-of-day">
+                            <option value="morning">Morning</option>
+                            <option value="afternoon">Afternoon</option>
+                            <option value="evening">Evening</option>
+                        </select> 
+                        <div class="location-time">
+                            <input type="time" class="event-exact-time-of-day start hide">
+                            <input type="time" class="event-exact-time-of-day end hide">
+                            <span class="location-duration hide"></span> 
                         </div>
-                        <div class="gp-grouper-div">
-                            <label class="w-radio gp-radio">
-                                <input type="radio" id="with-kids-radio" name="travel-with-radio" class="w-checkbox-input" value="my family with kids">
-                                <span class="w-form-label" for="with-kids-radio">My Family with Kids</span>
-                            </label>
-                            <label class="w-radio gp-radio">
-                                <input type="radio" id="partner-radio" name="travel-with-radio" class="w-checkbox-input" value="my partner or spouse">
-                                <span class="w-form-label" for="partner-radio">My Partner or Spouse</span>
-                            </label>
+                        <input type="text" class="day-text width-80"> 
+                        <!-- <div class="expand-more-info" title="More location info"><i class="arrow right"></i><i class="arrow right margin-right-3px"></i></div> -->
+                        <img class="expand-more-info" title="More location info" src="Imgs/right-arrow.png"> 
+                        <div class="location-more-info hide"> 
+                            <textarea class="more-info" placeholder="More location info..."></textarea>
+                            <div class="toggle-reservation">
+                                <input type="button" class="toggle-reservation" value="Add Reservation">
+                                <img src="Imgs/fat-arrow-right.png" class="toggle-reservation-img"> 
+                            </div> 
+                            <div class="location-reservation hide"> 
+                                <div>Reservation</div>
+                                <input type="text" class="reserve-time" data-pick-date="true" placeholder="add reservation time" readonly="readonly">
+                                <input type="text" class="reserve-info" placeholder="add reservation info"></div>
+                            </div>
+                        <img class="remove-marker" src="Imgs/x.png" alt="">
+                        <img class="get-directions" src="Imgs/directions.png" alt=""> 
+                    </div>  
+                    <div class="all-activities full-day"></div> 
+                    <div class="modal hide"> 
+                        <div class="modal-content">
+                            <img src="Imgs/x.png" alt="close modal" class="close-modal">
                         </div>
                     </div>
-                </div> 
-                <div class="gp-question-sec gp-occasion-wrap" gp-wrap="gp-occasion-wrap">
-                    <div class="gp-sec-header">Is this a special occasion?</div>
-                    <div class="gp-grouper-sec">
-                        <div class="gp-grouper-div">
-                            <label class="w-radio gp-radio">
-                                <input type="radio" id="birthday-radio" name="occasion-radio" class="w-checkbox-input" value="birthday">
-                                <span class="w-form-label" for="birthday-radio">Birthday</span>
-                            </label>
-                            <label class="w-radio gp-radio">
-                                <input type="radio" id="anniversary-radio" name="occasion-radio" class="w-checkbox-input" value="anniversary">
-                                <span class="w-form-label" for="anniversary-radio">Anniversary</span>
-                            </label>
-                            <label class="w-radio gp-radio">
-                                <input type="radio" id="family-trip-radio" name="occasion-radio" class="w-checkbox-input" value="family trip">
-                                <span class="w-form-label" for="family-trip-radio">Family Trip</span>
-                            </label>
-                            <label class="w-radio gp-radio">
-                                <input type="radio" id="friends-weekend-radio" name="occasion-radio" class="w-checkbox-input" value="friends weekend">
-                                <span class="w-form-label" for="friends-weekend-radio">Friends Weekend</span>
-                            </label>
-                        </div>
-                        <div class="gp-grouper-div">
-                            <label class="w-radio gp-radio">
-                                <input type="radio" id="honeymoon-radio" name="occasion-radio" class="w-checkbox-input" value="honeymoon">
-                                <span class="w-form-label" for="honeymoon-radio">Honeymoon</span>
-                            </label> 
-                            <label class="w-radio gp-radio">
-                                <input type="radio" id="job-radio" name="occasion-radio" class="w-checkbox-input" value="job">
-                                <span class="w-form-label" for="job-radio">Job</span>
-                            </label>
-                            <label class="w-radio gp-radio">
-                                <input type="radio" id="other-occasion-radio" name="occasion-radio" class="w-checkbox-input" value="">
-                                <span class="w-form-label" for="other-occasion-radio">Other Occasion</span>
-                            </label>
-                            <label class="w-radio gp-radio">
-                                <input type="radio" id="none-radio" name="occasion-radio" class="w-checkbox-input" value="">
-                                <span class="w-form-label" for="none-radio">None</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>  
-                <div class="gp-question-sec gp-checkbox-wrap">
-                    <div class="gp-sec-header">Attractions</div>
-                    <div class="gp-checkbox-div-wrap">
-                    <div class="gp-checkbox-div">
-                        <label class="w-checkbox gp-checkbox">
-                            <input type="checkbox" id="empire-state-bldg" name="empire-state-bldg" data-name="empire-state-bldg" class="w-checkbox-input">
-                            <span class="w-form-label" for="empire-state-bldg">Empire State Bldg</span>
-                        </label>
-                        <label class="w-checkbox gp-checkbox">
-                            <input type="checkbox" id="times-square" name="times-square" data-name="times-square" class="w-checkbox-input">
-                            <span class="w-form-label" for="times-square">Times Square</span>
-                        </label>
-                        <label class="w-checkbox gp-checkbox">
-                            <input type="checkbox" id="statue-of-liberty" name="statue-of-liberty" data-name="statue-of-liberty" class="w-checkbox-input">
-                            <span class="w-form-label" for="statue-of-liberty">Statue of Liberty</span>
-                        </label>
-                        <label class="w-checkbox gp-checkbox"><input type="checkbox" id="central-park" name="central-park" data-name="central-park" class="w-checkbox-input">
-                            <span class="w-form-label" for="central-park">Central Park</span>
-                        </label>
-                        <label class="w-checkbox gp-checkbox">
-                            <input type="checkbox" id="brooklyn-bridge" name="brooklyn-bridge" data-name="brooklyn-bridge" class="w-checkbox-input">
-                            <span class="w-form-label" for="brooklyn-bridge">Brooklyn Bridge</span>
-                        </label>
-                        <label class="w-checkbox gp-checkbox">
-                            <input type="checkbox" id="observation-decks" name="observation-decks" data-name="observation-decks" class="w-checkbox-input">
-                            <span class="w-form-label" for="observation-decks">Observation Decks</span>
-                        </label>
-                        <label class="w-checkbox gp-checkbox">
-                            <input type="checkbox" id="jazz-club" name="jazz-club" data-name="jazz-club" class="w-checkbox-input">
-                            <span class="w-form-label" for="jazz-club">Jazz Club</span>
-                        </label>
-                        <label class="w-checkbox gp-checkbox">
-                            <input type="checkbox" id="steakhouse" name="steakhouse" data-name="steakhouse" class="w-checkbox-input">
-                            <span class="w-form-label" for="steakhouse">Steakhouse</span>
-                        </label>
-                    </div>
-                    <div class="gp-checkbox-div">
-                        <label class="w-checkbox gp-checkbox">
-                            <input type="checkbox" id="broadway" name="broadway" data-name="broadway" class="w-checkbox-input">
-                            <span class="w-form-label" for="broadway">Broadway</span>
-                        </label>
-                        <label class="w-checkbox gp-checkbox">
-                            <input type="checkbox" id="hudson-yards" name="hudson-yards" data-name="hudson-yards" class="w-checkbox-input">
-                            <span class="w-form-label" for="hudson-yards">Hudson Yards</span>
-                        </label>
-                        <label class="w-checkbox gp-checkbox">
-                            <input type="checkbox" id="highline" name="highline" data-name="highline" class="w-checkbox-input">
-                            <span class="w-form-label" for="highline">Highline</span>
-                        </label>
-                        <label class="w-checkbox gp-checkbox">
-                            <input type="checkbox" id="memorial-911" name="911-memorial" data-name="911-memorial" class="w-checkbox-input">
-                            <span class="w-form-label" for="911-memorial">911 Memorial</span>
-                        </label>
-                        <label class="w-checkbox gp-checkbox">
-                            <input type="checkbox" id="moma" name="moma" data-name="moma" class="w-checkbox-input">
-                            <span class="w-form-label" for="moma">MoMA</span>
-                        </label>
-                        <label class="w-checkbox gp-checkbox">
-                            <input type="checkbox" id="the-met" name="the-met" data-name="the-met" class="w-checkbox-input">
-                            <span class="w-form-label" for="the-met">The Met</span>
-                        </label>
-                        <label class="w-checkbox gp-checkbox">
-                            <input type="checkbox" id="museum-of-natural-history" name="museum-of-natural-history" data-name="museum-of-natural-history" class="w-checkbox-input">
-                            <span class="w-form-label" for="museum-of-natural-history">Museum of Natural History</span>
-                        </label>
-                        <label class="w-checkbox gp-checkbox">
-                            <input type="checkbox" id="kid-friendly-museums" name="kid-friendly-museums" data-name="kid-friendly-museums" class="w-checkbox-input">
-                            <span class="w-form-label" for="kid-friendly-museums">Kid Friendly Museums</span>
-                        </label>
-                    </div>
+                    <div class="agent-notes">
+                        <div class="toggle-notes">
+                            <input type="button" class="toggle-notes-inp" value="Add Notes">
+                            <img src="Imgs/double-right.png" class="toggle-notes-img"> 
+                        </div> 
+                        <textarea class="agent-notes-textarea hide"></textarea>
                     </div>
                 </div>
-                <textarea placeholder="Other Attractions" maxlength="5000" id="other-attractions" name="other-attractions" data-name="other-attractions" class="gp-input gp-textarea w-input"></textarea>
-                <input type="submit" class="gp-input gp-btn w-button" value="Submit">
-            </form>
-            
+                <div class="all-days"></div> 
+                <div class="no-days">fetching...</div>  
+                <div class="show-removed hide"><input type="button" value="Show removed days >>"></div>
+                <div class="removed-days hide">
+                    <div class="heading">Removed Days</div>
+                    <div class="all-days"></div>
+                </div>
+            </div> 
+        </div> 
+        <div id="map"></div>
+        <div class="map-results-overlay hide">      
+            <div class="map-results-content">
+                <span class="close">&times;</span>  
+                <div class="results-header">Select one or more <span class="user-search-result"></span>(s) to add</div>   
+                <div class="map-results"></div>
+            </div> 
         </div>
-        <div class="gp-output">
-            <div class="gp-prompt">Prompt:<span> </span></div>
-            <div class="gp-edit-prompt-wrap">
-                <textarea class="gp-edit-prompt hide"></textarea>
-                <input type="button" value="Re-Submit Prompt" class="gp-output-prompt-btn resubmit hide">
-                <input type="button" value="Edit Prompt" class="gp-output-prompt-btn edit hide">
+    </div>
+    <div class="section">
+        <input type="button" value="View Hive" class="view-hive-btn">
+    </div>
+    <div class="section align-top">
+        <div class="khonsu-data reservations">
+            <div class="reservation sample-reservation hide">
+                <label class="day-text center-label">Reservations</label>
+                <div class="reserves">
+                    <div class="reserve">
+                        <div>
+                            <label>Reserve Label</label> 
+                        </div>
+                        <div>
+                            <input type="text" class="reserve-time" data-pick-date="true" placeholder="add reservation time">
+                        </div>
+                        <div>
+                            <input type="text" class="reserve-info" placeholder="add reservation info"> 
+                            <img class="remove-reservation" src="Imgs/x.png" alt=""> 
+                        </div>
+                    </div>
+                </div>
+                <!-- <input type="button" value="Add Reservation" class="add-reservation"> -->
+                <!-- <input type="button" value="Submit" class="save-khonsu-data save-reservations"> -->
             </div>
-            <div class="gp-result"></div>
-        </div>
-        <div class="gp-map"></div>
-        <div class="gp-try-out-wrap">
-            <div class="gp-try-out">
-                <textarea name="gp-try-out-input" id="gp-try-out-input" class="gp-try-out-input" placeholder="Write out your prompt..."></textarea>
-                <input type="button" value="Prompt" class="gp-try-out-btn">
+            <div class="all-reservations"></div>
+        </div> 
+        <div class="khonsu-data map-url">
+            <label for="map-url-link">Map Url</label>
+            <div class="map-url-link">
+                <input type="text">
             </div>
-            <div class="gp-try-out-result"></div>
+            <input type="button" value="Submit" class="save-khonsu-data save-map-url">
         </div>
-    </section>
+        <div class="khonsu-data map-url-qrcode">
+            <label for="map-url-qr">QR Code</label>
+            <div class="map-url-qr"></div>
+            <!-- <input type="button" value="Submit" class="save-khonsu-data save-qrcode"> -->
+            <div><i>Auto-generated from Map URL</i></div> 
+        </div>
+    </div>
+    <div class="section center-content"> 
 
-   <!-- <script>(g=>{
-        var h,a,k,p="The Google Maps JavaScript API",
-        c="google",
-        l="importLibrary",
-        q="__ib__",
-        m=document,
-        b=window;
-        b=b[c]||(b[c]={});
-        var d=b.maps||(b.maps={}),
-        r=new Set,
-        e=new URLSearchParams,
-        u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));
-        e.set("libraries",[...r]+"");
-        for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);
-        e.set("callback",c+".maps."+q);
-        a.src=`https://maps.${c}apis.com/maps/api/js?`+e;
-        d[q]=f;
-        a.onerror=()=>h=n(Error(p+" could not load."));
-        a.nonce=m.querySelector("script[nonce]")?.nonce||"";
-        m.head.append(a)}));
-        d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
-        ({key: "AIzaSyDM7Sbx3ogbiG0l_c-j7PJk4m1ivbddY4I", v: "beta"});</script> -->
+    </div>
+    <!-- <div class="section notes">
+        <div class="khonsu-data khonsu-notes">
+            <label class="knotes-title" for="knotes">Khonsu Notes Day 1</label>
+            <textarea name="knotes" class="knotes" cols="30" rows="10"></textarea>
+            <input type="button" value="Submit" class="save-khonsu-data save-khonsu-notes">
+        </div>
+    </div> -->
+    <a href="https://www.flaticon.com/free-icons/new-tab" title="new-tab icons">Get direction icons created by Prosymbols Premium - Flaticon</a>
+    <br><a target="_blank" href="https://icons8.com">Icon by Icons8</a>
+    <br><a href="https://www.freepik.com/icon/bag_12120859#fromView=keyword&page=1&position=21&uuid=d100ea67-23ca-4ba9-acf6-0e722c3639fe">Icon by tuktukdesign</a>
 
- <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))}) 
-        ({key: "AIzaSyDM7Sbx3ogbiG0l_c-j7PJk4m1ivbddY4I", v: "beta"});</script> 
-
+    <!-- <script>
+        (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+          key: "AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4",
+          libraries: "places",
+          v: "weekly",
+          // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
+          // Add other bootstrap parameters as needed, using camel case.
+        });
+      </script> -->
+       
+      
+    <script src="https://apis.google.com/js/api.js"></script>  
+    <script src="https://unpkg.com/@bitjson/qr-code@1.0.2/dist/qr-code.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script type="module" src="script.js"></script>
-</body>
-</html>
+    <script type="module" src="script.js"></script>  
+    <!-- <script>
+        const CLIENT_ID = '424207365074-g5444q1mhm5n5d04pu563ofqjup3j5e2.apps.googleusercontent.com'; 
+        const API_KEY = 'AIzaSyCMmi6kGAOGfMzK4CBvNiVBB7T6OjGbsU4'; 
+
+        function authenticate() {
+            return gapi.auth2.getAuthInstance()
+            .signIn({scope: "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/spreadsheets"})
+            .then(function() { console.log("Sign-in successful"); },
+              function(err) { console.error("Error signing in", err); });
+        }
+
+        function loadClient() {
+            gapi.client.setApiKey(API_KEY);
+            return gapi.client.load("https://sheets.googleapis.com/$discovery/rest?version=v4")
+            .then(function() { console.log("GAPI client loaded for API"); },
+              function(err) { console.error("Error loading GAPI client for API", err); });
+        }
+
+        // Make sure the client is loaded and sign-in is complete before calling this method.
+        function execute() {
+            return gapi.client.sheets.spreadsheets.values.append({
+                "spreadsheetId": "1Zj1ae5faA8h7UwHvtYVtKoiA_G3LtQcuTOFV1Evq4BQ",
+                "range": "A1:E1",
+                "includeValuesInResponse": true,
+                "insertDataOption": "INSERT_ROWS",
+                "responseDateTimeRenderOption": "FORMATTED_STRING",
+                "responseValueRenderOption": "UNFORMATTED_VALUE",
+                "valueInputOption": "RAW",
+                "resource": {
+                    "values": [
+                        [
+                            "Yes",
+                            "No",
+                            "Maybe",
+                            "I",
+                            "Don't",
+                            "Know"
+                        ]
+                    ]
+                }
+            })
+            .then(function(response) {
+                // Handle the results here (response.result has the parsed body).
+                console.log("Response", response);
+              },
+              function(err) { console.error("Execute error", err); 
+            });
+        }
+
+        gapi.load("client:auth2", function() {
+            gapi.auth2.init({client_id: CLIENT_ID});
+        });
+    </script> -->
+</body> 
+</html>   
