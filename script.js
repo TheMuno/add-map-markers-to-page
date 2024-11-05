@@ -1202,6 +1202,11 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
 
     const userRef = doc(db, 'travelData', `user-${userMail}`); 
     const docSnap = await getDoc(userRef);
+    if (!docSnap.exists()) {
+        $userPromptLoader.classList.add('hidden');
+        $userPromptLoader.classList.remove('loader');
+        return;
+    }
     const data = await docSnap.data(); 
 
     const { prompts } = data; 
