@@ -1227,9 +1227,8 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
 }(localStorage['user-email']);
 
 async function retrieveSavedMarkersFromFirebase(userMail, changeTrip=false) {   
-
+    const $tripDropdown = document.querySelector('.trip-select');
     async function populateTripsDropdown() {
-        const $tripDropdown = document.querySelector('.trip-select');
         const $tripDropdownLink = $tripDropdown.querySelector('option');
         // const $tripNameDisplay = document.querySelector('.gp-trip-select-val');
 
