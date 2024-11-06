@@ -1238,7 +1238,7 @@ async function retrieveSavedMarkersFromFirebase(userMail, changeTrip=false) {
         const tripData = sortObject(docSnap.data());
         const tripNames = tripData.subNames;
 
-        tripNames.forEach((tripName, n) => {
+        tripNames?.forEach((tripName, n) => {
             tripName = tripName.replaceAll('_', ' ');
             const $linkClone = $tripDropdownLink.cloneNode(true);
             $linkClone.textContent = tripName;
@@ -1258,6 +1258,7 @@ async function retrieveSavedMarkersFromFirebase(userMail, changeTrip=false) {
     }  
     else {
         currentTrip = await populateTripsDropdown();
+        $tripDropdown.selectedIndex = 0; 
     }
     
     // const userRef = doc(db, 'travelData', `user-${userMail}`, dbSubCollection, 'doc1'); 
