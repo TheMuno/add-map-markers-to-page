@@ -1257,7 +1257,7 @@ async function retrieveSavedMarkersFromFirebase(userMail, changeTrip=false) {
     }  
     else {
         currentTrip = await populateTripsDropdown();
-        $tripDropdown.selectedIndex = 0; 
+        $tripDropdown.selectedIndex = 1; 
     }
     
     // const userRef = doc(db, 'travelData', `user-${userMail}`, dbSubCollection, 'doc1'); 
