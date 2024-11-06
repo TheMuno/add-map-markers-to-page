@@ -1226,8 +1226,16 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
     }
 }(localStorage['user-email']);
 
+const $tripDropdown = document.querySelector('.trip-select');
+
+$tripDropdown.addEventListener('change', async e => {
+    const tripName = e.currentTarget.value;
+    const userMail = localStorage['user-email'];
+    await retrieveSavedMarkersFromFirebase(userMail, tripName);
+});
+
 async function retrieveSavedMarkersFromFirebase(userMail, changeTrip=false) {   
-    const $tripDropdown = document.querySelector('.trip-select');
+    
     async function populateTripsDropdown() {
         const $tripDropdownLink = $tripDropdown.querySelector('option');
         // const $tripNameDisplay = document.querySelector('.gp-trip-select-val');
@@ -1238,9 +1246,9 @@ async function retrieveSavedMarkersFromFirebase(userMail, changeTrip=false) {
         const tripNames = tripData.subNames;
 
         tripNames?.forEach((tripName, n) => {
-            tripName = tripName.replaceAll('_', ' ');
             const $linkClone = $tripDropdownLink.cloneNode(true);
-            $linkClone.textContent = tripName;
+            $linkClone.textContent = tripName.replaceAll('_', ' ');
+            $linkClone.value = tripName; 
             $linkClone.classList.remove('hidden');
             $tripDropdown.append($linkClone);
             if (n !== 0) return;
