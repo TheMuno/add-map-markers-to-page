@@ -1255,7 +1255,7 @@ async function retrieveSavedMarkersFromFirebase(userMail, changeTrip=false) {
             // $tripNameDisplay.textContent = tripName;
         });
 
-        return tripNames ? tripNames[0] : '';
+        return tripNames ? tripNames[0] : false;
     }
 
     let currentTrip;
@@ -1265,7 +1265,7 @@ async function retrieveSavedMarkersFromFirebase(userMail, changeTrip=false) {
     }  
     else {
         currentTrip = await populateTripsDropdown();
-        $tripDropdown.selectedIndex = 1; 
+        if (currentTrip) $tripDropdown.selectedIndex = 1; 
     }
     
     // const userRef = doc(db, 'travelData', `user-${userMail}`, dbSubCollection, 'doc1'); 
