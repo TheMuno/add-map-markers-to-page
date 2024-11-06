@@ -25,14 +25,10 @@ let map;
 if (!localStorage.getItem('user-email'))
 localStorage.setItem('user-email', 'one@mail.com');  
 
-
-
-
 document.querySelector('.user-email').addEventListener('change', e => {
     localStorage.setItem('user-email', e.currentTarget.value);
     window.location.reload(); 
 });
-
 
 const $map = document.querySelector('#map'),
     $userMail = document.querySelector('.user-email'), 
@@ -1194,6 +1190,8 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
 }
 
 !async function retrievePromptsFromFirebase(userMail) {
+    if (!userMail) return;
+
     const $userPrompts = document.querySelector('.user-prompts');
     const $userPromptDefault = $userPrompts.querySelector('.user-prompt.hidden');
     const $userPromptLoader = $userPrompts.querySelector('.user-prompt-load');
@@ -1226,30 +1224,71 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
         $userPromptDefault.innerHTML = `No saved prompts for user: <b>${userMail}</b>`;
         $userPromptDefault.classList.remove('hidden');
     }
-
-    // const $userPrompts = document.querySelector('.user-prompts');
-    // $userPrompts.value = prompts;
 }(localStorage['user-email']);
 
-async function retrieveSavedMarkersFromFirebase(userMail) {   
+async function retrieveSavedMarkersFromFirebase(userMail, changeTrip=false) {   
+
+    async function populateTripsDropdown() {
+        const $tripDropdown = document.querySelector('.trip-select');
+        const $tripDropdownLink = $tripDropdown.querySelector('option');
+        // const $tripNameDisplay = document.querySelector('.gp-trip-select-val');
+
+        const docRef = doc(db, 'travelData', `user-${userMail}`);
+        const docSnap = await getDoc(docRef);
+        const tripData = sortObject(docSnap.data());
+        const tripNames = tripData.subNames;
+
+        tripNames.forEach((tripName, n) => {
+            tripName = tripName.replaceAll('_', ' ');
+            const $linkClone = $tripDropdownLink.cloneNode(true);
+            $linkClone.textContent = tripName;
+            $linkClone.classList.remove('hidden');
+            $tripDropdown.append($linkClone);
+            if (n !== 0) return;
+            // $tripNameDisplay.textContent = tripName;
+        });
+
+        return tripNames[0];
+    }
+
+    let currentTrip;
+
+    if (changeTrip) {
+        currentTrip = changeTrip; 
+    }  
+    else {
+        currentTrip = await populateTripsDropdown();
+    }
     
     // const userRef = doc(db, 'travelData', `user-${userMail}`, dbSubCollection, 'doc1'); 
     // const docSnap = await getDoc(userRef);
 
+    const querySnapshot = await getDocs(collection(db, 'travelData', `user-${userMail}`, currentTrip));
+    let obj;
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        // console.log(doc.id, " => ", doc.data());
+        obj = doc.data();
+    });
+
+    const userData2 = sortObject(obj); 
+
+    const { days, deletedDays, references, hive } = userData2;
     
-    const userData = doc(db, 'travelData', `user-${userMail}`);
+    /*const userData = doc(db, 'travelData', `user-${userMail}`);
     const docSnap = await getDoc(userData);
 
     if (!docSnap.exists()) {
         // docSnap.data() will be undefined in this case
         console.log('No user with such email!');
-        $noUser.textContent = 'No user with such email, sorry!';
+        $noUser.textContent = 'No user with such email, sorry :)';
         setTimeout(()=> $noUser.textContent = '', 5000);
         return; 
     } 
 
     const data = await docSnap.data(); 
     const { days, deletedDays, references, hive } = data;
+    */
 
     // console.log('days in db:', days)
 
@@ -1314,6 +1353,13 @@ async function retrieveSavedMarkersFromFirebase(userMail) {
                 }
             });
         });
+    }
+
+    function sortObject(obj) {
+        return Object.keys(obj).sort().reduce((result, key) => {   
+            result[key] = obj[key];
+            return result;
+        }, {});
     }
 }
 
