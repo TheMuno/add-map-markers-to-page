@@ -1317,6 +1317,7 @@ async function retrieveSavedMarkersFromFirebase(userMail, changeTrip=false) {
 
     function setupDays(parentContainerClass, daysArr) {
         const $parentContainer = $dayActivities.querySelector(parentContainerClass); 
+        $parentContainer.innerHTML = '';
 
         daysArr?.forEach(day => {
             const { dayDate, events:dayActivities } = day;
