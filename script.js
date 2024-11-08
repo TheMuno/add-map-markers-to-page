@@ -93,7 +93,7 @@ console.log('currentDay.markers', currentDay.markers)
 
 $daysSelect.selectedIndex = 0; // startingIndex;  
 
-google.maps.event.addDomListener(window, 'load', () => {
+window.addEventListener('load', () => {
     $noDays.textContent = 'fetching...';
     $noDays.classList.remove('hide');
 
@@ -1196,7 +1196,7 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
     // console.log('docSnap:::::', docSnap)
 
     const querySnapshot = await getDocs(collection(db, 'travelData'));//, `user-${userMail}`, currentTrip));
-    
+
     let obj;
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
