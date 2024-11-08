@@ -1190,10 +1190,21 @@ async function saveMarkerToFirebase(userMail, dayDate, markerObj) {
 }
 
 !async function getdataFromFirebase() {
-    const userRef = doc(db, 'travelData')//, `user-${userMail}`); 
-    const docSnap = await getDocs(userRef);
+    // const userRef = doc(db, 'travelData')//, `user-${userMail}`); 
+    // const docSnap = await getDocs(userRef);
     // const data = await docSnap.data(); 
-    console.log('docSnap:::::', docSnap)
+    // console.log('docSnap:::::', docSnap)
+
+    const querySnapshot = await getDocs(collection(db, 'travelData'));//, `user-${userMail}`, currentTrip));
+    
+    let obj;
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        // console.log(doc.id, " => ", doc.data());
+        obj = doc.data();
+    });
+
+    console.log('obj', obj);
 }();
 
 !async function retrievePromptsFromFirebase(userMail) {
