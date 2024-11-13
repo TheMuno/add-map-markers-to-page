@@ -973,3 +973,115 @@ body {
     margin-top: 10px;
 }
 
+
+
+/**
+ * 
+ *  Passes Filter
+ * 
+ */
+
+ .section {
+    width: 80%;
+    margin: auto;
+    /* outline: 1px dotted red; */
+}
+
+.title {
+    text-align: center;
+    margin: 40px;
+    font-size: 2rem;
+}
+
+.passes {
+    display: flex;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.passes-sec {
+    margin: 0 30px;
+}
+
+.pass {
+    display: flex;
+    align-items: center;
+}
+
+.pass-check {
+    margin-right: 5px;
+}
+
+.divider {
+    border: 1px solid;
+    margin-top: 50px;
+}
+
+.results {
+    font-size: 0.8rem; 
+    margin-top: 40px;
+}
+
+.results .passer {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.result-passes {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    flex-wrap: wrap;
+}
+
+.result-pass {
+    /* margin: 0 5px; */
+    /* border: 3px solid; */
+    padding: 5px;
+}
+
+.result-pass.hide {
+    display: none;
+}
+
+.name {
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding: 2px 4px;
+    border-radius: 1px;
+}
+
+.name.active {
+    background-color: rgb(186 195 180);
+}
+
+.name.inactive {
+    background-color: initial;
+}
+
+span.ex:before {
+    content: '\03C7';
+    display: inline-block;
+    color: red;
+    padding: 0 5px 0 0;
+}
+
+span.tick:before {
+    content: '\2713'; 
+    display: inline-block;
+    color: green;
+}
+
+span.tick, 
+span.ex {
+    list-style-type: none;
+    font-size: 1em;
+    margin-left: 5px;
+}
+
+span.tick.hide, 
+span.ex.hide {
+    display: none;
+}
+
