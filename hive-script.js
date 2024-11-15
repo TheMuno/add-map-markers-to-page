@@ -1181,6 +1181,7 @@ function getFilterData($filtersWrap) {
 }
 */
 
+/*
 // const saveEntryBtnTxt = $saveEntryBtn.value;
 $saveEntryBtn?.addEventListener('click', async e => {
     const $btn = e.currentTarget;
@@ -1275,6 +1276,7 @@ $saveEntryBtn?.addEventListener('click', async e => {
         refreshAddToDBFields(); 
     }, 2000);
 });
+*/
 
 function refreshAddToDBFields() {
     $userSearch.value = '';  
