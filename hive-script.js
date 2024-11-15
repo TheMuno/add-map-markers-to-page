@@ -1182,7 +1182,7 @@ function getFilterData($filtersWrap) {
 */
 
 // const saveEntryBtnTxt = $saveEntryBtn.value;
-$saveEntryBtn.addEventListener('click', async e => {
+$saveEntryBtn?.addEventListener('click', async e => {
     const $btn = e.currentTarget;
 
     // if ($btn.edit) {
