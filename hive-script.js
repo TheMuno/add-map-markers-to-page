@@ -47,8 +47,8 @@ const $map = document.querySelector('#map'),
     $restaurantsSections = document.querySelectorAll('[data-type="restaurants"]'),
 	$entertainmentSections = document.querySelectorAll('[data-type="entertainment"]'),
     $addFilters = document.querySelector('.add-filters'),
-    $saveEntryBtn = document.querySelector('.save-entry-btn'),
-    saveEntryBtnTxt = $saveEntryBtn.value,
+    $saveEntryBtn = document.querySelector('.save-entry-btn') || {}, // empty obj 
+    // saveEntryBtnTxt = $saveEntryBtn.value,
     $refreshBtn = document.querySelector('.refresh-btn'),
     $addOrViewSelect = document.querySelector('.view-type-select'),
     $neighborhoodFilter = document.querySelector('[data-filter="neighborhood"]');
