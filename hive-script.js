@@ -197,14 +197,14 @@ async function retrieveHiveFromDB(hiveCategory) {
 
     hive?.forEach(hiveItem => { 
 		const $hiveItem = addToHive(hiveItem, $hiveList);
-		$hiveItem.addEventListener('mouseenter', (e) => {
+		$hiveItem?.addEventListener('mouseenter', (e) => {
 			const item = e.currentTarget; 
 			item.querySelector('.copy-hive-item').classList.remove('opacity1');
 			item.querySelector('.remove-hive-item').classList.remove('opacity1');
 			item.querySelector('.edit-hive-item').classList.remove('hide');
 		});
 		
-		$hiveItem.addEventListener('mouseleave', (e) => {
+		$hiveItem?.addEventListener('mouseleave', (e) => {
 			const item = e.currentTarget; 
 			item.querySelector('.copy-hive-item').classList.add('opacity1');
 			item.querySelector('.remove-hive-item').classList.add('opacity1');
@@ -303,7 +303,7 @@ function addToHive(hiveItem, hiveList) {
 		value: 'Edit',
 	});
 	
-	$hiveRemoveImg.addEventListener('click', e => {
+	$hiveRemoveImg?.addEventListener('click', e => {
 		alertify.confirm('Remove Location?\nPlease confim',
 			() => {
 				// alertify.success('Ok');
@@ -318,12 +318,12 @@ function addToHive(hiveItem, hiveList) {
 		});
 	});
 	
-	$hiveCopyImg.addEventListener('click', e => {
+	$hiveCopyImg?.addEventListener('click', e => {
 		const text = e.currentTarget.closest('.hive-item').querySelector('.hive-item-text').textContent;
 		copyContent(text);
 	});
 	
-	$hiveItemEdit.addEventListener('click', e => {
+	$hiveItemEdit?.addEventListener('click', e => {
 		// if (!e.currentTarget.classList.contains('edit-hive-item'))
 		$addOrViewSelect.value = 'add-data';
 		$addOrViewSelect.dispatchEvent(new Event('click'));
@@ -408,7 +408,7 @@ async function copyContent(text) {
 //     $hiveWrapper.querySelector('.hive-filters').classList.toggle('hide');
 // });
 
-$addFilters.addEventListener('click', e => {
+$addFilters?.addEventListener('click', e => {
     if (!e.target.closest('.remove-filter')) return;
     alertify.confirm('Remove Filter?\nPlease confim',
         () => {
@@ -473,7 +473,7 @@ function populateFilterInputs(hiveItem) {
     if (dayEventName) $userSearch.value = dayEventName; 
 }
 
-$hiveList.addEventListener('click', e => {
+$hiveList?.addEventListener('click', e => {
     if (!e.target.closest('.hive-item')) return;
     const $hiveItem = e.target.closest('.hive-item');
 
@@ -499,7 +499,7 @@ $hiveList.addEventListener('click', e => {
     } */
 });
 
-$hiveListAttractions.addEventListener('click', e => {
+$hiveListAttractions?.addEventListener('click', e => {
     if (!e.target.closest('.hive-item')) return;
     const $hiveItem = e.target.closest('.hive-item');
 
@@ -523,7 +523,7 @@ $hiveListAttractions.addEventListener('click', e => {
     } */
 });
 
-$hiveListRestaurants.addEventListener('click', e => {
+$hiveListRestaurants?.addEventListener('click', e => {
     if (!e.target.closest('.hive-item')) return;
     const $hiveItem = e.target.closest('.hive-item');
 
@@ -547,7 +547,7 @@ $hiveListRestaurants.addEventListener('click', e => {
     } */
 });
 
-$hiveListEntertainment.addEventListener('click', e => {
+$hiveListEntertainment?.addEventListener('click', e => {
     if (!e.target.closest('.hive-item')) return;
     const $hiveItem = e.target.closest('.hive-item');
 
@@ -601,7 +601,7 @@ function openMarkerWithInfo(marker, $hiveItem) {
     markerPopup.open(marker.getMap(), marker);
 }
 
-$map.addEventListener('click', e => { 
+$map?.addEventListener('click', e => { 
     if (!e.target.closest('.view-reviews')) return;
     const $locationReviews = e.target.closest('.location-reviews'); 
     const $arrow = e.target.closest('.view-reviews').querySelector('.arrow'); 
@@ -617,8 +617,8 @@ $map.addEventListener('click', e => {
     }
 });
 
-$hiveFilterCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener('click', e => {
+$hiveFilterCheckboxes?.forEach(checkbox => {
+    checkbox?.addEventListener('click', e => {
         // const $hiveList = e.currentTarget.closest('.section').querySelector('.khonsu-data');
         const $hiveItems = $hiveList.querySelectorAll('.hive-item');    
         $hiveItems.forEach(item => item.classList.add('hide'));
@@ -712,8 +712,8 @@ function updateNumberOfLocations(hiveList, hiveWrapper) {
     hiveList.closest(hiveWrapper).querySelector('.item-no').textContent = `${locationsNum} locations`;
 }
 
-document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="checkbox"]').forEach(checkbox => {
-    checkbox.addEventListener('click', e => {
+document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="checkbox"]')?.forEach(checkbox => {
+    checkbox?.addEventListener('click', e => {
         // const $hiveList = e.currentTarget.closest('.section').querySelector('.khonsu-data');
         const $hiveItems = $hiveListAttractions.querySelectorAll('.hive-item');    
         $hiveItems.forEach(item => item.classList.add('hide'));
@@ -822,7 +822,7 @@ document.querySelectorAll('[data-type="attractions"] .hive-filters input[type="c
     });
 });
 
-document.querySelectorAll('[data-type="restaurants"] .hive-filters input[type="checkbox"]').forEach(checkbox => {
+document.querySelectorAll('[data-type="restaurants"] .hive-filters input[type="checkbox"]')?.forEach(checkbox => {
     checkbox.addEventListener('click', e => {
         // const $hiveList = e.currentTarget.closest('.section').querySelector('.khonsu-data');
         const $hiveItems = $hiveListRestaurants.querySelectorAll('.hive-item');    
@@ -1033,7 +1033,7 @@ function isString(x) {
     return Object.prototype.toString.call(x) === '[object String]';
 }
 
-$dataTypeSelect.addEventListener('change', e => {
+$dataTypeSelect?.addEventListener('change', e => {
     const val = e.currentTarget.value.toLowerCase().trim();
     $dataTypeSections.forEach(sec => {
         sec.classList.add('hide');
@@ -1286,11 +1286,11 @@ function refreshAddToDBFields() {
     markerPopup.close();
 }
 
-$refreshBtn.addEventListener('click', e => {
+$refreshBtn?.addEventListener('click', e => {
     refreshAddToDBFields(); 
 }); 
 
-$addOrViewSelect.addEventListener('click', e => {
+$addOrViewSelect?.addEventListener('click', e => {
 	const $sideBar = document.querySelector('.side-bar');
 	const $viewData = document.querySelector('.view-data-section');
 	
@@ -1304,7 +1304,7 @@ $addOrViewSelect.addEventListener('click', e => {
 	}
 });
 
-document.querySelectorAll('.toggle-hive-filters-div input[type=checkbox]').forEach(div => {
+document.querySelectorAll('.toggle-hive-filters-div input[type=checkbox]')?.forEach(div => {
     div.addEventListener('click', e => {
           e.currentTarget.closest('.section').querySelector('.toggle-hive-wrapper').classList.toggle('hide');
     });
