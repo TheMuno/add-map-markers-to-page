@@ -58,5 +58,8 @@ async function fetchUserIDPrompt(id) {
 
     // if (!prompts) return;
 
-    return prompts ? prompts.length : 0;
+    const returnVal = prompts ? prompts.length : 0;
+    console.log('returnVal', returnVal)
+
+    return returnVal;
 }
