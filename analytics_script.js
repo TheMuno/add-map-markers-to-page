@@ -56,7 +56,7 @@ async function fetchUserIDPrompt(id) {
     console.log('id::', id)
     console.log('prompts::', prompts)
 
-    if (!prompts) return;
+    // if (!prompts) return;
 
-    return prompts.length;
+    return prompts ? prompts.length : 0;
 }
