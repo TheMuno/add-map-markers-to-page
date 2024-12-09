@@ -37,15 +37,13 @@ const $errorPercent = document.querySelector('.counter.error-percent');
 
     const { id_array:userIds } = docSnap.data();
 
-    // let totalPrompts = 0;
+    let totalPrompts = 0;
 
-    $promptCounter.textContent = userIds.reduce((id, total) => {
-        const promptNum = fetchUserIDPrompt(id); 
-        total += promptNum;
-        return total;
-    }, 0);
+    userIds.forEach(id => {
+        totalPrompts += fetchUserIDPrompt(id); 
+    });
 
-    // $promptCounter = totalPrompts;
+    $promptCounter.textContent = totalPrompts;
 }();
 
 async function fetchUserIDPrompt(id) {
