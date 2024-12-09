@@ -49,7 +49,7 @@ const $errorPercent = document.querySelector('.counter.error-percent');
 async function fetchUserIDPrompt(id) {
     const docRef = doc(db, 'travelData', id);
     const docSnap = await getDoc(docRef);
-    if (!docSnap.exists()) return;
+    if (!docSnap.exists()) return 0;
     const idData = docSnap.data();
     const { prompts } = idData;
 
