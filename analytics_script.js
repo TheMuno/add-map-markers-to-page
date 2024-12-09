@@ -39,8 +39,9 @@ const $errorPercent = document.querySelector('.counter.error-percent');
 
     let totalPrompts = 0;
 
-    userIds.forEach(id => {
-        const num = fetchUserIDPrompt(id); 
+    userIds.forEach(async id => {
+        
+        const num = await fetchUserIDPrompt(id); 
 
         console.log('num', num)
 
