@@ -39,16 +39,12 @@ const $errorPercent = document.querySelector('.counter.error-percent');
 
     let totalPrompts = 0;
 
-    userIds.forEach(async id => {
-        
+    $promptCounter.textContent = userIds.reduce(async (id, total) => {
         const num = await fetchUserIDPrompt(id); 
+        total += num;
+    }, 0);
 
-        console.log('num', num)
-
-        totalPrompts += num;
-    });
-
-    $promptCounter.textContent = totalPrompts;
+    // $promptCounter.textContent = totalPrompts;
 }();
 
 async function fetchUserIDPrompt(id) {
@@ -67,4 +63,5 @@ async function fetchUserIDPrompt(id) {
     // console.log('returnVal', returnVal)
 
     return returnVal;
-}
+}   
+
