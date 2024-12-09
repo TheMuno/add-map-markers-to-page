@@ -40,7 +40,8 @@ const $errorPercent = document.querySelector('.counter.error-percent');
     // let totalPrompts = 0;
 
     $promptCounter.textContent = userIds.reduce((id, total) => {
-        return total += fetchUserIDPrompt(id); 
+        const promptNum = fetchUserIDPrompt(id); 
+        return total += promptNum;
     }, 0);
 
     // $promptCounter = totalPrompts;
