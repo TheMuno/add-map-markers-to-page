@@ -42,6 +42,7 @@ const $errorPercent = document.querySelector('.counter.error-percent');
     $promptCounter.textContent = userIds.reduce(async (id, total) => {
         const num = await fetchUserIDPrompt(id); 
         total += num;
+        console.log('total', total)
         return total;
     }, 0);
 
