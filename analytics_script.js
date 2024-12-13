@@ -48,7 +48,7 @@ const $errorPercent = document.querySelector('.counter.error-percent');
 
     $promptCounter.textContent = totalPrompts;
     $errorCounter.textContent = totalErrors;
-    $errorPercent.textContent = percent;
+    $errorPercent.textContent = `${percent}%`;
 }();
 
 async function fetchUserIDPrompt(id) {
