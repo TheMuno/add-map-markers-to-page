@@ -37,14 +37,33 @@ const $errorPercent = document.querySelector('.counter.error-percent');
 
     const { id_array:userIds } = docSnap.data();
 
+    const numberOfUserIds = userIds.length;
     let totalPrompts = 0;
 
-    $promptCounter.textContent = userIds.reduce(async (id, total) => {
-        const num = await fetchUserIDPrompt(id); 
-        total += num;
-        console.log('total', total)
-        return total;
-    }, 0);
+    // $promptCounter.textContent = userIds.reduce(async (id, total) => {
+    //     const num = await fetchUserIDPrompt(id); 
+    //     total += num;
+    //     console.log('total', total)
+    //     return total;
+    // }, 0);
+
+    console.log('1:::')
+
+    for (const id of userIds) {
+        const num = await fetchUserIDPrompt(id);
+        totalPrompts += num; 
+
+    }
+
+    console.log('2:::')
+
+    $promptCounter.textContent = totalPrompts;
+
+    // userIds.forEach(async (id, n) => {
+    //     const num = await fetchUserIDPrompt(id); 
+    //     totalPrompts += num; 
+    //     if (n !== numberOfUserIds-1) 
+    // });
 
     // $promptCounter.textContent = totalPrompts;
 }();
