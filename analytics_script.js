@@ -52,6 +52,8 @@ const $errorPercent = document.querySelector('.counter.error-percent');
         if (prompts) totalPrompts += prompts.length; 
         if (promptErrors) totalErrors += promptErrors.length;
 
+        console.log('promptErrors', promptErrors)
+
         const { errorMsg, prompt } = promptErrors;
 
         const $row = $cloneRow.cloneNode(true);
