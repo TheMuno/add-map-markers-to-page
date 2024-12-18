@@ -58,6 +58,9 @@ const $errorPercent = document.querySelector('.counter.error-percent');
 
         const { errorMsg, prompt } = promptErrors;
 
+        console.log('errorMsg', errorMsg)
+        console.log('prompt', prompt)
+
         const $row = $cloneRow.cloneNode(true);
         $row.classList.remove('hide');
         $row.querySelector('.tcell.errors').textContent = errorMsg;
