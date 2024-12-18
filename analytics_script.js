@@ -42,9 +42,12 @@ const $errorPercent = document.querySelector('.counter.error-percent');
         percent = 0;
 
     for (const id of userIds) {
-        const num = await fetchUserIDPrompt(id);
-        totalPrompts += num; 
+        const { promptsNum, errorsNum } = await fetchUserIDPrompt(id);
+        totalPrompts += promptsNum; 
+        totalErrors += errorsNum;
     }
+
+    percent = (totalErrors/totalPrompts) * 100;
 
     $promptCounter.textContent = totalPrompts;
     $errorCounter.textContent = totalErrors;
@@ -56,16 +59,11 @@ async function fetchUserIDPrompt(id) {
     const docSnap = await getDoc(docRef);
     if (!docSnap.exists()) return 0;
     const idData = docSnap.data();
-    const { prompts } = idData;
+    const { prompts, promptErrors } = idData;
 
-    // console.log('id::', id)
-    // console.log('prompts::', prompts)
+    const promptsNum = prompts ? prompts.length : 0; 
+    const errorsNum = promptErrors ? promptErrors.length : 0;
 
-    // if (!prompts) return;
-
-    const returnVal = prompts ? prompts.length : 0;
-    // console.log('returnVal', returnVal)
-
-    return returnVal;
+    return { promptsNum, errorsNum };
 }   
 
