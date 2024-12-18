@@ -25,7 +25,11 @@ const $promptCounter = document.querySelector('.counter.prompts');
 const $errorCounter = document.querySelector('.counter.errors');
 const $errorPercent = document.querySelector('.counter.error-percent');
 
+const $loader = document.querySelector('.bg-load');
+
 !async function retrievePromptsFromDB() {
+    $loader.classList.add('spinner');
+
     const docRef = doc(db, 'travelData', 'user_ids');
     const docSnap = await getDoc(docRef);
 
@@ -66,6 +70,8 @@ const $errorPercent = document.querySelector('.counter.error-percent');
     $promptCounter.textContent = totalPrompts;
     $errorCounter.textContent = totalErrors;
     $errorPercent.textContent = `${percent}%`;
+
+    $loader.classList.remove('spinner');
 
     function setupRow({errorMsg, prompt}) {
         const $row = $cloneRow.cloneNode(true);

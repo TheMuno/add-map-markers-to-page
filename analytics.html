@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gemini Prompt Analytics</title>
     <style>
+        .bg-loader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+        }
+
         .section {
             width: 80%;
             margin: auto;
@@ -40,10 +48,36 @@
             margin: 1px;
             padding: 10px;
         } 
+
+        /* loader */
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid black;
+            width: 270px;
+            height: 270px;
+            -webkit-animation: spin 1s linear infinite; /* Safari */
+            animation: spin 1s linear infinite;
+            margin: 50px auto;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
     <script defer type="module" src="analytics_script.js"></script>
 </head>
 <body>
+    <div class="bg-loader">
+        <div class="bg-load"></div>
+    </div>   
     <div class="section">
         <div class="title">Error Rate & What Prompts Give What Errors!</div>
         <div class="wrap">Prompts: <span class="counter prompts"></span> </div>
