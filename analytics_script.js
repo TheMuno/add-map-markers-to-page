@@ -50,7 +50,7 @@ const $errorPercent = document.querySelector('.counter.error-percent');
         const { prompts, promptErrors } = await fetchUserIDPrompt(id);
 
         if (prompts) totalPrompts += prompts.length; 
-        if (!promptErrors) return; 
+        if (!promptErrors) continue;
             
         totalErrors += promptErrors.length;
 
