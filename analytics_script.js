@@ -41,13 +41,27 @@ const $errorPercent = document.querySelector('.counter.error-percent');
         totalErrors = 0,
         percent = 0;
 
+    let errorArr = [];
+
+    const $errorsTable = document.querySelector('.tbody');
+    const $cloneRow = $errorsTable.querySelector('.trow.hide');
+
     for (const id of userIds) {
-        const { promptsNum, errorsNum } = await fetchUserIDPrompt(id);
-        totalPrompts += promptsNum; 
-        totalErrors += errorsNum;
+        const { prompts, promptErrors } = await fetchUserIDPrompt(id);
+
+        if (prompts) totalPrompts += prompts.length; 
+        if (promptErrors) totalErrors += promptErrors.length;
+
+        const { errorMsg, prompt } = promptErrors;
+
+        const $row = $cloneRow.cloneNode(true);
+        $row.classList.remove('hide');
+        $row.querySelector('.tcell.errors').textContent = errorMsg;
+        $row.querySelector('.tcell.prompts').textContent = prompt;
+        $errorsTable.append($row);
     }
 
-    percent = (totalErrors/totalPrompts) * 100;
+    percent = ((totalErrors/totalPrompts) * 100).toFixed(2);
 
     $promptCounter.textContent = totalPrompts;
     $errorCounter.textContent = totalErrors;
@@ -57,13 +71,15 @@ const $errorPercent = document.querySelector('.counter.error-percent');
 async function fetchUserIDPrompt(id) {
     const docRef = doc(db, 'travelData', id);
     const docSnap = await getDoc(docRef);
-    if (!docSnap.exists()) return 0;
+    if (!docSnap.exists()) return;
     const idData = docSnap.data();
     const { prompts, promptErrors } = idData;
 
-    const promptsNum = prompts ? prompts.length : 0; 
-    const errorsNum = promptErrors ? promptErrors.length : 0;
+    // const promptsNum = prompts ? prompts.length : 0; 
+    // const errorsNum = promptErrors ? promptErrors.length : 0;
 
-    return { promptsNum, errorsNum };
+    // return { promptsNum, errorsNum };
+    
+    return { prompts, promptErrors };
 }   
 

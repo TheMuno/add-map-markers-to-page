@@ -30,12 +30,16 @@
             display: flex;
         }
 
+        .trow.hide {
+            display: none;
+        }
+
         .tcell {
             width: 50%;
             border: 1px solid;
             margin: 1px;
             padding: 10px;
-        }
+        } 
     </style>
     <script defer type="module" src="analytics_script.js"></script>
 </head>
@@ -49,18 +53,10 @@
     <div class="section">
         <div class="thead">Prompts & Errors</div>
         <div class="tbody">
-            <div class="trow">
-                <div class="tcell prompts">Errors 1</div>
-                <div class="tcell errors">Prompt 1</div>
-            </div>   
-            <div class="trow">
-                <div class="tcell prompts">Errors 2</div>
-                <div class="tcell errors">Prompt 2</div>
-            </div>  
-            <div class="trow">
-                <div class="tcell prompts">Errors 3</div>
-                <div class="tcell errors">Prompt 3</div>
-            </div>           
+            <div class="trown hide">
+                <div class="tcell errors"></div>
+                <div class="tcell prompts"></div>                
+            </div>            
         </div>
     </div>
 </body>
