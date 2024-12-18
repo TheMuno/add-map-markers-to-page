@@ -56,16 +56,9 @@ const $errorPercent = document.querySelector('.counter.error-percent');
 
         console.log('promptErrors', promptErrors)
 
-        const { errorMsg, prompt } = promptErrors;
-
-        console.log('errorMsg', errorMsg)
-        console.log('prompt', prompt)
-
-        const $row = $cloneRow.cloneNode(true);
-        $row.classList.remove('hide');
-        $row.querySelector('.tcell.errors').textContent = errorMsg;
-        $row.querySelector('.tcell.prompts').textContent = prompt;
-        $errorsTable.append($row);
+        promptErrors.forEach(err => {
+            setupRow(err);
+        });        
     }
 
     percent = ((totalErrors/totalPrompts) * 100).toFixed(2);
@@ -73,6 +66,14 @@ const $errorPercent = document.querySelector('.counter.error-percent');
     $promptCounter.textContent = totalPrompts;
     $errorCounter.textContent = totalErrors;
     $errorPercent.textContent = `${percent}%`;
+
+    function setupRow({errorMsg, prompt}) {
+        const $row = $cloneRow.cloneNode(true);
+        $row.classList.remove('hide');
+        $row.querySelector('.tcell.errors').textContent = errorMsg;
+        $row.querySelector('.tcell.prompts').textContent = prompt;
+        $errorsTable.append($row);
+    }
 }();
 
 async function fetchUserIDPrompt(id) {
