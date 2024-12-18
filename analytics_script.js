@@ -25,7 +25,8 @@ const $promptCounter = document.querySelector('.counter.prompts');
 const $errorCounter = document.querySelector('.counter.errors');
 const $errorPercent = document.querySelector('.counter.error-percent');
 
-const $loader = document.querySelector('.bg-load');
+const $bg = document.querySelector('.bg-loader');
+const $loader = $bg.querySelector('.bg-load');
 
 !async function retrievePromptsFromDB() {
     $loader.classList.add('spinner');
@@ -71,7 +72,8 @@ const $loader = document.querySelector('.bg-load');
     $errorCounter.textContent = totalErrors;
     $errorPercent.textContent = `${percent}%`;
 
-    $loader.classList.remove('spinner');
+    // $loader.classList.remove('spinner');
+    $bg.remove();
 
     function setupRow({errorMsg, prompt}) {
         const $row = $cloneRow.cloneNode(true);
