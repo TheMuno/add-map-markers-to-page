@@ -75,9 +75,10 @@ const $loader = $bg.querySelector('.bg-load');
     // $loader.classList.remove('spinner');
     $bg.remove();
 
-    function setupRow({errorMsg, prompt}) {
+    function setupRow({addedAt, errorMsg, prompt}) {
         const $row = $cloneRow.cloneNode(true);
         $row.classList.remove('hide');
+        $row.querySelector('.tcell.timestamp').textContent = addedAt;
         $row.querySelector('.tcell.errors').textContent = errorMsg;
         $row.querySelector('.tcell.prompts').textContent = prompt;
         $errorsTable.append($row);
