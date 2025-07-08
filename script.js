@@ -2305,7 +2305,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'artechouse', 
         'madam tussands', 
         'yankee stadium tour', 
-        'madison sq garden tour'
+        'madison sq garden tour',
+        'intrepid',
     ];
 
     const sightseeingArr = [
@@ -2324,7 +2325,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'artechouse', 
         'madam tussands', 
         'yankee stadium tour', 
-        'madison sq garden tour'
+        'madison sq garden tour',
     ];
 
     const cityPassArr = [
@@ -2333,7 +2334,8 @@ document.addEventListener('DOMContentLoaded', () => {
         '911 museum', 
         'tor', 
         'guggenhiem', 
-        'amnh'
+        'amnh',
+        'intrepid',
     ];
 
     const $goCity = document.querySelector('[data-pass="go-city"]');
